@@ -5,8 +5,6 @@ import TextEngine from 'spring-text-engine';
 
 interface SkillItem {
   name: string;
-  category: string;
-  desc: string;
   icon: React.ReactNode;
 }
 
@@ -14,10 +12,8 @@ export const SkillsShowcase: React.FC = () => {
   const skills: SkillItem[] = [
     {
       name: 'Python',
-      category: 'Data & Telemetry',
-      desc: 'Algorithms & Automation • Kaggle Certified',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none">
           <path
             d="M11.9 2c-5.2 0-4.9 2.2-4.9 2.2l.1 2.3h4.9v.7H5.2S2 6.8 2 12s2.8 5 2.8 5h1.7v-2.3s-.1-2.8 2.8-2.8h4.7s2.7.1 2.7-2.7V4.7S17.1 2 11.9 2zm-2.7 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z"
             fill="#38bdf8"
@@ -31,10 +27,8 @@ export const SkillsShowcase: React.FC = () => {
     },
     {
       name: 'C / C++',
-      category: 'Low-Level / Firmware',
-      desc: 'Memory Management & OOP • Certified',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none">
           <path
             d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.2l6.9 3.8v7.9L12 19.8l-6.9-3.9V8.1L12 4.2z"
             fill="#0284c7"
@@ -48,23 +42,19 @@ export const SkillsShowcase: React.FC = () => {
     },
     {
       name: 'React 19',
-      category: 'Frontend Engineering',
-      desc: 'Hooks, Suspense, State & Modern SPA',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#44f0ff" strokeWidth="1.5">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke="#44f0ff" strokeWidth="1.6">
           <ellipse cx="12" cy="12" rx="10" ry="4.2" />
           <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)" />
           <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)" />
-          <circle cx="12" cy="12" r="1.5" fill="#44f0ff" />
+          <circle cx="12" cy="12" r="1.6" fill="#44f0ff" />
         </svg>
       ),
     },
     {
       name: 'TypeScript',
-      category: 'Typed Systems',
-      desc: 'Strict Contracts, Generics & DX',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none">
           <rect width="24" height="24" rx="4" fill="#3178C6" />
           <path
             d="M5 11h6v2.2H8.8V19H6.3v-5.8H5V11zm7.8 4.7c.6.4 1.3.6 2 .6.8 0 1.2-.3 1.2-.7 0-.5-.4-.7-1.4-1.1-1.3-.4-2.1-1.1-2.1-2.2 0-1.4 1.1-2.3 2.8-2.3 1 0 1.8.3 2.4.7l-.6 1.7c-.5-.3-1.1-.5-1.8-.5-.7 0-1.1.3-1.1.7 0 .4.4.6 1.3 1 1.4.5 2.2 1.1 2.2 2.3 0 1.5-1.2 2.4-3 2.4-1.1 0-2.1-.3-2.8-.8l.8-1.8z"
@@ -75,10 +65,8 @@ export const SkillsShowcase: React.FC = () => {
     },
     {
       name: 'JavaScript',
-      category: 'Web Standards',
-      desc: 'Async/Await, Promises & DOM APIs',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none">
           <rect width="24" height="24" rx="4" fill="#F7DF1E" />
           <path
             d="M7.5 18c-.8 0-1.4-.4-1.8-1l1.5-1c.2.3.5.5.8.5.5 0 .8-.3.8-.9V10h2.2v5.8c0 1.4-.9 2.2-2.5 2.2zm7.2 0c-1.8 0-2.9-1.1-2.9-2.6 0-1.6 1.1-2.6 2.7-2.6.9 0 1.6.3 2 .8l-1.3 1.1c-.3-.3-.5-.4-.8-.4-.4 0-.8.3-.8.9 0 .6.3.9.8.9.3 0 .6-.1.8-.4l1.3 1.1c-.5.7-1.2 1.2-2.6 1.2z"
@@ -89,10 +77,8 @@ export const SkillsShowcase: React.FC = () => {
     },
     {
       name: 'DSA & Algorithms',
-      category: 'Computer Science',
-      desc: 'Trees, Graphs, Sorting & Complexity',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.6">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.7">
           <circle cx="12" cy="5" r="3" />
           <circle cx="6" cy="19" r="3" />
           <circle cx="18" cy="19" r="3" />
@@ -102,24 +88,18 @@ export const SkillsShowcase: React.FC = () => {
     },
     {
       name: 'ESP32 & IoT',
-      category: 'Hardware Telemetry',
-      desc: 'WiFi/BLE, FreeRTOS & GPIO Pins',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="1.7">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="1.8">
           <rect x="5" y="5" width="14" height="14" rx="2" />
           <path d="M9 9h6v6H9z" />
           <path d="M2 9h3m-3 6h3m14-6h3m-3 6h3M9 2v3m6-3v3m-6 14v3m6-3v3" />
         </svg>
       ),
     },
-    
-    
     {
       name: 'Tailwind CSS',
-      category: 'UI Architecture',
-      desc: 'Design Tokens, Flexbox & Responsive Grid',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none">
           <path
             d="M12 6c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.9.2 1.6.9 2.3 1.6 1.2 1.2 2.6 2.6 5.5 2.6 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.6-1.2-1.2-2.6-2.6-5.5-2.6zm-6 6c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.9.2 1.6.9 2.3 1.6 1.2 1.2 2.6 2.6 5.5 2.6 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.6-1.2-1.2-2.6-2.6-5.5-2.6z"
             fill="#38bdf8"
@@ -127,14 +107,10 @@ export const SkillsShowcase: React.FC = () => {
         </svg>
       ),
     },
-    
-    
     {
       name: 'Machine Learning',
-      category: 'Data Science',
-      desc: 'Pandas & Intro to ML • Kaggle Badged',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.6">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.8">
           <circle cx="6" cy="6" r="3" />
           <circle cx="18" cy="6" r="3" />
           <circle cx="12" cy="18" r="3" />
@@ -144,10 +120,8 @@ export const SkillsShowcase: React.FC = () => {
     },
     {
       name: 'Git & GitHub',
-      category: 'Collaboration',
-      desc: 'Branches, PRs, CI/CD & Code Review',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none">
           <path
             d="M12 2C6.47 2 2 6.47 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"
             fill="#f4f4f5"
@@ -155,13 +129,12 @@ export const SkillsShowcase: React.FC = () => {
         </svg>
       ),
     },
-    
   ];
 
   return (
     <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center" id="skills">
       <div className="w-full my-auto py-1">
-        <div className="flex items-center justify-between mb-1.5">
+        <div className="flex items-center justify-between mb-2 sm:mb-3">
           <div>
             <TextEngine
               tag="h2"
@@ -175,13 +148,9 @@ export const SkillsShowcase: React.FC = () => {
               Skills &amp; Technologies
             </TextEngine>
             <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
-              Interactive 3D Spectral Grid • 16 Core competencies from Moratuwa CSE &amp; LinkedIn
+              Core Technical Competencies &amp; Toolchain
             </p>
           </div>
-          <span className="text-xs font-mono text-[#DDF8F3] bg-[#2C7A78]/20 border border-[#2C7A78]/40 px-2.5 py-1 rounded-full hidden sm:flex items-center gap-1.5 backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DDF8F3] animate-pulse"></span>
-            Spectral Tiles
-          </span>
         </div>
 
         {/* Spectral Tiles Background Container - Seamless Edge Blend */}
@@ -199,50 +168,26 @@ export const SkillsShowcase: React.FC = () => {
             zoom={1.2}
             lights={3}
             lightSize={1.1}
-            style={{ minHeight: 'clamp(360px, 48vh, 440px)' }}
+            style={{ minHeight: 'clamp(280px, 38vh, 360px)' }}
           >
             {/* Skill Tiles Overlaid on top of 3D Spectral Tiles */}
-            <div className="relative z-10 p-2.5 sm:p-4 flex flex-col justify-between h-full bg-transparent">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="text-[11px] sm:text-xs font-mono text-[#DDF8F3] tracking-wide uppercase drop-shadow-sm font-semibold">
-                  Interactive Grid • Hover tiles to bend 3D spectral planes
-                </span>
-                <span className="text-[11px] font-mono text-[#cbd5e1] hidden sm:inline-block">
-                  LinkedIn &amp; Coursework Skills
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
+            <div className="relative z-10 p-3 sm:p-5 flex flex-col justify-center h-full bg-transparent">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3.5">
                 {skills.map((skill) => (
                   <motion.div
                     key={skill.name}
-                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileHover={{ scale: 1.05, y: -3 }}
                     transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-                    className="group relative p-2 sm:p-2.5 rounded-xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#DDF8F3]/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(44,122,120,0.4)] flex flex-col justify-between"
+                    className="group relative p-3 sm:p-4 rounded-xl bg-black/45 hover:bg-black/70 border border-white/10 hover:border-[#DDF8F3]/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(44,122,120,0.45)] flex flex-col items-center justify-center text-center gap-2 sm:gap-2.5 cursor-default"
                   >
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <div className="w-7 h-7 flex items-center justify-center rounded-lg bg-black/55 border border-white/10 group-hover:border-[#2C7A78] transition-colors flex-shrink-0">
-                        {skill.icon}
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-xs sm:text-[13px] font-bold text-white tracking-tight group-hover:text-[#DDF8F3] transition-colors truncate drop-shadow-sm">
-                          {skill.name}
-                        </div>
-                        <div className="text-[10px] text-[#5eead4] font-mono leading-tight truncate font-semibold">
-                          {skill.category}
-                        </div>
-                      </div>
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-xl bg-black/60 border border-white/10 group-hover:border-[#2C7A78] group-hover:scale-110 transition-all flex-shrink-0 shadow-sm">
+                      {skill.icon}
                     </div>
-                    <div className="text-[11px] text-[#e2e8f0] font-sans truncate font-normal">
-                      {skill.desc}
-                    </div>
+                    <span className="text-xs sm:text-[13px] font-bold text-white tracking-tight group-hover:text-[#DDF8F3] transition-colors drop-shadow-sm">
+                      {skill.name}
+                    </span>
                   </motion.div>
                 ))}
-              </div>
-
-              <div className="mt-2.5 flex items-center justify-between text-[11px] font-mono text-[#cbd5e1] pt-2 border-t border-white/10">
-                <span>Moratuwa CSE • Hardware &amp; Full-Stack</span>
-                <span className="text-[#DDF8F3] font-bold">16 Core Competencies</span>
               </div>
             </div>
           </SpectralTiles>
