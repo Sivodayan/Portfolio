@@ -50,7 +50,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
             letterIn={{ opacity: 1, scale: 1 }}
             letterConfig={{ tension: 426, friction: 17 }}
             letterStagger={27}
-            className="text-3xl sm:text-4xl lg:text-[2.85rem] font-extrabold tracking-tight text-white mb-2 leading-[1.12] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
+            className="font-anton text-4xl sm:text-5xl lg:text-[3.5rem] tracking-wide text-white mb-2 leading-[1.08] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
           >
             Sivodayan Sujeevakumar
           </TextEngine>

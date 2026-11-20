@@ -47,21 +47,11 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
-        <div className="flex items-center gap-2 mb-3">
-          <span className="w-2 h-2 rounded-full bg-[#44f0ff] animate-ping" />
-          <span className="w-2 h-2 rounded-full bg-[#44f0ff] -ml-4" />
-          <span className="text-[11px] font-mono tracking-widest text-[#44f0ff] uppercase">
-            System Boot // Moratuwa CSE
-          </span>
-        </div>
-
         <div className="text-center mb-3">
-          <div className="text-sm font-semibold tracking-tight text-white">
+          <div className="font-anton text-base tracking-wider text-white">
             Sujeevakumar Sivodayan
           </div>
-          <div className="text-[11px] text-[#a1a1aa] font-mono mt-0.5">
-            Dept. Representative • CGPA 3.54
-          </div>
+          
         </div>
 
         {/* Progress bar */}
