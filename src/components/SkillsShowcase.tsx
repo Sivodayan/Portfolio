@@ -132,9 +132,9 @@ export const SkillsShowcase: React.FC = () => {
   ];
 
   return (
-    <section className="section relative w-full py-8 sm:py-12 flex flex-col" id="skills">
-      <div className="w-full">
-        <div className="flex items-center justify-between mb-2 sm:mb-3">
+    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16" id="skills">
+      <div className="w-full my-auto">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div>
             <TextEngine
               tag="h2"
@@ -147,11 +147,13 @@ export const SkillsShowcase: React.FC = () => {
             >
               Skills &amp; Technologies
             </TextEngine>
-           
+            <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
+              Core Technical Competencies &amp; Toolchain
+            </p>
           </div>
         </div>
 
-        {/* Spectral Tiles Background Container - Seamless Edge Blend */}
+        {/* Spectral Tiles Background Container - Generously Spanning the Screen */}
         <div
           className="relative overflow-hidden rounded-2xl"
           style={{
@@ -166,22 +168,22 @@ export const SkillsShowcase: React.FC = () => {
             zoom={1.2}
             lights={3}
             lightSize={1.1}
-            style={{ minHeight: 'clamp(280px, 38vh, 360px)' }}
+            style={{ minHeight: 'clamp(460px, 60vh, 560px)' }}
           >
             {/* Skill Tiles Overlaid on top of 3D Spectral Tiles */}
-            <div className="relative z-10 p-3 sm:p-5 flex flex-col justify-center h-full bg-transparent">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3.5">
+            <div className="relative z-10 p-4 sm:p-6 flex flex-col justify-center h-full bg-transparent">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4.5">
                 {skills.map((skill) => (
                   <motion.div
                     key={skill.name}
                     whileHover={{ scale: 1.05, y: -3 }}
                     transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-                    className="group relative p-3 sm:p-4 rounded-xl bg-black/45 hover:bg-black/70 border border-white/10 hover:border-[#DDF8F3]/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(44,122,120,0.45)] flex flex-col items-center justify-center text-center gap-2 sm:gap-2.5 cursor-default"
+                    className="group relative p-4 sm:p-5 rounded-2xl bg-black/45 hover:bg-black/70 border border-white/10 hover:border-[#DDF8F3]/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(44,122,120,0.45)] flex flex-col items-center justify-center text-center gap-2.5 sm:gap-3 cursor-default"
                   >
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-xl bg-black/60 border border-white/10 group-hover:border-[#2C7A78] group-hover:scale-110 transition-all flex-shrink-0 shadow-sm">
+                    <div className="w-13 h-13 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl bg-black/60 border border-white/10 group-hover:border-[#2C7A78] group-hover:scale-110 transition-all flex-shrink-0 shadow-sm">
                       {skill.icon}
                     </div>
-                    <span className="text-xs sm:text-[13px] font-bold text-white tracking-tight group-hover:text-[#DDF8F3] transition-colors drop-shadow-sm">
+                    <span className="text-xs sm:text-sm font-bold text-white tracking-tight group-hover:text-[#DDF8F3] transition-colors drop-shadow-sm">
                       {skill.name}
                     </span>
                   </motion.div>

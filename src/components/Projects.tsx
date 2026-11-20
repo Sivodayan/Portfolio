@@ -105,7 +105,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <article
       ref={cardRef}
-      className="project-item !p-3 sm:!p-3.5 !rounded-xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/50 backdrop-blur-md transition-all flex flex-col justify-between"
+      className="project-item !p-4 !rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/50 backdrop-blur-md transition-all flex flex-col justify-between h-full min-h-[440px] sm:min-h-[460px]"
       style={{
         transform: transformStyle,
         transition: 'transform 0.15s ease-out, border-color 0.2s, background-color 0.2s',
@@ -240,9 +240,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
 export const Projects: React.FC = () => {
   return (
-    <section className="section relative w-full py-8 sm:py-12 flex flex-col" id="projects">
-      <div className="relative z-10 w-full">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 sm:mb-3">
+    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16" id="projects">
+      <div className="relative z-10 w-full my-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 sm:mb-4">
           <div>
             <TextEngine
               tag="h2"
@@ -256,13 +256,13 @@ export const Projects: React.FC = () => {
               Selected Projects
             </TextEngine>
             <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
-              Featured Engineering, Embedded & Web Systems
+              Featured Engineering, Embedded &amp; Web Systems
             </p>
           </div>
         </div>
 
-        {/* Clean Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+        {/* Clean Grid Layout Spanning the Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 items-stretch">
           {PROJECTS_DATA.map((proj) => (
             <ProjectCard key={proj.id} project={proj} />
           ))}

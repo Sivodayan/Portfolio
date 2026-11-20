@@ -21,15 +21,15 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
 
 
   return (
-    <section className="hero relative w-full min-h-[calc(100dvh-2.5rem)] flex flex-col justify-center select-none pt-14 pb-8 sm:pt-16 sm:pb-10" id="about">
+    <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none py-12 sm:py-16" id="about">
       {/* Two-Column Arrangement: Left photo / Right text & bio */}
-      <div className="w-full flex flex-col lg:flex-row items-center lg:items-center justify-between gap-6 lg:gap-8 py-1">
+      <div className="w-full flex flex-col lg:flex-row items-center lg:items-center justify-between gap-8 lg:gap-12 my-auto">
 
         {/* Left Column: Pure ChromaCard Picture (No borders, No underlying cards) */}
         <div className="shrink-0 relative flex items-center justify-center select-none self-center">
           <ChromaCard
-            width={365}
-            height={495}
+            width={370}
+            height={505}
             className="rounded-[24px]"
           />
         </div>
@@ -37,9 +37,9 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
         {/* Right Column: Kicker, Display Name, Bio, Links & Badges */}
         <div className="flex-1 max-w-2xl text-left">
           {/* Uppercase Kicker Tagline */}
-          <div className="text-xs font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-1.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] flex-col items-center gap-2">
-            <span>COMPUTER SCIENCE & ENGINEERING UNDERGRADUATE</span><br></br>
-            <span>University of Moratuwa</span>
+          <div className="text-xs sm:text-sm font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-2 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+            <span>COMPUTER SCIENCE &amp; ENGINEERING UNDERGRADUATE</span><br />
+            <span className="text-[#93c5fd]">University of Moratuwa • Sri Lanka</span>
           </div>
 
           {/* Large Bold Display Heading with Pop Scale spring overshoot */}
@@ -50,18 +50,18 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
             letterIn={{ opacity: 1, scale: 1 }}
             letterConfig={{ tension: 426, friction: 17 }}
             letterStagger={27}
-            className="font-anton text-4xl sm:text-5xl lg:text-[3.5rem] tracking-wide text-white mb-2 leading-[1.08] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
+            className="font-anton text-4xl sm:text-5xl lg:text-[3.6rem] tracking-wide text-white mb-3 leading-[1.08] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
           >
             Sivodayan Sujeevakumar
           </TextEngine>
 
           {/* Bio Description */}
-          <p className="text-sm sm:text-base text-[#f1f5f9] leading-relaxed mb-2.5 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
-            I build full-stack web applications, embedded IoT systems, and practical software tools using React, TypeScript, Python, and C++.
+          <p className="text-sm sm:text-base text-[#f1f5f9] leading-relaxed mb-4 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+            Department Representative for Computer Science &amp; Engineering. I build full-stack web applications, embedded IoT telemetries, and performant developer software using React, TypeScript, Python, and C++.
           </p>
 
           {/* Social & Contact Icon Action Row */}
-          <div className="flex items-center gap-2.5 mb-3">
+          <div className="flex items-center gap-2.5 mb-5">
             {/* Resume / Document Icon */}
             <a
               href="assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
@@ -120,7 +120,29 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
             </button>
           </div>
 
-
+          {/* Interactive Badges Playground */}
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              { id: 'uom', emoji: '🎓', label: 'Moratuwa CSE' },
+              { id: 'rep', emoji: '🏛️', label: 'Dept. Representative' },
+              { id: 'loc', emoji: '📍', label: 'Jaffna, Sri Lanka' },
+              { id: 'stack', emoji: '⚡', label: 'Full-Stack & Systems' },
+              { id: 'iot', emoji: '🛠️', label: 'IoT & Telemetry' },
+            ].map((b) => (
+              <motion.span
+                key={b.id}
+                drag
+                dragConstraints={{ left: -25, right: 25, top: -15, bottom: 15 }}
+                dragElastic={0.2}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="draggable-badge"
+              >
+                <span>{b.emoji}</span>
+                <span>{b.label}</span>
+              </motion.span>
+            ))}
+          </div>
         </div>
 
       </div>

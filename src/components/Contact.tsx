@@ -16,7 +16,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
   };
 
   return (
-    <section className="section relative w-full pt-8 pb-4 sm:pt-12 sm:pb-6 flex flex-col justify-between" id="contact">
+    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-between py-12 sm:py-16" id="contact">
       {/* React Bits Pro: Rising Lines Background - Seamless Upward Fade */}
       <div
         className="absolute -inset-x-8 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 opacity-40 overflow-hidden"
@@ -42,8 +42,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
         />
       </div>
 
-      <div className="relative z-10 w-full mb-6">
-        <div className="flex items-center justify-between mb-2">
+      <div className="relative z-10 w-full my-auto py-2">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div>
             <TextEngine
               tag="h2"
@@ -56,26 +56,25 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
             >
               Get in Touch
             </TextEngine>
-            
+            <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
+              Direct communication channels, inquiries &amp; professional networks
+            </p>
           </div>
-         
         </div>
 
-        {/* Contact Content - Blended with Main Page */}
-        <div className="w-full">
-         
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mb-2.5">
+        {/* Contact Content - Spacious 2-Column Responsive Grid */}
+        <div className="w-full max-w-4xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 mb-4">
             {/* Email Tile */}
-            <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
-              <div className="truncate mr-2">
-                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold">Direct Email</div>
+            <div className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
+              <div className="truncate mr-3">
+                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">Direct Email</div>
                 <a href="mailto:sivodayan17@gmail.com" className="text-xs sm:text-sm text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
                   sivodayan17@gmail.com
                 </a>
               </div>
               <button
-                className="copy-pill flex-shrink-0 text-xs font-mono font-bold px-2 py-0.5"
+                className="copy-pill flex-shrink-0 text-xs font-mono font-bold px-2.5 py-1"
                 onClick={() => copyText('sivodayan17@gmail.com', 'Email copied')}
               >
                 Copy
@@ -83,15 +82,15 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
             </div>
 
             {/* Phone Tile */}
-            <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
-              <div className="truncate mr-2">
-                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold">Phone / WhatsApp</div>
+            <div className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
+              <div className="truncate mr-3">
+                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">Phone / WhatsApp</div>
                 <a href="tel:+94705891710" className="text-xs sm:text-sm text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
                   +94 70 589 1710
                 </a>
               </div>
               <button
-                className="copy-pill flex-shrink-0 text-xs font-mono font-bold px-2 py-0.5"
+                className="copy-pill flex-shrink-0 text-xs font-mono font-bold px-2.5 py-1"
                 onClick={() => copyText('+94 70 589 1710', 'Phone copied')}
               >
                 Copy
@@ -103,10 +102,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
               href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm group"
+              className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm group"
             >
               <div>
-                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold">LinkedIn Network</div>
+                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">LinkedIn Network</div>
                 <div className="text-xs sm:text-sm text-white group-hover:text-[#38bdf8] font-semibold transition-colors">
                   sivodayan-sujeevakumar ↗
                 </div>
@@ -118,10 +117,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
               href="https://github.com/Sivodayan"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm group"
+              className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm group"
             >
               <div>
-                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold">Codebase Repository</div>
+                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">Codebase Repository</div>
                 <div className="text-xs sm:text-sm text-white group-hover:text-[#44f0ff] font-semibold transition-colors">
                   github.com/Sivodayan ↗
                 </div>
@@ -129,12 +128,17 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
             </a>
           </div>
 
-         
+          {/* Location & Status Bar */}
+          <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[#cbd5e1] pt-3 border-t border-white/10">
+            <span>📍 Department of Computer Science &amp; Engineering, University of Moratuwa</span>
+            <span>•</span>
+            <span>Open to Engineering Internships</span>
+          </div>
         </div>
       </div>
 
       {/* Embedded Clean Single-Screen Footer */}
-      <footer className="relative z-10 w-full py-2 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-1 text-[11px] font-mono text-[#94a3b8]">
+      <footer className="relative z-10 w-full py-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-1 text-[11px] font-mono text-[#94a3b8]">
         <div>© {new Date().getFullYear()} Sujeevakumar Sivodayan</div>
         <div>Computer Science &amp; Engineering - University of Moratuwa</div>
       </footer>

@@ -49,9 +49,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       >
         <div className="text-center mb-3">
           <div className="font-anton text-base tracking-wider text-white">
-            Sujeevakumar Sivodayan
+            Sivodayan Sujeevakumar
           </div>
-          
+
         </div>
 
         {/* Progress bar */}
