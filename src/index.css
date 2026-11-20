@@ -97,7 +97,12 @@ body {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
-  opacity: 0.38;
+  opacity: 0.92;
+  transition: opacity 0.3s ease;
+}
+
+[data-theme="light"] .ascii-stream-fullscreen {
+  opacity: 0.65;
 }
 
 /* Global Typography High-Legibility Shadows */

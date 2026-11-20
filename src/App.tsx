@@ -59,19 +59,20 @@ export const App: React.FC = () => {
       {/* React Bits Pro: Custom Cursor */}
       <CustomCursor />
 
-      {/* React Bits Pro: AsciiStream Full-Screen Background (replaces older ThreeBackground) */}
+      {/* React Bits Pro: AsciiStream Full-Screen Background */}
       <div className="ascii-stream-fullscreen" aria-hidden="true">
         <AsciiStream
           colors={["#44f0ff", "#ff087b"]}
           text={"dev sivodayan @cse"}
-          pulse={1.05}
-          flare={0.4}
-          burst={0.7}
-          backgroundColor="transparent"
+          pulse={1.2}
+          flare={1.2}
+          glow={1.4}
+          intensity={1.25}
+          burst={1.0}
+          speed={2.2}
+          backgroundColor="#07080b"
           className="w-full h-full"
         />
-        {/* Ambient Dark Readability Scrim Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#07080b]/75 via-[#07080b]/82 to-[#07080b]/90 pointer-events-none" />
       </div>
 
       <div className="page-container">
