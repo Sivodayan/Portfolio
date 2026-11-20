@@ -227,10 +227,10 @@ export const Projects: React.FC = () => {
   const D = CircleGalleryComponent;
 
   return (
-    <section className="section relative my-16 md:my-24" id="projects">
+    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center" id="projects">
       {/* React Bits Pro: Lightspeed Hyperspace Warp Background - Seamless Edge Blend */}
       <div
-        className="absolute -inset-x-8 sm:-inset-x-16 -inset-y-12 pointer-events-none z-0 opacity-45 overflow-hidden"
+        className="absolute -inset-x-8 sm:-inset-x-16 -inset-y-12 pointer-events-none z-0 opacity-40 overflow-hidden"
         style={{
           maskImage: 'radial-gradient(ellipse 75% 65% at 50% 50%, black 35%, transparent 100%)',
           WebkitMaskImage: 'radial-gradient(ellipse 75% 65% at 50% 50%, black 35%, transparent 100%)',
@@ -250,8 +250,8 @@ export const Projects: React.FC = () => {
         />
       </div>
 
-      <div className="relative z-10">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+      <div className="relative z-10 w-full my-auto py-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
           <div>
             <TextEngine
               tag="h2"
@@ -260,11 +260,11 @@ export const Projects: React.FC = () => {
               letterIn={{ opacity: 1, scale: 1 }}
               letterConfig={{ tension: 426, friction: 17 }}
               letterStagger={27}
-              className="section-heading !mb-0 !border-none !pb-0 text-2xl md:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm"
+              className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm"
             >
               Selected Projects
             </TextEngine>
-            <p className="text-sm sm:text-base text-[#cbd5e1] mt-1.5 font-mono">
+            <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
               3D interactive carousel • Drag to rotate ring, click tile to inspect
             </p>
           </div>
@@ -274,7 +274,7 @@ export const Projects: React.FC = () => {
             <div className="flex items-center p-1 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
               <button
                 onClick={() => setViewMode('circle')}
-                className={`px-3.5 py-1.5 rounded-lg text-sm font-mono transition-all ${
+                className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${
                   viewMode === 'circle'
                     ? 'bg-[#44f0ff]/20 text-[#44f0ff] border border-[#44f0ff]/30 shadow-[0_0_12px_rgba(68,240,255,0.25)]'
                     : 'text-white/60 hover:text-white'
@@ -284,7 +284,7 @@ export const Projects: React.FC = () => {
               </button>
               <button
                 onClick={() => setViewMode('grid')}
-                className={`px-3.5 py-1.5 rounded-lg text-sm font-mono transition-all ${
+                className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${
                   viewMode === 'grid'
                     ? 'bg-[#44f0ff]/20 text-[#44f0ff] border border-[#44f0ff]/30 shadow-[0_0_12px_rgba(68,240,255,0.25)]'
                     : 'text-white/60 hover:text-white'
@@ -300,19 +300,19 @@ export const Projects: React.FC = () => {
         {viewMode === 'circle' ? (
           <div className="relative flex flex-col items-center">
             {/* Unboxed, Open 3D Space */}
-            <div className="w-full my-1 relative">
+            <div className="w-full relative">
               {/* React Bits Pro: Circle Gallery component */}
               <D
-                radiusPercent={32}
-                itemWidth={280}
-                itemHeight={380}
+                radiusPercent={25}
+                itemWidth={200}
+                itemHeight={250}
                 itemScale={0.85}
-                borderRadius={16}
+                borderRadius={14}
                 enableDrag={true}
                 throwResistance={0.35}
                 animationDuration={0.9}
                 showNumbers={true}
-                autoSpin={4}
+                autoSpin={3.5}
                 onItemClick={(idx: number) => {
                   const selected = PROJECTS_DATA[idx % PROJECTS_DATA.length];
                   setActiveProject(selected);
@@ -322,84 +322,64 @@ export const Projects: React.FC = () => {
 
             {/* Seamless Active Project Details beneath the 3D gallery */}
             {activeProject && (
-              <div className="w-full mt-5 pt-7 border-t border-white/10 transition-all duration-300">
-                <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+              <div className="w-full mt-2 pt-2.5 border-t border-white/10 transition-all duration-300">
+                <div className="flex flex-col md:flex-row md:items-start justify-between gap-3">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2.5 mb-2.5">
-                      <span className="px-3 py-1 rounded-full text-xs font-mono bg-[#44f0ff]/15 text-[#44f0ff] border border-[#44f0ff]/30 font-semibold">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#44f0ff]/15 text-[#44f0ff] border border-[#44f0ff]/30 font-semibold">
                         {activeProject.tag}
                       </span>
-                      <span className="text-xs font-mono text-white/70">Focused Project</span>
+                      <TextEngine
+                        key={activeProject.id}
+                        tag="h3"
+                        mode="once"
+                        letterOut={{ opacity: 0, scale: 0 }}
+                        letterIn={{ opacity: 1, scale: 1 }}
+                        letterConfig={{ tension: 426, friction: 17 }}
+                        letterStagger={27}
+                        className="text-sm sm:text-base font-bold text-white drop-shadow-sm inline-block"
+                      >
+                        {activeProject.title}
+                      </TextEngine>
                     </div>
-                    <TextEngine
-                      key={activeProject.id}
-                      tag="h3"
-                      mode="once"
-                      letterOut={{ opacity: 0, scale: 0 }}
-                      letterIn={{ opacity: 1, scale: 1 }}
-                      letterConfig={{ tension: 426, friction: 17 }}
-                      letterStagger={27}
-                      className="text-2xl md:text-3xl font-extrabold text-white mb-2.5 drop-shadow-sm"
-                    >
-                      {activeProject.title}
-                    </TextEngine>
-                    <p className="text-base md:text-lg text-[#f1f5f9] leading-relaxed mb-5 font-normal">
+
+                    <p className="text-xs text-[#f1f5f9] leading-relaxed mb-2 font-normal line-clamp-2 max-w-4xl">
                       {activeProject.desc}
                     </p>
 
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {activeProject.tags.map((t, idx) => (
-                        <span key={idx} className="tech-badge">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    {activeProject.drawerDetails && (
-                      <p className="text-sm md:text-base text-[#e2e8f0] italic border-l-2 border-[#44f0ff]/60 pl-3.5 py-1.5 mb-5 bg-white/[0.04] rounded-r">
-                        {activeProject.drawerDetails}
-                      </p>
-                    )}
-
-                    {activeProject.flowSteps && (
-                      <div className="flex flex-wrap items-center gap-2.5 text-xs sm:text-sm font-mono text-[#cbd5e1] mb-2">
-                        <span className="text-xs text-[#44f0ff] uppercase tracking-wider font-bold">Flow:</span>
-                        {activeProject.flowSteps.map((step, idx) => (
-                          <React.Fragment key={idx}>
-                            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-white font-medium">
-                              {step}
-                            </span>
-                            {idx < activeProject.flowSteps!.length - 1 && (
-                              <span className="text-[#44f0ff]">➔</span>
-                            )}
-                          </React.Fragment>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <div className="flex flex-wrap gap-1.5">
+                        {activeProject.tags.map((t, idx) => (
+                          <span key={idx} className="tech-badge text-[10px] px-2 py-0.5">
+                            {t}
+                          </span>
                         ))}
                       </div>
-                    )}
-                  </div>
 
-                  {activeProject.links && activeProject.links.length > 0 && (
-                    <div className="flex md:flex-col gap-2.5 shrink-0">
-                      {activeProject.links.map((link, idx) => (
-                        <a
-                          key={idx}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-5 py-2.5 rounded-xl text-sm font-mono font-bold bg-[#44f0ff]/15 hover:bg-[#44f0ff]/25 text-[#44f0ff] border border-[#44f0ff]/40 hover:border-[#44f0ff] transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(68,240,255,0.15)]"
-                        >
-                          <span>{link.label}</span>
-                        </a>
-                      ))}
+                      {activeProject.links && (
+                        <div className="flex items-center gap-2 ml-auto">
+                          {activeProject.links.map((link, lIdx) => (
+                            <a
+                              key={lIdx}
+                              href={link.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2.5 py-0.5 rounded-lg text-xs font-mono font-semibold bg-white/10 hover:bg-[#44f0ff]/20 text-[#44f0ff] border border-[#44f0ff]/30 transition-all"
+                            >
+                              {link.label}
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             )}
           </div>
         ) : (
           /* Grid Fallback View */
-          <div className="projects-list mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-3">
             {PROJECTS_DATA.map((proj) => (
               <ProjectCard key={proj.id} project={proj} />
             ))}

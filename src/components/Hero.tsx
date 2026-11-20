@@ -42,8 +42,9 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
         <div className="flex-1 max-w-2xl text-left">
           {/* Uppercase Kicker Tagline */}
           <div className="text-xs font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-2 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse" />
-            <span>SOFTWARE ENGINEER &amp; CSE UNDERGRAD • UNIVERSITY OF MORATUWA</span>
+            
+            <span className='block'>COMPUTER SCIENCE & ENGINEERING UNDERGRADUATE</span>
+            <span>University of Moratuwa</span>
           </div>
 
           {/* Large Bold Display Heading with Pop Scale spring overshoot */}

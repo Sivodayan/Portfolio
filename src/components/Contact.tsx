@@ -16,10 +16,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
   };
 
   return (
-    <section className="section relative my-16 md:my-24 pt-8" id="contact">
+    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-between" id="contact">
       {/* React Bits Pro: Rising Lines Background - Seamless Upward Fade */}
       <div
-        className="absolute -inset-x-8 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 opacity-50 overflow-hidden"
+        className="absolute -inset-x-8 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 opacity-40 overflow-hidden"
         style={{
           maskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 100%)',
@@ -42,8 +42,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
         />
       </div>
 
-      <div className="relative z-10 w-full">
-        <div className="flex items-center justify-between mb-5">
+      <div className="relative z-10 w-full my-auto py-2">
+        <div className="flex items-center justify-between mb-3">
           <div>
             <TextEngine
               tag="h2"
@@ -52,37 +52,37 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
               letterIn={{ opacity: 1, scale: 1 }}
               letterConfig={{ tension: 426, friction: 17 }}
               letterStagger={27}
-              className="section-heading !mb-0 !border-none !pb-0 text-2xl md:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm"
+              className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm"
             >
               Get in Touch
             </TextEngine>
-            <p className="text-sm sm:text-base text-[#cbd5e1] mt-1.5 font-mono">
-              Direct telemetry & communication channels
+            <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
+              Direct telemetry &amp; communication channels
             </p>
           </div>
-          <span className="text-xs sm:text-sm font-mono text-[#cbd5e1] bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full flex items-center gap-2 backdrop-blur-sm">
-            <span className="w-2 h-2 rounded-full bg-emerald animate-pulse"></span>
+          <span className="text-xs font-mono text-[#cbd5e1] bg-white/5 border border-white/10 px-2.5 py-1 rounded-full flex items-center gap-1.5 backdrop-blur-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald animate-pulse"></span>
             Available for Internships
           </span>
         </div>
 
         {/* Contact Content - Blended with Main Page */}
-        <div className="w-full pt-2">
-          <p className="text-lg sm:text-xl text-[#f1f5f9] leading-relaxed mb-7 font-normal drop-shadow-sm max-w-3xl">
-            I'm actively seeking software engineering internships, hardware-software telemetry roles, and open-source collaborations. Feel free to reach out directly via email or message me on LinkedIn.
+        <div className="w-full">
+          <p className="text-xs sm:text-sm text-[#f1f5f9] leading-relaxed mb-3.5 font-normal drop-shadow-sm max-w-2xl">
+            I'm actively seeking software engineering internships, hardware-software telemetry roles, and open-source collaborations. Reach out directly via email or LinkedIn.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mb-3.5">
             {/* Email Tile */}
-            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
               <div className="truncate mr-2">
-                <div className="text-xs font-mono uppercase text-[#cbd5e1] font-semibold">Direct Email</div>
-                <a href="mailto:sivodayan17@gmail.com" className="text-sm sm:text-base text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
+                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold">Direct Email</div>
+                <a href="mailto:sivodayan17@gmail.com" className="text-xs sm:text-sm text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
                   sivodayan17@gmail.com
                 </a>
               </div>
               <button
-                className="copy-pill flex-shrink-0 text-xs sm:text-sm font-mono font-bold"
+                className="copy-pill flex-shrink-0 text-xs font-mono font-bold px-2 py-0.5"
                 onClick={() => copyText('sivodayan17@gmail.com', 'Email copied')}
               >
                 Copy
@@ -90,15 +90,15 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
             </div>
 
             {/* Phone Tile */}
-            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
               <div className="truncate mr-2">
-                <div className="text-xs font-mono uppercase text-[#cbd5e1] font-semibold">Phone / WhatsApp</div>
-                <a href="tel:+94705891710" className="text-sm sm:text-base text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
+                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold">Phone / WhatsApp</div>
+                <a href="tel:+94705891710" className="text-xs sm:text-sm text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
                   +94 70 589 1710
                 </a>
               </div>
               <button
-                className="copy-pill flex-shrink-0 text-xs sm:text-sm font-mono font-bold"
+                className="copy-pill flex-shrink-0 text-xs font-mono font-bold px-2 py-0.5"
                 onClick={() => copyText('+94 70 589 1710', 'Phone copied')}
               >
                 Copy
@@ -110,11 +110,11 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
               href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm group"
+              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm group"
             >
               <div>
-                <div className="text-xs font-mono uppercase text-[#cbd5e1] font-semibold">LinkedIn Network</div>
-                <div className="text-sm sm:text-base text-white group-hover:text-[#38bdf8] font-semibold transition-colors">
+                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold">LinkedIn Network</div>
+                <div className="text-xs sm:text-sm text-white group-hover:text-[#38bdf8] font-semibold transition-colors">
                   sivodayan-sujeevakumar ↗
                 </div>
               </div>
@@ -125,24 +125,30 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
               href="https://github.com/Sivodayan"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm group"
+              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm group"
             >
               <div>
-                <div className="text-xs font-mono uppercase text-[#cbd5e1] font-semibold">Codebase Repository</div>
-                <div className="text-sm sm:text-base text-white group-hover:text-[#44f0ff] font-semibold transition-colors">
+                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold">Codebase Repository</div>
+                <div className="text-xs sm:text-sm text-white group-hover:text-[#44f0ff] font-semibold transition-colors">
                   github.com/Sivodayan ↗
                 </div>
               </div>
             </a>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm font-mono text-[#cbd5e1] pt-3.5 border-t border-white/10">
-            <span>📍 Department of Computer Science & Engineering, University of Moratuwa</span>
+          <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[#cbd5e1] pt-2.5 border-t border-white/10">
+            <span>📍 Department of Computer Science &amp; Engineering, University of Moratuwa</span>
             <span>•</span>
             <span className="text-[#44f0ff] font-semibold">Fast Response Guaranteed</span>
           </div>
         </div>
       </div>
+
+      {/* Embedded Clean Single-Screen Footer */}
+      <footer className="relative z-10 w-full py-2 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-1 text-[11px] font-mono text-[#94a3b8]">
+        <div>© {new Date().getFullYear()} Sujeevakumar Sivodayan</div>
+        <div>Computer Science &amp; Engineering • University of Moratuwa • Sri Lanka</div>
+      </footer>
     </section>
   );
 };

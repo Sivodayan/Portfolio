@@ -8,7 +8,6 @@ import Projects from './components/Projects';
 import SkillsShowcase from './components/SkillsShowcase';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
-import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
 import { Analytics } from "@vercel/analytics/next";
 
@@ -77,9 +76,10 @@ export const App: React.FC = () => {
         />
       </div>
 
-      <div className="page-container">
-        <Header theme={theme} onToggleTheme={toggleTheme} />
+      {/* Sticky Fixed Glass Header */}
+      <Header theme={theme} onToggleTheme={toggleTheme} />
 
+      <div className="page-container">
         <main>
           <Hero onShowToast={showToast} />
           <Projects />
@@ -87,8 +87,6 @@ export const App: React.FC = () => {
           <Experience />
           <Contact onShowToast={showToast} />
         </main>
-
-        <Footer />
       </div>
 
       {/* Toast feedback */}

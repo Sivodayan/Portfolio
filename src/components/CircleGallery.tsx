@@ -99,11 +99,11 @@ const DEFAULT_EXPANDED_ITEMS: CircleGalleryItemData[] = [
 export const CircleGallery: React.FC<CircleGalleryProps> = ({
   images = [],
   items,
-  radiusPercent = 34,
-  itemWidth = 280,
-  itemHeight = 360,
+  radiusPercent = 26,
+  itemWidth = 205,
+  itemHeight = 265,
   itemScale = 0.85,
-  borderRadius = 16,
+  borderRadius = 14,
   enableDrag = true,
   throwResistance = 0.35,
   animationDuration = 0.9,
@@ -436,7 +436,7 @@ export const CircleGallery: React.FC<CircleGalleryProps> = ({
     <div
       ref={containerRef}
       className={cn(
-        'relative w-full h-[580px] md:h-[660px] overflow-hidden flex items-center justify-center select-none',
+        'relative w-full h-[270px] sm:h-[300px] md:h-[330px] overflow-hidden flex items-center justify-center select-none',
         enableDrag && selectedIndex === null && 'cursor-grab active:cursor-grabbing',
         className
       )}

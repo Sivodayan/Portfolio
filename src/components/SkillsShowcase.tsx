@@ -229,92 +229,94 @@ export const SkillsShowcase: React.FC = () => {
   ];
 
   return (
-    <section className="section relative my-16 md:my-24" id="skills">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <TextEngine
-            tag="h2"
-            mode="once"
-            letterOut={{ opacity: 0, scale: 0 }}
-            letterIn={{ opacity: 1, scale: 1 }}
-            letterConfig={{ tension: 426, friction: 17 }}
-            letterStagger={27}
-            className="section-heading !mb-0 !border-none !pb-0 text-2xl md:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm"
-          >
-            Skills &amp; Technologies
-          </TextEngine>
-          <p className="text-sm sm:text-base text-[#cbd5e1] mt-1.5 font-mono">
-            Interactive 3D Spectral Grid • 16 Core competencies from Moratuwa CSE & LinkedIn
-          </p>
-        </div>
-        <span className="text-xs font-mono text-[#DDF8F3] bg-[#2C7A78]/20 border border-[#2C7A78]/40 px-3 py-1.5 rounded-full hidden sm:flex items-center gap-2 backdrop-blur-sm">
-          <span className="w-2 h-2 rounded-full bg-[#DDF8F3] animate-pulse"></span>
-          Spectral Tiles
-        </span>
-      </div>
-
-      {/* Spectral Tiles Background Container - Seamless Edge Blend */}
-      <div
-        className="relative my-2 overflow-hidden rounded-2xl"
-        style={{
-          maskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
-        }}
-      >
-        <SpectralTiles
-          color={"#2C7A78"}
-          glowColor={"#DDF8F3"}
-          tilt={36}
-          zoom={1.2}
-          lights={3}
-          lightSize={1.1}
-          style={{ minHeight: '560px' }}
-        >
-          {/* Skill Tiles Overlaid on top of 3D Spectral Tiles */}
-          <div className="relative z-10 p-3 sm:p-5 flex flex-col justify-between h-full bg-transparent">
-            <div className="mb-4 flex items-center justify-between">
-              <span className="text-xs sm:text-sm font-mono text-[#DDF8F3] tracking-wide uppercase drop-shadow-sm font-semibold">
-                Interactive Grid • Hover tiles to bend 3D spectral planes
-              </span>
-              <span className="text-xs font-mono text-[#cbd5e1] hidden sm:inline-block">
-                LinkedIn & Coursework Skills
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
-              {skills.map((skill) => (
-                <motion.div
-                  key={skill.name}
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-                  className="group relative p-3.5 rounded-xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#DDF8F3]/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(44,122,120,0.4)] flex flex-col justify-between"
-                >
-                  <div className="flex items-center gap-2.5 mb-2">
-                    <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-black/55 border border-white/10 group-hover:border-[#2C7A78] transition-colors flex-shrink-0">
-                      {skill.icon}
-                    </div>
-                    <div>
-                      <div className="text-sm sm:text-base font-bold text-white tracking-tight group-hover:text-[#DDF8F3] transition-colors line-clamp-1 drop-shadow-sm">
-                        {skill.name}
-                      </div>
-                      <div className="text-xs text-[#5eead4] font-mono leading-tight line-clamp-1 font-semibold">
-                        {skill.category}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-xs sm:text-[13px] text-[#e2e8f0] font-sans line-clamp-1 font-normal">
-                    {skill.desc}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="mt-5 flex items-center justify-between text-xs sm:text-sm font-mono text-[#cbd5e1] pt-3 border-t border-white/10">
-              <span>Moratuwa Computer Science & Engineering • Hardware & Full-Stack</span>
-              <span className="text-[#DDF8F3] font-bold">16 Core Competencies</span>
-            </div>
+    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center" id="skills">
+      <div className="w-full my-auto py-2">
+        <div className="flex items-center justify-between mb-2">
+          <div>
+            <TextEngine
+              tag="h2"
+              mode="once"
+              letterOut={{ opacity: 0, scale: 0 }}
+              letterIn={{ opacity: 1, scale: 1 }}
+              letterConfig={{ tension: 426, friction: 17 }}
+              letterStagger={27}
+              className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm"
+            >
+              Skills &amp; Technologies
+            </TextEngine>
+            <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
+              Interactive 3D Spectral Grid • 16 Core competencies from Moratuwa CSE &amp; LinkedIn
+            </p>
           </div>
-        </SpectralTiles>
+          <span className="text-xs font-mono text-[#DDF8F3] bg-[#2C7A78]/20 border border-[#2C7A78]/40 px-2.5 py-1 rounded-full hidden sm:flex items-center gap-1.5 backdrop-blur-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DDF8F3] animate-pulse"></span>
+            Spectral Tiles
+          </span>
+        </div>
+
+        {/* Spectral Tiles Background Container - Seamless Edge Blend */}
+        <div
+          className="relative overflow-hidden rounded-2xl"
+          style={{
+            maskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
+          }}
+        >
+          <SpectralTiles
+            color={"#2C7A78"}
+            glowColor={"#DDF8F3"}
+            tilt={36}
+            zoom={1.2}
+            lights={3}
+            lightSize={1.1}
+            style={{ minHeight: 'clamp(360px, 48vh, 440px)' }}
+          >
+            {/* Skill Tiles Overlaid on top of 3D Spectral Tiles */}
+            <div className="relative z-10 p-2.5 sm:p-4 flex flex-col justify-between h-full bg-transparent">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-[11px] sm:text-xs font-mono text-[#DDF8F3] tracking-wide uppercase drop-shadow-sm font-semibold">
+                  Interactive Grid • Hover tiles to bend 3D spectral planes
+                </span>
+                <span className="text-[11px] font-mono text-[#cbd5e1] hidden sm:inline-block">
+                  LinkedIn &amp; Coursework Skills
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
+                {skills.map((skill) => (
+                  <motion.div
+                    key={skill.name}
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    transition={{ type: 'spring', stiffness: 350, damping: 22 }}
+                    className="group relative p-2 sm:p-2.5 rounded-xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#DDF8F3]/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(44,122,120,0.4)] flex flex-col justify-between"
+                  >
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="w-7 h-7 flex items-center justify-center rounded-lg bg-black/55 border border-white/10 group-hover:border-[#2C7A78] transition-colors flex-shrink-0">
+                        {skill.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-xs sm:text-[13px] font-bold text-white tracking-tight group-hover:text-[#DDF8F3] transition-colors truncate drop-shadow-sm">
+                          {skill.name}
+                        </div>
+                        <div className="text-[10px] text-[#5eead4] font-mono leading-tight truncate font-semibold">
+                          {skill.category}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-[11px] text-[#e2e8f0] font-sans truncate font-normal">
+                      {skill.desc}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="mt-2.5 flex items-center justify-between text-[11px] font-mono text-[#cbd5e1] pt-2 border-t border-white/10">
+                <span>Moratuwa CSE • Hardware &amp; Full-Stack</span>
+                <span className="text-[#DDF8F3] font-bold">16 Core Competencies</span>
+              </div>
+            </div>
+          </SpectralTiles>
+        </div>
       </div>
     </section>
   );
