@@ -545,9 +545,16 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   aspect-ratio: 16 / 9;
   border-radius: 11px;
   overflow: hidden;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   border: 1px solid var(--border-color);
   background: #090a0f;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  isolation: isolate;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: -webkit-radial-gradient(white, black);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .project-image-wrap img {
@@ -557,6 +564,10 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   object-position: top center;
   display: block;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .project-item:hover .project-image-wrap img {

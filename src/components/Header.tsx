@@ -57,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
         {/* Brand with Monogram Badge */}
         <a href="#about" className="brand-link group" aria-label="Sujeevakumar Sivodayan">
           
-          <span className="font-anton text-base font-extralight sm:text-xl tracking-wider text-white group-hover:text-[#44f0ff] transition-colors">
+          <span className="font-anton text-base sm:text-lg tracking-wider text-white group-hover:text-[#44f0ff] transition-colors">
             Sivodayan
           </span>
         </a>

@@ -147,9 +147,7 @@ export const SkillsShowcase: React.FC = () => {
             >
               Skills &amp; Technologies
             </TextEngine>
-            <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
-              Core Technical Competencies &amp; Toolchain
-            </p>
+           
           </div>
         </div>
 

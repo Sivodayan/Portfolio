@@ -28,7 +28,6 @@ uniform float u_zoomLevel;
 uniform float u_imageOffsetY;
 uniform float u_rgbShift;
 uniform float u_pixelDisplace;
-uniform float u_borderRadius;
 uniform vec2 u_resolution;
 varying vec2 vUv;
 
@@ -40,24 +39,8 @@ float exponentialInOut(float t) {
       : -0.5 * pow(2.0, 10.0 - (t * 20.0)) + 1.0;
 }
 
-float roundedBoxSDF(vec2 p, vec2 b, float r) {
-  vec2 q = abs(p) - b + r;
-  return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r;
-}
-
 void main() {
   vec2 uv = vUv;
-
-  vec2 pixelCoord = vUv * u_resolution;
-  vec2 center = u_resolution * 0.5;
-  vec2 halfSize = u_resolution * 0.5;
-  float dist = roundedBoxSDF(pixelCoord - center, halfSize, u_borderRadius);
-
-  if (dist > 0.0) {
-    discard;
-  }
-
-  float alpha = 1.0 - smoothstep(-1.0, 1.0, dist);
 
   float u = u_imageAspectRatio / u_aspectRatio;
   if(u_imageAspectRatio > u_aspectRatio) {
@@ -67,22 +50,34 @@ void main() {
   uv.y *= u;
   uv.y -= (u) / 2. - .5;
 
+  // Smooth hover transition
   float hoverLevel = exponentialInOut(min(1., (distance(vec2(.5), uv) * u_hover) + u_hover));
+  
+  // Safe zoom that stays firmly within viewport
   uv *= 1. - u_zoomLevel * hoverLevel;
-  uv += u_zoomLevel / 2. * hoverLevel;
-  uv = clamp(uv, 0., 1.);
+  uv += (u_zoomLevel * 0.5) * hoverLevel;
   uv.y -= u_imageOffsetY;
+
+  // Edge dampening mask: ensures displacement smoothly falls to 0 at the card perimeter
+  // This completely eliminates corner pinching, pixel folding, and texture tearing
+  float edgeMask = smoothstep(0.0, 0.12, vUv.x) * smoothstep(1.0, 0.88, vUv.x) *
+                   smoothstep(0.0, 0.12, vUv.y) * smoothstep(1.0, 0.88, vUv.y);
+
+  uv = clamp(uv, 0.001, 0.999);
   vec4 color = texture2D(u_texture, uv);
 
   if(hoverLevel > 0.) {
-    hoverLevel = 1. - abs(hoverLevel - .5) * 2.;
-    uv.y += color.r * hoverLevel * u_pixelDisplace;
-    color = texture2D(u_texture, uv);
-    color.r = texture2D(u_texture, uv + (hoverLevel) * u_rgbShift).r;
-    color.g = texture2D(u_texture, uv - (hoverLevel) * u_rgbShift).g;
+    float peak = (1. - abs(hoverLevel - .5) * 2.) * edgeMask;
+    vec2 displaceUv = clamp(vec2(uv.x, uv.y + color.r * peak * u_pixelDisplace), 0.001, 0.999);
+    color = texture2D(u_texture, displaceUv);
+    
+    vec2 rUv = clamp(displaceUv + (peak * u_rgbShift), 0.001, 0.999);
+    vec2 gUv = clamp(displaceUv - (peak * u_rgbShift), 0.001, 0.999);
+    color.r = texture2D(u_texture, rUv).r;
+    color.g = texture2D(u_texture, gUv).g;
   }
 
-  gl_FragColor = vec4(color.rgb, color.a * u_opacity * alpha);
+  gl_FragColor = vec4(color.rgb, color.a * u_opacity);
 }
 `;
 
@@ -119,18 +114,18 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   imageAspectRatio = 0.75,
   cardWidth = 6.8,
   cardHeight = 8.4,
-  zoomLevel = 0.28,
-  rgbShiftAmount = 0.025,
-  pixelDisplaceAmount = 0.08,
-  hoverDuration = 1.8,
-  rotationIntensity = 0.22,
-  scaleIntensity = 0.08,
-  positionIntensity = 0.35,
+  zoomLevel = 0.22,
+  rgbShiftAmount = 0.016,
+  pixelDisplaceAmount = 0.035,
+  hoverDuration = 1.6,
+  rotationIntensity = 0.15,
+  scaleIntensity = 0.05,
+  positionIntensity = 0.22,
   interactionDuration = 0.4,
   opacity = 1,
   cameraFov = 50,
   cameraZ = 7,
-  borderRadius = 32,
+  borderRadius = 24,
   imageOffsetY = 0.8,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -347,10 +342,18 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('relative overflow-hidden cursor-pointer select-none', className)}
-      style={{ width: resolvedWidth, height: resolvedHeight }}
+      className={cn(
+        'relative overflow-hidden cursor-pointer select-none',
+        'isolate [transform:translateZ(0)] [-webkit-mask-image:-webkit-radial-gradient(white,black)]',
+        className
+      )}
+      style={{
+        width: resolvedWidth,
+        height: resolvedHeight,
+        borderRadius: typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
+      }}
     >
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full pointer-events-none" />
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full pointer-events-none [transform:translateZ(0)]" />
       {children && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           {children}
