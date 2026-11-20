@@ -191,17 +191,22 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
         : interactiveEl;
 
       if (candidate) {
-        currentElRef.current = candidate;
-        setActiveEl(candidate);
-        setActiveTargetIdx(matchedTargetIdx);
-        updateRingToElement(candidate);
+        if (candidate !== currentElRef.current) {
+          currentElRef.current = candidate;
+          setActiveEl(candidate);
+          setActiveTargetIdx(matchedTargetIdx);
+          updateRingToElement(candidate);
+        }
       } else {
         if (currentElRef.current) {
           currentElRef.current = null;
           setActiveEl(null);
           setActiveTargetIdx(null);
+          resetRingToMouse();
+        } else {
+          ringTargetX.set(e.clientX);
+          ringTargetY.set(e.clientY);
         }
-        resetRingToMouse();
       }
     };
 
@@ -215,10 +220,15 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
       setActiveTargetIdx(null);
     };
 
+    let scrollRafId = 0;
     const handleScrollOrResize = () => {
-      if (currentElRef.current) {
-        updateRingToElement(currentElRef.current);
-      }
+      if (scrollRafId) return;
+      scrollRafId = requestAnimationFrame(() => {
+        scrollRafId = 0;
+        if (currentElRef.current) {
+          updateRingToElement(currentElRef.current);
+        }
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
