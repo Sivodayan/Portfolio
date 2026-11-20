@@ -65,19 +65,20 @@
 }
 
 html {
-  font-size: 18px;
+  font-size: 15px;
   font-family: var(--font-sans);
   background-color: var(--bg-body);
   color: var(--text-primary);
-  line-height: 1.65;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 1280px) {
   html {
-    font-size: 18.5px;
+    font-size: 15.5px;
   }
 }
 
@@ -116,29 +117,45 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
-/* Main Container — Modern Spacious Page Container */
+/* Main Container — Streamlined Full-Screen Slide Container */
 .page-container {
   width: 100%;
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 4rem 1.75rem 6rem;
+  padding: 0 1.25rem;
   position: relative;
   z-index: 1;
 }
 
 @media (min-width: 1024px) {
   .page-container {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
 /* --- Top Navigation Header --- */
 .site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 3.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 4rem;
+  padding: 0 1.5rem;
+  background: rgba(7, 8, 11, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0;
+}
+
+[data-theme="light"] .site-header {
+  background: rgba(251, 251, 251, 0.85);
+  border-bottom-color: rgba(0, 0, 0, 0.06);
 }
 
 .brand-link {
@@ -201,7 +218,14 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 
 /* --- Hero Section & ASCII Stream Integration --- */
 .hero {
-  margin-bottom: 4rem;
+  min-height: 100dvh;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-snap-align: start;
+  padding-top: 3.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .hero.hero-centered {
@@ -420,7 +444,14 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 
 /* --- Section Formatting --- */
 .section {
-  margin-bottom: 4rem;
+  min-height: 100dvh;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-snap-align: start;
+  padding-top: 3.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .section-heading {
