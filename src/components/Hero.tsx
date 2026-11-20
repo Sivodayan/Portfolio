@@ -17,14 +17,14 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
     });
   };
 
-  
-  
+
+
 
   return (
     <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none" id="about">
       {/* Two-Column Arrangement: Left photo / Right text & bio */}
       <div className="w-full flex flex-col lg:flex-row items-center lg:items-center justify-between gap-6 lg:gap-8 my-auto py-1">
-        
+
         {/* Left Column: Pure ChromaCard Picture (No borders, No underlying cards) */}
         <div className="shrink-0 relative flex items-center justify-center select-none self-center">
           <ChromaCard
@@ -37,8 +37,8 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
         {/* Right Column: Kicker, Display Name, Bio, Links & Badges */}
         <div className="flex-1 max-w-2xl text-left">
           {/* Uppercase Kicker Tagline */}
-          <div className="text-s font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-1.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]  flex-col  items-center gap-2">
-            <span className='block'>Computer science & engineering undergraduate</span>
+          <div className="text-xs font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-1.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] flex-col items-center gap-2">
+            <span>COMPUTER SCIENCE & ENGINEERING UNDERGRADUATE</span><br></br>
             <span>University of Moratuwa</span>
           </div>
 
@@ -52,12 +52,12 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
             letterStagger={27}
             className="text-3xl sm:text-4xl lg:text-[2.85rem] font-extrabold tracking-tight text-white mb-2 leading-[1.12] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
           >
-            Sujeevakumar Sivodayan
+            Sivodayan Sujeevakumar
           </TextEngine>
 
           {/* Bio Description */}
           <p className="text-sm sm:text-base text-[#f1f5f9] leading-relaxed mb-2.5 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
-           I develop responsive web applications and embedded IoT systems with React, Python, and C++, alongside contributing to student leadership and community tech initiatives.
+            I build full-stack web applications, embedded IoT systems, and practical software tools using React, TypeScript, Python, and C++.
           </p>
 
           {/* Social & Contact Icon Action Row */}
@@ -120,7 +120,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
             </button>
           </div>
 
-       
+
         </div>
 
       </div>

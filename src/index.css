@@ -101,8 +101,22 @@ body {
   transition: opacity 0.3s ease;
 }
 
+/* Very transparent black overlay to maximize font legibility while keeping background fully visible */
+.ascii-stream-fullscreen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.533);
+  pointer-events: none;
+  z-index: 1;
+}
+
 [data-theme="light"] .ascii-stream-fullscreen {
   opacity: 0.65;
+}
+
+[data-theme="light"] .ascii-stream-fullscreen::after {
+  background: rgba(0, 0, 0, 0.15);
 }
 
 /* Global Typography High-Legibility Shadows */
