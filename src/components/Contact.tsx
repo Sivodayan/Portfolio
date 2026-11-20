@@ -42,8 +42,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
         />
       </div>
 
-      <div className="relative z-10 w-full my-auto py-2">
-        <div className="flex items-center justify-between mb-3">
+      <div className="relative z-10 w-full my-auto py-1">
+        <div className="flex items-center justify-between mb-2">
           <div>
             <TextEngine
               tag="h2"
@@ -68,11 +68,11 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
 
         {/* Contact Content - Blended with Main Page */}
         <div className="w-full">
-          <p className="text-xs sm:text-sm text-[#f1f5f9] leading-relaxed mb-3.5 font-normal drop-shadow-sm max-w-2xl">
+          <p className="text-xs sm:text-sm text-[#f1f5f9] leading-relaxed mb-2.5 font-normal drop-shadow-sm max-w-2xl">
             I'm actively seeking software engineering internships, hardware-software telemetry roles, and open-source collaborations. Reach out directly via email or LinkedIn.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mb-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mb-2.5">
             {/* Email Tile */}
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
               <div className="truncate mr-2">

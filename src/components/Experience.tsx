@@ -6,8 +6,8 @@ export const Experience: React.FC = () => {
     <>
       {/* Education & Leadership Section */}
       <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center" id="experience">
-        <div className="w-full my-auto py-2">
-          <div className="mb-3">
+        <div className="w-full my-auto py-1">
+          <div className="mb-2">
             <TextEngine
               tag="h2"
               mode="once"
@@ -24,7 +24,7 @@ export const Experience: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* University of Moratuwa Card */}
             <div className="p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.07] border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between">
               <div>

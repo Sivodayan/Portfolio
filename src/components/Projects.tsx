@@ -250,8 +250,8 @@ export const Projects: React.FC = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full my-auto py-2">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
+      <div className="relative z-10 w-full my-auto py-1">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-1.5">
           <div>
             <TextEngine
               tag="h2"
@@ -322,7 +322,7 @@ export const Projects: React.FC = () => {
 
             {/* Seamless Active Project Details beneath the 3D gallery */}
             {activeProject && (
-              <div className="w-full mt-2 pt-2.5 border-t border-white/10 transition-all duration-300">
+              <div className="w-full mt-1.5 pt-1.5 border-t border-white/10 transition-all duration-300">
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">

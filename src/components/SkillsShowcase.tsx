@@ -230,8 +230,8 @@ export const SkillsShowcase: React.FC = () => {
 
   return (
     <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center" id="skills">
-      <div className="w-full my-auto py-2">
-        <div className="flex items-center justify-between mb-2">
+      <div className="w-full my-auto py-1">
+        <div className="flex items-center justify-between mb-1.5">
           <div>
             <TextEngine
               tag="h2"

@@ -33,7 +33,7 @@
   --font-serif: 'Newsreader', Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  --max-w: 1180px;
+  --max-w: 1260px;
   --transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -122,15 +122,15 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   width: 100%;
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 0 1rem;
   position: relative;
   z-index: 1;
 }
 
 @media (min-width: 1024px) {
   .page-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 
@@ -224,8 +224,8 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   flex-direction: column;
   justify-content: center;
   scroll-snap-align: start;
-  padding-top: 3.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 2.75rem;
+  padding-bottom: 0.5rem;
 }
 
 .hero.hero-centered {
@@ -450,8 +450,8 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   flex-direction: column;
   justify-content: center;
   scroll-snap-align: start;
-  padding-top: 3.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 2.75rem;
+  padding-bottom: 0.5rem;
 }
 
 .section-heading {
@@ -783,10 +783,14 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   font-size: 0.75rem;
   color: var(--text-secondary);
   background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  padding: 0.25rem 0.65rem;
   border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  
   cursor: default;
+}
+.live-clock-pill:hover{
+  border:solid 1px #44f0ff;
+  transition: 3s;
 }
 
 /* --- Interactive Draggable Craft Badges Playground --- */

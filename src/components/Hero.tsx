@@ -23,7 +23,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
   return (
     <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none" id="about">
       {/* Two-Column Arrangement: Left photo / Right text & bio */}
-      <div className="w-full flex flex-col lg:flex-row items-center lg:items-center justify-between gap-8 lg:gap-12 my-auto py-2">
+      <div className="w-full flex flex-col lg:flex-row items-center lg:items-center justify-between gap-6 lg:gap-8 my-auto py-1">
         
         {/* Left Column: Pure ChromaCard Picture (No borders, No underlying cards) */}
         <div className="shrink-0 relative flex items-center justify-center select-none self-center">
@@ -37,8 +37,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
         {/* Right Column: Kicker, Display Name, Bio, Links & Badges */}
         <div className="flex-1 max-w-2xl text-left">
           {/* Uppercase Kicker Tagline */}
-          <div className="text-xs font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-2 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] flex items-center gap-2">
-            
+          <div className="text-xs font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-1.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] flex items-center gap-2">
             <span className='block'>COMPUTER SCIENCE & ENGINEERING UNDERGRADUATE</span>
             <span>University of Moratuwa</span>
           </div>
@@ -51,20 +50,18 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
             letterIn={{ opacity: 1, scale: 1 }}
             letterConfig={{ tension: 426, friction: 17 }}
             letterStagger={27}
-            className="text-3xl sm:text-4xl lg:text-[2.85rem] font-extrabold tracking-tight text-white mb-3 leading-[1.12] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
+            className="text-3xl sm:text-4xl lg:text-[2.85rem] font-extrabold tracking-tight text-white mb-2 leading-[1.12] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
           >
             Sujeevakumar Sivodayan
           </TextEngine>
 
           {/* Bio Description */}
-          <p className="text-sm sm:text-base text-[#f1f5f9] leading-relaxed mb-4 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+          <p className="text-sm sm:text-base text-[#f1f5f9] leading-relaxed mb-2.5 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
             I sweat the parts most people skip past: fast pages, edge cases that actually get handled, and interfaces that don't fight you. Engineering undergraduate at the <strong className="text-white font-semibold">University of Moratuwa</strong> (CGPA 3.54) and elected <strong className="text-white font-semibold">Department Representative</strong> for Computer Science &amp; Engineering. I build IoT telemetry hardware, write clean web applications with React, and actively coordinate campus initiatives.
           </p>
 
-         
-
           {/* Social & Contact Icon Action Row */}
-          <div className="flex items-center gap-2.5 mb-4">
+          <div className="flex items-center gap-2.5 mb-3">
             {/* Resume / Document Icon */}
             <a
               href="assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
