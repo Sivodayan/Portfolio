@@ -108,14 +108,14 @@ export interface ChromaCardProps {
 }
 
 export const ChromaCard: React.FC<ChromaCardProps> = ({
-  width = 260,
-  height = 340,
+  width = 460,
+  height = 540,
   className = '',
   children,
   imageSrc = 'assets/images/profile.jpg',
   imageAspectRatio = 0.75,
-  cardWidth = 4.8,
-  cardHeight = 6.4,
+  cardWidth = 6.8,
+  cardHeight = 8.4,
   zoomLevel = 0.28,
   rgbShiftAmount = 0.025,
   pixelDisplaceAmount = 0.08,
