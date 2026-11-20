@@ -240,8 +240,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
 export const Projects: React.FC = () => {
   return (
-    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center" id="projects">
-      <div className="relative z-10 w-full my-auto py-1">
+    <section className="section relative w-full py-8 sm:py-12 flex flex-col" id="projects">
+      <div className="relative z-10 w-full">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 sm:mb-3">
           <div>
             <TextEngine

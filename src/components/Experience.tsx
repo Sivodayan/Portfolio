@@ -3,8 +3,8 @@ import TextEngine from 'spring-text-engine';
 
 export const Experience: React.FC = () => {
   return (
-    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center" id="experience">
-      <div className="w-full my-auto py-1">
+    <section className="section relative w-full py-8 sm:py-12 flex flex-col" id="experience">
+      <div className="w-full">
         <div className="mb-2 sm:mb-3">
           <TextEngine
             tag="h2"

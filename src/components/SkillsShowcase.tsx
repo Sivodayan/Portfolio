@@ -132,8 +132,8 @@ export const SkillsShowcase: React.FC = () => {
   ];
 
   return (
-    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center" id="skills">
-      <div className="w-full my-auto py-1">
+    <section className="section relative w-full py-8 sm:py-12 flex flex-col" id="skills">
+      <div className="w-full">
         <div className="flex items-center justify-between mb-2 sm:mb-3">
           <div>
             <TextEngine

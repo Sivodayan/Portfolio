@@ -264,13 +264,13 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 
 /* --- Hero Section & ASCII Stream Integration --- */
 .hero {
-  min-height: 100dvh;
+  min-height: calc(100dvh - 3rem);
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 2.75rem;
-  padding-bottom: 0.5rem;
+  padding-top: 3.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .hero.hero-centered {
@@ -489,13 +489,13 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 
 /* --- Section Formatting --- */
 .section {
-  min-height: 100dvh;
+  min-height: auto;
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 2.75rem;
-  padding-bottom: 0.5rem;
+  justify-content: flex-start;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .section-heading {

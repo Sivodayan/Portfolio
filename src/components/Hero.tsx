@@ -21,9 +21,9 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
 
 
   return (
-    <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none" id="about">
+    <section className="hero relative w-full min-h-[calc(100dvh-2.5rem)] flex flex-col justify-center select-none pt-14 pb-8 sm:pt-16 sm:pb-10" id="about">
       {/* Two-Column Arrangement: Left photo / Right text & bio */}
-      <div className="w-full flex flex-col lg:flex-row items-center lg:items-center justify-between gap-6 lg:gap-8 my-auto py-1">
+      <div className="w-full flex flex-col lg:flex-row items-center lg:items-center justify-between gap-6 lg:gap-8 py-1">
 
         {/* Left Column: Pure ChromaCard Picture (No borders, No underlying cards) */}
         <div className="shrink-0 relative flex items-center justify-center select-none self-center">

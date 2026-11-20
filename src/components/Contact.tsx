@@ -16,7 +16,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
   };
 
   return (
-    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-between" id="contact">
+    <section className="section relative w-full pt-8 pb-4 sm:pt-12 sm:pb-6 flex flex-col justify-between" id="contact">
       {/* React Bits Pro: Rising Lines Background - Seamless Upward Fade */}
       <div
         className="absolute -inset-x-8 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 opacity-40 overflow-hidden"
@@ -42,7 +42,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
         />
       </div>
 
-      <div className="relative z-10 w-full my-auto py-1">
+      <div className="relative z-10 w-full mb-6">
         <div className="flex items-center justify-between mb-2">
           <div>
             <TextEngine
