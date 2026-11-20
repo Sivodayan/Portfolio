@@ -149,9 +149,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           >
             {project.title}
           </TextEngine>
-          <span className="project-tag !text-[10px] !px-2 !py-0.5 !rounded-md flex-shrink-0">
-            {project.tag}
-          </span>
+          
+
+          
         </div>
 
         <p className="project-desc !text-xs !leading-relaxed text-[#cbd5e1] !mb-2 line-clamp-3">

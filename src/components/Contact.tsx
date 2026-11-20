@@ -56,21 +56,14 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
             >
               Get in Touch
             </TextEngine>
-            <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
-              Direct telemetry &amp; communication channels
-            </p>
+            
           </div>
-          <span className="text-xs font-mono text-[#cbd5e1] bg-white/5 border border-white/10 px-2.5 py-1 rounded-full flex items-center gap-1.5 backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald animate-pulse"></span>
-            Available for Internships
-          </span>
+         
         </div>
 
         {/* Contact Content - Blended with Main Page */}
         <div className="w-full">
-          <p className="text-xs sm:text-sm text-[#f1f5f9] leading-relaxed mb-2.5 font-normal drop-shadow-sm max-w-2xl">
-            I'm actively seeking software engineering internships, hardware-software telemetry roles, and open-source collaborations. Reach out directly via email or LinkedIn.
-          </p>
+         
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mb-2.5">
             {/* Email Tile */}
@@ -136,18 +129,14 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
             </a>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[#cbd5e1] pt-2.5 border-t border-white/10">
-            <span>📍 Department of Computer Science &amp; Engineering, University of Moratuwa</span>
-            <span>•</span>
-            <span className="text-[#44f0ff] font-semibold">Fast Response Guaranteed</span>
-          </div>
+         
         </div>
       </div>
 
       {/* Embedded Clean Single-Screen Footer */}
       <footer className="relative z-10 w-full py-2 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-1 text-[11px] font-mono text-[#94a3b8]">
         <div>© {new Date().getFullYear()} Sujeevakumar Sivodayan</div>
-        <div>Computer Science &amp; Engineering • University of Moratuwa • Sri Lanka</div>
+        <div>Computer Science &amp; Engineering - University of Moratuwa</div>
       </footer>
     </section>
   );
