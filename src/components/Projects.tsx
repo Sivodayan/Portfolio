@@ -240,12 +240,15 @@ export const Projects: React.FC = () => {
           primaryColor="#44f0ff"
           secondaryColor="#ff087b"
           tertiaryColor="#38bdf8"
-          speed={0.65}
-          intensity={1.15}
-          streakCount={120}
+          speed={0.55}
+          intensity={1.1}
+          streakCount={64}
           stretchFactor={0.06}
           fadePower={2.0}
-          opacity={0.75}
+          opacity={0.7}
+          quality="low"
+          maxFPS={30}
+          pauseWhenOffscreen={true}
           className="w-full h-full pointer-events-auto"
         />
       </div>
@@ -312,7 +315,7 @@ export const Projects: React.FC = () => {
                 throwResistance={0.35}
                 animationDuration={0.9}
                 showNumbers={true}
-                autoSpin={3.5}
+                autoSpin={1.2}
                 onItemClick={(idx: number) => {
                   const selected = PROJECTS_DATA[idx % PROJECTS_DATA.length];
                   setActiveProject(selected);

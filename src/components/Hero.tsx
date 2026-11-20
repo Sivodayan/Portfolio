@@ -37,8 +37,8 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
         {/* Right Column: Kicker, Display Name, Bio, Links & Badges */}
         <div className="flex-1 max-w-2xl text-left">
           {/* Uppercase Kicker Tagline */}
-          <div className="text-xs font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-1.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] flex items-center gap-2">
-            <span className='block'>COMPUTER SCIENCE & ENGINEERING UNDERGRADUATE</span>
+          <div className="text-s font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-1.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]  flex-col  items-center gap-2">
+            <span className='block'>Computer science & engineering undergraduate</span>
             <span>University of Moratuwa</span>
           </div>
 
@@ -57,7 +57,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
 
           {/* Bio Description */}
           <p className="text-sm sm:text-base text-[#f1f5f9] leading-relaxed mb-2.5 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
-            I sweat the parts most people skip past: fast pages, edge cases that actually get handled, and interfaces that don't fight you. Engineering undergraduate at the <strong className="text-white font-semibold">University of Moratuwa</strong> (CGPA 3.54) and elected <strong className="text-white font-semibold">Department Representative</strong> for Computer Science &amp; Engineering. I build IoT telemetry hardware, write clean web applications with React, and actively coordinate campus initiatives.
+           I develop responsive web applications and embedded IoT systems with React, Python, and C++, alongside contributing to student leadership and community tech initiatives.
           </p>
 
           {/* Social & Contact Icon Action Row */}

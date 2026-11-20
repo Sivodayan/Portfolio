@@ -73,7 +73,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
 }
 
 @media (min-width: 1280px) {
@@ -223,7 +222,6 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  scroll-snap-align: start;
   padding-top: 2.75rem;
   padding-bottom: 0.5rem;
 }
@@ -449,7 +447,6 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  scroll-snap-align: start;
   padding-top: 2.75rem;
   padding-bottom: 0.5rem;
 }

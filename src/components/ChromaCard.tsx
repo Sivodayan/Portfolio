@@ -25,6 +25,7 @@ uniform float u_aspectRatio;
 uniform float u_opacity;
 uniform float u_hover;
 uniform float u_zoomLevel;
+uniform float u_imageOffsetY;
 uniform float u_rgbShift;
 uniform float u_pixelDisplace;
 uniform float u_borderRadius;
@@ -70,6 +71,7 @@ void main() {
   uv *= 1. - u_zoomLevel * hoverLevel;
   uv += u_zoomLevel / 2. * hoverLevel;
   uv = clamp(uv, 0., 1.);
+  uv.y -= u_imageOffsetY;
   vec4 color = texture2D(u_texture, uv);
 
   if(hoverLevel > 0.) {
@@ -105,6 +107,7 @@ export interface ChromaCardProps {
   cameraFov?: number;
   cameraZ?: number;
   borderRadius?: number;
+  imageOffsetY?: number;
 }
 
 export const ChromaCard: React.FC<ChromaCardProps> = ({
@@ -128,6 +131,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   cameraFov = 50,
   cameraZ = 7,
   borderRadius = 32,
+  imageOffsetY = 0.8,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -148,7 +152,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         powerPreference: 'high-performance',
       });
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
     } catch {
       return;
     }
@@ -195,6 +199,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     });
 
     const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.y = imageOffsetY;
     scene.add(mesh);
 
     const updateSize = () => {
@@ -234,6 +239,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
       gsap.to(mesh.position, {
         x: mouse.x * positionIntensity,
+        y: imageOffsetY,
         duration: interactionDuration,
         ease: 'power2.out',
       });
@@ -263,7 +269,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
       gsap.to(mesh.position, {
         x: 0.0,
-        y: 0.0,
+        y: imageOffsetY,
         duration: interactionDuration,
         ease: 'power2.out',
       });
@@ -280,8 +286,19 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     container.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('resize', updateSize);
 
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(container);
+
     const render = () => {
-      renderer?.render(scene, camera);
+      if (isVisible) {
+        renderer?.render(scene, camera);
+      }
       animationFrameId = requestAnimationFrame(render);
     };
 
@@ -289,6 +306,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', updateSize);
@@ -317,6 +335,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     positionIntensity,
     interactionDuration,
     opacity,
+    imageOffsetY,
     cameraFov,
     cameraZ,
     borderRadius,

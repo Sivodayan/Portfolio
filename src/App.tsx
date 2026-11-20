@@ -65,12 +65,14 @@ export const App: React.FC = () => {
         <AsciiStream
           colors={["#44f0ff", "#ff087b"]}
           text={"dev sivodayan @cse"}
-          pulse={1.2}
-          flare={1.2}
-          glow={1.4}
-          intensity={1.25}
-          burst={1.0}
-          speed={2.2}
+          pulse={1.05}
+          flare={1.0}
+          glow={1.1}
+          intensity={1.15}
+          grain={0.05}
+          quality={0.65}
+          burst={0.8}
+          speed={1.8}
           backgroundColor="#07080b"
           className="w-full h-full"
         />
