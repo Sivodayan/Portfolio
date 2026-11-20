@@ -26,10 +26,19 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
 
   return (
     <section className="hero relative w-full mb-16 pt-4 md:pt-10" id="about">
-      {/* Two-Column Arrangement: Left text & bio / Right photo card stack */}
-      <div className="w-full flex flex-col-reverse lg:flex-row items-center lg:items-start justify-between gap-10 lg:gap-14">
+      {/* Two-Column Arrangement: Left photo / Right text & bio */}
+      <div className="w-full flex flex-col lg:flex-row items-center lg:items-start justify-between gap-10 lg:gap-14">
         
-        {/* Left Column: Kicker, Display Name, Bio, Links & Badges */}
+        {/* Left Column: Pure ChromaCard Picture (No borders, No underlying cards) */}
+        <div className="shrink-0 relative flex items-center justify-center select-none self-center lg:self-start lg:mt-2">
+          <ChromaCard
+            width={270}
+            height={360}
+            className="rounded-[28px]"
+          />
+        </div>
+
+        {/* Right Column: Kicker, Display Name, Bio, Links & Badges */}
         <div className="flex-1 max-w-2xl text-left">
           {/* Uppercase Kicker Tagline */}
           <div className="text-xs sm:text-sm font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-3.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] flex items-center gap-2">
@@ -140,24 +149,6 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
                 {b.label}
               </motion.div>
             ))}
-          </div>
-        </div>
-
-        {/* Right Column: Exact Reference Arrangement (Framed Card + Tilted Colored Backing Card) */}
-        <div className="shrink-0 relative flex items-center justify-center p-4 self-center lg:self-start lg:mt-3 select-none">
-          {/* Tilted Vibrant Magenta/Rose Accent Card (from reference image) */}
-          <div
-            className="absolute w-[230px] sm:w-[260px] h-[300px] sm:h-[340px] rounded-[32px] bg-gradient-to-tr from-[#e11d48] via-[#f43f5e] to-[#fb7185] rotate-6 shadow-[0_20px_45px_rgba(225,29,72,0.4)] transition-transform duration-300 hover:rotate-8"
-            aria-hidden="true"
-          />
-
-          {/* Foreground Card with crisp border housing ChromaCard */}
-          <div className="relative z-10 p-1 rounded-[28px] bg-black/90 border-2 border-white/90 shadow-[0_25px_60px_rgba(0,0,0,0.85)] backdrop-blur-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
-            <ChromaCard
-              width={230}
-              height={300}
-              className="rounded-[24px]"
-            />
           </div>
         </div>
 
