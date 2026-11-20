@@ -112,47 +112,8 @@ export const SkillsShowcase: React.FC = () => {
         </svg>
       ),
     },
-    {
-      name: 'Arduino',
-      category: 'Microcontrollers',
-      desc: 'Ultrasonic Sensors, I2C, SPI & Relays',
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M17.5 7A5.5 5.5 0 0012 11.2 5.5 5.5 0 006.5 7 5.5 5.5 0 1012 12.8 5.5 5.5 0 0017.5 17a5.5 5.5 0 000-10zm-11 8a3.5 3.5 0 110-7 3.5 3.5 0 010 7zm11 0a3.5 3.5 0 110-7 3.5 3.5 0 010 7z"
-            fill="#00979D"
-          />
-          <path d="M5 12h3M16 12h3m-1.5-1.5v3" stroke="#ffffff" strokeWidth="1.2" strokeLinecap="round" />
-        </svg>
-      ),
-    },
-    {
-      name: 'MQTT & WebSockets',
-      category: 'Real-Time Telemetry',
-      desc: 'Pub/Sub Brokerage & Live Streams',
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="1.6">
-          <circle cx="12" cy="12" r="3" fill="#a855f7" />
-          <path d="M6.3 6.3a8 8 0 0111.4 0m-14.2-2.8a12 12 0 0117 0m-14.2 17a12 12 0 010-17" />
-        </svg>
-      ),
-    },
-    {
-      name: 'Node.js & APIs',
-      category: 'Backend Services',
-      desc: 'REST Endpoints, Express & Microservices',
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M12 2L3.5 7v10L12 22l8.5-5V7L12 2z"
-            stroke="#22c55e"
-            strokeWidth="1.6"
-            fill="rgba(34, 197, 94, 0.15)"
-          />
-          <path d="M12 7v10m-4-7l8 4m-8 0l8-4" stroke="#22c55e" strokeWidth="1.4" />
-        </svg>
-      ),
-    },
+    
+    
     {
       name: 'Tailwind CSS',
       category: 'UI Architecture',
@@ -166,29 +127,8 @@ export const SkillsShowcase: React.FC = () => {
         </svg>
       ),
     },
-    {
-      name: 'Three.js & WebGL',
-      category: 'Creative Engineering',
-      desc: 'Custom Shader Pass, Canvas & 3D Math',
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ec4899" strokeWidth="1.6">
-          <path d="M12 2L2 22h20L12 2zm0 4l6.5 13H5.5L12 6z" />
-          <circle cx="12" cy="14" r="2" fill="#ec4899" />
-        </svg>
-      ),
-    },
-    {
-      name: 'PostgreSQL & SQL',
-      category: 'Data Persistence',
-      desc: 'Relational Schemas, Indexing & Queries',
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.6">
-          <ellipse cx="12" cy="5" rx="9" ry="3" />
-          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-        </svg>
-      ),
-    },
+    
+    
     {
       name: 'Machine Learning',
       category: 'Data Science',
@@ -215,17 +155,7 @@ export const SkillsShowcase: React.FC = () => {
         </svg>
       ),
     },
-    {
-      name: 'Linux / POSIX',
-      category: 'Systems & Tooling',
-      desc: 'Bash, Systemd, SSH & Build Toolchains',
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="1.6">
-          <polyline points="4 17 10 11 4 5" />
-          <line x1="12" y1="19" x2="20" y2="19" />
-        </svg>
-      ),
-    },
+    
   ];
 
   return (
