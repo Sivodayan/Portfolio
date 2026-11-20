@@ -17,12 +17,8 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
     });
   };
 
-  const badges = [
-    { label: '🏛️ CSE Dept Rep' },
-    { label: '⚡ Moratuwa 3.54 GPA' },
-    { label: '🌊 Team Void Warriors' },
-    { label: '📍 Sri Lanka' },
-  ];
+  
+  
 
   return (
     <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none" id="about">
@@ -32,8 +28,8 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
         {/* Left Column: Pure ChromaCard Picture (No borders, No underlying cards) */}
         <div className="shrink-0 relative flex items-center justify-center select-none self-center">
           <ChromaCard
-            width={225}
-            height={295}
+            width={365}
+            height={495}
             className="rounded-[24px]"
           />
         </div>
@@ -65,17 +61,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
             I sweat the parts most people skip past: fast pages, edge cases that actually get handled, and interfaces that don't fight you. Engineering undergraduate at the <strong className="text-white font-semibold">University of Moratuwa</strong> (CGPA 3.54) and elected <strong className="text-white font-semibold">Department Representative</strong> for Computer Science &amp; Engineering. I build IoT telemetry hardware, write clean web applications with React, and actively coordinate campus initiatives.
           </p>
 
-          {/* Action Link: More about me → */}
-          <div className="mb-4 flex items-center gap-4">
-            <a
-              href="assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
-              download
-              className="inline-flex items-center gap-2 text-sm sm:text-base font-bold text-[#44f0ff] hover:text-[#a5f3fc] transition-colors group cursor-pointer drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]"
-            >
-              <span>More about me &amp; Resume</span>
-              <span className="transform transition-transform group-hover:translate-x-1.5">→</span>
-            </a>
-          </div>
+         
 
           {/* Social & Contact Icon Action Row */}
           <div className="flex items-center gap-2.5 mb-4">
@@ -137,22 +123,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
             </button>
           </div>
 
-          {/* Interactive Physics Badges */}
-          <div className="flex flex-wrap gap-2 pt-0.5" title="Interactive: Drag and fling any badge!">
-            {badges.map((b, i) => (
-              <motion.div
-                key={i}
-                className="draggable-badge text-xs sm:text-sm font-semibold px-2.5 py-1"
-                drag
-                dragSnapToOrigin
-                whileDrag={{ scale: 1.08, rotate: (i % 2 === 0 ? 3 : -3), zIndex: 50, cursor: 'grabbing' }}
-                whileHover={{ scale: 1.03 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              >
-                {b.label}
-              </motion.div>
-            ))}
-          </div>
+       
         </div>
 
       </div>
