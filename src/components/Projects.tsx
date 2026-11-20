@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import StaggeredText from './StaggeredText';
+import TextEngine from 'spring-text-engine';
 import Lightspeed from './Lightspeed';
 import { d as CircleGalleryComponent } from './CircleGallery';
 
@@ -138,9 +138,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       )}
 
       <div className="project-header">
-        <h3 className="project-name">
-          <span>{project.title}</span>
-        </h3>
+        <TextEngine
+          tag="h3"
+          mode="once"
+          letterOut={{ opacity: 0, scale: 0 }}
+          letterIn={{ opacity: 1, scale: 1 }}
+          letterConfig={{ tension: 426, friction: 17 }}
+          letterStagger={27}
+          className="project-name text-white font-bold"
+        >
+          {project.title}
+        </TextEngine>
         <span className="project-tag">{project.tag}</span>
       </div>
 
@@ -245,14 +253,17 @@ export const Projects: React.FC = () => {
       <div className="relative z-10">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
           <div>
-            <StaggeredText
-              as="h2"
-              text="Selected Projects"
-              segmentBy="words"
+            <TextEngine
+              tag="h2"
+              mode="once"
+              letterOut={{ opacity: 0, scale: 0 }}
+              letterIn={{ opacity: 1, scale: 1 }}
+              letterConfig={{ tension: 426, friction: 17 }}
+              letterStagger={27}
               className="section-heading !mb-0 !border-none !pb-0 text-2xl md:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm"
-              duration={0.4}
-              delay={45}
-            />
+            >
+              Selected Projects
+            </TextEngine>
             <p className="text-sm sm:text-base text-[#cbd5e1] mt-1.5 font-mono">
               3D interactive carousel • Drag to rotate ring, click tile to inspect
             </p>
@@ -320,9 +331,18 @@ export const Projects: React.FC = () => {
                       </span>
                       <span className="text-xs font-mono text-white/70">Focused Project</span>
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-2.5 drop-shadow-sm">
+                    <TextEngine
+                      key={activeProject.id}
+                      tag="h3"
+                      mode="once"
+                      letterOut={{ opacity: 0, scale: 0 }}
+                      letterIn={{ opacity: 1, scale: 1 }}
+                      letterConfig={{ tension: 426, friction: 17 }}
+                      letterStagger={27}
+                      className="text-2xl md:text-3xl font-extrabold text-white mb-2.5 drop-shadow-sm"
+                    >
                       {activeProject.title}
-                    </h3>
+                    </TextEngine>
                     <p className="text-base md:text-lg text-[#f1f5f9] leading-relaxed mb-5 font-normal">
                       {activeProject.desc}
                     </p>

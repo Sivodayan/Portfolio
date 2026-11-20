@@ -1,5 +1,5 @@
 import React from 'react';
-import StaggeredText from './StaggeredText';
+import TextEngine from 'spring-text-engine';
 
 export const Experience: React.FC = () => {
   return (
@@ -7,16 +7,19 @@ export const Experience: React.FC = () => {
       {/* Education & Leadership Section */}
       <section className="section my-16 md:my-24" id="experience">
         <div className="mb-4">
-          <StaggeredText
-            as="h2"
-            text="Education & Leadership"
-            segmentBy="words"
+          <TextEngine
+            tag="h2"
+            mode="once"
+            letterOut={{ opacity: 0, scale: 0 }}
+            letterIn={{ opacity: 1, scale: 1 }}
+            letterConfig={{ tension: 426, friction: 17 }}
+            letterStagger={27}
             className="section-heading !mb-0 !border-none !pb-0 text-xl md:text-2xl font-bold tracking-tight text-white drop-shadow-sm"
-            duration={0.5}
-            delay={70}
-          />
+          >
+            Education &amp; Leadership
+          </TextEngine>
           <p className="text-xs text-[#cbd5e1] mt-1 font-mono">
-            Academic milestones, leadership appointments & extracurricular impact
+            Academic milestones, leadership appointments &amp; extracurricular impact
           </p>
         </div>
 
@@ -25,7 +28,17 @@ export const Experience: React.FC = () => {
           <div className="timeline-entry">
             <div className="timeline-date">Nov 2025 — Present</div>
             <div>
-              <div className="timeline-role">B.Sc. (Hons) in Engineering</div>
+              <TextEngine
+                tag="h3"
+                mode="once"
+                letterOut={{ opacity: 0, scale: 0 }}
+                letterIn={{ opacity: 1, scale: 1 }}
+                letterConfig={{ tension: 426, friction: 17 }}
+                letterStagger={27}
+                className="timeline-role text-lg font-bold text-white mb-1"
+              >
+                B.Sc. (Hons) in Engineering
+              </TextEngine>
               <div className="timeline-org">University of Moratuwa • Computer Science and Engineering Department</div>
               <div className="timeline-details">
                 <ul>
@@ -43,11 +56,21 @@ export const Experience: React.FC = () => {
           <div className="timeline-entry">
             <div className="timeline-date">Jan 2016 — Apr 2025</div>
             <div>
-              <div className="timeline-role">Secondary Education</div>
+              <TextEngine
+                tag="h3"
+                mode="once"
+                letterOut={{ opacity: 0, scale: 0 }}
+                letterIn={{ opacity: 1, scale: 1 }}
+                letterConfig={{ tension: 426, friction: 17 }}
+                letterStagger={27}
+                className="timeline-role text-lg font-bold text-white mb-1"
+              >
+                Secondary Education
+              </TextEngine>
               <div className="timeline-org">Jaffna Hindu College</div>
               <div className="timeline-details">
                 <ul>
-                  <li>Member of the <strong>Board of Prefects</strong>.</li>
+                  <li><strong>Board of Prefects</strong> member with institutional service.</li>
                   <li>President of the <strong>Cycling Club</strong> and leader in the <strong>Eastern Band</strong>.</li>
                   <li>Secretary of the <strong>Red Cross Society</strong>.</li>
                 </ul>

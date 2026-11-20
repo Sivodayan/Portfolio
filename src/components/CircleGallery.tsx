@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { Draggable } from 'gsap/Draggable';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import TextEngine from 'spring-text-engine';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -495,9 +496,17 @@ export const CircleGallery: React.FC<CircleGalleryProps> = ({
             {/* Bottom Card Title & Tech Info */}
             <div className="absolute bottom-0 inset-x-0 p-4 z-10 flex flex-col justify-end pointer-events-none">
               {item.title && (
-                <h4 className="text-white font-semibold text-sm md:text-base leading-snug drop-shadow-md group-hover:text-[#44f0ff] transition-colors mb-1.5">
+                <TextEngine
+                  tag="h4"
+                  mode="once"
+                  letterOut={{ opacity: 0, scale: 0 }}
+                  letterIn={{ opacity: 1, scale: 1 }}
+                  letterConfig={{ tension: 426, friction: 17 }}
+                  letterStagger={27}
+                  className="text-white font-semibold text-sm md:text-base leading-snug drop-shadow-md group-hover:text-[#44f0ff] transition-colors mb-1.5"
+                >
                   {item.title}
-                </h4>
+                </TextEngine>
               )}
 
               {item.tags && item.tags.length > 0 && (

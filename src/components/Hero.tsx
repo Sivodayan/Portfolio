@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import StaggeredText from './StaggeredText';
+import TextEngine from 'spring-text-engine';
 import ChromaCard from './ChromaCard';
 
 export interface HeroProps {
@@ -46,16 +46,18 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
             <span>SOFTWARE ENGINEER &amp; CSE UNDERGRAD • UNIVERSITY OF MORATUWA</span>
           </div>
 
-          {/* Large Bold Display Heading */}
-          <StaggeredText
-            as="h1"
-            text="Sujeevakumar Sivodayan"
-            segmentBy="words"
+          {/* Large Bold Display Heading with Pop Scale spring overshoot */}
+          <TextEngine
+            tag="h1"
+            mode="once"
+            letterOut={{ opacity: 0, scale: 0 }}
+            letterIn={{ opacity: 1, scale: 1 }}
+            letterConfig={{ tension: 426, friction: 17 }}
+            letterStagger={27}
             className="text-5xl sm:text-6xl lg:text-[4rem] font-extrabold tracking-tight text-white mb-6 leading-[1.08] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
-            duration={0.55}
-            delay={90}
-            blur={true}
-          />
+          >
+            Sujeevakumar Sivodayan
+          </TextEngine>
 
           {/* Bio Description */}
           <p className="text-lg sm:text-xl text-[#f1f5f9] leading-relaxed mb-7 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">

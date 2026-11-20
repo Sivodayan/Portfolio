@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import SpectralTiles from './SpectralTiles';
-import StaggeredText from './StaggeredText';
+import TextEngine from 'spring-text-engine';
 
 interface SkillItem {
   name: string;
@@ -232,14 +232,17 @@ export const SkillsShowcase: React.FC = () => {
     <section className="section relative my-16 md:my-24" id="skills">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <StaggeredText
-            as="h2"
-            text="Skills & Technologies"
-            segmentBy="words"
+          <TextEngine
+            tag="h2"
+            mode="once"
+            letterOut={{ opacity: 0, scale: 0 }}
+            letterIn={{ opacity: 1, scale: 1 }}
+            letterConfig={{ tension: 426, friction: 17 }}
+            letterStagger={27}
             className="section-heading !mb-0 !border-none !pb-0 text-2xl md:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm"
-            duration={0.5}
-            delay={70}
-          />
+          >
+            Skills &amp; Technologies
+          </TextEngine>
           <p className="text-sm sm:text-base text-[#cbd5e1] mt-1.5 font-mono">
             Interactive 3D Spectral Grid • 16 Core competencies from Moratuwa CSE & LinkedIn
           </p>
