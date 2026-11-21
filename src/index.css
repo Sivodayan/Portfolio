@@ -269,8 +269,9 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 }
 
 .brand-link {
+  font-family: var(--font-mono);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
   text-decoration: none;
   display: flex;
