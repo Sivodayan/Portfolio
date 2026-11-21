@@ -6,6 +6,11 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/**
+ * ChromaCardProps
+ * React Bits Pro Chroma Card component props interface
+ * Docs: https://pro.reactbits.dev/docs/components/chroma-card
+ */
 export interface ChromaCardProps {
   width?: number | string;
   height?: number | string;
@@ -26,10 +31,22 @@ export interface ChromaCardProps {
   opacity?: number;
   cameraFov?: number;
   cameraZ?: number;
-  borderRadius?: number;
+  borderRadius?: number | string;
   triggerGlitch?: boolean;
 }
 
+/**
+ * ChromaCard — Refined React Bits Pro Component (@reactbits-starter/chroma-card-tw)
+ * Docs: https://pro.reactbits.dev/docs/components/chroma-card
+ *
+ * Features:
+ * - Fluid 3D perspective tilt tracking cursor coordinates
+ * - Zero-lag decoupled physics loop (zero React state re-renders during mouse tracking)
+ * - Optical RGB chromatic aberration channel splitting (Red and Cyan/Blue channels)
+ * - Authentic mouse ON and mouse OFF glitch burst transition (micro-slice jitter)
+ * - Dynamic specular glare spotlight reflection
+ * - Glass hairline border with theme support (Light & Dark)
+ */
 export const ChromaCard: React.FC<ChromaCardProps> = ({
   width = '100%',
   height = 'auto',
@@ -50,11 +67,11 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   const redLayerRef = useRef<HTMLDivElement | null>(null);
   const cyanLayerRef = useRef<HTMLDivElement | null>(null);
 
-  // Transient glitch transition state for mouse on / mouse off / entry
+  // Glitch transition state for mouse-on, mouse-off, and programmatic triggers
   const [glitchActive, setGlitchActive] = useState<boolean>(false);
   const glitchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Decoupled physics refs (zero React re-renders during mouse move)
+  // Decoupled physics refs for zero-lag 60+ FPS motion without React state updates
   const isHoveredRef = useRef<boolean>(false);
   const targetTilt = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const currentTilt = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -63,7 +80,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   const isRunningRef = useRef<boolean>(false);
   const animationFrameId = useRef<number | null>(null);
 
-  // Trigger brief chromatic glitch pulse (used on mouse enter, mouse leave, and initial intro)
+  // Trigger rapid chromatic glitch pulse (used on mouse enter, mouse leave, and intro)
   const triggerGlitchPulse = useCallback((duration = 240) => {
     setGlitchActive(true);
     startLoopIfNeeded();
@@ -73,7 +90,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     }, duration);
   }, []);
 
-  // Direct GPU update loop (runs only while tilting/settling, zero React overhead)
+  // Direct GPU update loop (runs during active tilt/settle; halts when at rest)
   const updatePhysics = useCallback(() => {
     const isHovered = isHoveredRef.current;
     const factor = isHovered ? 0.14 : 0.09;
@@ -91,34 +108,34 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     const tiltY = currentTilt.current.y;
     const scale = isHovered ? 1 + scaleIntensity : 1;
 
-    // Direct DOM transform
+    // 3D Card tilt transform
     if (innerRef.current) {
       innerRef.current.style.transform = `rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) scale3d(${scale}, ${scale}, 1)`;
     }
 
-    // Direct chromatic layer displacement
-    const glitchOffset = glitchActive ? 5 : 0;
+    // Dynamic chromatic aberration displacement
+    const baseShift = rgbShiftAmount * 32;
     if (redLayerRef.current) {
-      const rx = (-tiltY * 0.4 * (rgbShiftAmount * 25)) - glitchOffset;
-      const ry = (tiltX * 0.4 * (rgbShiftAmount * 25)) + (glitchActive ? 2 : 0);
+      const rx = -tiltY * 0.45 * baseShift;
+      const ry = tiltX * 0.45 * baseShift;
       redLayerRef.current.style.transform = `scale(${isHovered ? 1 + zoomLevel : 1}) translate3d(${rx.toFixed(1)}px, ${ry.toFixed(1)}px, 0)`;
       redLayerRef.current.style.opacity = isHovered || glitchActive ? '0.85' : '0';
     }
 
     if (cyanLayerRef.current) {
-      const cx = (tiltY * 0.4 * (rgbShiftAmount * 25)) + glitchOffset;
-      const cy = (-tiltX * 0.4 * (rgbShiftAmount * 25)) - (glitchActive ? 2 : 0);
+      const cx = tiltY * 0.45 * baseShift;
+      const cy = -tiltX * 0.45 * baseShift;
       cyanLayerRef.current.style.transform = `scale(${isHovered ? 1 + zoomLevel : 1}) translate3d(${cx.toFixed(1)}px, ${cy.toFixed(1)}px, 0)`;
       cyanLayerRef.current.style.opacity = isHovered || glitchActive ? '0.85' : '0';
     }
 
-    // Specular Glare update
+    // Specular Glare reflection update
     if (glareRef.current) {
       glareRef.current.style.opacity = currentGlare.current.opacity.toFixed(2);
-      glareRef.current.style.background = `radial-gradient(circle 320px at ${currentGlare.current.x.toFixed(1)}% ${currentGlare.current.y.toFixed(1)}%, rgba(255, 255, 255, 0.4) 0%, rgba(56, 189, 248, 0.12) 35%, transparent 70%)`;
+      glareRef.current.style.background = `radial-gradient(circle 380px at ${currentGlare.current.x.toFixed(1)}% ${currentGlare.current.y.toFixed(1)}%, rgba(255, 255, 255, 0.42) 0%, rgba(56, 189, 248, 0.16) 35%, transparent 70%)`;
     }
 
-    // Check if loop should continue
+    // Continue loop only while active or settling
     const tiltDiff = Math.abs(targetTilt.current.x - currentTilt.current.x) + Math.abs(targetTilt.current.y - currentTilt.current.y);
     const glareDiff = Math.abs(glarePos.current.opacity - currentGlare.current.opacity);
 
@@ -137,7 +154,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     }
   }, [updatePhysics]);
 
-  // Handle Mouse Movement over Card
+  // Mouse Move: calculate normalized 3D tilt coordinates
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (!cardRef.current) return;
@@ -165,7 +182,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     [rotationIntensity, startLoopIfNeeded]
   );
 
-  // Mouse ON: Trigger glitch transition + start smooth 3D tilt
+  // Mouse ON: Trigger glitch burst transition + start smooth tilt tracking
   const handleMouseEnter = useCallback(() => {
     isHoveredRef.current = true;
     if (imageWrapperRef.current) {
@@ -174,7 +191,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     triggerGlitchPulse(240);
   }, [triggerGlitchPulse, zoomLevel]);
 
-  // Mouse OFF: Trigger glitch transition + return smoothly to resting position
+  // Mouse OFF: Trigger glitch burst transition + return to resting position
   const handleMouseLeave = useCallback(() => {
     isHoveredRef.current = false;
     targetTilt.current = { x: 0, y: 0 };
@@ -185,7 +202,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     triggerGlitchPulse(240);
   }, [triggerGlitchPulse]);
 
-  // Trigger glitch from external prop (e.g. initial hero intro complete)
+  // External glitch trigger prop (e.g. initial Hero entry sequence)
   useEffect(() => {
     if (triggerGlitch) {
       triggerGlitchPulse(320);
@@ -204,8 +221,8 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
   return (
     <>
-      {/* SVG Filters for Optical RGB Chromatic Separation */}
-      <svg className="absolute w-0 h-0 overflow-hidden" aria-hidden="true">
+      {/* SVG Color Matrix Filters for Pure Optical RGB Channel Separation */}
+      <svg className="absolute w-0 h-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <defs>
           <filter id="chroma-channel-red" colorInterpolationFilters="sRGB">
             <feColorMatrix
@@ -249,11 +266,10 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         {/* Tilting Card Frame */}
         <div
           ref={innerRef}
-          className="relative w-full h-full overflow-hidden will-change-transform"
+          className="relative w-full h-full overflow-hidden will-change-transform bg-slate-950 transition-shadow duration-500 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.65)] group-hover:shadow-[0_25px_60px_-12px_rgba(56,189,248,0.25)]"
           style={{
             borderRadius: typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
             transformStyle: 'preserve-3d',
-            boxShadow: '0 20px 45px -10px rgba(0, 0, 0, 0.65)',
             transform: 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
           }}
         >
@@ -279,7 +295,10 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
           {/* Layer 1: Red Chromatic Separation Layer */}
           <div
             ref={redLayerRef}
-            className="absolute inset-0 w-full h-full overflow-hidden rounded-[inherit] pointer-events-none opacity-0 will-change-transform"
+            className={cn(
+              'absolute inset-0 w-full h-full overflow-hidden rounded-[inherit] pointer-events-none opacity-0 will-change-transform',
+              glitchActive && 'chroma-glitch-red-active'
+            )}
             style={{
               mixBlendMode: 'screen',
               filter: 'url(#chroma-channel-red)',
@@ -296,7 +315,10 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
           {/* Layer 2: Cyan Chromatic Separation Layer */}
           <div
             ref={cyanLayerRef}
-            className="absolute inset-0 w-full h-full overflow-hidden rounded-[inherit] pointer-events-none opacity-0 will-change-transform"
+            className={cn(
+              'absolute inset-0 w-full h-full overflow-hidden rounded-[inherit] pointer-events-none opacity-0 will-change-transform',
+              glitchActive && 'chroma-glitch-cyan-active'
+            )}
             style={{
               mixBlendMode: 'screen',
               filter: 'url(#chroma-channel-cyan)',
@@ -319,14 +341,14 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
               <div
                 className="absolute inset-0 w-full h-full bg-[#00f0ff]/25"
                 style={{
-                  clipPath: 'polygon(0 18%, 100% 18%, 100% 32%, 0 32%)',
+                  clipPath: 'polygon(0 20%, 100% 20%, 100% 34%, 0 34%)',
                   transform: 'translateX(-6px)',
                 }}
               />
               <div
                 className="absolute inset-0 w-full h-full bg-[#ff0055]/25"
                 style={{
-                  clipPath: 'polygon(0 58%, 100% 58%, 100% 72%, 0 72%)',
+                  clipPath: 'polygon(0 62%, 100% 62%, 100% 75%, 0 75%)',
                   transform: 'translateX(6px)',
                 }}
               />
@@ -342,9 +364,9 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
             }}
           />
 
-          {/* Layer 5: Light Mode Dark Contrast Overlay */}
+          {/* Layer 5: Light Mode Gentle Contrast Overlay */}
           <div
-            className="absolute inset-0 pointer-events-none z-10 [data-theme=light]:opacity-20 opacity-0 bg-black transition-opacity duration-300"
+            className="absolute inset-0 pointer-events-none z-10 [data-theme=light]:opacity-15 opacity-0 bg-black transition-opacity duration-300"
           />
 
           {/* Optional Children Overlay */}

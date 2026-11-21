@@ -1041,6 +1041,57 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   animation-name: glitch-transition-light !important;
 }
 
+/* --- React Bits Pro Chroma Card RGB Glitch Keyframes --- */
+@keyframes chroma-glitch-red {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    transform: translate3d(-5px, 2px, 0);
+  }
+  40% {
+    transform: translate3d(4px, -2px, 0);
+  }
+  60% {
+    transform: translate3d(-6px, 1px, 0);
+  }
+  80% {
+    transform: translate3d(3px, -1px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes chroma-glitch-cyan {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    transform: translate3d(5px, -2px, 0);
+  }
+  40% {
+    transform: translate3d(-4px, 2px, 0);
+  }
+  60% {
+    transform: translate3d(6px, -1px, 0);
+  }
+  80% {
+    transform: translate3d(-3px, 1px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.chroma-glitch-red-active {
+  animation: chroma-glitch-red 0.24s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.chroma-glitch-cyan-active {
+  animation: chroma-glitch-cyan 0.24s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
 /* --- Project Expandable Quick-View Drawer --- */
 .drawer-toggle-btn {
   background: none;
