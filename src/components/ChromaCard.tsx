@@ -24,6 +24,7 @@ uniform float u_imageAspectRatio;
 uniform float u_aspectRatio;
 uniform float u_opacity;
 uniform float u_hover;
+uniform float u_glitch;
 uniform float u_zoomLevel;
 uniform float u_rgbShift;
 uniform float u_pixelDisplace;
@@ -63,20 +64,23 @@ void main() {
   vec2 center = vec2(0.5);
   uv = (uv - center) * (1.0 - u_zoomLevel * u_hover) + center;
 
-  // Directional RGB chromatic aberration tracking 3D tilt
+  // Directional RGB chromatic aberration tracking 3D tilt and glitch burst
   vec2 mouseDir = length(u_mouse) > 0.02 ? normalize(u_mouse) : vec2(1.0, 0.0);
-  float dynamicShift = u_rgbShift * u_hover * (0.7 + 0.3 * length(u_mouse));
+  float dynamicShift = u_rgbShift * (u_hover * 0.65 + u_glitch * 1.35) * (0.7 + 0.3 * length(u_mouse));
   vec2 shift = mouseDir * dynamicShift;
 
   // Authentic procedural digital glitch bands (horizontal slice displacement)
-  float sliceBand = floor(uv.y * 28.0 + fract(sin(floor(u_time * 12.0)) * 43758.5453) * 6.0);
+  // Glitch fires punchy bursts on mouse in and mouse out, with subtle micro-chatter while hovering
+  float glitchFactor = max(u_glitch, u_hover * 0.1);
+
+  float sliceBand = floor(uv.y * 32.0 + fract(sin(floor(u_time * 18.0)) * 43758.5453) * 8.0);
   float sliceNoise = fract(sin(sliceBand * 12.9898) * 43758.5453);
-  float glitchTrigger = step(0.78, sliceNoise) * u_hover;
+  float glitchTrigger = step(0.65, sliceNoise) * glitchFactor;
   float glitchOffset = (sliceNoise - 0.5) * 2.0 * u_pixelDisplace * glitchTrigger;
 
-  // Micro jitter for high-frequency scanline chroma tear
-  float microJitter = (fract(sin(dot(uv.xy * 80.0, vec2(12.9898, 78.233)) + u_time * 8.0) * 43758.5453) - 0.5) * 0.12;
-  float totalGlitch = glitchOffset + microJitter * u_pixelDisplace * 0.2 * u_hover;
+  // High-frequency scanline chroma micro-tear
+  float microJitter = (fract(sin(dot(uv.xy * 90.0, vec2(12.9898, 78.233)) + u_time * 12.0) * 43758.5453) - 0.5) * 0.15;
+  float totalGlitch = glitchOffset + microJitter * u_pixelDisplace * 0.3 * glitchFactor;
 
   // Sample RGB channels with pure chromatic aberration & displacement
   vec2 displacedUv = uv + vec2(totalGlitch, 0.0);
@@ -204,6 +208,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       u_aspectRatio: { value: widthPx / heightPx },
       u_opacity: { value: opacity },
       u_hover: { value: 0.0 },
+      u_glitch: { value: 0.0 },
       u_zoomLevel: { value: zoomLevel },
       u_rgbShift: { value: rgbShiftAmount },
       u_pixelDisplace: { value: pixelDisplaceAmount },
@@ -264,10 +269,30 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     let touchStartX = 0;
     let touchStartY = 0;
 
+    // Signature React Bits punchy RGB glitch burst
+    const triggerGlitchBurst = () => {
+      if (!material) return;
+      gsap.killTweensOf(material.uniforms.u_glitch);
+      gsap.fromTo(
+        material.uniforms.u_glitch,
+        { value: 0.0 },
+        {
+          keyframes: [
+            { value: 1.0, duration: 0.07, ease: 'power1.out' },
+            { value: 0.28, duration: 0.05, ease: 'power1.in' },
+            { value: 0.9, duration: 0.08, ease: 'power1.out' },
+            { value: 0.0, duration: 0.2, ease: 'power2.out' },
+          ],
+        }
+      );
+    };
+
     const resetToNeutral = () => {
       if (!material || !mesh) return;
       isHovering = false;
       isMobileActive = false;
+
+      triggerGlitchBurst();
 
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
@@ -317,6 +342,8 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
       isHovering = true;
       isMobileActive = true;
+
+      triggerGlitchBurst();
 
       gsap.to(material.uniforms.u_hover, {
         value: 1.0,
@@ -383,6 +410,9 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
       if (shouldHover !== isHovering) {
         isHovering = shouldHover;
+        // Trigger punchy glitch effect upon mouse in and mouse out
+        triggerGlitchBurst();
+
         gsap.to(material.uniforms.u_hover, {
           value: isHovering ? 1.0 : 0.0,
           duration: hoverDuration,
@@ -426,6 +456,11 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
           overwrite: 'auto',
         });
       }
+    };
+
+    const handleMouseEnter = () => {
+      if (Date.now() - lastTouchTime < 1000) return;
+      triggerGlitchBurst();
     };
 
     const handleMouseLeave = () => {
@@ -497,6 +532,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       }
     };
 
+    container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
     container.addEventListener('touchstart', handleTouchStart, { passive: true });
@@ -518,6 +554,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
       container.removeEventListener('touchstart', handleTouchStart);
@@ -529,6 +566,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       resizeObserver.disconnect();
 
       gsap.killTweensOf(material.uniforms.u_hover);
+      gsap.killTweensOf(material.uniforms.u_glitch);
       gsap.killTweensOf(material.uniforms.u_mouse.value);
       gsap.killTweensOf(mesh.scale);
       gsap.killTweensOf(mesh.position);
@@ -558,9 +596,22 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     borderRadius,
   ]);
 
-  // Programmatic hover trigger
+  // Programmatic glitch trigger (e.g. on intro completion)
   useEffect(() => {
     if (triggerGlitch && materialRef.current) {
+      gsap.killTweensOf(materialRef.current.uniforms.u_glitch);
+      gsap.fromTo(
+        materialRef.current.uniforms.u_glitch,
+        { value: 0.0 },
+        {
+          keyframes: [
+            { value: 1.0, duration: 0.08, ease: 'power1.out' },
+            { value: 0.25, duration: 0.06, ease: 'power1.in' },
+            { value: 0.95, duration: 0.08, ease: 'power1.out' },
+            { value: 0.0, duration: 0.22, ease: 'power2.out' },
+          ],
+        }
+      );
       gsap.to(materialRef.current.uniforms.u_hover, {
         value: 1.0,
         duration: 0.28,
