@@ -219,12 +219,14 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     resizeObserver.observe(container);
 
     let isMobileActive = false;
-    let lastTouchTime = 0;
+    let lastToggleTime = 0;
     let touchStartX = 0;
     let touchStartY = 0;
 
+    const isMobileViewport = () => window.innerWidth < 1024 || !window.matchMedia('(hover: hover)').matches;
+
     const resetToNeutral = () => {
-      lastTouchTime = Date.now();
+      lastToggleTime = Date.now();
       if (!material || !mesh) return;
       isMobileActive = false;
       gsap.killTweensOf(material.uniforms.u_hover);
@@ -234,31 +236,35 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
-        duration: 0.45,
+        duration: 0.35,
         ease: 'power2.out',
+        overwrite: true,
       });
       gsap.to(mesh.scale, {
         x: 1.0,
         y: 1.0,
-        duration: interactionDuration,
+        duration: 0.45,
         ease: 'power2.out',
+        overwrite: true,
       });
       gsap.to(mesh.position, {
         x: 0.0,
         y: 0.0,
-        duration: interactionDuration,
+        duration: 0.45,
         ease: 'power2.out',
+        overwrite: true,
       });
       gsap.to(mesh.rotation, {
         x: 0.0,
         y: 0.0,
-        duration: interactionDuration,
+        duration: 0.45,
         ease: 'power2.out',
+        overwrite: true,
       });
     };
 
     const activateMobileEffect = (clientX: number, clientY: number) => {
-      lastTouchTime = Date.now();
+      lastToggleTime = Date.now();
       if (!container || !material || !mesh) return;
       isMobileActive = true;
       const rect = container.getBoundingClientRect();
@@ -276,30 +282,34 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         value: 1.0,
         duration: hoverDuration,
         ease: 'power2.out',
+        overwrite: true,
       });
       gsap.to(mesh.scale, {
         x: 1 + scaleIntensity,
         y: 1 + scaleIntensity,
         duration: interactionDuration,
         ease: 'power2.out',
+        overwrite: true,
       });
       gsap.to(mesh.position, {
         x: clampedX * positionIntensity * 0.7,
         duration: interactionDuration,
         ease: 'power2.out',
+        overwrite: true,
       });
       gsap.to(mesh.rotation, {
         x: -clampedY * (Math.PI / 3) * rotationIntensity * 0.7,
         y: clampedX * (Math.PI / 3) * rotationIntensity * 0.7,
         duration: interactionDuration,
         ease: 'power2.out',
+        overwrite: true,
       });
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Disallow mouse hover emulation on touchscreens / mobile devices
-      if (!window.matchMedia('(hover: hover)').matches) return;
-      if (Date.now() - lastTouchTime < 2000) return;
+      // Completely disable desktop mouse hover simulation on mobile viewports (<1024px) or non-hover devices
+      if (isMobileViewport()) return;
+      if (Date.now() - lastToggleTime < 1000) return;
       if (!container || !mesh || !material) return;
       const rect = container.getBoundingClientRect();
       mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -337,12 +347,12 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     };
 
     const handleMouseLeave = () => {
+      if (isMobileViewport()) return;
       if (!material || !mesh || isMobileActive) return;
       resetToNeutral();
     };
 
     const handleTouchStart = (e: TouchEvent) => {
-      lastTouchTime = Date.now();
       if (e.touches.length > 0) {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
@@ -350,9 +360,12 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
-      lastTouchTime = Date.now();
       if (!material || !mesh) return;
       if (e.changedTouches.length === 0) return;
+
+      const now = Date.now();
+      // Debounce rapid tap / multi-touch double events
+      if (now - lastToggleTime < 350) return;
 
       const touch = e.changedTouches[0];
       const dx = touch.clientX - touchStartX;
@@ -369,6 +382,19 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       }
     };
 
+    const handleClick = (e: MouseEvent) => {
+      // Support click events on mobile viewports while debouncing synthetic touch-clicks
+      if (!isMobileViewport()) return;
+      const now = Date.now();
+      if (now - lastToggleTime < 350) return;
+
+      if (isMobileActive) {
+        resetToNeutral();
+      } else {
+        activateMobileEffect(e.clientX, e.clientY);
+      }
+    };
+
     const handleDocumentTouch = (e: TouchEvent) => {
       if (!isMobileActive || !container) return;
       if (e.target && container.contains(e.target as Node)) return;
@@ -376,14 +402,16 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     };
 
     const handleWindowScroll = () => {
-      lastTouchTime = Date.now();
       if (isMobileActive) {
         resetToNeutral();
+        // Lock out accidental tap re-activation at the end of a scroll gesture
+        lastToggleTime = Date.now() + 250;
       }
     };
 
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('click', handleClick);
     container.addEventListener('touchstart', handleTouchStart, { passive: true });
     container.addEventListener('touchend', handleTouchEnd, { passive: true });
     window.addEventListener('scroll', handleWindowScroll, { passive: true });
@@ -421,6 +449,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       cancelAnimationFrame(animationFrameId);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('click', handleClick);
       container.removeEventListener('touchstart', handleTouchStart);
       container.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('scroll', handleWindowScroll);
