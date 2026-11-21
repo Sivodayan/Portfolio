@@ -160,6 +160,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         alpha: true,
         powerPreference: 'high-performance',
       });
+      renderer.setClearColor(0x000000, 0);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     } catch {
@@ -378,7 +379,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('relative overflow-hidden cursor-pointer select-none bg-transparent shadow-none border-0', className)}
+      className={cn('relative overflow-hidden cursor-pointer select-none', className)}
       style={{
         width: resolvedWidth,
         height: resolvedHeight === 'auto' ? 'auto' : resolvedHeight,
