@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export interface HeaderProps {
   theme: 'dark' | 'light';
-  onToggleTheme: () => void;
+  onToggleTheme: (e?: React.MouseEvent) => void;
 }
 
 interface NavItem {
@@ -185,7 +185,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92, rotate: 180 }}
               transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-              onClick={onToggleTheme}
+              onClick={(e) => onToggleTheme(e)}
               className="theme-toggle-btn cursor-pointer overflow-hidden"
               title={theme === 'dark' ? 'Switch to Light mode' : 'Switch to Dark mode'}
               aria-label="Toggle theme"

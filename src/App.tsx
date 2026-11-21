@@ -40,8 +40,46 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isLoading]);
 
-  const toggleTheme = () => {
+  const toggleTheme = (e?: React.MouseEvent) => {
     const next = theme === 'dark' ? 'light' : 'dark';
+
+    // Circular View Transition: Spreads color outward from button coordinates
+    const doc = typeof document !== 'undefined' ? (document as any) : null;
+    if (doc && typeof doc.startViewTransition === 'function') {
+      const x = e ? e.clientX : window.innerWidth - 60;
+      const y = e ? e.clientY : 30;
+      const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
+      );
+
+      const transition = doc.startViewTransition(() => {
+        setTheme(next);
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('sivodayan-theme', next);
+      });
+
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 650,
+            easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+            pseudoElement: '::view-transition-new(root)',
+          }
+        );
+      });
+
+      showToast(`Switched to ${next} mode`);
+      return;
+    }
+
+    // Direct fallback
     setTheme(next);
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('sivodayan-theme', next);

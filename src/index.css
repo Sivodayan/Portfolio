@@ -271,6 +271,21 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   border-color: rgba(0, 0, 0, 0.2);
 }
 
+/* --- Circular View Transition: Theme Spreading Outward from Toggle Button --- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 999999;
+}
+
 /* --- Hero Section & ASCII Stream Integration --- */
 .hero {
   min-height: 100dvh;
