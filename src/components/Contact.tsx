@@ -50,10 +50,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         }}
       >
         <RisingLines
-          colors={theme === 'light' ? ['#b45309', '#6366f1'] : ['#e5a93c', '#ff087b']}
-          color={theme === 'light' ? '#b45309' : '#ff087b'}
-          horizonColor={theme === 'light' ? '#e5a93c' : '#f3ba63'}
-          haloColor={theme === 'light' ? '#d97706' : '#e5a93c'}
+          colors={theme === 'light' ? ['#d97706', '#e11d48'] : ['#e5a93c', '#ff087b']}
+          color={theme === 'light' ? '#d97706' : '#ff087b'}
+          horizonColor={theme === 'light' ? '#f59e0b' : '#f3ba63'}
+          haloColor={theme === 'light' ? '#b45309' : '#e5a93c'}
           horizonHeight={-0.45}
           speed={0.6}
           density={1.1}

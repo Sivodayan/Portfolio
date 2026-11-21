@@ -125,9 +125,9 @@ body {
 [data-theme="light"] body {
   background-color: #f8fafc;
   background-image:
-    radial-gradient(ellipse 85% 55% at 50% -8%, rgba(56, 189, 248, 0.14), transparent 70%),
-    radial-gradient(ellipse 65% 50% at 92% 48%, rgba(99, 102, 241, 0.07), transparent 60%),
-    radial-gradient(ellipse 60% 55% at 8% 85%, rgba(14, 165, 233, 0.06), transparent 65%);
+    radial-gradient(ellipse 85% 55% at 50% -8%, rgba(229, 169, 60, 0.12), transparent 70%),
+    radial-gradient(ellipse 65% 50% at 92% 48%, rgba(245, 158, 11, 0.06), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 8% 85%, rgba(217, 119, 6, 0.05), transparent 65%);
   background-attachment: fixed;
 }
 
@@ -188,12 +188,12 @@ a, button, input, select, textarea {
 }
 
 [data-theme="light"] .ascii-stream-fullscreen {
-  opacity: 0.38;
-  mix-blend-mode: multiply;
+  opacity: 0.85;
+  mix-blend-mode: normal;
 }
 
 [data-theme="light"] .ascii-stream-fullscreen::after {
-  background: radial-gradient(circle at 50% 30%, transparent 40%, rgba(248, 250, 252, 0.45) 100%);
+  background: rgba(248, 250, 252, 0.32);
 }
 
 /* Global Typography High-Legibility Shadows */

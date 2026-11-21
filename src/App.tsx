@@ -247,19 +247,19 @@ export const App: React.FC = () => {
 
       <div className="ascii-stream-fullscreen" aria-hidden="true">
         <AsciiStream
-          colors={theme === 'light' ? ["#b45309", "#9A5B2C"] : ["#e5a93c", "#ff087b"]}
+          colors={theme === 'light' ? ["#d97706", "#e11d48"] : ["#e5a93c", "#ff087b"]}
           text={"dev sivodayan @cse"}
           pulse={0.9}
-          flare={theme === 'light' ? 0.35 : 0.6}
-          glow={theme === 'light' ? 0.45 : 0.8}
-          intensity={theme === 'light' ? 0.65 : 1.05}
+          flare={theme === 'light' ? 0.45 : 0.6}
+          glow={theme === 'light' ? 0.35 : 0.8}
+          intensity={theme === 'light' ? 1.05 : 1.05}
           grain={0}
           quality={0.45}
           burst={0.4}
           speed={1.5}
           interactive={true}
           ignite={1.2}
-          backgroundColor={theme === 'light' ? "#ffffff" : "#07080b"}
+          backgroundColor={theme === 'light' ? "#f8fafc" : "#07080b"}
           className="w-full h-full"
         />
       </div>

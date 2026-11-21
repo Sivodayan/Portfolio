@@ -158,13 +158,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             letterIn={{ opacity: 1, scale: 1 }}
             letterConfig={{ tension: 426, friction: 17 }}
             letterStagger={27}
-            className="text-sm sm:text-[15px] font-bold text-white tracking-tight drop-shadow-sm leading-snug"
+            className="text-sm sm:text-[15px] font-bold text-white light:text-slate-900 tracking-tight drop-shadow-sm light:drop-shadow-none leading-snug"
           >
             {project.title}
           </TextEngine>
         </div>
 
-        <p className="project-desc !text-xs !leading-relaxed text-[#cbd5e1] !mb-2 line-clamp-3">
+        <p className="project-desc !text-xs !leading-relaxed text-[#cbd5e1] light:text-slate-600 !mb-2 line-clamp-3">
           {project.desc}
         </p>
       </div>
@@ -183,7 +183,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 e.stopPropagation();
                 setShowAllTags(!showAllTags);
               }}
-              className="text-[10px] font-mono text-[#e5a93c] hover:text-[#f3ba63] active:scale-95 bg-white/5 hover:bg-white/10 active:bg-[#e5a93c]/20 px-1.5 py-0.5 rounded border border-[#e5a93c]/30 transition-all cursor-pointer touch-manipulation select-none self-center"
+              className="text-[10px] font-mono text-[#e5a93c] light:text-[#b45309] hover:text-[#f3ba63] light:hover:text-amber-800 active:scale-95 bg-white/5 light:bg-slate-100 hover:bg-white/10 active:bg-[#e5a93c]/20 px-1.5 py-0.5 rounded border border-[#e5a93c]/30 light:border-amber-600/30 transition-all cursor-pointer touch-manipulation select-none self-center"
               title={showAllTags ? "Show fewer tags" : "Show more tags"}
               aria-label={showAllTags ? "Show fewer tags" : "Show more tags"}
             >
@@ -193,19 +193,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
 
         {project.links && project.links.length > 0 && (
-          <div className="project-links !mt-1 !text-xs flex flex-wrap items-center gap-2 border-t border-white/10 pt-2">
+          <div className="project-links !mt-1 !text-xs flex flex-wrap items-center gap-2 border-t border-white/10 light:border-slate-200 pt-2">
             {project.links.map((link, idx) => (
               <React.Fragment key={idx}>
                 <a
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#e5a93c] font-semibold text-white transition-colors"
+                  className="hover:text-[#e5a93c] light:hover:text-[#b45309] font-semibold text-white light:text-slate-900 transition-colors"
                 >
                   <span>{link.label}</span>
                 </a>
                 {idx < project.links!.length - 1 && (
-                  <span className="text-white/30">•</span>
+                  <span className="text-white/30 light:text-slate-400">•</span>
                 )}
               </React.Fragment>
             ))}
@@ -236,7 +236,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'dark' }) => {
                 letterIn={{ opacity: 1, scale: 1 }}
                 letterConfig={{ tension: 426, friction: 17 }}
                 letterStagger={27}
-                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm"
+                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none"
               >
                 Selected Projects
               </TextEngine>

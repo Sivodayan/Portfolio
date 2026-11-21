@@ -116,33 +116,15 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                 letterIn={{ opacity: 1, scale: 1 }}
                 letterConfig={{ tension: 426, friction: 17 }}
                 letterStagger={27}
-                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-bold tracking-tight text-white drop-shadow-sm"
+                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-bold tracking-tight text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none"
               >
                 Education &amp; Experience
               </TextEngine>
             </GlitchHeading>
-            <p className="text-xs font-mono text-[#cbd5e1] light:text-slate-600 mt-1">
-              Academic milestones, departmental leadership &amp; volunteer initiatives
-            </p>
+          
           </div>
 
-          <div className="flex items-center gap-2">
-            {milestones.map((m) => (
-              <button
-                key={m.id}
-                type="button"
-                onClick={() => scrollToMilestone(m.id)}
-                className={`px-3 py-1.5 min-h-[32px] rounded-full text-[11px] font-mono transition-all touch-manipulation active:scale-95 cursor-pointer border ${
-                  activeIndex === m.id
-                    ? 'bg-[#e5a93c]/20 border-[#e5a93c] text-[#e5a93c] light:border-amber-500/40 light:text-amber-600 light:bg-amber-500/10 font-bold shadow-[0_0_12px_rgba(229,169,60,0.3)]'
-                    : 'bg-white/5 border-white/10 light:bg-slate-200 light:border-slate-300 text-[#94a3b8] light:text-slate-600 hover:text-white light:hover:text-slate-900 active:bg-white/10'
-                }`}
-                title={`Jump to ${m.label}`}
-              >
-                0{m.id + 1}
-              </button>
-            ))}
-          </div>
+         
         </motion.div>
 
         <motion.div
@@ -175,9 +157,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
             >
               <div>
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#e5a93c]/15 text-[#e5a93c] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#e5a93c]/30 light:border-[#b45309]/30 font-semibold mb-3">
-                  Jan 2016 — Apr 2025
-                </div>
+                
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   Secondary Education
                 </h3>
@@ -202,9 +182,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
             >
               <div>
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#e5a93c]/15 text-[#e5a93c] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#e5a93c]/30 light:border-[#b45309]/30 font-semibold mb-3">
-                  Nov 2025 — Present
-                </div>
+               
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   B.Sc. (Hons) in Engineering
                 </h3>
@@ -229,9 +207,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#f3ba63]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
             >
               <div>
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#f3ba63]/15 text-[#f3ba63] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#f3ba63]/30 light:border-[#b45309]/30 font-semibold mb-3">
-                  TRCSL Initiative
-                </div>
+               
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   TRCSL IT Volunteer
                 </h3>
