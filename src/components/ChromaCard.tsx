@@ -31,12 +31,9 @@ uniform float u_borderRadius;
 uniform vec2 u_resolution;
 varying vec2 vUv;
 
-float exponentialInOut(float t) {
-  return t == 0.0 || t == 1.0
-    ? t
-    : t < 0.5
-      ? +0.5 * pow(2.0, (20.0 * t) - 10.0)
-      : -0.5 * pow(2.0, 10.0 - (t * 20.0)) + 1.0;
+float smootherstep(float t) {
+  t = clamp(t, 0.0, 1.0);
+  return t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
 }
 
 float roundedBoxSDF(vec2 p, vec2 b, float r) {
@@ -66,7 +63,7 @@ void main() {
   uv.y *= u;
   uv.y -= (u) / 2. - .5;
 
-  float hoverLevel = exponentialInOut(min(1., (distance(vec2(.5), uv) * u_hover) + u_hover));
+  float hoverLevel = smootherstep(min(1., (distance(vec2(.5), uv) * u_hover) + u_hover));
   uv *= 1. - u_zoomLevel * hoverLevel;
   uv += u_zoomLevel / 2. * hoverLevel;
   uv = clamp(uv, 0., 1.);
@@ -97,6 +94,7 @@ export interface ChromaCardProps {
   rgbShiftAmount?: number;
   pixelDisplaceAmount?: number;
   hoverDuration?: number;
+  zoomOutDuration?: number;
   rotationIntensity?: number;
   scaleIntensity?: number;
   positionIntensity?: number;
@@ -121,6 +119,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   rgbShiftAmount = 0.025,
   pixelDisplaceAmount = 0.08,
   hoverDuration = 1.8,
+  zoomOutDuration = 0.85,
   rotationIntensity = 0.22,
   scaleIntensity = 0.08,
   positionIntensity = 0.35,
@@ -239,59 +238,88 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       const intersects = raycaster.intersectObject(mesh);
       const isHovered = isWithinBounds || intersects.length > 0;
 
-      gsap.to(material.uniforms.u_hover, {
-        value: isHovered ? 1.0 : 0.0,
-        duration: isHovered ? Math.min(hoverDuration, 0.45) : 0.45,
-        ease: 'power2.out',
-      });
+      if (isHovered) {
+        gsap.to(material.uniforms.u_hover, {
+          value: 1.0,
+          duration: Math.min(hoverDuration, 0.45),
+          ease: 'power2.out',
+        });
 
-      gsap.to(mesh.scale, {
-        x: 1 - mouse.y * scaleIntensity,
-        y: 1 - mouse.y * scaleIntensity,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
+        gsap.to(mesh.scale, {
+          x: 1 - mouse.y * scaleIntensity,
+          y: 1 - mouse.y * scaleIntensity,
+          duration: interactionDuration,
+          ease: 'power2.out',
+        });
 
-      gsap.to(mesh.position, {
-        x: mouse.x * positionIntensity,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
+        gsap.to(mesh.position, {
+          x: mouse.x * positionIntensity,
+          duration: interactionDuration,
+          ease: 'power2.out',
+        });
 
-      gsap.to(mesh.rotation, {
-        x: -mouse.y * (Math.PI / 3) * rotationIntensity,
-        y: mouse.x * (Math.PI / 3) * rotationIntensity,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
+        gsap.to(mesh.rotation, {
+          x: -mouse.y * (Math.PI / 3) * rotationIntensity,
+          y: mouse.x * (Math.PI / 3) * rotationIntensity,
+          duration: interactionDuration,
+          ease: 'power2.out',
+        });
+      } else {
+        gsap.to(material.uniforms.u_hover, {
+          value: 0.0,
+          duration: zoomOutDuration,
+          ease: 'power2.out',
+        });
+
+        gsap.to(mesh.scale, {
+          x: 1.0,
+          y: 1.0,
+          duration: zoomOutDuration,
+          ease: 'power2.out',
+        });
+
+        gsap.to(mesh.position, {
+          x: 0.0,
+          y: 0.0,
+          duration: zoomOutDuration,
+          ease: 'power2.out',
+        });
+
+        gsap.to(mesh.rotation, {
+          x: 0.0,
+          y: 0.0,
+          duration: zoomOutDuration,
+          ease: 'power2.out',
+        });
+      }
     };
 
     const handleMouseLeave = () => {
       if (!material || !mesh || isMobileActive) return;
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
-        duration: 0.45,
+        duration: zoomOutDuration,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.scale, {
         x: 1.0,
         y: 1.0,
-        duration: interactionDuration,
+        duration: zoomOutDuration,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.position, {
         x: 0.0,
         y: 0.0,
-        duration: interactionDuration,
+        duration: zoomOutDuration,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.rotation, {
         x: 0.0,
         y: 0.0,
-        duration: interactionDuration,
+        duration: zoomOutDuration,
         ease: 'power2.out',
       });
     };
@@ -303,13 +331,13 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
       gsap.to(material.uniforms.u_hover, {
         value: isMobileActive ? 1.0 : 0.0,
-        duration: hoverDuration,
+        duration: isMobileActive ? 0.5 : zoomOutDuration,
         ease: 'power2.out',
       });
       gsap.to(mesh.scale, {
         x: isMobileActive ? 1 + scaleIntensity : 1.0,
         y: isMobileActive ? 1 + scaleIntensity : 1.0,
-        duration: interactionDuration,
+        duration: isMobileActive ? 0.5 : zoomOutDuration,
         ease: 'power2.out',
       });
     };
@@ -373,6 +401,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     rgbShiftAmount,
     pixelDisplaceAmount,
     hoverDuration,
+    zoomOutDuration,
     rotationIntensity,
     scaleIntensity,
     positionIntensity,
