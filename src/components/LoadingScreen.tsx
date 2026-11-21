@@ -70,9 +70,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         {/* Skip button */}
         <button
           onClick={onComplete}
-          className="mt-4 px-3 py-1 text-[10px] font-mono text-[#a1a1aa] hover:text-white border border-white/10 hover:border-[#44f0ff]/40 rounded-md transition-colors"
+          className="mt-4 px-3.5 py-1.5 min-h-[36px] text-xs font-mono text-[#a1a1aa] hover:text-white border border-white/10 hover:border-[#44f0ff]/40 rounded-lg transition-colors touch-manipulation cursor-pointer flex items-center justify-center"
         >
-          Skip Intro [ESC / Click]
+          Skip Intro
         </button>
       </motion.div>
     </motion.div>

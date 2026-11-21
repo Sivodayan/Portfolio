@@ -91,7 +91,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
       className={isOverflowing ? 'relative w-full h-[160vh] sm:h-[180vh]' : 'relative w-full py-16 sm:py-20'}
     >
       {/* Sticky Viewport Container */}
-      <div className={isOverflowing ? 'sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden py-8' : 'w-full flex flex-col justify-center'}>
+      <div className={isOverflowing ? 'sticky top-0 min-h-[100dvh] sm:h-screen w-full flex flex-col justify-center overflow-hidden py-4 sm:py-8' : 'w-full flex flex-col justify-center'}>
         
         {/* Section Heading & Interactive Milestones Bar */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-4 sm:mb-6">
@@ -152,7 +152,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
             }`}
           >
             {/* Card 1: Jaffna Hindu College */}
-            <div className="w-[300px] sm:w-[380px] md:w-[410px] shrink-0 p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 [data-theme=light]:bg-white/95 border border-white/12 hover:border-[#38bdf8]/45 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[320px] sm:min-h-[350px]">
+            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 [data-theme=light]:bg-white/95 border border-white/12 hover:border-[#38bdf8]/45 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
                 <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#38bdf8]/15 text-[#38bdf8] border border-[#38bdf8]/30 font-semibold mb-3">
                   Jan 2016 — Apr 2025
@@ -173,7 +173,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
             </div>
 
             {/* Card 2: University of Moratuwa */}
-            <div className="w-[300px] sm:w-[380px] md:w-[410px] shrink-0 p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 [data-theme=light]:bg-white/95 border border-white/12 hover:border-[#38bdf8]/45 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[320px] sm:min-h-[350px]">
+            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 [data-theme=light]:bg-white/95 border border-white/12 hover:border-[#38bdf8]/45 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
                 <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#38bdf8]/15 text-[#38bdf8] border border-[#38bdf8]/30 font-semibold mb-3">
                   Nov 2025 — Present
@@ -194,7 +194,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
             </div>
 
             {/* Card 3: TRCSL IT Volunteer */}
-            <div className="w-[300px] sm:w-[380px] md:w-[410px] shrink-0 p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 [data-theme=light]:bg-white/95 border border-white/12 hover:border-[#44f0ff]/45 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[320px] sm:min-h-[350px]">
+            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 [data-theme=light]:bg-white/95 border border-white/12 hover:border-[#44f0ff]/45 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
                 <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#44f0ff]/15 text-[#44f0ff] border border-[#44f0ff]/30 font-semibold mb-3">
                   TRCSL Initiative

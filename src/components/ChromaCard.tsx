@@ -341,8 +341,33 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       });
     };
 
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1 && container && mesh && material) {
+        const touch = e.touches[0];
+        const containerRect = container.getBoundingClientRect();
+        const normX = Math.max(-1, Math.min(1, ((touch.clientX - containerRect.left) / containerRect.width) * 2 - 1));
+        const normY = Math.max(-1, Math.min(1, -(((touch.clientY - containerRect.top) / containerRect.height) * 2 - 1)));
+
+        gsap.to(material.uniforms.u_hover, { value: 1.0, duration: 0.35, ease: 'power2.out' });
+        gsap.to(mesh.scale, { x: 1 + scaleIntensity * 0.8, y: 1 + scaleIntensity * 0.8, duration: 0.3, ease: 'power2.out' });
+        gsap.to(mesh.rotation, {
+          x: -normY * (Math.PI / 4) * rotationIntensity,
+          y: normX * (Math.PI / 4) * rotationIntensity,
+          duration: 0.3,
+          ease: 'power2.out',
+        });
+      }
+    };
+
+    const handleTouchEnd = () => {
+      handleMouseLeave();
+    };
+
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('touchstart', handleTouchStart, { passive: true });
+    container.addEventListener('touchend', handleTouchEnd, { passive: true });
+    container.addEventListener('touchcancel', handleTouchEnd, { passive: true });
     window.addEventListener('resize', updateSize);
 
     const render = () => {
@@ -356,6 +381,9 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       cancelAnimationFrame(animationFrameId);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchend', handleTouchEnd);
+      container.removeEventListener('touchcancel', handleTouchEnd);
       window.removeEventListener('resize', updateSize);
       resizeObserver.disconnect();
 
@@ -407,10 +435,11 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('relative overflow-visible cursor-pointer select-none', className)}
+      className={cn('relative overflow-visible cursor-pointer select-none touch-pan-y', className)}
       style={{
         width: resolvedWidth,
         height: resolvedHeight === 'auto' ? 'auto' : resolvedHeight,
+        touchAction: 'pan-y',
       }}
     >
       <canvas

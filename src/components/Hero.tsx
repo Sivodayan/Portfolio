@@ -37,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
           initial={{ opacity: 0, scale: 0.92, y: 15 }}
           animate={isIntroDone ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.92, y: 15 }}
           transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="shrink-0 relative flex items-center justify-center select-none self-center w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[360px] overflow-visible"
+          className="shrink-0 relative flex items-center justify-center select-none self-center w-full max-w-[250px] min-[360px]:max-w-[280px] sm:max-w-[320px] lg:max-w-[360px] overflow-visible"
         >
           <ChromaCard
             width="100%"
@@ -75,7 +75,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               letterIn={{ opacity: 1, scale: 1 }}
               letterConfig={{ tension: 426, friction: 17 }}
               letterStagger={27}
-              className="font-anton text-4xl sm:text-5xl lg:text-[3.8rem] tracking-wide text-white mb-3.5 leading-[1.05] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
+              className="font-anton text-3xl min-[380px]:text-4xl sm:text-5xl lg:text-[3.8rem] tracking-wide text-white mb-3.5 leading-[1.08] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)] break-words"
             >
               Sivodayan Sujeevakumar
             </TextEngine>
@@ -96,7 +96,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
             initial={{ opacity: 0, y: 12 }}
             animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center gap-2.5 sm:gap-3 mb-4"
+            className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4"
           >
             {/* Download CV Action Button */}
             <a

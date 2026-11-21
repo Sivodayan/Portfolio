@@ -172,7 +172,7 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="relative overflow-hidden rounded-2xl"
+          className="relative overflow-hidden rounded-2xl min-h-[460px] sm:min-h-0"
           style={{
             maskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
             WebkitMaskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
@@ -186,7 +186,7 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
             zoom={1.2}
             lights={3}
             lightSize={1.1}
-            style={{ minHeight: 'clamp(400px, 55vh, 560px)' }}
+            style={{ minHeight: 'clamp(460px, 60vh, 560px)' }}
           >
             {/* Skill Tiles Overlaid on top of 3D Spectral Tiles with subtle stagger */}
             <div className="relative z-10 p-3 sm:p-6 flex flex-col justify-center h-full bg-transparent">

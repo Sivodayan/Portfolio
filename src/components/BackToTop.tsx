@@ -92,7 +92,7 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350, theme = '
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           transition={{ type: 'spring', stiffness: 380, damping: 26 }}
-          className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-40 select-none flex items-center"
+          className="fixed bottom-5 right-4 sm:bottom-8 sm:right-8 z-40 select-none flex items-center"
         >
           {/* Smooth Tooltip Pill on Hover */}
           <AnimatePresence>
@@ -123,7 +123,7 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350, theme = '
             whileTap={{ scale: 0.92 }}
             aria-label={`Back to top, ${scrollPercent}% scrolled`}
             title="Back to top"
-            className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 [data-theme=light]:bg-white/85 [data-theme=light]:hover:bg-white text-white [data-theme=light]:text-slate-900 border border-white/20 hover:border-[#38bdf8]/60 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/60 backdrop-blur-md shadow-[0_8px_25px_rgba(0,0,0,0.45)] hover:shadow-[0_0_28px_rgba(56,189,248,0.38)] transition-colors duration-300 cursor-pointer"
+            className="group relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] touch-manipulation rounded-full bg-black/60 hover:bg-black/90 [data-theme=light]:bg-white/85 [data-theme=light]:hover:bg-white text-white [data-theme=light]:text-slate-900 border border-white/20 hover:border-[#38bdf8]/60 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/60 backdrop-blur-md shadow-[0_8px_25px_rgba(0,0,0,0.45)] hover:shadow-[0_0_28px_rgba(56,189,248,0.38)] transition-colors duration-300 cursor-pointer"
           >
             {/* Ambient Aura Glow */}
             <div className="absolute inset-0 rounded-full bg-[#38bdf8]/25 [data-theme=light]:bg-[#0284c7]/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none -z-10 scale-125" />

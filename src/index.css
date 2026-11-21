@@ -75,6 +75,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   overflow-x: clip;
+  max-width: 100vw;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (min-width: 1280px) {
@@ -87,7 +89,20 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: clip;
+  max-width: 100vw;
   transition: background-color var(--transition), color var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+a, button, input, select, textarea {
+  touch-action: manipulation;
+}
+
+@media (max-width: 768px), (hover: none), (pointer: coarse) {
+  .custom-cursor,
+  [data-custom-cursor="true"] {
+    display: none !important;
+  }
 }
 
 /* Full-Screen React Bits Pro ASCII Stream Background */

@@ -164,14 +164,26 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
 
   // Global mouse tracking and element detection
   useEffect(() => {
-    const isPureTouch =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(pointer: coarse)').matches &&
-      !window.matchMedia('(pointer: fine)').matches;
+    const checkIsTouch = () => {
+      return (
+        typeof window !== 'undefined' &&
+        (window.innerWidth < 768 ||
+          (window.matchMedia &&
+            (window.matchMedia('(pointer: coarse)').matches ||
+              window.matchMedia('(hover: none)').matches)))
+      );
+    };
+
+    const isPureTouch = checkIsTouch();
     setIsTouchDevice(isPureTouch);
 
     if (isPureTouch && !showOnTouch) return;
+
+    const handleResize = () => {
+      const touch = checkIsTouch();
+      setIsTouchDevice(touch);
+      handleScrollOrResize();
+    };
 
     const handleMouseMove = (e: MouseEvent) => {
       if (isTouchDevice) setIsTouchDevice(false);
@@ -257,7 +269,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
     document.addEventListener('mouseenter', handleMouseEnter);
     document.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('scroll', handleScrollOrResize, true);
-    window.addEventListener('resize', handleScrollOrResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
@@ -266,7 +278,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('scroll', handleScrollOrResize, true);
-      window.removeEventListener('resize', handleScrollOrResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [isVisible, showOnTouch, targets, rawMouseX, rawMouseY, updateRingToElement, resetRingToMouse, getInteractiveTarget]);
 

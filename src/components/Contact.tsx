@@ -134,7 +134,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
                 <a
                   href="mailto:sivodayan17@gmail.com"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#44f0ff]/15 hover:bg-[#44f0ff]/25 [data-theme=light]:bg-[#0284c7]/10 [data-theme=light]:hover:bg-[#0284c7]/20 text-[#44f0ff] [data-theme=light]:text-[#0284c7] font-mono text-xs font-semibold transition-colors"
@@ -170,7 +170,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
                 <a
                   href="https://wa.me/94705891710"
                   target="_blank"
@@ -264,7 +264,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
                 <a
                   href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
                   target="_blank"
