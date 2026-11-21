@@ -1221,10 +1221,6 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   filter: none !important;
 }
 
-[data-theme="light"] .hero .aspect-\[370\/505\] {
-  box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.06) !important;
-}
-
 [data-theme="light"] p,
 [data-theme="light"] .hero-bio,
 [data-theme="light"] .project-desc,

@@ -43,7 +43,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
             width="100%"
             height="auto"
             triggerGlitch={isGlitching}
-            className="rounded-[22px] sm:rounded-[26px] aspect-[370/505] w-full shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)]"
+            className="aspect-[370/505] w-full bg-transparent shadow-none border-0"
           />
         </motion.div>
 

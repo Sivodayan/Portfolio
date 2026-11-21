@@ -378,7 +378,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('relative overflow-hidden cursor-pointer select-none', className)}
+      className={cn('relative overflow-hidden cursor-pointer select-none bg-transparent shadow-none border-0', className)}
       style={{
         width: resolvedWidth,
         height: resolvedHeight === 'auto' ? 'auto' : resolvedHeight,
