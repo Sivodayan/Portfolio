@@ -185,7 +185,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   // Update ring bounds to match target element or free mouse
   const updateRingToElement = useCallback((el: HTMLElement) => {
     const rect = el.getBoundingClientRect();
-    if (rect.width > 560 || rect.height > 200) {
+    if (rect.width > 600 || rect.height > 600) {
       ringTargetW.set(circleSize);
       ringTargetH.set(circleSize);
       ringTargetRadius.set(circleSize / 2);

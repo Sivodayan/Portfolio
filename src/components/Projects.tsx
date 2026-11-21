@@ -119,7 +119,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <article
       ref={cardRef}
-      className="project-item !p-4 !rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#e5a93c]/50 backdrop-blur-md transition-all flex flex-col justify-between h-full min-h-0 sm:min-h-[440px] lg:min-h-[460px]"
+      data-cursor-target
+      data-cursor-card
+      className="project-item !p-4 !rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#e5a93c]/50 backdrop-blur-md transition-all flex flex-col justify-between h-full min-h-0 sm:min-h-[440px] lg:min-h-[460px] cursor-pointer focus:outline-none focus:ring-0"
       style={{
         transform: 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)',
         transition: 'transform 0.15s ease-out, border-color 0.2s, background-color 0.2s',
@@ -179,11 +181,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           {project.tags.length > 4 && (
             <button
               type="button"
+              data-cursor-ignore
               onClick={(e) => {
                 e.stopPropagation();
                 setShowAllTags(!showAllTags);
               }}
-              className="text-[10px] font-mono text-[#e5a93c] light:text-[#b45309] hover:text-[#f3ba63] light:hover:text-amber-800 active:scale-95 bg-white/5 light:bg-slate-100 hover:bg-white/10 active:bg-[#e5a93c]/20 px-1.5 py-0.5 rounded border border-[#e5a93c]/30 light:border-amber-600/30 transition-all cursor-pointer touch-manipulation select-none self-center"
+              className="text-[10px] font-mono text-[#e5a93c] light:text-[#b45309] hover:text-[#f3ba63] light:hover:text-amber-800 active:scale-95 bg-white/5 light:bg-slate-100 hover:bg-white/10 active:bg-[#e5a93c]/20 px-1.5 py-0.5 rounded border border-[#e5a93c]/30 light:border-amber-600/30 transition-all cursor-pointer touch-manipulation select-none self-center focus:outline-none"
               title={showAllTags ? "Show fewer tags" : "Show more tags"}
               aria-label={showAllTags ? "Show fewer tags" : "Show more tags"}
             >
@@ -200,7 +203,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#e5a93c] light:hover:text-[#b45309] font-semibold text-white light:text-slate-900 transition-colors"
+                  data-cursor-ignore
+                  className="hover:text-[#e5a93c] light:hover:text-[#b45309] font-semibold text-white light:text-slate-900 transition-colors focus:outline-none"
                 >
                   <span>{link.label}</span>
                 </a>
