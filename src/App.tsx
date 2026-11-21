@@ -228,7 +228,7 @@ export const App: React.FC = () => {
 
       <div className="page-container">
         <main>
-          <Hero onShowToast={showToast} isIntroDone={isIntroDone} />
+          <Hero onShowToast={showToast} isIntroDone={isIntroDone} theme={theme} />
           <Projects theme={theme} />
           <SkillsShowcase theme={theme} />
           <Experience theme={theme} />

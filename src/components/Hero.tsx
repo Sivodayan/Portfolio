@@ -7,9 +7,10 @@ import ChromaCard from './ChromaCard';
 export interface HeroProps {
   onShowToast?: (msg: string) => void;
   isIntroDone?: boolean;
+  theme?: 'dark' | 'light';
 }
 
-export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) => {
+export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true, theme = 'dark' }) => {
   const [isGlitching, setIsGlitching] = React.useState(false);
 
   React.useEffect(() => {
@@ -52,22 +53,22 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
             initial={{ opacity: 0, y: -8 }}
             animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs sm:text-[13px] font-mono font-bold tracking-wider text-[#e5a93c] light:text-[#b45309] uppercase mb-2.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] light:drop-shadow-none"
+            className="text-xs sm:text-[13px] font-mono font-bold tracking-wider uppercase mb-2.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] light:drop-shadow-none"
           >
             <span className="block text-[#e5a93c] light:text-[#b45309]">Computer Science &amp; Engineering Undergraduate</span>
-            <span className="block text-[#fde68a] light:text-slate-700 text-[11px] sm:text-xs font-medium tracking-normal mt-0.5">University of Moratuwa </span>
+            <span className="block text-[#fde68a] light:text-slate-700 text-[11px] sm:text-xs font-semibold tracking-normal mt-0.5">University of Moratuwa </span>
           </motion.div>
 
           <div className={isGlitching ? 'glitch-transition' : ''}>
             <TextEngine
-              key={isIntroDone ? 'intro-done' : 'intro-waiting'}
+              key={isIntroDone ? `intro-done-${theme}` : 'intro-waiting'}
               tag="h1"
               mode="once"
               letterOut={{ opacity: 0, scale: 0 }}
               letterIn={{ opacity: 1, scale: 1 }}
               letterConfig={{ tension: 426, friction: 17 }}
-              letterStagger={27}
-              className="font-anton text-3xl min-[380px]:text-4xl sm:text-5xl lg:text-[3.8rem] tracking-wide text-white light:text-slate-900 mb-3.5 leading-[1.08] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)] light:drop-shadow-none break-words"
+              letterStagger={22}
+              className="font-anton text-3xl min-[380px]:text-4xl sm:text-5xl lg:text-[3.8rem] tracking-wide text-white light:text-slate-950 mb-3.5 leading-[1.08] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)] light:drop-shadow-none break-words"
             >
               Sivodayan Sujeevakumar
             </TextEngine>
@@ -77,7 +78,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
             initial={{ opacity: 0, y: 12 }}
             animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.65, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
-            className="text-sm sm:text-[15px] lg:text-base text-[#f1f5f9] light:text-slate-700 leading-relaxed mb-5 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] light:drop-shadow-none max-w-xl"
+            className="text-sm sm:text-[15px] lg:text-base text-[#f1f5f9] light:text-slate-800 leading-relaxed mb-5 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] light:drop-shadow-none max-w-xl"
           >
             Department Representative for Computer Science &amp; Engineering. I build full-stack web applications, embedded IoT telemetries, and performant developer software using React, TypeScript, Python, and C++.
           </motion.p>
