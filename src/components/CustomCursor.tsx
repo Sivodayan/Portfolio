@@ -72,9 +72,15 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   const morphBgColor = theme === 'light' ? 'rgba(180, 83, 9, 0.08)' : 'rgba(229, 169, 60, 0.08)';
   const morphShadow = theme === 'light' ? '0 0 16px rgba(180, 83, 9, 0.25)' : '0 0 20px rgba(229, 169, 60, 0.3), inset 0 0 10px rgba(229, 169, 60, 0.08)';
 
+  // Visual styling for pointer circle when hovering clickable elements and focus is not in progress
+  const pointerBorderColor = theme === 'light' ? '#b45309' : '#e5a93c';
+  const pointerBgColor = theme === 'light' ? 'rgba(180, 83, 9, 0.1)' : 'rgba(229, 169, 60, 0.14)';
+  const pointerShadow = theme === 'light' ? '0 0 14px rgba(180, 83, 9, 0.25)' : '0 0 16px rgba(229, 169, 60, 0.35)';
+
   const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isHoveringPointer, setIsHoveringPointer] = useState(false);
   const [activeEl, setActiveEl] = useState<HTMLElement | null>(null);
   const [activeTargetIdx, setActiveTargetIdx] = useState<number | null>(null);
 
@@ -255,8 +261,21 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
           setActiveTargetIdx(null);
           resetRingToMouse();
         }
+        setIsHoveringPointer(false);
         return;
       }
+
+      // Detect if cursor is over a pointer/clickable element when focus is not active
+      let isPointer = false;
+      try {
+        if (
+          target.closest('a, button, input[type="button"], input[type="submit"], [role="button"], select, summary, label, .cursor-pointer, [style*="cursor: pointer"], [style*="cursor:pointer"]') ||
+          window.getComputedStyle(target).cursor === 'pointer'
+        ) {
+          isPointer = true;
+        }
+      } catch {}
+      setIsHoveringPointer(isPointer);
 
       // Check if target matches any explicit selector in `targets` prop
       let matchedTargetIdx: number | null = null;
@@ -304,6 +323,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
     const handleMouseEnter = () => setIsVisible(true);
     const handleMouseLeave = () => {
       setIsVisible(false);
+      setIsHoveringPointer(false);
       currentElRef.current = null;
       setActiveEl(null);
       setActiveTargetIdx(null);
@@ -344,6 +364,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   }
 
   const isMorphed = Boolean(activeEl);
+  const isPointerActive = isHoveringPointer && !isMorphed;
 
   return (
     <div
@@ -355,12 +376,32 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
       <motion.div
         className={`absolute flex items-center justify-center ${circleClassName}`}
         animate={{
-          scale: isMorphed ? 1 : isClicked ? 0.82 : 1,
-          borderColor: isMorphed ? morphBorderColor : effectiveCircleColor,
-          backgroundColor: isMorphed ? morphBgColor : 'transparent',
-          boxShadow: isMorphed ? morphShadow : '0 0 0px transparent',
+          scale: isMorphed
+            ? 1
+            : isPointerActive
+            ? isClicked
+              ? 0.95
+              : 1.38
+            : isClicked
+            ? 0.82
+            : 1,
+          borderColor: isMorphed
+            ? morphBorderColor
+            : isPointerActive
+            ? pointerBorderColor
+            : effectiveCircleColor,
+          backgroundColor: isMorphed
+            ? morphBgColor
+            : isPointerActive
+            ? pointerBgColor
+            : 'transparent',
+          boxShadow: isMorphed
+            ? morphShadow
+            : isPointerActive
+            ? pointerShadow
+            : '0 0 0px transparent',
         }}
-        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+        transition={{ type: 'spring', stiffness: 420, damping: 26 }}
         style={{
           width: smoothW,
           height: smoothH,
@@ -386,7 +427,15 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
         className={`absolute rounded-full pointer-events-none ${dotClassName}`}
         animate={{
           opacity: isVisible && !isMorphed ? 1 : 0,
-          scale: isMorphed ? 0 : isClicked ? 1.5 : 1,
+          scale: isMorphed
+            ? 0
+            : isPointerActive
+            ? isClicked
+              ? 1.6
+              : 1.35
+            : isClicked
+            ? 1.5
+            : 1,
         }}
         transition={{ duration: 0.12 }}
         style={{
