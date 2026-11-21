@@ -88,25 +88,6 @@ const MILESTONES_DATA: Milestone[] = [
     ],
     tags: ['CSE Dept Rep', 'CGPA 3.54', 'AIESEC CXP', 'Mora Lenz Club', 'Algorithms'],
   },
-  {
-    id: 'future',
-    index: '04',
-    year: 'Ongoing & Beyond',
-    period: 'Present & Beyond',
-    type: 'Vision & Systems',
-    title: 'Distributed Systems & Edge AI',
-    org: 'Engineering & Research',
-    location: 'Global / Sri Lanka',
-    icon: <Sparkles className="w-4 h-4 text-[#c084fc]" />,
-    accentColor: '#c084fc',
-    points: [
-      { bold: 'IoT Sensor Networks:', text: ' Architecting telemetry mesh networks (e.g., FloodGuard river hydrometric monitoring system).' },
-      { bold: 'Full-Stack Performance:', text: ' Building resilient, high-speed applications using React 19, TypeScript, and Three.js.' },
-      { bold: 'Systems Research:', text: ' Deepening investigations into distributed consensus algorithms, embedded firmware, and edge ML.' },
-      { bold: 'Open Collaboration:', text: ' Actively seeking high-impact software engineering internships and innovative tech collaborations.' },
-    ],
-    tags: ['Distributed Systems', 'Embedded IoT', 'Full-Stack', 'Edge AI'],
-  },
 ];
 
 export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'dark' }) => {
@@ -194,12 +175,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
         {/* Section Top Bar: Title & Controls */}
         <div className="w-full mb-3 sm:mb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="inline-block w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse" />
-              <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-[#38bdf8] font-semibold">
-                Chronological Journey
-              </span>
-            </div>
+            
             <GlitchHeading>
               <TextEngine
                 tag="h2"
@@ -226,8 +202,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
                   : 'bg-black/40 border-white/10 text-white/70'
               }`}
             >
-              <Compass className="w-3.5 h-3.5 text-[#38bdf8] animate-spin" style={{ animationDuration: '8s' }} />
-              <span>Scroll page to advance</span>
+              
             </div>
 
             {/* Prev / Next buttons */}
@@ -480,20 +455,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
           </motion.div>
         </div>
 
-        {/* Timeline Bottom Micro-Indicator */}
-        <div className="mt-2 sm:mt-3 flex items-center justify-between text-[11px] font-mono text-white/50 [data-theme=light]:text-slate-500 px-1">
-          <div className="flex items-center gap-2">
-            <span>Scroll page to glide timeline</span>
-            <span className="hidden sm:inline">•</span>
-            <span className="hidden sm:inline">Use arrows or milestone nodes to scrub</span>
-          </div>
-          <div>
-            <span className="text-[#38bdf8] font-semibold">
-              {Math.round(activeMilestone * 33.3 + 0.1)}%
-            </span>{' '}
-            explored
-          </div>
-        </div>
+       
 
       </div>
     </section>
