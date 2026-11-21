@@ -98,7 +98,20 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         {/* Compact 4-Card Contact Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 mb-6">
           {/* Email Card */}
-          <div className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/40 backdrop-blur-md transition-all shadow-sm group">
+          <div
+            role="button"
+            tabIndex={0}
+            data-cursor-target
+            onClick={() => {
+              window.location.href = 'mailto:sivodayan17@gmail.com';
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                window.location.href = 'mailto:sivodayan17@gmail.com';
+              }
+            }}
+            className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/40 backdrop-blur-md transition-all shadow-sm group cursor-pointer"
+          >
             <div className="flex items-center gap-3 min-w-0">
               <span className="p-2.5 rounded-lg bg-[#e5a93c]/10 text-[#e5a93c] light:text-[#b45309] shrink-0">
                 <Mail className="w-4 h-4" />
@@ -107,17 +120,16 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 <div className="text-[10px] font-mono uppercase tracking-wider text-[#94a3b8] light:text-slate-500 font-semibold">
                   Email
                 </div>
-                <a
-                  href="mailto:sivodayan17@gmail.com"
+                <span
                   className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309] transition-colors truncate block"
                   title="Send Email"
                 >
                   sivodayan17@gmail.com
-                </a>
+                </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 shrink-0 ml-2">
+            <div className="flex items-center gap-1.5 shrink-0 ml-2 relative z-10" onClick={(e) => e.stopPropagation()}>
               <a
                 href="mailto:sivodayan17@gmail.com"
                 className="p-2 rounded-lg bg-[#e5a93c]/15 hover:bg-[#e5a93c]/25 light:bg-[#b45309]/10 light:hover:bg-[#b45309]/20 border border-white/10 light:border-slate-300 text-[#e5a93c] light:text-[#b45309] transition-colors cursor-pointer"
@@ -128,7 +140,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               </a>
               <button
                 type="button"
-                onClick={() => handleCopy('sivodayan17@gmail.com', 'Email', 'email')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCopy('sivodayan17@gmail.com', 'Email', 'email');
+                }}
                 className="p-2 rounded-lg bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
                 title="Copy email address"
                 aria-label="Copy email address"
@@ -139,7 +154,20 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
           </div>
 
           {/* WhatsApp & Phone Card */}
-          <div className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-emerald-500/40 light:border-slate-200 light:hover:border-emerald-600/40 backdrop-blur-md transition-all shadow-sm group">
+          <div
+            role="button"
+            tabIndex={0}
+            data-cursor-target
+            onClick={() => {
+              window.open('https://wa.me/94705891710', '_blank', 'noopener,noreferrer');
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                window.open('https://wa.me/94705891710', '_blank', 'noopener,noreferrer');
+              }
+            }}
+            className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-emerald-500/40 light:border-slate-200 light:hover:border-emerald-600/40 backdrop-blur-md transition-all shadow-sm group cursor-pointer"
+          >
             <div className="flex items-center gap-3 min-w-0">
               <span className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 light:text-emerald-700 shrink-0">
                 <Phone className="w-4 h-4" />
@@ -154,7 +182,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 shrink-0 ml-2">
+            <div className="flex items-center gap-1.5 shrink-0 ml-2 relative z-10" onClick={(e) => e.stopPropagation()}>
               <a
                 href="https://wa.me/94705891710"
                 target="_blank"
@@ -167,7 +195,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               </a>
               <button
                 type="button"
-                onClick={() => handleCopy('+94 70 589 1710', 'Phone number', 'phone')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCopy('+94 70 589 1710', 'Phone number', 'phone');
+                }}
                 className="p-2 rounded-lg bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
                 title="Copy phone number"
                 aria-label="Copy phone number"
