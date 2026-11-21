@@ -107,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
           className="brand-link group"
           aria-label="Sujeevakumar Sivodayan"
         >
-          <span className="font-anton text-base sm:text-lg tracking-wider text-white light:text-slate-900 group-hover:text-[#38bdf8] transition-colors drop-shadow-sm">
+          <span className="text-sm sm:text-base font-semibold tracking-tight text-white light:text-slate-900 group-hover:text-[#38bdf8] light:group-hover:text-[#0284c7] transition-colors">
             Sivodayan
           </span>
         </motion.a>
