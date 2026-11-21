@@ -63,20 +63,26 @@ void main() {
   vec2 center = vec2(0.5);
   uv = (uv - center) * (1.0 - u_zoomLevel * u_hover) + center;
 
-  // Realistic chromatic aberration (RGB split) tracking 3D tilt direction
-  vec2 mouseDir = length(u_mouse) > 0.02 ? normalize(u_mouse) : vec2(0.707, 0.707);
-  float dynamicShift = u_rgbShift * u_hover * (0.6 + 0.4 * length(u_mouse));
+  // Directional RGB chromatic aberration tracking 3D tilt
+  vec2 mouseDir = length(u_mouse) > 0.02 ? normalize(u_mouse) : vec2(1.0, 0.0);
+  float dynamicShift = u_rgbShift * u_hover * (0.7 + 0.3 * length(u_mouse));
   vec2 shift = mouseDir * dynamicShift;
 
-  // Horizontal digital glitch scanline effect on hover
-  float glitchLine = step(0.93, sin(uv.y * 36.0 + u_time * 20.0)) * u_pixelDisplace * u_hover;
-  float glitchScan = sin(uv.y * 70.0 - u_time * 15.0);
-  vec2 glitch = vec2(glitchLine * glitchScan * 0.5, 0.0);
+  // Authentic procedural digital glitch bands (horizontal slice displacement)
+  float sliceBand = floor(uv.y * 28.0 + fract(sin(floor(u_time * 12.0)) * 43758.5453) * 6.0);
+  float sliceNoise = fract(sin(sliceBand * 12.9898) * 43758.5453);
+  float glitchTrigger = step(0.78, sliceNoise) * u_hover;
+  float glitchOffset = (sliceNoise - 0.5) * 2.0 * u_pixelDisplace * glitchTrigger;
 
-  // Sample channels with chromatic split & glitch
-  vec2 uvR = clamp(uv + shift + glitch, 0.0, 1.0);
-  vec2 uvG = clamp(uv + glitch * 0.3, 0.0, 1.0);
-  vec2 uvB = clamp(uv - shift - glitch * 0.2, 0.0, 1.0);
+  // Micro jitter for high-frequency scanline chroma tear
+  float microJitter = (fract(sin(dot(uv.xy * 80.0, vec2(12.9898, 78.233)) + u_time * 8.0) * 43758.5453) - 0.5) * 0.12;
+  float totalGlitch = glitchOffset + microJitter * u_pixelDisplace * 0.2 * u_hover;
+
+  // Sample RGB channels with pure chromatic aberration & displacement
+  vec2 displacedUv = uv + vec2(totalGlitch, 0.0);
+  vec2 uvR = clamp(displacedUv + shift, 0.0, 1.0);
+  vec2 uvG = clamp(displacedUv, 0.0, 1.0);
+  vec2 uvB = clamp(displacedUv - shift, 0.0, 1.0);
 
   float r = texture2D(u_texture, uvR).r;
   float g = texture2D(u_texture, uvG).g;
@@ -84,10 +90,6 @@ void main() {
   vec4 base = texture2D(u_texture, clamp(uv, 0.0, 1.0));
 
   vec3 col = vec3(r, g, b);
-
-  // Subtle interactive light refraction sheen when card tilts in 3D
-  float sheen = max(0.0, 1.0 - abs(dot(vUv - 0.5, mouseDir)) * 3.2) * 0.12 * u_hover;
-  col += sheen * vec3(0.3, 0.75, 1.0);
 
   gl_FragColor = vec4(col, base.a * u_opacity * alpha);
 }
@@ -136,13 +138,13 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   imageAspectRatio = 370 / 505,
   cardWidth = 4.8,
   cardHeight = 6.4,
-  zoomLevel = 0.08,
-  rgbShiftAmount = 0.032,
-  pixelDisplaceAmount = 0.038,
-  hoverDuration = 0.35,
-  rotationIntensity = 0.22,
+  zoomLevel = 0.06,
+  rgbShiftAmount = 0.026,
+  pixelDisplaceAmount = 0.075,
+  hoverDuration = 0.32,
+  rotationIntensity = 0.28,
   scaleIntensity = 0.04,
-  positionIntensity = 0.2,
+  positionIntensity = 0.16,
   interactionDuration = 0.35,
   opacity = 1,
   cameraFov = 50,
