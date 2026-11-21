@@ -100,6 +100,8 @@ body {
   z-index: 0;
   overflow: hidden;
   opacity: 0.92;
+  transform: translateZ(0);
+  will-change: transform;
   transition: opacity 0.3s ease;
 }
 
@@ -501,6 +503,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   flex-direction: column;
   justify-content: center;
   padding: 3.5rem 0;
+  contain: layout style;
 }
 
 #contact.section {

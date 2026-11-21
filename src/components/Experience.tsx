@@ -133,11 +133,11 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
   const rawX = useTransform(scrollYProgress, [0, 1], [0, -maxScroll]);
   const smoothX = useSpring(rawX, { damping: 25, stiffness: 120, mass: 0.15 });
 
-  // Update active milestone index as user scrolls
+  // Update active milestone index only when the milestone actually changes
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
     const step = 1 / MILESTONES_DATA.length;
     const idx = Math.min(MILESTONES_DATA.length - 1, Math.floor(latest / step));
-    setActiveMilestone(idx);
+    setActiveMilestone((prev) => (prev !== idx ? idx : prev));
   });
 
   // Jump smoothly to a specific milestone
@@ -404,35 +404,8 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
                       ))}
                     </ul>
                   </div>
-
-                  {/* Bottom Tags / Action */}
-                  <div className="mt-4 pt-3 border-t border-white/10 dark:border-white/10 [data-theme=light]:border-slate-200 flex flex-wrap items-center justify-between gap-2">
-                    <div className="flex flex-wrap gap-1.5">
-                      {item.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className={`text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded-md border ${
-                            isLight
-                              ? 'bg-slate-100 text-slate-700 border-slate-200'
-                              : 'bg-white/[0.06] text-[#cbd5e1] border-white/10'
-                          }`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {item.id === 'future' && (
-                      <a
-                        href="#contact"
-                        className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-[#c084fc] hover:text-[#d8b4fe] transition-colors"
-                      >
-                        <span>Connect</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </a>
-                    )}
                   </div>
-                </div>
+                
               );
             })}
           </motion.div>

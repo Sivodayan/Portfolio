@@ -218,9 +218,6 @@ export const Projects: React.FC = () => {
                 Selected Projects
               </TextEngine>
             </GlitchHeading>
-            <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
-              Featured Engineering, Embedded &amp; Web Systems
-            </p>
           </div>
         </div>
 

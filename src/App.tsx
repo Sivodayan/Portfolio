@@ -67,19 +67,19 @@ export const App: React.FC = () => {
       {/* React Bits Pro: Custom Cursor */}
       <CustomCursor theme={theme} />
 
-      {/* React Bits Pro: AsciiStream Full-Screen Background */}
+      {/* React Bits Pro: AsciiStream Full-Screen Background (Optimized for 60/120fps) */}
       <div className="ascii-stream-fullscreen" aria-hidden="true">
         <AsciiStream
           colors={theme === 'light' ? ["#0284c7", "#0d9488"] : ["#44f0ff", "#ff087b"]}
           text={"dev sivodayan @cse"}
-          pulse={1.05}
-          flare={1.0}
-          glow={1.1}
-          intensity={theme === 'light' ? 0.75 : 1.15}
-          grain={0.05}
-          quality={0.65}
-          burst={0.8}
-          speed={1.8}
+          pulse={0.9}
+          flare={0.6}
+          glow={0.8}
+          intensity={theme === 'light' ? 0.75 : 1.05}
+          grain={0}
+          quality={0.45}
+          burst={0.4}
+          speed={1.5}
           backgroundColor={theme === 'light' ? "#f8fafc" : "#07080b"}
           className="w-full h-full"
         />

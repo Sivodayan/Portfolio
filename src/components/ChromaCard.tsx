@@ -36,51 +36,107 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   className = '',
   children,
   imageSrc = '/assets/images/profile.jpg',
-  zoomLevel = 0.05,
-  rgbShiftAmount = 0.03,
-  rotationIntensity = 0.8,
-  scaleIntensity = 0.04,
+  zoomLevel = 0.04,
+  rgbShiftAmount = 0.025,
+  rotationIntensity = 0.75,
+  scaleIntensity = 0.03,
   borderRadius = 26,
   triggerGlitch = false,
 }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const innerRef = useRef<HTMLDivElement | null>(null);
+  const imageWrapperRef = useRef<HTMLDivElement | null>(null);
+  const foilRef = useRef<HTMLDivElement | null>(null);
+  const glareRef = useRef<HTMLDivElement | null>(null);
+  const redLayerRef = useRef<HTMLDivElement | null>(null);
+  const cyanLayerRef = useRef<HTMLDivElement | null>(null);
+  const angleBadgeRef = useRef<HTMLSpanElement | null>(null);
 
-  // Smooth 3D tilt tracking state
-  const [tilt, setTilt] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [glare, setGlare] = useState<{ x: number; y: number; opacity: number }>({
-    x: 50,
-    y: 50,
-    opacity: 0,
-  });
-  const [isHovered, setIsHovered] = useState<boolean>(false);
   const [glitchActive, setGlitchActive] = useState<boolean>(false);
 
-  // Internal lerp physics targets
+  // Non-rendering physics refs (100% decoupled from React state for 120fps performance)
+  const isHoveredRef = useRef<boolean>(false);
   const targetTilt = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const currentTilt = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const glarePos = useRef<{ x: number; y: number; opacity: number }>({ x: 50, y: 50, opacity: 0 });
+  const currentGlare = useRef<{ x: number; y: number; opacity: number }>({ x: 50, y: 50, opacity: 0 });
+  const isRunningRef = useRef<boolean>(false);
   const animationFrameId = useRef<number | null>(null);
 
-  // Smooth lerp loop for tactile inertia
-  useEffect(() => {
-    const loop = () => {
-      // Lerp toward target
-      const factor = isHovered ? 0.12 : 0.08;
-      currentTilt.current.x += (targetTilt.current.x - currentTilt.current.x) * factor;
-      currentTilt.current.y += (targetTilt.current.y - currentTilt.current.y) * factor;
+  // Direct GPU update loop (runs only when needed, never triggers React re-renders)
+  const updatePhysics = useCallback(() => {
+    const isHovered = isHoveredRef.current;
+    const factor = isHovered ? 0.14 : 0.09;
 
-      setTilt({
-        x: Number(currentTilt.current.x.toFixed(2)),
-        y: Number(currentTilt.current.y.toFixed(2)),
-      });
+    // Lerp tilt
+    currentTilt.current.x += (targetTilt.current.x - currentTilt.current.x) * factor;
+    currentTilt.current.y += (targetTilt.current.y - currentTilt.current.y) * factor;
 
-      animationFrameId.current = requestAnimationFrame(loop);
-    };
+    // Lerp glare
+    currentGlare.current.x += (glarePos.current.x - currentGlare.current.x) * factor;
+    currentGlare.current.y += (glarePos.current.y - currentGlare.current.y) * factor;
+    currentGlare.current.opacity += (glarePos.current.opacity - currentGlare.current.opacity) * factor;
 
-    animationFrameId.current = requestAnimationFrame(loop);
-    return () => {
-      if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
-    };
-  }, [isHovered]);
+    const tiltX = currentTilt.current.x;
+    const tiltY = currentTilt.current.y;
+    const scale = isHovered ? 1 + scaleIntensity : 1;
+
+    // Direct DOM transform (zero VDOM reconciliation cost)
+    if (innerRef.current) {
+      innerRef.current.style.transform = `rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) scale3d(${scale}, ${scale}, 1)`;
+    }
+
+    // Direct chromatic layer displacement
+    const chromaticActive = isHovered || glitchActive;
+    if (redLayerRef.current) {
+      const rx = (-tiltY * 0.4 * (rgbShiftAmount * 25));
+      const ry = (tiltX * 0.4 * (rgbShiftAmount * 25));
+      redLayerRef.current.style.transform = `scale(${isHovered ? 1 + zoomLevel : 1}) translate3d(${rx.toFixed(1)}px, ${ry.toFixed(1)}px, 0)`;
+      redLayerRef.current.style.opacity = chromaticActive ? '0.85' : '0';
+    }
+
+    if (cyanLayerRef.current) {
+      const cx = (tiltY * 0.4 * (rgbShiftAmount * 25));
+      const cy = (-tiltX * 0.4 * (rgbShiftAmount * 25));
+      cyanLayerRef.current.style.transform = `scale(${isHovered ? 1 + zoomLevel : 1}) translate3d(${cx.toFixed(1)}px, ${cy.toFixed(1)}px, 0)`;
+      cyanLayerRef.current.style.opacity = chromaticActive ? '0.85' : '0';
+    }
+
+    // Update holographic foil sheen
+    if (foilRef.current) {
+      foilRef.current.style.backgroundPosition = `${(50 + tiltY * 2).toFixed(1)}% ${(50 + tiltX * 2).toFixed(1)}%`;
+      foilRef.current.style.opacity = isHovered ? '0.3' : '0.1';
+    }
+
+    // Update specular glare
+    if (glareRef.current) {
+      glareRef.current.style.opacity = currentGlare.current.opacity.toFixed(2);
+      glareRef.current.style.background = `radial-gradient(circle 320px at ${currentGlare.current.x.toFixed(1)}% ${currentGlare.current.y.toFixed(1)}%, rgba(255, 255, 255, 0.45) 0%, rgba(56, 189, 248, 0.15) 35%, transparent 70%)`;
+    }
+
+    // Update readout badge
+    if (angleBadgeRef.current) {
+      angleBadgeRef.current.textContent = `${tiltY > 0 ? `+${tiltY.toFixed(0)}°` : `${tiltY.toFixed(0)}°`} / ${tiltX > 0 ? `+${tiltX.toFixed(0)}°` : `${tiltX.toFixed(0)}°`}`;
+    }
+
+    // Determine if loop should continue
+    const tiltDiff = Math.abs(targetTilt.current.x - currentTilt.current.x) + Math.abs(targetTilt.current.y - currentTilt.current.y);
+    const glareDiff = Math.abs(glarePos.current.opacity - currentGlare.current.opacity);
+
+    if (isHovered || tiltDiff > 0.02 || glareDiff > 0.01) {
+      animationFrameId.current = requestAnimationFrame(updatePhysics);
+    } else {
+      isRunningRef.current = false;
+      animationFrameId.current = null;
+    }
+  }, [glitchActive, rgbShiftAmount, scaleIntensity, zoomLevel]);
+
+  const startLoopIfNeeded = useCallback(() => {
+    if (!isRunningRef.current) {
+      isRunningRef.current = true;
+      animationFrameId.current = requestAnimationFrame(updatePhysics);
+    }
+  }, [updatePhysics]);
 
   // Handle Mouse Movement over Card
   const handleMouseMove = useCallback(
@@ -95,51 +151,65 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       const normY = (y / rect.height) * 2 - 1;
 
       // Calculate 3D tilt angles
-      const maxRot = 16 * rotationIntensity;
+      const maxRot = 14 * rotationIntensity;
       targetTilt.current = {
         x: -normY * maxRot,
         y: normX * maxRot,
       };
 
       // Calculate holographic glare position (0% - 100%)
-      setGlare({
+      glarePos.current = {
         x: (x / rect.width) * 100,
         y: (y / rect.height) * 100,
         opacity: 0.65,
-      });
+      };
+
+      startLoopIfNeeded();
     },
-    [rotationIntensity]
+    [rotationIntensity, startLoopIfNeeded]
   );
 
   const handleMouseEnter = useCallback(() => {
-    setIsHovered(true);
+    isHoveredRef.current = true;
+    if (imageWrapperRef.current) {
+      imageWrapperRef.current.style.transform = `scale(${1 + zoomLevel})`;
+    }
     // Micro-glitch pulse on enter
     setGlitchActive(true);
-    const timer = setTimeout(() => setGlitchActive(false), 240);
+    const timer = setTimeout(() => setGlitchActive(false), 200);
+    startLoopIfNeeded();
     return () => clearTimeout(timer);
-  }, []);
+  }, [startLoopIfNeeded, zoomLevel]);
 
   const handleMouseLeave = useCallback(() => {
-    setIsHovered(false);
+    isHoveredRef.current = false;
     targetTilt.current = { x: 0, y: 0 };
-    setGlare((prev) => ({ ...prev, opacity: 0 }));
-  }, []);
+    glarePos.current.opacity = 0;
+    if (imageWrapperRef.current) {
+      imageWrapperRef.current.style.transform = 'scale(1)';
+    }
+    startLoopIfNeeded();
+  }, [startLoopIfNeeded]);
 
-  // Trigger glitch when triggerGlitch prop updates (e.g. hero entry intro)
+  // Trigger glitch when triggerGlitch prop updates
   useEffect(() => {
     if (triggerGlitch) {
       setGlitchActive(true);
-      const timer = setTimeout(() => setGlitchActive(false), 380);
+      startLoopIfNeeded();
+      const timer = setTimeout(() => {
+        setGlitchActive(false);
+      }, 350);
       return () => clearTimeout(timer);
     }
-  }, [triggerGlitch]);
+  }, [triggerGlitch, startLoopIfNeeded]);
 
-  // Calculate dynamic chromatic aberration offset based on current tilt & hover state
-  const chromaticIntensity = (isHovered ? 1.0 : 0.0) + (glitchActive ? 2.2 : 0.0);
-  const redShiftX = (-tilt.y * 0.45 * (rgbShiftAmount * 25) * chromaticIntensity);
-  const redShiftY = (tilt.x * 0.45 * (rgbShiftAmount * 25) * chromaticIntensity);
-  const cyanShiftX = (tilt.y * 0.45 * (rgbShiftAmount * 25) * chromaticIntensity);
-  const cyanShiftY = (-tilt.x * 0.45 * (rgbShiftAmount * 25) * chromaticIntensity);
+  useEffect(() => {
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+    };
+  }, []);
 
   const resolvedWidth = typeof width === 'number' ? `${width}px` : width;
   const resolvedHeight = typeof height === 'number' ? `${height}px` : height;
@@ -149,7 +219,6 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       {/* Hidden SVG Filters for Chromatic Color Separation */}
       <svg className="absolute w-0 h-0 overflow-hidden" aria-hidden="true">
         <defs>
-          {/* Pure Red Channel Filter */}
           <filter id="chroma-channel-red" colorInterpolationFilters="sRGB">
             <feColorMatrix
               type="matrix"
@@ -159,8 +228,6 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
                       0 0 0 1 0"
             />
           </filter>
-
-          {/* Pure Cyan Channel Filter (Green + Blue) */}
           <filter id="chroma-channel-cyan" colorInterpolationFilters="sRGB">
             <feColorMatrix
               type="matrix"
@@ -193,80 +260,67 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       >
         {/* Tilting Card Wrapper */}
         <div
-          className="relative w-full h-full overflow-hidden transition-all duration-300 ease-out will-change-transform"
+          ref={innerRef}
+          className="relative w-full h-full overflow-hidden will-change-transform"
           style={{
             borderRadius: typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
-            transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale3d(${
-              isHovered ? 1 + scaleIntensity : 1
-            }, ${isHovered ? 1 + scaleIntensity : 1}, 1)`,
             transformStyle: 'preserve-3d',
-            boxShadow: isHovered
-              ? '0 30px 60px -12px rgba(0, 0, 0, 0.85), 0 0 25px rgba(56, 189, 248, 0.35)'
-              : '0 20px 40px -10px rgba(0, 0, 0, 0.6)',
+            boxShadow: '0 20px 45px -10px rgba(0, 0, 0, 0.65)',
+            transform: 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
           }}
         >
           {/* Cyber Glass Outer Border */}
           <div
-            className={`absolute inset-0 rounded-[inherit] border transition-colors duration-300 pointer-events-none z-30 ${
-              isHovered ? 'border-[#38bdf8]/70' : 'border-white/15 [data-theme=light]:border-black/10'
-            }`}
+            className="absolute inset-0 rounded-[inherit] border border-white/15 [data-theme=light]:border-black/10 group-hover:border-[#38bdf8]/60 transition-colors duration-300 pointer-events-none z-30"
           />
 
           {/* Layer 0: Base Crystal Clear Image */}
           <div
-            className="absolute inset-0 w-full h-full overflow-hidden rounded-[inherit]"
-            style={{
-              transform: `scale(${isHovered ? 1 + zoomLevel : 1})`,
-              transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-            }}
+            ref={imageWrapperRef}
+            className="absolute inset-0 w-full h-full overflow-hidden rounded-[inherit] transition-transform duration-300 ease-out will-change-transform"
           >
             <img
               src={imageSrc}
               alt="Profile Portrait"
               loading="eager"
+              decoding="async"
               className="w-full h-full object-cover select-none pointer-events-none"
             />
           </div>
 
           {/* Layer 1: Red Chromatic Separation Layer */}
-          {chromaticIntensity > 0.05 && (
-            <div
-              className="absolute inset-0 w-full h-full overflow-hidden rounded-[inherit] pointer-events-none transition-opacity duration-200"
-              style={{
-                opacity: isHovered || glitchActive ? 0.85 : 0,
-                transform: `scale(${isHovered ? 1 + zoomLevel : 1}) translate3d(${redShiftX}px, ${redShiftY}px, 0)`,
-                mixBlendMode: 'screen',
-                filter: 'url(#chroma-channel-red)',
-              }}
-            >
-              <img
-                src={imageSrc}
-                alt=""
-                aria-hidden="true"
-                className="w-full h-full object-cover select-none"
-              />
-            </div>
-          )}
+          <div
+            ref={redLayerRef}
+            className="absolute inset-0 w-full h-full overflow-hidden rounded-[inherit] pointer-events-none opacity-0 will-change-transform"
+            style={{
+              mixBlendMode: 'screen',
+              filter: 'url(#chroma-channel-red)',
+            }}
+          >
+            <img
+              src={imageSrc}
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-cover select-none"
+            />
+          </div>
 
           {/* Layer 2: Cyan Chromatic Separation Layer */}
-          {chromaticIntensity > 0.05 && (
-            <div
-              className="absolute inset-0 w-full h-full overflow-hidden rounded-[inherit] pointer-events-none transition-opacity duration-200"
-              style={{
-                opacity: isHovered || glitchActive ? 0.85 : 0,
-                transform: `scale(${isHovered ? 1 + zoomLevel : 1}) translate3d(${cyanShiftX}px, ${cyanShiftY}px, 0)`,
-                mixBlendMode: 'screen',
-                filter: 'url(#chroma-channel-cyan)',
-              }}
-            >
-              <img
-                src={imageSrc}
-                alt=""
-                aria-hidden="true"
-                className="w-full h-full object-cover select-none"
-              />
-            </div>
-          )}
+          <div
+            ref={cyanLayerRef}
+            className="absolute inset-0 w-full h-full overflow-hidden rounded-[inherit] pointer-events-none opacity-0 will-change-transform"
+            style={{
+              mixBlendMode: 'screen',
+              filter: 'url(#chroma-channel-cyan)',
+            }}
+          >
+            <img
+              src={imageSrc}
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-cover select-none"
+            />
+          </div>
 
           {/* Layer 3: Cyberpunk Horizontal Slices Glitch */}
           {glitchActive && (
@@ -277,15 +331,15 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
               <div
                 className="absolute inset-0 w-full h-full bg-[#00f0ff]/20"
                 style={{
-                  clipPath: 'polygon(0 15%, 100% 15%, 100% 32%, 0 32%)',
-                  transform: 'translateX(-6px)',
+                  clipPath: 'polygon(0 18%, 100% 18%, 100% 34%, 0 34%)',
+                  transform: 'translateX(-5px)',
                 }}
               />
               <div
                 className="absolute inset-0 w-full h-full bg-[#ff0055]/20"
                 style={{
-                  clipPath: 'polygon(0 58%, 100% 58%, 100% 74%, 0 74%)',
-                  transform: 'translateX(6px)',
+                  clipPath: 'polygon(0 55%, 100% 55%, 100% 70%, 0 70%)',
+                  transform: 'translateX(5px)',
                 }}
               />
             </div>
@@ -296,51 +350,48 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
             className="absolute inset-0 pointer-events-none z-15 opacity-[0.14] group-hover:opacity-[0.22] transition-opacity duration-300"
             style={{
               backgroundImage:
-                'repeating-linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35) 1px, transparent 1px, transparent 3px)',
+                'repeating-linear-gradient(0deg, rgba(0,0,0,0.3), rgba(0,0,0,0.3) 1px, transparent 1px, transparent 3px)',
             }}
           />
 
           {/* Layer 5: Holographic Rainbow Foil Sheen */}
           <div
-            className="absolute inset-0 pointer-events-none z-20 transition-opacity duration-300"
+            ref={foilRef}
+            className="absolute inset-0 pointer-events-none z-20 opacity-10 transition-opacity duration-300 will-change-transform"
             style={{
-              opacity: isHovered ? 0.32 : 0.12,
-              background: `linear-gradient(${115 + tilt.y * 3}deg, 
+              background: `linear-gradient(115deg, 
                 rgba(255, 0, 128, 0.22) 0%, 
                 rgba(0, 240, 255, 0.28) 25%, 
                 rgba(255, 235, 59, 0.22) 50%, 
                 rgba(168, 85, 247, 0.28) 75%, 
                 rgba(52, 211, 153, 0.22) 100%)`,
               backgroundSize: '200% 200%',
-              backgroundPosition: `${50 + tilt.y * 2}% ${50 + tilt.x * 2}%`,
+              backgroundPosition: '50% 50%',
               mixBlendMode: 'color-dodge',
             }}
           />
 
           {/* Layer 6: Dynamic Specular Spotlight / Glare */}
           <div
-            className="absolute inset-0 pointer-events-none z-25 transition-opacity duration-200"
+            ref={glareRef}
+            className="absolute inset-0 pointer-events-none z-25 opacity-0 will-change-transform"
             style={{
-              opacity: glare.opacity,
-              background: `radial-gradient(circle 320px at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, 0.45) 0%, rgba(56, 189, 248, 0.15) 35%, transparent 70%)`,
               mixBlendMode: 'overlay',
             }}
           />
 
           {/* Layer 7: Light Mode Dark Contrast Overlay */}
           <div
-            className="absolute inset-0 pointer-events-none z-10 transition-opacity duration-300 [data-theme=light]:opacity-20 opacity-0 bg-black"
+            className="absolute inset-0 pointer-events-none z-10 [data-theme=light]:opacity-20 opacity-0 bg-black transition-opacity duration-300"
           />
 
           {/* Layer 8: HUD Micro-Markers (Top Bar) */}
           <div className="absolute top-3 left-3 right-3 z-30 flex items-center justify-between pointer-events-none">
-            {/* Top-Left Code Badge */}
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-mono text-white/90 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8] animate-pulse" />
               <span className="font-semibold tracking-wider">CHROMA // 01</span>
             </div>
 
-            {/* Top-Right Online Status */}
             <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-mono text-emerald-400 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span className="text-[9px] font-bold tracking-widest">ACTIVE</span>
@@ -350,9 +401,8 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
           {/* Layer 9: HUD Bottom Bar */}
           <div className="absolute bottom-3 left-3 right-3 z-30 flex items-center justify-between px-3 py-1.5 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 text-[10px] font-mono text-white/80 pointer-events-none shadow-sm">
             <span className="font-medium tracking-wide">SIVODAYAN • CSE</span>
-            <span className="text-[#38bdf8] font-bold">
-              {tilt.y > 0 ? `+${tilt.y.toFixed(0)}°` : `${tilt.y.toFixed(0)}°`} /{' '}
-              {tilt.x > 0 ? `+${tilt.x.toFixed(0)}°` : `${tilt.x.toFixed(0)}°`}
+            <span ref={angleBadgeRef} className="text-[#38bdf8] font-bold font-mono">
+              0° / 0°
             </span>
           </div>
 

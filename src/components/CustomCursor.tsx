@@ -120,82 +120,20 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   const borderCacheRef = useRef(new WeakMap<HTMLElement, boolean>());
 
   /**
-   * Checks whether an element has a fully defined, visible border on all sides.
+   * Fast, zero-layout-thrashing detection of interactive elements.
+   * Uses native C++ .closest() matching without calling getComputedStyle in mousemove.
    */
-  const elementHasBorder = useCallback((el: HTMLElement): boolean => {
-    const cached = borderCacheRef.current.get(el);
-    if (cached !== undefined) return cached;
-
-    try {
-      const style = window.getComputedStyle(el);
-      const sides = ['Top', 'Right', 'Bottom', 'Left'] as const;
-
-      for (const side of sides) {
-        const width = parseFloat(style[`border${side}Width` as keyof CSSStyleDeclaration] as string) || 0;
-        const borderStyle = style[`border${side}Style` as keyof CSSStyleDeclaration] as string;
-        const color = style[`border${side}Color` as keyof CSSStyleDeclaration] as string;
-
-        if (
-          width <= 0 ||
-          !borderStyle ||
-          borderStyle === 'none' ||
-          borderStyle === 'hidden' ||
-          !color ||
-          color === 'transparent' ||
-          color === 'rgba(0, 0, 0, 0)'
-        ) {
-          borderCacheRef.current.set(el, false);
-          return false;
-        }
-      }
-
-      borderCacheRef.current.set(el, true);
-      return true;
-    } catch {
-      return false;
-    }
-  }, []);
-
-  /**
-   * Finds the nearest element that already has a visible border.
-   * Only targets elements with a pre-existing border within reasonable dimensions.
-   */
-  const getBorderedTarget = useCallback((target: HTMLElement | null): HTMLElement | null => {
+  const getInteractiveTarget = useCallback((target: HTMLElement | null): HTMLElement | null => {
     if (!target) return null;
-
-    let curr: HTMLElement | null = target;
-    let depth = 0;
-
-    while (curr && curr !== document.body && curr !== document.documentElement && depth < 5) {
-      const rect = curr.getBoundingClientRect();
-      // Ignore full-width / massive containers
-      if (rect.width > 420 || rect.height > 160) {
-        break;
-      }
-
-      if (elementHasBorder(curr)) {
-        return curr;
-      }
-
-      if (
-        curr.classList.contains('section') ||
-        curr.classList.contains('page-container') ||
-        curr.tagName === 'MAIN'
-      ) {
-        break;
-      }
-
-      curr = curr.parentElement;
-      depth++;
-    }
-
-    return null;
-  }, [elementHasBorder]);
+    return target.closest<HTMLElement>(
+      'a, button, input, textarea, select, [role="button"], .draggable-badge, .theme-toggle-btn, .nav-actions a, .timeline-node, [data-cursor-target]'
+    );
+  }, []);
 
   // Update ring bounds to match target element or free mouse
   const updateRingToElement = useCallback((el: HTMLElement) => {
     const rect = el.getBoundingClientRect();
-    if (rect.width > 420 || rect.height > 160) {
+    if (rect.width > 480 || rect.height > 180) {
       ringTargetW.set(circleSize);
       ringTargetH.set(circleSize);
       ringTargetRadius.set(circleSize / 2);
@@ -207,12 +145,11 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
     const pad = targetPadding;
     const w = rect.width + pad * 2;
     const h = rect.height + pad * 2;
-    const computedR = parseFloat(window.getComputedStyle(el).borderRadius) || 8;
-    const isCircle = Math.abs(rect.width - rect.height) < 4 && computedR >= rect.width / 2 - 2;
+    const isCircle = Math.abs(rect.width - rect.height) < 4;
 
     ringTargetW.set(w);
     ringTargetH.set(h);
-    ringTargetRadius.set(isCircle ? w / 2 : computedR + pad);
+    ringTargetRadius.set(isCircle ? w / 2 : 12);
     ringTargetX.set(rect.left + rect.width / 2);
     ringTargetY.set(rect.top + rect.height / 2);
   }, [circleSize, targetPadding, rawMouseX, ringTargetW, ringTargetH, ringTargetRadius, ringTargetX, ringTargetY]);
@@ -268,9 +205,9 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
         }
       }
 
-      // Only add focus on hover shape for elements that already have a visible border!
+      // Match interactive buttons, links, pills, and badges
       if (!candidate) {
-        candidate = getBorderedTarget(target);
+        candidate = getInteractiveTarget(target);
       }
 
       if (candidate) {
@@ -331,7 +268,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
       window.removeEventListener('scroll', handleScrollOrResize, true);
       window.removeEventListener('resize', handleScrollOrResize);
     };
-  }, [isVisible, showOnTouch, targets, rawMouseX, rawMouseY, updateRingToElement, resetRingToMouse, getBorderedTarget]);
+  }, [isVisible, showOnTouch, targets, rawMouseX, rawMouseY, updateRingToElement, resetRingToMouse, getInteractiveTarget]);
 
   if (isTouchDevice && !showOnTouch) {
     return null;
