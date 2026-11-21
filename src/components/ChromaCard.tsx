@@ -119,7 +119,7 @@ export interface ChromaCardProps {
  * - GSAP-driven 3D perspective tilt, rotation, and scale tracking
  */
 export const ChromaCard: React.FC<ChromaCardProps> = ({
-  width = '100%',
+  width = 'auto',
   height = 'auto',
   className = '',
   children,
@@ -437,8 +437,8 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       ref={containerRef}
       className={cn('relative overflow-visible cursor-pointer select-none touch-pan-y', className)}
       style={{
-        width: resolvedWidth,
-        height: resolvedHeight === 'auto' ? 'auto' : resolvedHeight,
+        width: resolvedWidth === 'auto' ? undefined : resolvedWidth,
+        height: resolvedHeight === 'auto' ? undefined : resolvedHeight,
         touchAction: 'pan-y',
       }}
     >

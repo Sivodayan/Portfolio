@@ -37,13 +37,11 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
           initial={{ opacity: 0, scale: 0.92, y: 15 }}
           animate={isIntroDone ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.92, y: 15 }}
           transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="shrink-0 relative flex items-center justify-center select-none self-center w-full max-w-[250px] min-[360px]:max-w-[280px] sm:max-w-[320px] lg:max-w-[360px] overflow-visible"
+          className="shrink-0 relative flex items-center justify-center select-none self-center overflow-visible"
         >
           <ChromaCard
-            width="100%"
-            height="auto"
             triggerGlitch={isGlitching}
-            className="aspect-[370/505] w-full"
+            className="aspect-[370/505] h-[32vh] min-h-[220px] max-h-[280px] sm:h-[40vh] sm:min-h-[290px] sm:max-h-[370px] lg:h-[56vh] lg:min-h-[420px] lg:max-h-[500px] xl:h-[60vh] xl:max-h-[530px] w-auto max-w-[85vw]"
           />
         </motion.div>
 
