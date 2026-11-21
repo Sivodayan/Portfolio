@@ -1,10 +1,8 @@
-"use client";
-
-import React, { useRef, useEffect } from "react";
-import * as THREE from "three";
-import { gsap } from "gsap";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import React, { useRef, useEffect } from 'react';
+import * as THREE from 'three';
+import { gsap } from 'gsap';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -43,6 +41,7 @@ float roundedBoxSDF(vec2 p, vec2 b, float r) {
 }
 
 void main() {
+  // Signed Distance Field (SDF) rounded rectangle for realistic card shape
   vec2 pixelCoord = vUv * u_resolution;
   vec2 centerPx = u_resolution * 0.5;
   vec2 halfSize = u_resolution * 0.5;
@@ -53,7 +52,7 @@ void main() {
   }
   float alpha = 1.0 - smoothstep(-0.8, 0.2, dist);
 
-  // Aspect-ratio cover mapping
+  // Aspect-ratio cover mapping for the portrait photo
   vec2 uv = vUv;
   float u = u_imageAspectRatio / u_aspectRatio;
   if (u_imageAspectRatio > u_aspectRatio) {
@@ -62,35 +61,57 @@ void main() {
   uv.y *= u;
   uv.y -= (u) / 2.0 - 0.5;
 
-  // Smooth zoom on hover/glitch
-  float activeZoom = max(u_hover, u_glitch * 0.85);
+  // Realistic uniform center zoom on hover (preserves flat, crisp corners with zero folding)
   vec2 center = vec2(0.5);
-  uv = (uv - center) * (1.0 - u_zoomLevel * activeZoom) + center;
+  uv = (uv - center) * (1.0 - u_zoomLevel * u_hover) + center;
 
+  // Directional RGB chromatic aberration tracking 3D tilt and glitch burst
   vec2 mouseDir = length(u_mouse) > 0.02 ? normalize(u_mouse) : vec2(0.707, 0.707);
-  float activeIntensity = max(u_glitch, (u_hover + u_glitch * 0.4) * (0.18 + 0.82 * u_motion));
+  
+  // Dynamic active intensity:
+  // - u_hover maintains active optical depth & baseline dispersion (0.35)
+  // - u_glitch triggers the full punchy holographic burst (up to 1.0)
+  // - u_motion adds live response on mouse movement
+  float activeIntensity = max(u_glitch, u_hover * (0.35 + 0.65 * u_motion));
 
-  float dynamicShift =
-    u_rgbShift *
-    (u_hover * 0.55 + u_glitch * 1.15 + activeIntensity * 0.9) *
-    (0.65 + 0.35 * length(u_mouse));
+  // Dynamic chromatic shift tracking tilt & glitch burst
+  float dynamicShift = u_rgbShift * (u_hover * 0.45 + activeIntensity * 0.85) * (0.7 + 0.3 * length(u_mouse));
   vec2 shift = mouseDir * dynamicShift;
 
-  // Wave displacement for fast pointer motion and glitch bursts
-  float wave1 = sin(uv.y * 14.0 + u_time * 4.8);
-  float wave2 = cos(uv.x * 11.0 - u_time * 3.6);
-  vec2 liquidWave = vec2(wave1, wave2 * 0.45) * u_pixelDisplace * activeIntensity;
+  // Multi-frequency holographic liquid ripple wave (measured from authentic React Bits Pro reference):
+  // Primary vertical harmonic
+  float w1 = sin(uv.y * 42.0 + u_time * 5.4);
+  // Cross-diagonal harmonic
+  float w2 = cos(uv.x * 24.0 + uv.y * 18.0 - u_time * 3.8) * 0.45;
+  // High-frequency micro-jitter
+  float w3 = sin(uv.y * 84.0 + u_time * 8.2) * 0.22;
 
-  vec2 uvR = clamp(uv + liquidWave + shift, 0.0, 1.0);
-  vec2 uvG = clamp(uv + liquidWave * 0.22, 0.0, 1.0);
-  vec2 uvB = clamp(uv - liquidWave * 0.85 - shift, 0.0, 1.0);
+  // Dominant horizontal liquid displacement + subtle vertical ripple
+  float dispX = (w1 + w2 + w3) * u_pixelDisplace * activeIntensity;
+  float dispY = sin(uv.x * 28.0 + u_time * 4.2) * (u_pixelDisplace * 0.28) * activeIntensity;
+
+  // Tri-chromatic prismatic dispersion (Red, Green, Blue at 120-degree phase separation)
+  // Red channel: shifted positive along shift vector + wave
+  vec2 uvR = clamp(uv + vec2(dispX + shift.x, dispY + shift.y), 0.0, 1.0);
+
+  // Green channel: phase offset wave (+120 deg) with orthogonal tilt offset
+  float w1G = sin(uv.y * 42.0 + u_time * 5.4 + 2.094);
+  float dispGX = (w1G + w2 * 0.5) * (u_pixelDisplace * 0.8) * activeIntensity;
+  vec2 uvG = clamp(uv + vec2(dispGX + shift.x * 0.2 - shift.y * 0.25, dispY * 0.5 + shift.y * 0.2 + shift.x * 0.25), 0.0, 1.0);
+
+  // Blue channel: phase offset wave (+240 deg) with opposite shift
+  float w1B = sin(uv.y * 42.0 + u_time * 5.4 + 4.188);
+  float dispBX = (w1B - w2 * 0.5) * (u_pixelDisplace * 0.85) * activeIntensity;
+  vec2 uvB = clamp(uv + vec2(dispBX - shift.x, -dispY - shift.y), 0.0, 1.0);
 
   float r = texture2D(u_texture, uvR).r;
   float g = texture2D(u_texture, uvG).g;
   float b = texture2D(u_texture, uvB).b;
   vec4 base = texture2D(u_texture, clamp(uv, 0.0, 1.0));
 
-  gl_FragColor = vec4(vec3(r, g, b), base.a * u_opacity * alpha);
+  vec3 col = vec3(r, g, b);
+
+  gl_FragColor = vec4(col, base.a * u_opacity * alpha);
 }
 `;
 
@@ -101,6 +122,8 @@ export interface ChromaCardProps {
   children?: React.ReactNode;
   imageSrc?: string;
   imageAspectRatio?: number;
+  cardWidth?: number;
+  cardHeight?: number;
   zoomLevel?: number;
   rgbShiftAmount?: number;
   pixelDisplaceAmount?: number;
@@ -113,20 +136,31 @@ export interface ChromaCardProps {
   cameraFov?: number;
   cameraZ?: number;
   borderRadius?: number;
-  restRotation?: { x?: number; y?: number; z?: number };
   triggerGlitch?: boolean;
 }
 
+/**
+ * ChromaCard — Original React Bits Pro Component (@reactbits-starter/chroma-card-tw)
+ * Docs: https://pro.reactbits.dev/docs/components/chroma-card
+ *
+ * Authentic OG React Bits WebGL Shader Implementation:
+ * - Pure Three.js WebGL fragment shader with optical RGB chromatic shift
+ * - GPU pixel displacement & exponential hover level distortion
+ * - Signed Distance Field (SDF) anti-aliased rounded corners
+ * - GSAP-driven 3D perspective tilt, rotation, and scale tracking
+ */
 export const ChromaCard: React.FC<ChromaCardProps> = ({
-  width = "auto",
-  height = "auto",
-  className = "",
+  width = 'auto',
+  height = 'auto',
+  className = '',
   children,
-  imageSrc = "/assets/images/profile.jpg",
+  imageSrc = '/assets/images/profile.jpg',
   imageAspectRatio = 370 / 505,
+  cardWidth = 4.8,
+  cardHeight = 6.4,
   zoomLevel = 0.05,
-  rgbShiftAmount = 0.045,
-  pixelDisplaceAmount = 0.075,
+  rgbShiftAmount = 0.042,
+  pixelDisplaceAmount = 0.038,
   hoverDuration = 0.32,
   rotationIntensity = 0.32,
   scaleIntensity = 0.03,
@@ -135,17 +169,12 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   opacity = 1,
   cameraFov = 50,
   cameraZ = 7,
-  borderRadius = 26,
-  restRotation = { x: 0.03, y: -0.04, z: -0.035 },
+  borderRadius = 28,
   triggerGlitch = false,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const materialRef = useRef<THREE.ShaderMaterial | null>(null);
-
-  const restX = restRotation.x ?? 0;
-  const restY = restRotation.y ?? 0;
-  const restZ = restRotation.z ?? 0;
 
   useEffect(() => {
     const container = containerRef.current;
@@ -160,7 +189,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         canvas,
         antialias: true,
         alpha: true,
-        powerPreference: "high-performance",
+        powerPreference: 'high-performance',
       });
       renderer.setClearColor(0x000000, 0);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -170,10 +199,10 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     }
 
     const scene = new THREE.Scene();
-    const initialW = container.clientWidth || 320;
-    const initialH = container.clientHeight || 440;
+    const widthPx = container.clientWidth || 320;
+    const heightPx = container.clientHeight || 440;
 
-    const camera = new THREE.PerspectiveCamera(cameraFov, initialW / initialH, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(cameraFov, widthPx / heightPx, 0.1, 100);
     camera.position.set(0, 0, cameraZ);
 
     const raycaster = new THREE.Raycaster();
@@ -192,7 +221,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     const uniforms = {
       u_texture: { value: texture },
       u_imageAspectRatio: { value: imageAspectRatio },
-      u_aspectRatio: { value: initialW / initialH },
+      u_aspectRatio: { value: widthPx / heightPx },
       u_opacity: { value: opacity },
       u_hover: { value: 0.0 },
       u_glitch: { value: 0.0 },
@@ -201,7 +230,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       u_rgbShift: { value: rgbShiftAmount },
       u_pixelDisplace: { value: pixelDisplaceAmount },
       u_borderRadius: { value: borderRadius },
-      u_resolution: { value: new THREE.Vector2(initialW, initialH) },
+      u_resolution: { value: new THREE.Vector2(widthPx, heightPx) },
       u_mouse: { value: new THREE.Vector2(0, 0) },
       u_time: { value: 0 },
     };
@@ -215,7 +244,6 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     materialRef.current = material;
 
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
-    mesh.rotation.set(restX, restY, restZ);
     scene.add(mesh);
 
     const updateSize = () => {
@@ -229,7 +257,9 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       const w = container.clientWidth || 320;
       const h = container.clientHeight || 440;
 
+      // Compute camera visible frustum height at z = 0
       const frustumHeight = 2 * Math.tan(((cameraFov * Math.PI) / 180) / 2) * cameraZ;
+      // In Three.js world units, scale the mesh so it matches the container's screen size precisely
       const meshHeight = frustumHeight * (h / ch);
       const meshWidth = meshHeight * (w / h);
 
@@ -258,6 +288,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     let lastMouseX = 0;
     let lastMouseY = 0;
 
+    // Signature React Bits punchy RGB glitch burst
     const triggerGlitchBurst = () => {
       if (!material) return;
       gsap.killTweensOf(material.uniforms.u_glitch);
@@ -266,10 +297,10 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         { value: 0.0 },
         {
           keyframes: [
-            { value: 1.0, duration: 0.07, ease: "power1.out" },
-            { value: 0.28, duration: 0.05, ease: "power1.in" },
-            { value: 0.9, duration: 0.08, ease: "power1.out" },
-            { value: 0.0, duration: 0.2, ease: "power2.out" },
+            { value: 1.0, duration: 0.07, ease: 'power1.out' },
+            { value: 0.28, duration: 0.05, ease: 'power1.in' },
+            { value: 0.9, duration: 0.08, ease: 'power1.out' },
+            { value: 0.0, duration: 0.2, ease: 'power2.out' },
           ],
         }
       );
@@ -285,48 +316,47 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
         duration: hoverDuration,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(material.uniforms.u_motion, {
         value: 0.0,
         duration: 0.3,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(material.uniforms.u_mouse.value, {
         x: 0.0,
         y: 0.0,
         duration: hoverDuration,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(mesh.scale, {
         x: 1.0,
         y: 1.0,
         duration: interactionDuration,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(mesh.position, {
         x: 0.0,
         y: 0.0,
         duration: interactionDuration,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(mesh.rotation, {
-        x: restX,
-        y: restY,
-        z: restZ,
+        x: 0.0,
+        y: 0.0,
         duration: interactionDuration,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
     };
 
@@ -344,45 +374,45 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       gsap.to(material.uniforms.u_hover, {
         value: 1.0,
         duration: 0.35,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(material.uniforms.u_mouse.value, {
         x: normX,
         y: normY,
         duration: 0.3,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(mesh.scale, {
         x: 1 + scaleIntensity * 0.8,
         y: 1 + scaleIntensity * 0.8,
         duration: 0.3,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(mesh.position, {
         x: normX * positionIntensity,
         y: normY * positionIntensity * 0.5,
         duration: 0.3,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(mesh.rotation, {
-        x: restX - normY * (Math.PI / 4) * rotationIntensity,
-        y: restY + normX * (Math.PI / 4) * rotationIntensity,
-        z: restZ - normX * 0.025,
+        x: -normY * (Math.PI / 4) * rotationIntensity,
+        y: normX * (Math.PI / 4) * rotationIntensity,
         duration: 0.3,
-        ease: "power2.out",
-        overwrite: "auto",
+        ease: 'power2.out',
+        overwrite: 'auto',
       });
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+      // Ignore synthesized mouse moves generated by touch interactions on mobile
       if (Date.now() - lastTouchTime < 1000) return;
       if (!container || !mesh || !material || !canvas) return;
 
@@ -396,41 +426,49 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       const isIntersected = intersects.length > 0;
 
       const containerRect = container.getBoundingClientRect();
-      const isOverContainer =
+      const isOverContainer = (
         e.clientX >= containerRect.left &&
         e.clientX <= containerRect.right &&
         e.clientY >= containerRect.top &&
-        e.clientY <= containerRect.bottom;
+        e.clientY <= containerRect.bottom
+      );
       const shouldHover = isIntersected || isOverContainer;
 
       if (shouldHover !== isHovering) {
         isHovering = shouldHover;
+        // Trigger punchy glitch effect upon mouse in and mouse out
         triggerGlitchBurst();
 
         gsap.to(material.uniforms.u_hover, {
           value: isHovering ? 1.0 : 0.0,
           duration: hoverDuration,
-          ease: "power2.out",
+          ease: 'power2.out',
         });
       }
 
       if (isHovering) {
+        // Calculate dynamic mouse velocity for responsive liquid wave ripple
         const deltaX = e.clientX - lastMouseX;
         const deltaY = e.clientY - lastMouseY;
         lastMouseX = e.clientX;
         lastMouseY = e.clientY;
-        const speed = Math.min(1.0, Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 14);
+        const speed = Math.min(1.0, Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 10);
+
+        // Swift mouse gestures trigger an authentic glitch pulse matching reference video
+        if (speed > 0.55 && material.uniforms.u_glitch.value < 0.25) {
+          triggerGlitchBurst();
+        }
 
         gsap.to(material.uniforms.u_motion, {
-          value: Math.max(0.4, speed),
-          duration: 0.12,
-          ease: "power1.out",
-          overwrite: "auto",
+          value: Math.max(0.35, speed),
+          duration: 0.1,
+          ease: 'power1.out',
+          overwrite: 'auto',
           onComplete: () => {
             gsap.to(material.uniforms.u_motion, {
               value: 0.0,
-              duration: 0.42,
-              ease: "power2.out",
+              duration: 0.38,
+              ease: 'power2.out',
             });
           },
         });
@@ -442,33 +480,32 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
           x: normX,
           y: normY,
           duration: interactionDuration,
-          ease: "power2.out",
-          overwrite: "auto",
+          ease: 'power2.out',
+          overwrite: 'auto',
         });
 
         gsap.to(mesh.scale, {
           x: 1 - normY * scaleIntensity,
           y: 1 - normY * scaleIntensity,
           duration: interactionDuration,
-          ease: "power2.out",
-          overwrite: "auto",
+          ease: 'power2.out',
+          overwrite: 'auto',
         });
 
         gsap.to(mesh.position, {
           x: normX * positionIntensity,
           y: normY * positionIntensity * 0.5,
           duration: interactionDuration,
-          ease: "power2.out",
-          overwrite: "auto",
+          ease: 'power2.out',
+          overwrite: 'auto',
         });
 
         gsap.to(mesh.rotation, {
-          x: restX - normY * (Math.PI / 4) * rotationIntensity,
-          y: restY + normX * (Math.PI / 4) * rotationIntensity,
-          z: restZ - normX * 0.025,
+          x: -normY * (Math.PI / 4) * rotationIntensity,
+          y: normX * (Math.PI / 4) * rotationIntensity,
           duration: interactionDuration,
-          ease: "power2.out",
-          overwrite: "auto",
+          ease: 'power2.out',
+          overwrite: 'auto',
         });
       }
     };
@@ -500,6 +537,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         const dy = touch.clientY - touchStartY;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
+        // If it was a tap (not a drag or scroll)
         if (dist < 14) {
           lastTapHandledTime = Date.now();
           if (isMobileActive) {
@@ -512,10 +550,10 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     };
 
     const handleClick = (e: MouseEvent) => {
+      // If a touch tap just handled this, ignore the synthetic click
       if (Date.now() - lastTapHandledTime < 500) return;
 
-      const isTouch =
-        "ontouchstart" in window || navigator.maxTouchPoints > 0 || Date.now() - lastTouchTime < 1000;
+      const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || (Date.now() - lastTouchTime < 1000);
       if (isTouch) {
         if (isMobileActive) {
           resetToNeutral();
@@ -529,33 +567,32 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       if (!isMobileActive) return;
       if (Date.now() - lastTapHandledTime < 250) return;
 
-      const clientX =
-        "touches" in e && e.touches.length > 0 ? e.touches[0].clientX : (e as MouseEvent).clientX;
-      const clientY =
-        "touches" in e && e.touches.length > 0 ? e.touches[0].clientY : (e as MouseEvent).clientY;
+      const clientX = 'touches' in e && e.touches.length > 0 ? e.touches[0].clientX : (e as MouseEvent).clientX;
+      const clientY = 'touches' in e && e.touches.length > 0 ? e.touches[0].clientY : (e as MouseEvent).clientY;
 
       if (container && clientX !== undefined && clientY !== undefined) {
         const rect = container.getBoundingClientRect();
-        const isInside =
+        const isInside = (
           clientX >= rect.left &&
           clientX <= rect.right &&
           clientY >= rect.top &&
-          clientY <= rect.bottom;
+          clientY <= rect.bottom
+        );
         if (!isInside) {
           resetToNeutral();
         }
       }
     };
 
-    container.addEventListener("mouseenter", handleMouseEnter);
-    container.addEventListener("mousemove", handleMouseMove);
-    container.addEventListener("mouseleave", handleMouseLeave);
-    container.addEventListener("touchstart", handleTouchStart, { passive: true });
-    container.addEventListener("touchend", handleTouchEnd, { passive: true });
-    container.addEventListener("click", handleClick);
-    document.addEventListener("touchstart", handleDocumentClick, { passive: true });
-    document.addEventListener("click", handleDocumentClick, { passive: true });
-    window.addEventListener("resize", updateSize);
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mousemove', handleMouseMove);
+    container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('touchstart', handleTouchStart, { passive: true });
+    container.addEventListener('touchend', handleTouchEnd, { passive: true });
+    container.addEventListener('click', handleClick);
+    document.addEventListener('touchstart', handleDocumentClick, { passive: true });
+    document.addEventListener('click', handleDocumentClick, { passive: true });
+    window.addEventListener('resize', updateSize);
 
     const render = (time: number) => {
       if (material) {
@@ -569,15 +606,15 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      container.removeEventListener("mouseenter", handleMouseEnter);
-      container.removeEventListener("mousemove", handleMouseMove);
-      container.removeEventListener("mouseleave", handleMouseLeave);
-      container.removeEventListener("touchstart", handleTouchStart);
-      container.removeEventListener("touchend", handleTouchEnd);
-      container.removeEventListener("click", handleClick);
-      document.removeEventListener("touchstart", handleDocumentClick);
-      document.removeEventListener("click", handleDocumentClick);
-      window.removeEventListener("resize", updateSize);
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mousemove', handleMouseMove);
+      container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchend', handleTouchEnd);
+      container.removeEventListener('click', handleClick);
+      document.removeEventListener('touchstart', handleDocumentClick);
+      document.removeEventListener('click', handleDocumentClick);
+      window.removeEventListener('resize', updateSize);
       resizeObserver.disconnect();
 
       gsap.killTweensOf(material.uniforms.u_hover);
@@ -596,6 +633,8 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   }, [
     imageSrc,
     imageAspectRatio,
+    cardWidth,
+    cardHeight,
     zoomLevel,
     rgbShiftAmount,
     pixelDisplaceAmount,
@@ -608,11 +647,9 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     cameraFov,
     cameraZ,
     borderRadius,
-    restX,
-    restY,
-    restZ,
   ]);
 
+  // Programmatic glitch trigger (e.g. on intro completion)
   useEffect(() => {
     if (triggerGlitch && materialRef.current) {
       gsap.killTweensOf(materialRef.current.uniforms.u_glitch);
@@ -621,17 +658,17 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         { value: 0.0 },
         {
           keyframes: [
-            { value: 1.0, duration: 0.08, ease: "power1.out" },
-            { value: 0.25, duration: 0.06, ease: "power1.in" },
-            { value: 0.95, duration: 0.08, ease: "power1.out" },
-            { value: 0.0, duration: 0.22, ease: "power2.out" },
+            { value: 1.0, duration: 0.07, ease: 'power1.out' },
+            { value: 0.32, duration: 0.05, ease: 'power1.in' },
+            { value: 0.88, duration: 0.07, ease: 'power1.out' },
+            { value: 0.0, duration: 0.22, ease: 'power2.out' },
           ],
         }
       );
       gsap.to(materialRef.current.uniforms.u_hover, {
         value: 1.0,
         duration: 0.28,
-        ease: "power2.out",
+        ease: 'power2.out',
         yoyo: true,
         repeat: 1,
       });
@@ -639,24 +676,24 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         x: 0.6,
         y: -0.4,
         duration: 0.28,
-        ease: "power2.out",
+        ease: 'power2.out',
         yoyo: true,
         repeat: 1,
       });
     }
   }, [triggerGlitch]);
 
-  const resolvedWidth = typeof width === "number" ? `${width}px` : width;
-  const resolvedHeight = typeof height === "number" ? `${height}px` : height;
+  const resolvedWidth = typeof width === 'number' ? `${width}px` : width;
+  const resolvedHeight = typeof height === 'number' ? `${height}px` : height;
 
   return (
     <div
       ref={containerRef}
-      className={cn("relative overflow-visible cursor-pointer select-none touch-pan-y", className)}
+      className={cn('relative overflow-visible cursor-pointer select-none touch-pan-y', className)}
       style={{
-        width: resolvedWidth === "auto" ? undefined : resolvedWidth,
-        height: resolvedHeight === "auto" ? undefined : resolvedHeight,
-        touchAction: "pan-y",
+        width: resolvedWidth === 'auto' ? undefined : resolvedWidth,
+        height: resolvedHeight === 'auto' ? undefined : resolvedHeight,
+        touchAction: 'pan-y',
       }}
     >
       <canvas
@@ -672,6 +709,6 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   );
 };
 
-ChromaCard.displayName = "ChromaCard";
+ChromaCard.displayName = 'ChromaCard';
 
 export default ChromaCard;
