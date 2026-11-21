@@ -114,11 +114,11 @@ body {
 }
 
 [data-theme="light"] .ascii-stream-fullscreen {
-  opacity: 0.52;
+  opacity: 0.85;
 }
 
 [data-theme="light"] .ascii-stream-fullscreen::after {
-  background: rgba(248, 250, 252, 0.55);
+  background: rgba(0, 0, 0, 0.32);
 }
 
 /* Global Typography High-Legibility Shadows */
@@ -1322,7 +1322,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 }
 
 [data-theme="light"] .project-image-overlay {
-  background: linear-gradient(180deg, transparent 60%, rgba(255, 255, 255, 0.5) 100%) !important;
+  background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.4) 100%) !important;
 }
 
 [data-theme="light"] .project-links a {
