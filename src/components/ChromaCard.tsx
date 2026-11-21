@@ -122,6 +122,7 @@ export interface ChromaCardProps {
   cameraFov?: number;
   cameraZ?: number;
   borderRadius?: number;
+  triggerGlitch?: boolean;
 }
 
 export const ChromaCard: React.FC<ChromaCardProps> = ({
@@ -145,9 +146,11 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   cameraFov = 50,
   cameraZ = 7,
   borderRadius = 24,
+  triggerGlitch = false,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const materialRef = useRef<THREE.ShaderMaterial | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -207,6 +210,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       uniforms,
       transparent: true,
     });
+    materialRef.current = material;
 
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
@@ -336,6 +340,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       material.dispose();
       texture.dispose();
       renderer?.dispose();
+      materialRef.current = null;
     };
   }, [
     imageSrc,
@@ -355,6 +360,15 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     cameraZ,
     borderRadius,
   ]);
+
+  // Temporary Chromatic Aberration Glitch Entry Transition (fires once and settles)
+  useEffect(() => {
+    if (triggerGlitch && materialRef.current) {
+      gsap.timeline()
+        .to(materialRef.current.uniforms.u_hover, { value: 1.15, duration: 0.16, ease: 'power2.in' })
+        .to(materialRef.current.uniforms.u_hover, { value: 0.0, duration: 0.6, ease: 'power3.out' });
+    }
+  }, [triggerGlitch]);
 
   const resolvedWidth = typeof width === 'number' ? `${width}px` : width;
   const resolvedHeight = typeof height === 'number' ? `${height}px` : height;

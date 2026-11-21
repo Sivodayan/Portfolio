@@ -9,6 +9,18 @@ export interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) => {
+  const [isGlitching, setIsGlitching] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isIntroDone) {
+      setIsGlitching(true);
+      const timer = setTimeout(() => {
+        setIsGlitching(false);
+      }, 650);
+      return () => clearTimeout(timer);
+    }
+  }, [isIntroDone]);
+
   const copyEmail = (e: React.MouseEvent) => {
     e.preventDefault();
     navigator.clipboard.writeText('sivodayan17@gmail.com').then(() => {
@@ -38,6 +50,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
           <ChromaCard
             width="100%"
             height="auto"
+            triggerGlitch={isGlitching}
             className="rounded-[22px] sm:rounded-[26px] aspect-[370/505] w-full shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)]"
           />
         </motion.div>
@@ -60,19 +73,21 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
             <span className="block text-[#93c5fd] text-[11px] sm:text-xs font-medium tracking-normal mt-0.5">University of Moratuwa • Sri Lanka</span>
           </motion.div>
 
-          {/* Large Bold Display Heading with Pop Scale spring overshoot triggered after intro */}
-          <TextEngine
-            key={isIntroDone ? 'intro-done' : 'intro-waiting'}
-            tag="h1"
-            mode="once"
-            letterOut={{ opacity: 0, scale: 0 }}
-            letterIn={{ opacity: 1, scale: 1 }}
-            letterConfig={{ tension: 426, friction: 17 }}
-            letterStagger={27}
-            className="font-anton text-4xl sm:text-5xl lg:text-[3.8rem] tracking-wide text-white mb-3.5 leading-[1.05] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
-          >
-            Sivodayan Sujeevakumar
-          </TextEngine>
+          {/* Large Bold Display Heading with Cyber Glitch Entry Transition */}
+          <div className={isGlitching ? 'glitch-transition' : ''}>
+            <TextEngine
+              key={isIntroDone ? 'intro-done' : 'intro-waiting'}
+              tag="h1"
+              mode="once"
+              letterOut={{ opacity: 0, scale: 0 }}
+              letterIn={{ opacity: 1, scale: 1 }}
+              letterConfig={{ tension: 426, friction: 17 }}
+              letterStagger={27}
+              className="font-anton text-4xl sm:text-5xl lg:text-[3.8rem] tracking-wide text-white mb-3.5 leading-[1.05] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
+            >
+              Sivodayan Sujeevakumar
+            </TextEngine>
+          </div>
 
           {/* Bio Description */}
           <motion.p

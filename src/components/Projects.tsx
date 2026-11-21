@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import TextEngine from 'spring-text-engine';
+import GlitchHeading from './GlitchHeading';
 
 interface ProjectData {
   id: string;
@@ -202,17 +203,19 @@ export const Projects: React.FC = () => {
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 sm:mb-4">
           <div>
-            <TextEngine
-              tag="h2"
-              mode="once"
-              letterOut={{ opacity: 0, scale: 0 }}
-              letterIn={{ opacity: 1, scale: 1 }}
-              letterConfig={{ tension: 426, friction: 17 }}
-              letterStagger={27}
-              className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm"
-            >
-              Selected Projects
-            </TextEngine>
+            <GlitchHeading>
+              <TextEngine
+                tag="h2"
+                mode="once"
+                letterOut={{ opacity: 0, scale: 0 }}
+                letterIn={{ opacity: 1, scale: 1 }}
+                letterConfig={{ tension: 426, friction: 17 }}
+                letterStagger={27}
+                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm"
+              >
+                Selected Projects
+              </TextEngine>
+            </GlitchHeading>
             <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
               Featured Engineering, Embedded &amp; Web Systems
             </p>

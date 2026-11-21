@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import SpectralTiles from './SpectralTiles';
 import TextEngine from 'spring-text-engine';
+import GlitchHeading from './GlitchHeading';
 
 interface SkillItem {
   name: string;
@@ -146,17 +147,19 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
       >
         <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div>
-            <TextEngine
-              tag="h2"
-              mode="once"
-              letterOut={{ opacity: 0, scale: 0 }}
-              letterIn={{ opacity: 1, scale: 1 }}
-              letterConfig={{ tension: 426, friction: 17 }}
-              letterStagger={27}
-              className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm"
-            >
-              Skills &amp; Technologies
-            </TextEngine>
+            <GlitchHeading>
+              <TextEngine
+                tag="h2"
+                mode="once"
+                letterOut={{ opacity: 0, scale: 0 }}
+                letterIn={{ opacity: 1, scale: 1 }}
+                letterConfig={{ tension: 426, friction: 17 }}
+                letterStagger={27}
+                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm"
+              >
+                Skills &amp; Technologies
+              </TextEngine>
+            </GlitchHeading>
             <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
               Core Technical Competencies &amp; Toolchain
             </p>

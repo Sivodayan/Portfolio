@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import TextEngine from 'spring-text-engine';
+import GlitchHeading from './GlitchHeading';
 
 export const Experience: React.FC = () => {
   return (
@@ -13,17 +14,19 @@ export const Experience: React.FC = () => {
         className="w-full my-auto"
       >
         <div className="mb-3 sm:mb-4">
-          <TextEngine
-            tag="h2"
-            mode="once"
-            letterOut={{ opacity: 0, scale: 0 }}
-            letterIn={{ opacity: 1, scale: 1 }}
-            letterConfig={{ tension: 426, friction: 17 }}
-            letterStagger={27}
-            className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-bold tracking-tight text-white drop-shadow-sm"
-          >
-            Education &amp; Experience
-          </TextEngine>
+          <GlitchHeading>
+            <TextEngine
+              tag="h2"
+              mode="once"
+              letterOut={{ opacity: 0, scale: 0 }}
+              letterIn={{ opacity: 1, scale: 1 }}
+              letterConfig={{ tension: 426, friction: 17 }}
+              letterStagger={27}
+              className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-bold tracking-tight text-white drop-shadow-sm"
+            >
+              Education &amp; Experience
+            </TextEngine>
+          </GlitchHeading>
         </div>
 
         <motion.div

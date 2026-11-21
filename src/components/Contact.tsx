@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import TextEngine from 'spring-text-engine';
 import RisingLines from './RisingLines';
+import GlitchHeading from './GlitchHeading';
 
 export interface ContactProps {
   onShowToast: (msg: string) => void;
@@ -53,17 +54,19 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
       >
         <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div>
-            <TextEngine
-              tag="h2"
-              mode="once"
-              letterOut={{ opacity: 0, scale: 0 }}
-              letterIn={{ opacity: 1, scale: 1 }}
-              letterConfig={{ tension: 426, friction: 17 }}
-              letterStagger={27}
-              className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm"
-            >
-              Get in Touch
-            </TextEngine>
+            <GlitchHeading>
+              <TextEngine
+                tag="h2"
+                mode="once"
+                letterOut={{ opacity: 0, scale: 0 }}
+                letterIn={{ opacity: 1, scale: 1 }}
+                letterConfig={{ tension: 426, friction: 17 }}
+                letterStagger={27}
+                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm"
+              >
+                Get in Touch
+              </TextEngine>
+            </GlitchHeading>
             <p className="text-xs font-mono text-[#cbd5e1] mt-0.5">
               Direct communication channels, inquiries &amp; professional networks
             </p>

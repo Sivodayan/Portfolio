@@ -931,6 +931,92 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   opacity: 1;
 }
 
+/* --- High-Tech Temporary Cyber Glitch Entry Transition --- */
+@keyframes glitch-transition {
+  0% {
+    transform: translate3d(-5px, 0, 0) skewX(-2deg);
+    text-shadow: 2.5px 0 #44f0ff, -2.5px 0 #ff087b;
+    clip-path: inset(18% 0 42% 0);
+  }
+  18% {
+    transform: translate3d(6px, 0, 0) skewX(2.5deg);
+    text-shadow: -3px 0 #44f0ff, 3px 0 #ff087b;
+    clip-path: inset(58% 0 12% 0);
+  }
+  36% {
+    transform: translate3d(-4px, 0, 0) skewX(-1.5deg);
+    text-shadow: 2px 0 #44f0ff, -2px 0 #ff087b;
+    clip-path: inset(22% 0 60% 0);
+  }
+  54% {
+    transform: translate3d(3px, 0, 0) skewX(1deg);
+    text-shadow: -1.5px 0 #44f0ff, 1.5px 0 #ff087b;
+    clip-path: inset(40% 0 22% 0);
+  }
+  72% {
+    transform: translate3d(-1px, 0, 0) skewX(0deg);
+    text-shadow: 1px 0 #44f0ff, -1px 0 #ff087b;
+    clip-path: inset(5% 0 5% 0);
+  }
+  90% {
+    transform: translate3d(0, 0, 0);
+    text-shadow: none;
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    text-shadow: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes glitch-transition-light {
+  0% {
+    transform: translate3d(-5px, 0, 0) skewX(-2deg);
+    text-shadow: 2px 0 #0284c7, -2px 0 #7c3aed;
+    clip-path: inset(18% 0 42% 0);
+  }
+  18% {
+    transform: translate3d(6px, 0, 0) skewX(2.5deg);
+    text-shadow: -2.5px 0 #0284c7, 2.5px 0 #7c3aed;
+    clip-path: inset(58% 0 12% 0);
+  }
+  36% {
+    transform: translate3d(-4px, 0, 0) skewX(-1.5deg);
+    text-shadow: 1.5px 0 #0284c7, -1.5px 0 #7c3aed;
+    clip-path: inset(22% 0 60% 0);
+  }
+  54% {
+    transform: translate3d(3px, 0, 0) skewX(1deg);
+    text-shadow: -1px 0 #0284c7, 1px 0 #7c3aed;
+    clip-path: inset(40% 0 22% 0);
+  }
+  72% {
+    transform: translate3d(-1px, 0, 0) skewX(0deg);
+    text-shadow: 0.5px 0 #0284c7, -0.5px 0 #7c3aed;
+    clip-path: inset(5% 0 5% 0);
+  }
+  90% {
+    transform: translate3d(0, 0, 0);
+    text-shadow: none;
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    text-shadow: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.glitch-transition {
+  animation: glitch-transition 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
+  will-change: transform, text-shadow, clip-path;
+}
+
+[data-theme="light"] .glitch-transition {
+  animation-name: glitch-transition-light !important;
+}
+
 /* --- Project Expandable Quick-View Drawer --- */
 .drawer-toggle-btn {
   background: none;
