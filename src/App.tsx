@@ -9,6 +9,7 @@ import SkillsShowcase from './components/SkillsShowcase';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import LoadingScreen from './components/LoadingScreen';
+import BackToTop from './components/BackToTop';
 
 
 export const App: React.FC = () => {
@@ -135,6 +136,9 @@ export const App: React.FC = () => {
           <Contact onShowToast={showToast} theme={theme} />
         </main>
       </div>
+
+      {/* Floating Back to Top Button */}
+      <BackToTop theme={theme} />
 
       {/* Toast feedback */}
       <div className={`minimal-toast ${toastMsg ? 'visible' : ''}`}>
