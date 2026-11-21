@@ -177,23 +177,23 @@ a, button, input, select, textarea {
   transition: opacity 0.3s ease;
 }
 
-/* Very transparent black overlay to maximize font legibility while keeping background fully visible */
+/* Subtle transparent overlay for maximum contrast and font legibility while keeping background razor sharp */
 .ascii-stream-fullscreen::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.533);
+  background: rgba(0, 0, 0, 0.25);
   pointer-events: none;
   z-index: 1;
 }
 
 [data-theme="light"] .ascii-stream-fullscreen {
-  opacity: 0.85;
+  opacity: 0.92;
   mix-blend-mode: normal;
 }
 
 [data-theme="light"] .ascii-stream-fullscreen::after {
-  background: rgba(248, 250, 252, 0.32);
+  background: rgba(248, 250, 252, 0.18);
 }
 
 /* Global Typography High-Legibility Shadows */

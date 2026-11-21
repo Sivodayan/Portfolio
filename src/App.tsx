@@ -208,11 +208,13 @@ export const App: React.FC = () => {
           colors={theme === 'light' ? ["#d97706", "#e11d48"] : ["#e5a93c", "#ff087b"]}
           text={"dev sivodayan @cse"}
           pulse={0.9}
-          flare={theme === 'light' ? 0.45 : 0.6}
-          glow={theme === 'light' ? 0.35 : 0.8}
-          intensity={theme === 'light' ? 1.05 : 1.05}
+          flare={theme === 'light' ? 0.35 : 0.45}
+          glow={theme === 'light' ? 0.2 : 0.35}
+          intensity={theme === 'light' ? 1.1 : 1.15}
           grain={0}
-          quality={0.45}
+          quality={1.0}
+          size={14}
+          fontFamily="'JetBrains Mono', monospace"
           burst={0.4}
           speed={1.5}
           interactive={true}
