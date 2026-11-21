@@ -76,7 +76,14 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
     const totalScrollableDistance = containerRef.current.offsetHeight - window.innerHeight;
     const targets = [0.06, 0.5, 0.94];
     const targetY = startY + targets[index] * totalScrollableDistance;
-    window.scrollTo({ top: targetY, behavior: 'smooth' });
+    if ((window as any).lenis) {
+      (window as any).lenis.scrollTo(targetY, {
+        duration: 1.25,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+    }
   };
 
   const milestones = [
@@ -108,9 +115,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                 Education &amp; Experience
               </TextEngine>
             </GlitchHeading>
-            <p className="text-xs font-mono text-[#cbd5e1] light:text-slate-600 mt-1">
-              Academic milestones, departmental leadership &amp; volunteer initiatives
-            </p>
+           
           </div>
 
           <div className="flex items-center gap-2">
@@ -150,9 +155,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
             {/* Card 1: Secondary Education */}
             <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#e5a93c]/15 text-[#e5a93c] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#e5a93c]/30 light:border-[#b45309]/30 font-semibold mb-3">
-                  Jan 2016 — Apr 2025
-                </div>
+                
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   Secondary Education
                 </h3>
@@ -171,9 +174,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
             {/* Card 2: B.Sc. Engineering */}
             <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#e5a93c]/15 text-[#e5a93c] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#e5a93c]/30 light:border-[#b45309]/30 font-semibold mb-3">
-                  Nov 2025 — Present
-                </div>
+                
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   B.Sc. (Hons) in Engineering
                 </h3>
@@ -192,9 +193,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
             {/* Card 3: TRCSL IT Volunteer */}
             <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#f3ba63]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#f3ba63]/15 text-[#f3ba63] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#f3ba63]/30 light:border-[#b45309]/30 font-semibold mb-3">
-                  TRCSL Initiative
-                </div>
+               
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   TRCSL IT Volunteer
                 </h3>

@@ -72,10 +72,17 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350, theme = '
   };
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    if ((window as any).lenis) {
+      (window as any).lenis.scrollTo(0, {
+        duration: 1.35,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (

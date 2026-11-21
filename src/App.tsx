@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { flushSync } from 'react-dom';
 import { AnimatePresence } from 'framer-motion';
+import Lenis from 'lenis';
 import CustomCursor from './components/CustomCursor';
 import AsciiStream from './components/AsciiStream';
 import Header from './components/Header';
@@ -40,6 +41,62 @@ export const App: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLoading]);
+
+  // Silky inertial momentum smooth scrolling with Lenis
+  useEffect(() => {
+    // Respect user's reduced motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const lenis = new Lenis({
+      autoRaf: true,
+      duration: 1.25,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Apple/Studio-Freight momentum ease-out
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
+      infinite: false,
+    });
+
+    (window as any).lenis = lenis;
+
+    // Global smooth anchor navigation with header offset compensation
+    const handleAnchorClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+      if (!anchor) return;
+      const href = anchor.getAttribute('href');
+      if (!href || href === '#' || href === '#!') return;
+      const targetElement = document.querySelector(href);
+      if (targetElement) {
+        e.preventDefault();
+        lenis.scrollTo(targetElement as HTMLElement, {
+          offset: -68,
+          duration: 1.25,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
+    return () => {
+      document.removeEventListener('click', handleAnchorClick);
+      lenis.destroy();
+      delete (window as any).lenis;
+    };
+  }, []);
+
+  // Sync scroll locking with intro loading sequence
+  useEffect(() => {
+    const lenis = (window as any).lenis;
+    if (!lenis) return;
+    if (isLoading) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
   }, [isLoading]);
 
   const toggleTheme = (e?: React.MouseEvent) => {
