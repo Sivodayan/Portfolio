@@ -10,8 +10,6 @@ interface ProjectData {
   image: string;
   imageAlt?: string;
   links?: { label: string; href: string }[];
-  flowSteps?: string[];
-  drawerDetails?: string;
 }
 
 const PROJECTS_DATA: ProjectData[] = [
@@ -23,8 +21,9 @@ const PROJECTS_DATA: ProjectData[] = [
     imageAlt: 'FloodGuard Node & FastAPI ML Live Telemetry Interface',
     desc: 'Multi-node early warning telemetry dashboard engineered by Team Void Warriors to monitor waterways. Ultrasonic sensors on ESP32 & Arduino stream live hydrometric trends and SMS alerts over GSM.',
     tags: ['ESP32', 'FastAPI ML', 'Arduino', 'GSM SIM800L', 'MQTT', 'C++'],
-    drawerDetails: 'Engineered for high-resilience riverbanks. Microcontrollers take periodic ultrasonic distance pings, trigger dual GSM modem broadcast pulses, and failover gracefully between cellular band and local telemetry.',
-    flowSteps: ['Ultrasonic Ping', 'ESP32 Sampling', 'GSM SIM800L Alert', 'MQTT Broker', 'Dashboard'],
+    links: [
+      { label: 'Team Void Warriors', href: 'https://github.com/Sivodayan' },
+    ],
   },
   {
     id: 'kopay-college',
@@ -38,8 +37,6 @@ const PROJECTS_DATA: ProjectData[] = [
       { label: 'GitHub ↗', href: 'https://github.com/Sivodayan/JHC_WEBSITE' },
       { label: 'Live Demo ↗', href: 'https://sivodayan.github.io/JHC_WEBSITE/' },
     ],
-    drawerDetails: 'Engineered for accessibility across low-bandwidth mobile connections in Northern Sri Lanka. Eliminated layout shifts and optimized bundle sizes.',
-    flowSteps: ['React 19 Components', 'Vite 6 Optimization', 'Tailwind Styling', 'Admissions & Curricula Hub'],
   },
   {
     id: 'uom-redesign',
@@ -53,8 +50,6 @@ const PROJECTS_DATA: ProjectData[] = [
       { label: 'GitHub ↗', href: 'https://github.com/Sivodayan/UoM-Redesign' },
       { label: 'Live Demo ↗', href: 'https://sivodayan.github.io/UoM-Redesign/' },
     ],
-    drawerDetails: 'Eliminated layout shifts (CLS < 0.01) and reduced visual cognitive overload for prospective engineering students.',
-    flowSteps: ['Frosted Glass Header', 'Faculty Explorer', 'CSS Grid Layout', 'GitHub Pages Deployment'],
   },
   {
     id: 'mora-travels',
@@ -67,8 +62,6 @@ const PROJECTS_DATA: ProjectData[] = [
     links: [
       { label: 'View on GitHub ↗', href: 'https://github.com/Sivodayan/MORA-Travels' },
     ],
-    drawerDetails: 'Client-rendered expedition planner for student batches exploring hill country and nature reserves.',
-    flowSteps: ['Route Selection', 'Waypoint Geolocation', 'Packing Checklist', 'Export Itinerary'],
   },
 ];
 
@@ -78,7 +71,6 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [transformStyle, setTransformStyle] = useState('perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)');
   const [shinePos, setShinePos] = useState({ x: -999, y: -999, opacity: 0 });
 
@@ -174,63 +166,22 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
 
         {project.links && project.links.length > 0 && (
-          <div className="project-links !mt-1 !text-xs flex flex-wrap items-center justify-between gap-y-1.5 border-t border-white/10 pt-2">
-            <div className="flex flex-wrap items-center gap-2">
-              {project.links.map((link, idx) => (
-                <React.Fragment key={idx}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-[#44f0ff] font-semibold text-white transition-colors"
-                  >
-                    <span>{link.label}</span>
-                  </a>
-                  {idx < project.links!.length - 1 && (
-                    <span className="text-white/30">•</span>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-
-            {project.drawerDetails && (
-              <button
-                className="drawer-toggle-btn text-[11px]"
-                onClick={() => setDrawerOpen(!drawerOpen)}
-              >
-                <span>{drawerOpen ? 'Hide specs ↑' : 'Specs ↓'}</span>
-              </button>
-            )}
-          </div>
-        )}
-
-        {project.drawerDetails && !project.links && (
-          <div className="border-t border-white/10 pt-1.5 mt-1">
-            <button
-              onClick={() => setDrawerOpen(!drawerOpen)}
-              className="drawer-toggle-btn text-[11px]"
-              aria-expanded={drawerOpen}
-            >
-              <span>{drawerOpen ? 'Hide specs ↑' : 'Specs ↓'}</span>
-            </button>
-          </div>
-        )}
-
-        {project.drawerDetails && (
-          <div className={`project-drawer ${drawerOpen ? 'open' : ''}`}>
-            <div className="drawer-content !text-xs !pt-2">
-              <p>{project.drawerDetails}</p>
-              {project.flowSteps && project.flowSteps.length > 0 && (
-                <div className="architecture-flow !gap-1 !mt-1.5">
-                  {project.flowSteps.map((step, idx) => (
-                    <React.Fragment key={idx}>
-                      <span className="flow-step !text-[10px] !px-1.5 !py-0.5">{step}</span>
-                      {idx < project.flowSteps!.length - 1 && <span className="flow-arrow text-[10px]">➔</span>}
-                    </React.Fragment>
-                  ))}
-                </div>
-              )}
-            </div>
+          <div className="project-links !mt-1 !text-xs flex flex-wrap items-center gap-2 border-t border-white/10 pt-2">
+            {project.links.map((link, idx) => (
+              <React.Fragment key={idx}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#44f0ff] font-semibold text-white transition-colors"
+                >
+                  <span>{link.label}</span>
+                </a>
+                {idx < project.links!.length - 1 && (
+                  <span className="text-white/30">•</span>
+                )}
+              </React.Fragment>
+            ))}
           </div>
         )}
       </div>
