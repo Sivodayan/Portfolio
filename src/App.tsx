@@ -200,7 +200,8 @@ export const App: React.FC = () => {
           quality={0.45}
           burst={0.4}
           speed={1.5}
-          interactive={false}
+          interactive={true}
+          ignite={1.2}
           backgroundColor={theme === 'light' ? "#ffffff" : "#07080b"}
           className="w-full h-full"
         />
