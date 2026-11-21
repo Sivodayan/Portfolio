@@ -193,7 +193,7 @@ a, button, input, select, textarea {
 }
 
 [data-theme="light"] .ascii-stream-fullscreen::after {
-  background: rgba(248, 250, 252, 0.18);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 /* Global Typography High-Legibility Shadows */
