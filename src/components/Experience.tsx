@@ -121,7 +121,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                 onClick={() => scrollToMilestone(m.id)}
                 className={`px-3 py-1.5 min-h-[32px] rounded-full text-[11px] font-mono transition-all touch-manipulation active:scale-95 cursor-pointer border ${
                   activeIndex === m.id
-                    ? 'bg-[#38bdf8]/20 border-[#38bdf8] text-[#38bdf8] font-bold shadow-[0_0_12px_rgba(56,189,248,0.3)]'
+                    ? 'bg-[#e5a93c]/20 border-[#e5a93c] text-[#e5a93c] light:border-amber-500/40 light:text-amber-600 light:bg-amber-500/10 font-bold shadow-[0_0_12px_rgba(229,169,60,0.3)]'
                     : 'bg-white/5 border-white/10 light:bg-slate-200 light:border-slate-300 text-[#94a3b8] light:text-slate-600 hover:text-white light:hover:text-slate-900 active:bg-white/10'
                 }`}
                 title={`Jump to ${m.label}`}
@@ -135,7 +135,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
         <div className="relative h-1 w-full bg-white/10 light:bg-slate-200 rounded-full mb-6 overflow-hidden">
           <motion.div
             style={{ scaleX: scrollYProgress }}
-            className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-[#38bdf8] via-[#60a5fa] to-[#44f0ff] origin-left"
+            className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-[#e5a93c] via-[#f59e0b] to-[#fde68a] origin-left"
           />
         </div>
 
@@ -147,15 +147,16 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               !isOverflowing ? 'justify-center flex-wrap' : ''
             }`}
           >
-            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 light:bg-white/95 border border-white/12 hover:border-[#38bdf8]/45 light:border-slate-300 light:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
+            {/* Card 1: Secondary Education */}
+            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#38bdf8]/15 text-[#38bdf8] border border-[#38bdf8]/30 font-semibold mb-3">
+                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#e5a93c]/15 text-[#e5a93c] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#e5a93c]/30 light:border-[#b45309]/30 font-semibold mb-3">
                   Jan 2016 — Apr 2025
                 </div>
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   Secondary Education
                 </h3>
-                <div className="text-xs text-[#38bdf8] font-mono mb-3.5 font-medium">
+                <div className="text-xs text-[#e5a93c] light:text-[#b45309] font-mono mb-3.5 font-medium">
                   Jaffna Hindu College
                 </div>
                 <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
@@ -167,15 +168,16 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               </div>
             </div>
 
-            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 light:bg-white/95 border border-white/12 hover:border-[#38bdf8]/45 light:border-slate-300 light:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
+            {/* Card 2: B.Sc. Engineering */}
+            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#38bdf8]/15 text-[#38bdf8] border border-[#38bdf8]/30 font-semibold mb-3">
+                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#e5a93c]/15 text-[#e5a93c] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#e5a93c]/30 light:border-[#b45309]/30 font-semibold mb-3">
                   Nov 2025 — Present
                 </div>
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   B.Sc. (Hons) in Engineering
                 </h3>
-                <div className="text-xs text-[#38bdf8] font-mono mb-3.5 font-medium">
+                <div className="text-xs text-[#e5a93c] light:text-[#b45309] font-mono mb-3.5 font-medium">
                   University of Moratuwa • CSE
                 </div>
                 <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
@@ -188,15 +190,15 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
             </div>
 
             {/* Card 3: TRCSL IT Volunteer */}
-            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 light:bg-white/95 border border-white/12 hover:border-[#44f0ff]/45 light:border-slate-300 light:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
+            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#f3ba63]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#44f0ff]/15 text-[#44f0ff] border border-[#44f0ff]/30 font-semibold mb-3">
+                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#f3ba63]/15 text-[#f3ba63] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#f3ba63]/30 light:border-[#b45309]/30 font-semibold mb-3">
                   TRCSL Initiative
                 </div>
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   TRCSL IT Volunteer
                 </h3>
-                <div className="text-xs text-[#44f0ff] font-mono mb-3.5 font-medium">
+                <div className="text-xs text-[#f3ba63] light:text-[#b45309] font-mono mb-3.5 font-medium">
                   J/Kopay Christian College
                 </div>
                 <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
