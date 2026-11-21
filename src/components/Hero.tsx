@@ -118,7 +118,6 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               <FileText className="w-3.5 h-3.5 text-[#38bdf8] [data-theme=light]:text-[#0284c7]" />
               <span>View CV</span>
             </a>
-
             {/* GitHub Profile */}
             <a
               href="https://github.com/Sivodayan"
@@ -163,37 +162,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
             </a>
           </motion.div>
 
-          {/* Interactive Badges Playground */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.6, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap items-center gap-2 pt-2.5 border-t border-white/10"
-          >
-            {[
-              { id: 'uom', emoji: '🎓', label: 'Moratuwa CSE' },
-              { id: 'rep', emoji: '🏛️', label: 'Dept. Representative' },
-              { id: 'loc', emoji: '📍', label: 'Jaffna, Sri Lanka' },
-              { id: 'stack', emoji: '⚡', label: 'Full-Stack & Systems' },
-              { id: 'iot', emoji: '🛠️', label: 'IoT & Telemetry' },
-            ].map((b, idx) => (
-              <motion.span
-                key={b.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isIntroDone ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.4, delay: 0.4 + idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                drag
-                dragConstraints={{ left: -25, right: 25, top: -15, bottom: 15 }}
-                dragElastic={0.2}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="draggable-badge text-xs sm:text-[13px] !py-1 !px-2.5 sm:!px-3"
-              >
-                <span>{b.emoji}</span>
-                <span>{b.label}</span>
-              </motion.span>
-            ))}
-          </motion.div>
+          
         </motion.div>
 
       </motion.div>

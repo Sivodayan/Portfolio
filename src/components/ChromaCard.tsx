@@ -25,6 +25,7 @@ uniform float u_aspectRatio;
 uniform float u_opacity;
 uniform float u_hover;
 uniform float u_glitch;
+uniform float u_motion;
 uniform float u_zoomLevel;
 uniform float u_rgbShift;
 uniform float u_pixelDisplace;
@@ -65,28 +66,26 @@ void main() {
   uv = (uv - center) * (1.0 - u_zoomLevel * u_hover) + center;
 
   // Directional RGB chromatic aberration tracking 3D tilt and glitch burst
-  vec2 mouseDir = length(u_mouse) > 0.02 ? normalize(u_mouse) : vec2(1.0, 0.0);
-  float dynamicShift = u_rgbShift * (u_hover * 0.65 + u_glitch * 1.35) * (0.7 + 0.3 * length(u_mouse));
+  vec2 mouseDir = length(u_mouse) > 0.02 ? normalize(u_mouse) : vec2(0.707, 0.707);
+  
+  // Total dynamic intensity: reacts to mouse movement velocity, hover, and glitch burst
+  float activeIntensity = max(u_glitch, u_hover * (0.12 + 0.88 * u_motion));
+
+  float dynamicShift = u_rgbShift * (u_hover * 0.5 + activeIntensity * 0.9) * (0.65 + 0.35 * length(u_mouse));
   vec2 shift = mouseDir * dynamicShift;
 
-  // Authentic procedural digital glitch bands (horizontal slice displacement)
-  // Glitch fires punchy bursts on mouse in and mouse out, with subtle micro-chatter while hovering
-  float glitchFactor = max(u_glitch, u_hover * 0.1);
+  // Authentic liquid sinusoidal wave displacement (matching original React Bits Pro Chroma Card)
+  float wave1 = sin(uv.y * 14.0 + u_time * 4.8);
+  float wave2 = cos(uv.x * 11.0 - u_time * 3.6);
+  vec2 liquidWave = vec2(wave1, wave2 * 0.45) * u_pixelDisplace * activeIntensity;
 
-  float sliceBand = floor(uv.y * 32.0 + fract(sin(floor(u_time * 18.0)) * 43758.5453) * 8.0);
-  float sliceNoise = fract(sin(sliceBand * 12.9898) * 43758.5453);
-  float glitchTrigger = step(0.65, sliceNoise) * glitchFactor;
-  float glitchOffset = (sliceNoise - 0.5) * 2.0 * u_pixelDisplace * glitchTrigger;
-
-  // High-frequency scanline chroma micro-tear
-  float microJitter = (fract(sin(dot(uv.xy * 90.0, vec2(12.9898, 78.233)) + u_time * 12.0) * 43758.5453) - 0.5) * 0.15;
-  float totalGlitch = glitchOffset + microJitter * u_pixelDisplace * 0.3 * glitchFactor;
-
-  // Sample RGB channels with pure chromatic aberration & displacement
-  vec2 displacedUv = uv + vec2(totalGlitch, 0.0);
-  vec2 uvR = clamp(displacedUv + shift, 0.0, 1.0);
-  vec2 uvG = clamp(displacedUv, 0.0, 1.0);
-  vec2 uvB = clamp(displacedUv - shift, 0.0, 1.0);
+  // Sample RGB channels with pure chromatic aberration & liquid displacement
+  // Red channel shifts with positive wave and tilt vector
+  vec2 uvR = clamp(uv + liquidWave + shift, 0.0, 1.0);
+  // Green channel has slight wave offset for realistic optical dispersion
+  vec2 uvG = clamp(uv + liquidWave * 0.22, 0.0, 1.0);
+  // Blue channel shifts opposite to Red along wave and tilt vector
+  vec2 uvB = clamp(uv - liquidWave * 0.85 - shift, 0.0, 1.0);
 
   float r = texture2D(u_texture, uvR).r;
   float g = texture2D(u_texture, uvG).g;
@@ -142,14 +141,14 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   imageAspectRatio = 370 / 505,
   cardWidth = 4.8,
   cardHeight = 6.4,
-  zoomLevel = 0.06,
-  rgbShiftAmount = 0.026,
-  pixelDisplaceAmount = 0.075,
+  zoomLevel = 0.05,
+  rgbShiftAmount = 0.038,
+  pixelDisplaceAmount = 0.065,
   hoverDuration = 0.32,
-  rotationIntensity = 0.28,
-  scaleIntensity = 0.04,
-  positionIntensity = 0.16,
-  interactionDuration = 0.35,
+  rotationIntensity = 0.32,
+  scaleIntensity = 0.03,
+  positionIntensity = 0.12,
+  interactionDuration = 0.32,
   opacity = 1,
   cameraFov = 50,
   cameraZ = 7,
@@ -209,6 +208,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       u_opacity: { value: opacity },
       u_hover: { value: 0.0 },
       u_glitch: { value: 0.0 },
+      u_motion: { value: 0.0 },
       u_zoomLevel: { value: zoomLevel },
       u_rgbShift: { value: rgbShiftAmount },
       u_pixelDisplace: { value: pixelDisplaceAmount },
@@ -268,6 +268,8 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     let lastTapHandledTime = 0;
     let touchStartX = 0;
     let touchStartY = 0;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
 
     // Signature React Bits punchy RGB glitch burst
     const triggerGlitchBurst = () => {
@@ -297,6 +299,13 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
         duration: hoverDuration,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      });
+
+      gsap.to(material.uniforms.u_motion, {
+        value: 0.0,
+        duration: 0.3,
         ease: 'power2.out',
         overwrite: 'auto',
       });
@@ -421,6 +430,27 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       }
 
       if (isHovering) {
+        // Calculate dynamic mouse velocity for responsive liquid wave ripple
+        const deltaX = e.clientX - lastMouseX;
+        const deltaY = e.clientY - lastMouseY;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+        const speed = Math.min(1.0, Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 14);
+
+        gsap.to(material.uniforms.u_motion, {
+          value: Math.max(0.4, speed),
+          duration: 0.12,
+          ease: 'power1.out',
+          overwrite: 'auto',
+          onComplete: () => {
+            gsap.to(material.uniforms.u_motion, {
+              value: 0.0,
+              duration: 0.42,
+              ease: 'power2.out',
+            });
+          },
+        });
+
         const normX = Math.max(-1, Math.min(1, ((e.clientX - containerRect.left) / containerRect.width) * 2 - 1));
         const normY = Math.max(-1, Math.min(1, -(((e.clientY - containerRect.top) / containerRect.height) * 2 - 1)));
 
@@ -567,6 +597,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
       gsap.killTweensOf(material.uniforms.u_hover);
       gsap.killTweensOf(material.uniforms.u_glitch);
+      gsap.killTweensOf(material.uniforms.u_motion);
       gsap.killTweensOf(material.uniforms.u_mouse.value);
       gsap.killTweensOf(mesh.scale);
       gsap.killTweensOf(mesh.position);
