@@ -114,13 +114,60 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   const borderCacheRef = useRef(new WeakMap<HTMLElement, boolean>());
 
   /**
-   * Fast, zero-layout-thrashing detection of interactive elements.
-   * Uses native C++ .closest() matching without calling getComputedStyle in mousemove.
+   * Check if an element has an active, visible border.
+   * Tailwind preflight sets default border-width to 0px across all elements,
+   * so an element has a border if and only if borderWidth > 0 and style is not none/hidden.
+   */
+  const hasBorder = useCallback((el: HTMLElement): boolean => {
+    if (!el || typeof window === 'undefined') return false;
+
+    if (borderCacheRef.current.has(el)) {
+      return borderCacheRef.current.get(el)!;
+    }
+
+    try {
+      const style = window.getComputedStyle(el);
+      const topW = parseFloat(style.borderTopWidth) || 0;
+      const rightW = parseFloat(style.borderRightWidth) || 0;
+      const bottomW = parseFloat(style.borderBottomWidth) || 0;
+      const leftW = parseFloat(style.borderLeftWidth) || 0;
+
+      const topS = style.borderTopStyle;
+      const rightS = style.borderRightStyle;
+      const bottomS = style.borderBottomStyle;
+      const leftS = style.borderLeftStyle;
+
+      const isVisibleStyle = (w: number, s: string) => w > 0 && s !== 'none' && s !== 'hidden';
+
+      const isTransparent = (color: string) => {
+        if (!color || color === 'transparent') return true;
+        const match = color.match(/rgba?\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*,\s*([\d.]+)\s*\)/);
+        if (match && parseFloat(match[1]) <= 0.01) return true;
+        return false;
+      };
+
+      const hasVisible = (
+        (isVisibleStyle(topW, topS) && !isTransparent(style.borderTopColor)) ||
+        (isVisibleStyle(rightW, rightS) && !isTransparent(style.borderRightColor)) ||
+        (isVisibleStyle(bottomW, bottomS) && !isTransparent(style.borderBottomColor)) ||
+        (isVisibleStyle(leftW, leftS) && !isTransparent(style.borderLeftColor))
+      );
+
+      borderCacheRef.current.set(el, hasVisible);
+      return hasVisible;
+    } catch {
+      borderCacheRef.current.set(el, false);
+      return false;
+    }
+  }, []);
+
+  /**
+   * Detection of interactive elements to evaluate for cursor framing.
    */
   const getInteractiveTarget = useCallback((target: HTMLElement | null): HTMLElement | null => {
     if (!target) return null;
     return target.closest<HTMLElement>(
-      'a, button, input, textarea, select, [role="button"], .draggable-badge, .theme-toggle-btn, .nav-actions a, .timeline-node, [data-cursor-target]'
+      'a, button, input, textarea, select, [role="button"], .draggable-badge, .theme-toggle-btn, .timeline-node, [data-cursor-target]'
     );
   }, []);
 
@@ -141,9 +188,12 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
     const h = rect.height + pad * 2;
     const isCircle = Math.abs(rect.width - rect.height) < 4;
 
+    const computedRadius = parseFloat(window.getComputedStyle(el).borderRadius) || 12;
+    const targetRadius = isCircle ? w / 2 : Math.min(computedRadius + pad, h / 2);
+
     ringTargetW.set(w);
     ringTargetH.set(h);
-    ringTargetRadius.set(isCircle ? w / 2 : 12);
+    ringTargetRadius.set(targetRadius);
     ringTargetX.set(rect.left + rect.width / 2);
     ringTargetY.set(rect.top + rect.height / 2);
   }, [circleSize, targetPadding, rawMouseX, ringTargetW, ringTargetH, ringTargetRadius, ringTargetX, ringTargetY]);
@@ -216,7 +266,8 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
         candidate = getInteractiveTarget(target);
       }
 
-      if (candidate) {
+      // ONLY focus elements that have an active visible border
+      if (candidate && hasBorder(candidate)) {
         if (candidate !== currentElRef.current) {
           currentElRef.current = candidate;
           setActiveEl(candidate);
@@ -274,7 +325,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
       window.removeEventListener('scroll', handleScrollOrResize, true);
       window.removeEventListener('resize', handleResize);
     };
-  }, [isVisible, showOnTouch, targets, rawMouseX, rawMouseY, updateRingToElement, resetRingToMouse, getInteractiveTarget]);
+  }, [isVisible, showOnTouch, targets, rawMouseX, rawMouseY, updateRingToElement, resetRingToMouse, getInteractiveTarget, hasBorder]);
 
   if (isTouchDevice && !showOnTouch) {
     return null;

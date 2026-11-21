@@ -90,15 +90,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 Get in Touch
               </TextEngine>
             </GlitchHeading>
-            <p className="text-xs sm:text-[13px] font-mono text-[#cbd5e1] light:text-slate-600 mt-1 max-w-xl">
-              Open for software engineering internships, telemetry projects, and engineering collaborations.
-            </p>
+           
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 light:text-emerald-700 text-xs font-mono font-medium self-start sm:self-auto backdrop-blur-md shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Available for Internships</span>
-          </div>
+         
         </div>
 
         {/* Compact 4-Card Contact Grid */}
@@ -126,7 +121,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             <div className="flex items-center gap-1.5 shrink-0 ml-2">
               <a
                 href="mailto:sivodayan17@gmail.com"
-                className="p-2 rounded-lg bg-[#38bdf8]/15 hover:bg-[#38bdf8]/25 light:bg-[#0284c7]/10 light:hover:bg-[#0284c7]/20 text-[#38bdf8] light:text-[#0284c7] transition-colors cursor-pointer"
+                className="p-2 rounded-lg bg-[#38bdf8]/15 hover:bg-[#38bdf8]/25 light:bg-[#0284c7]/10 light:hover:bg-[#0284c7]/20 border border-white/10 light:border-slate-300 text-[#38bdf8] light:text-[#0284c7] transition-colors cursor-pointer"
                 title="Send Mail"
                 aria-label="Send Mail"
               >
@@ -135,7 +130,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               <button
                 type="button"
                 onClick={() => handleCopy('sivodayan17@gmail.com', 'Email', 'email')}
-                className="p-2 rounded-lg bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
+                className="p-2 rounded-lg bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
                 title="Copy email address"
                 aria-label="Copy email address"
               >
@@ -165,7 +160,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 href="https://wa.me/94705891710"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 light:bg-emerald-600/10 light:hover:bg-emerald-600/20 text-emerald-400 light:text-emerald-700 transition-colors cursor-pointer"
+                className="p-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 light:bg-emerald-600/10 light:hover:bg-emerald-600/20 border border-white/10 light:border-slate-300 text-emerald-400 light:text-emerald-700 transition-colors cursor-pointer"
                 title="Chat on WhatsApp"
                 aria-label="Chat on WhatsApp"
               >
@@ -174,7 +169,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               <button
                 type="button"
                 onClick={() => handleCopy('+94 70 589 1710', 'Phone number', 'phone')}
-                className="p-2 rounded-lg bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
+                className="p-2 rounded-lg bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
                 title="Copy phone number"
                 aria-label="Copy phone number"
               >
@@ -232,15 +227,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
         {/* Compact Location & Navigation Info Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 rounded-xl bg-black/30 light:bg-white/60 border border-white/5 light:border-slate-200/80 text-xs font-mono text-[#cbd5e1] light:text-slate-600">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-3.5 h-3.5 text-amber-400 light:text-amber-600 shrink-0" />
-            <span>Moratuwa &amp; Jaffna, Sri Lanka</span>
-            <span className="text-[#94a3b8]">•</span>
-            <div className="flex items-center gap-1 text-amber-400 light:text-amber-600">
-              <Clock className="w-3 h-3" />
-              <span>UTC+5:30</span>
-            </div>
-          </div>
+         
 
           <a
             href="#about"
