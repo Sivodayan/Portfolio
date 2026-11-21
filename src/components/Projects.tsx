@@ -119,7 +119,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <article
       ref={cardRef}
-      className="project-item !p-4 !rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/50 backdrop-blur-md transition-all flex flex-col justify-between h-full min-h-0 sm:min-h-[440px] lg:min-h-[460px]"
+      className="project-item !p-4 !rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#e5a93c]/50 backdrop-blur-md transition-all flex flex-col justify-between h-full min-h-0 sm:min-h-[440px] lg:min-h-[460px]"
       style={{
         transform: 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)',
         transition: 'transform 0.15s ease-out, border-color 0.2s, background-color 0.2s',
@@ -183,7 +183,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 e.stopPropagation();
                 setShowAllTags(!showAllTags);
               }}
-              className="text-[10px] font-mono text-[#38bdf8] hover:text-[#44f0ff] active:scale-95 bg-white/5 hover:bg-white/10 active:bg-[#38bdf8]/20 px-1.5 py-0.5 rounded border border-[#38bdf8]/30 transition-all cursor-pointer touch-manipulation select-none self-center"
+              className="text-[10px] font-mono text-[#e5a93c] hover:text-[#f3ba63] active:scale-95 bg-white/5 hover:bg-white/10 active:bg-[#e5a93c]/20 px-1.5 py-0.5 rounded border border-[#e5a93c]/30 transition-all cursor-pointer touch-manipulation select-none self-center"
               title={showAllTags ? "Show fewer tags" : "Show more tags"}
               aria-label={showAllTags ? "Show fewer tags" : "Show more tags"}
             >
@@ -200,7 +200,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#44f0ff] font-semibold text-white transition-colors"
+                  className="hover:text-[#e5a93c] font-semibold text-white transition-colors"
                 >
                   <span>{link.label}</span>
                 </a>

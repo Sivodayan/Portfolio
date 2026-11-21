@@ -35,12 +35,12 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     >
       <div className="absolute inset-0 w-full h-full pointer-events-auto">
         <CircuitFlash
-          colors={["#44f0ff", "#ff087b"]}
+          colors={["#e5a93c", "#ff087b"]}
         />
       </div>
 
       <motion.div
-        className="relative z-20 flex flex-col items-center max-w-sm px-6 py-5 mx-4 rounded-xl bg-[#090b10]/85 border border-[#44f0ff]/30 shadow-[0_0_50px_rgba(68,240,255,0.18)] backdrop-blur-md"
+        className="relative z-20 flex flex-col items-center max-w-sm px-6 py-5 mx-4 rounded-xl bg-[#090b10]/85 border border-[#e5a93c]/30 shadow-[0_0_50px_rgba(229,169,60,0.18)] backdrop-blur-md"
         initial={{ scale: 0.92, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -55,7 +55,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         {/* Progress bar */}
         <div className="w-48 h-1.5 bg-white/10 rounded-full overflow-hidden mb-2">
           <motion.div
-            className="h-full bg-gradient-to-r from-[#44f0ff] to-[#ff087b]"
+            className="h-full bg-gradient-to-r from-[#e5a93c] to-[#ff087b]"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -68,7 +68,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         {/* Skip button */}
         <button
           onClick={onComplete}
-          className="mt-4 px-3.5 py-1.5 min-h-[36px] text-xs font-mono text-[#a1a1aa] hover:text-white border border-white/10 hover:border-[#44f0ff]/40 rounded-lg transition-colors touch-manipulation cursor-pointer flex items-center justify-center"
+          className="mt-4 px-3.5 py-1.5 min-h-[36px] text-xs font-mono text-[#a1a1aa] hover:text-white border border-white/10 hover:border-[#e5a93c]/40 rounded-lg transition-colors touch-manipulation cursor-pointer flex items-center justify-center"
         >
           Skip Intro
         </button>

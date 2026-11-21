@@ -190,7 +190,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
           className="brand-link group"
           aria-label="Sujeevakumar Sivodayan"
         >
-          <span className="font-mono text-sm sm:text-base font-bold tracking-tight text-white light:text-slate-900 group-hover:text-[#38bdf8] light:group-hover:text-[#0284c7] transition-colors">
+          <span className="font-mono text-sm sm:text-base font-bold tracking-tight text-white light:text-slate-900 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309] transition-colors">
             Sivodayan
           </span>
         </motion.a>
@@ -212,8 +212,8 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                   className={`relative px-3 sm:px-3.5 py-1.5 rounded-full text-xs sm:text-[13px] font-medium transition-colors z-10 select-none ${
                     isActive
                       ? isLight
-                        ? 'text-sky-600 font-semibold'
-                        : 'text-[#38bdf8] font-semibold'
+                        ? 'text-amber-600 font-semibold'
+                        : 'text-[#e5a93c] font-semibold'
                       : isHovered
                       ? isLight
                         ? 'text-slate-900'
@@ -229,8 +229,8 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       className={`absolute inset-0 rounded-full z-[-1] border shadow-sm ${
                         isLight
-                          ? 'bg-sky-500/10 border-sky-500/30 shadow-[0_0_12px_rgba(2,132,199,0.2)]'
-                          : 'bg-white/15 border-white/20 shadow-[0_0_14px_rgba(56,189,248,0.25)]'
+                          ? 'bg-amber-500/10 border-amber-500/30 shadow-[0_0_12px_rgba(180,83,9,0.2)]'
+                          : 'bg-white/15 border-white/20 shadow-[0_0_14px_rgba(229,169,60,0.25)]'
                       }`}
                     />
                   )}
@@ -366,8 +366,8 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                     className={`px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between transition-colors ${
                       isActive
                         ? isLight
-                          ? 'bg-sky-500/10 text-sky-600 border border-sky-500/30'
-                          : 'bg-white/15 text-[#38bdf8] border border-white/20'
+                          ? 'bg-amber-500/10 text-amber-600 border border-amber-500/30'
+                          : 'bg-white/15 text-[#e5a93c] border border-white/20'
                         : isLight
                         ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                         : 'text-[#cbd5e1] hover:text-white hover:bg-white/5'
@@ -375,7 +375,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                   >
                     <span>{item.label}</span>
                     {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_#38bdf8]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#e5a93c] shadow-[0_0_8px_#e5a93c]" />
                     )}
                   </motion.a>
                 );

@@ -52,10 +52,10 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
             initial={{ opacity: 0, y: -8 }}
             animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs sm:text-[13px] font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-2.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]"
+            className="text-xs sm:text-[13px] font-mono font-bold tracking-wider text-[#e5a93c] uppercase mb-2.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]"
           >
-            <span className="block text-[#38bdf8]">Computer Science &amp; Engineering Undergraduate</span>
-            <span className="block text-[#93c5fd] text-[11px] sm:text-xs font-medium tracking-normal mt-0.5">University of Moratuwa </span>
+            <span className="block text-[#e5a93c]">Computer Science &amp; Engineering Undergraduate</span>
+            <span className="block text-[#fde68a] text-[11px] sm:text-xs font-medium tracking-normal mt-0.5">University of Moratuwa </span>
           </motion.div>
 
           <div className={isGlitching ? 'glitch-transition' : ''}>
@@ -94,7 +94,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
                 href="https://github.com/Sivodayan"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#44f0ff] light:border-slate-300 light:hover:border-[#0284c7] text-white hover:text-[#44f0ff] light:text-slate-900 light:hover:text-[#0284c7] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
+                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 light:hover:border-[#b45309] text-white hover:text-[#e5a93c] light:text-slate-900 light:hover:text-[#b45309] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
                 title="GitHub Profile"
                 aria-label="GitHub"
               >
@@ -107,7 +107,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
                 href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#44f0ff] light:border-slate-300 light:hover:border-[#0284c7] text-white hover:text-[#44f0ff] light:text-slate-900 light:hover:text-[#0284c7] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
+                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 light:hover:border-[#b45309] text-white hover:text-[#e5a93c] light:text-slate-900 light:hover:text-[#b45309] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
                 title="LinkedIn Profile"
                 aria-label="LinkedIn"
               >
@@ -120,7 +120,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
 
               <a
                 href="mailto:sivodayan17@gmail.com"
-                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#44f0ff] light:border-slate-300 light:hover:border-[#0284c7] text-white hover:text-[#44f0ff] light:text-slate-900 light:hover:text-[#0284c7] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
+                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 light:hover:border-[#b45309] text-white hover:text-[#e5a93c] light:text-slate-900 light:hover:text-[#b45309] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
                 title="Send Direct Email"
                 aria-label="Send Direct Email"
               >
@@ -136,7 +136,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               <a
                 href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
                 download="Sivodayan_Sujeevakumar_CV.pdf"
-                className="px-3 sm:px-3.5 py-2 rounded-xl bg-[#38bdf8] hover:bg-[#0284c7] text-[#07080b] hover:text-white font-mono text-xs sm:text-[13px] font-bold flex items-center gap-1.5 shadow-[0_0_16px_rgba(56,189,248,0.35)] hover:shadow-[0_0_22px_rgba(56,189,248,0.5)] transition-all cursor-pointer border border-[#38bdf8] hover:border-[#0284c7]"
+                className="px-3 sm:px-3.5 py-2 rounded-xl bg-[#e5a93c] hover:bg-[#d97706] text-[#07080b] hover:text-white font-mono text-xs sm:text-[13px] font-bold flex items-center gap-1.5 shadow-[0_0_16px_rgba(229,169,60,0.35)] hover:shadow-[0_0_22px_rgba(229,169,60,0.5)] transition-all cursor-pointer border border-[#e5a93c] hover:border-[#d97706]"
                 title="Download Resume (PDF)"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -147,10 +147,10 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
                 href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 sm:px-3.5 py-2 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#38bdf8] light:border-slate-300 text-white light:text-slate-900 font-mono text-xs sm:text-[13px] font-semibold flex items-center gap-1.5 transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
+                className="px-3 sm:px-3.5 py-2 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 text-white light:text-slate-900 font-mono text-xs sm:text-[13px] font-semibold flex items-center gap-1.5 transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
                 title="View Resume in Browser (PDF)"
               >
-                <FileText className="w-3.5 h-3.5 text-[#38bdf8] light:text-[#0284c7]" />
+                <FileText className="w-3.5 h-3.5 text-[#e5a93c] light:text-[#b45309]" />
                 <span>View CV</span>
               </a>
             </div>

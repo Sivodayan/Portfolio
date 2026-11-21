@@ -67,10 +67,10 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   children,
 }) => {
   const effectiveCircleColor = circleColor || (theme === 'light' ? 'rgba(15, 23, 42, 0.45)' : 'rgba(244, 244, 245, 0.5)');
-  const effectiveDotColor = dotColor || (theme === 'light' ? '#0284c7' : '#44f0ff');
-  const morphBorderColor = theme === 'light' ? '#0284c7' : '#44f0ff';
-  const morphBgColor = theme === 'light' ? 'rgba(2, 132, 199, 0.08)' : 'rgba(68, 240, 255, 0.05)';
-  const morphShadow = theme === 'light' ? '0 0 16px rgba(2, 132, 199, 0.25)' : '0 0 20px rgba(68, 240, 255, 0.3), inset 0 0 10px rgba(68, 240, 255, 0.08)';
+  const effectiveDotColor = dotColor || (theme === 'light' ? '#b45309' : '#e5a93c');
+  const morphBorderColor = theme === 'light' ? '#b45309' : '#e5a93c';
+  const morphBgColor = theme === 'light' ? 'rgba(180, 83, 9, 0.08)' : 'rgba(229, 169, 60, 0.08)';
+  const morphShadow = theme === 'light' ? '0 0 16px rgba(180, 83, 9, 0.25)' : '0 0 20px rgba(229, 169, 60, 0.3), inset 0 0 10px rgba(229, 169, 60, 0.08)';
 
   const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
