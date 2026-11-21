@@ -38,7 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
         >
           <ChromaCard
             triggerGlitch={isGlitching}
-            className="aspect-[370/505] h-[32vh] min-h-[220px] max-h-[280px] sm:h-[40vh] sm:min-h-[290px] sm:max-h-[370px] lg:h-[56vh] lg:min-h-[420px] lg:max-h-[500px] xl:h-[60vh] xl:max-h-[530px] w-auto max-w-[85vw]"
+            className="aspect-[370/505] h-[36vh] min-h-[250px] max-h-[320px] sm:h-[45vh] sm:min-h-[340px] sm:max-h-[430px] lg:h-[62vh] lg:min-h-[470px] lg:max-h-[560px] xl:h-[66vh] xl:max-h-[600px] w-auto max-w-[90vw]"
           />
         </motion.div>
 

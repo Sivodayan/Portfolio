@@ -109,8 +109,8 @@ export interface ChromaCardProps {
 }
 
 export const ChromaCard: React.FC<ChromaCardProps> = ({
-  width = 360,
-  height = 440,
+  width = 380,
+  height = 480,
   className = '',
   children,
   imageSrc = '/assets/images/profile.jpg',
@@ -127,7 +127,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   interactionDuration = 0.4,
   opacity = 1,
   cameraFov = 50,
-  cameraZ = 7,
+  cameraZ = 7.7,
   borderRadius = 32,
   triggerGlitch = false,
 }) => {
@@ -400,7 +400,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('relative overflow-hidden cursor-pointer select-none', className)}
+      className={cn('relative overflow-visible cursor-pointer select-none', className)}
       style={{
         width: resolvedWidth === 'auto' ? undefined : resolvedWidth,
         height: resolvedHeight === 'auto' ? undefined : resolvedHeight,
