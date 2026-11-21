@@ -2,6 +2,11 @@ import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import TextEngine from 'spring-text-engine';
 import GlitchHeading from './GlitchHeading';
+import SpectralTiles from './SpectralTiles';
+
+export interface ProjectsProps {
+  theme?: 'dark' | 'light';
+}
 
 interface ProjectData {
   id: string;
@@ -198,7 +203,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   );
 };
 
-export const Projects: React.FC = () => {
+export const Projects: React.FC<ProjectsProps> = ({ theme = 'dark' }) => {
   return (
     <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16" id="projects">
       <motion.div
@@ -227,37 +232,66 @@ export const Projects: React.FC = () => {
         </div>
 
         <motion.div
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.15 }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.08,
-              },
-            },
+          transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="relative overflow-hidden rounded-2xl min-h-[460px] sm:min-h-0"
+          style={{
+            maskImage: 'radial-gradient(ellipse 92% 85% at 50% 50%, black 55%, transparent 100%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 92% 85% at 50% 50%, black 55%, transparent 100%)',
           }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 items-stretch"
         >
-          {PROJECTS_DATA.map((proj) => (
-            <motion.div
-              key={proj.id}
-              variants={{
-                hidden: { opacity: 0, y: 24, scale: 0.98 },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-                },
-              }}
-              className="h-full"
-            >
-              <ProjectCard project={proj} />
-            </motion.div>
-          ))}
+          <SpectralTiles
+            color={"#9A5B2C"}
+            glowColor={"#ffe5db"}
+            tilt={40}
+            zoom={1.1}
+            lightSize={1.65}
+            frost={0.55}
+            gap={0.065}
+            scatter={0.59}
+            fog={0.51}
+            lift={1.4500000000000002}
+            lean={1.25}
+            backgroundColor={theme === 'light' ? "#f8fafc" : "#000000"}
+          >
+            <div className="relative z-10 p-3 sm:p-5 flex flex-col justify-center h-full bg-transparent">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.15 }}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.08,
+                    },
+                  },
+                }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 items-stretch"
+              >
+                {PROJECTS_DATA.map((proj) => (
+                  <motion.div
+                    key={proj.id}
+                    variants={{
+                      hidden: { opacity: 0, y: 24, scale: 0.98 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                      },
+                    }}
+                    className="h-full"
+                  >
+                    <ProjectCard project={proj} />
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </SpectralTiles>
         </motion.div>
       </motion.div>
     </section>

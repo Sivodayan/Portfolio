@@ -225,18 +225,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
           </a>
         </div>
 
-        {/* Compact Location & Navigation Info Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 rounded-xl bg-black/30 light:bg-white/60 border border-white/5 light:border-slate-200/80 text-xs font-mono text-[#cbd5e1] light:text-slate-600">
-         
-
-          <a
-            href="#about"
-            className="inline-flex items-center gap-1.5 text-[#38bdf8] light:text-[#0284c7] hover:underline font-semibold transition-colors"
-          >
-            <span>Back to top</span>
-            <ArrowUp className="w-3 h-3" />
-          </a>
-        </div>
+      
+       
       </motion.div>
 
       {/* Minimal Footer */}
