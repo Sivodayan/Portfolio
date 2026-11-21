@@ -100,7 +100,13 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
     >
       {/* Sticky locked track container */}
       <div className={isOverflowing ? 'sticky top-0 h-[100dvh] w-full flex flex-col justify-center overflow-hidden py-4 sm:py-8 z-10' : 'w-full flex flex-col justify-center'}>
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-4 sm:mb-6">
+        <motion.div
+          initial={{ opacity: 0, x: 80 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-4 sm:mb-6"
+        >
           <div>
             <GlitchHeading>
               <TextEngine
@@ -115,7 +121,9 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                 Education &amp; Experience
               </TextEngine>
             </GlitchHeading>
-           
+            <p className="text-xs font-mono text-[#cbd5e1] light:text-slate-600 mt-1">
+              Academic milestones, departmental leadership &amp; volunteer initiatives
+            </p>
           </div>
 
           <div className="flex items-center gap-2">
@@ -135,14 +143,20 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               </button>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="relative h-1 w-full bg-white/10 light:bg-slate-200 rounded-full mb-6 overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+          className="relative h-1 w-full bg-white/10 light:bg-slate-200 rounded-full mb-6 overflow-hidden"
+        >
           <motion.div
             style={{ scaleX: scrollYProgress }}
             className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-[#e5a93c] via-[#f59e0b] to-[#fde68a] origin-left"
           />
-        </div>
+        </motion.div>
 
         <div ref={wrapperRef} className="w-full overflow-hidden">
           <motion.div
@@ -153,9 +167,17 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
             }`}
           >
             {/* Card 1: Secondary Education */}
-            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
+            <motion.div
+              initial={{ opacity: 0, x: 140 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
+            >
               <div>
-                
+                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#e5a93c]/15 text-[#e5a93c] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#e5a93c]/30 light:border-[#b45309]/30 font-semibold mb-3">
+                  Jan 2016 — Apr 2025
+                </div>
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   Secondary Education
                 </h3>
@@ -169,12 +191,20 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                   <li>Active leadership across inter-school academic and cultural societies.</li>
                 </ul>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2: B.Sc. Engineering */}
-            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
+            <motion.div
+              initial={{ opacity: 0, x: 220 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.9, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
+            >
               <div>
-                
+                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#e5a93c]/15 text-[#e5a93c] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#e5a93c]/30 light:border-[#b45309]/30 font-semibold mb-3">
+                  Nov 2025 — Present
+                </div>
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   B.Sc. (Hons) in Engineering
                 </h3>
@@ -188,12 +218,20 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                   <li>Coordinated university flagship tech events and freshers&apos; induction programs.</li>
                 </ul>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 3: TRCSL IT Volunteer */}
-            <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#f3ba63]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
+            <motion.div
+              initial={{ opacity: 0, x: 300 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.95, delay: 0.34, ease: [0.16, 1, 0.3, 1] }}
+              className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#f3ba63]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
+            >
               <div>
-               
+                <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#f3ba63]/15 text-[#f3ba63] light:bg-[#b45309]/10 light:text-[#b45309] border border-[#f3ba63]/30 light:border-[#b45309]/30 font-semibold mb-3">
+                  TRCSL Initiative
+                </div>
                 <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
                   TRCSL IT Volunteer
                 </h3>
@@ -207,7 +245,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                   <li>Supported digital infrastructure complementing the official college web portal.</li>
                 </ul>
               </div>
-            </div>
+            </motion.div>
 
           </motion.div>
         </div>
