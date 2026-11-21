@@ -25,59 +25,79 @@ uniform float u_aspectRatio;
 uniform float u_opacity;
 uniform float u_hover;
 uniform float u_zoomLevel;
-uniform float u_imageOffsetY;
 uniform float u_rgbShift;
 uniform float u_pixelDisplace;
+uniform vec2 u_mouse;
 uniform vec2 u_resolution;
 varying vec2 vUv;
 
 float exponentialInOut(float t) {
-  return t == 0.0 || t == 1.0
-    ? t
+  return t <= 0.0 ? 0.0
+    : t >= 1.0 ? 1.0
     : t < 0.5
-      ? +0.5 * pow(2.0, (20.0 * t) - 10.0)
+      ? 0.5 * pow(2.0, (20.0 * t) - 10.0)
       : -0.5 * pow(2.0, 10.0 - (t * 20.0)) + 1.0;
 }
 
 void main() {
   vec2 uv = vUv;
 
+  // Aspect ratio preservation (object-fit: cover)
   float u = u_imageAspectRatio / u_aspectRatio;
-  if(u_imageAspectRatio > u_aspectRatio) {
-    u = 1. / u;
+  if (u_imageAspectRatio > u_aspectRatio) {
+    u = 1.0 / u;
+    uv.x *= u;
+    uv.x -= (u - 1.0) * 0.5;
+  } else {
+    uv.y *= u;
+    uv.y -= (u - 1.0) * 0.5;
   }
 
-  uv.y *= u;
-  uv.y -= (u) / 2. - .5;
+  // Smooth hover transition factor
+  float h = exponentialInOut(clamp(u_hover, 0.0, 1.0));
 
-  // Smooth hover transition
-  float hoverLevel = exponentialInOut(min(1., (distance(vec2(.5), uv) * u_hover) + u_hover));
-  
-  // Safe zoom that stays firmly within viewport
-  uv *= 1. - u_zoomLevel * hoverLevel;
-  uv += (u_zoomLevel * 0.5) * hoverLevel;
-  uv.y -= u_imageOffsetY;
+  // Fluid subtle zoom on hover centered on card
+  vec2 center = vec2(0.5);
+  uv = center + (uv - center) * (1.0 - u_zoomLevel * h);
 
-  // Edge dampening mask: ensures displacement smoothly falls to 0 at the card perimeter
-  // This completely eliminates corner pinching, pixel folding, and texture tearing
-  float edgeMask = smoothstep(0.0, 0.12, vUv.x) * smoothstep(1.0, 0.88, vUv.x) *
-                   smoothstep(0.0, 0.12, vUv.y) * smoothstep(1.0, 0.88, vUv.y);
+  // Dampen effects near perimeter to prevent pixel folding or corner tearing
+  float edgeDamp = smoothstep(0.0, 0.08, vUv.x) * smoothstep(1.0, 0.92, vUv.x) *
+                   smoothstep(0.0, 0.08, vUv.y) * smoothstep(1.0, 0.92, vUv.y);
 
-  uv = clamp(uv, 0.001, 0.999);
-  vec4 color = texture2D(u_texture, uv);
+  // Base texture sample for luminance calculation
+  vec4 baseSample = texture2D(u_texture, clamp(uv, 0.001, 0.999));
+  float luma = dot(baseSample.rgb, vec3(0.299, 0.587, 0.114));
 
-  if(hoverLevel > 0.) {
-    float peak = (1. - abs(hoverLevel - .5) * 2.) * edgeMask;
-    vec2 displaceUv = clamp(vec2(uv.x, uv.y + color.r * peak * u_pixelDisplace), 0.001, 0.999);
-    color = texture2D(u_texture, displaceUv);
-    
-    vec2 rUv = clamp(displaceUv + (peak * u_rgbShift), 0.001, 0.999);
-    vec2 gUv = clamp(displaceUv - (peak * u_rgbShift), 0.001, 0.999);
-    color.r = texture2D(u_texture, rUv).r;
-    color.g = texture2D(u_texture, gUv).g;
-  }
+  // Directional mouse vector for chromatic refraction
+  vec2 mouseDir = u_mouse;
+  float mouseLen = length(mouseDir);
+  vec2 dir = mouseLen > 0.02 ? (mouseDir / mouseLen) : vec2(0.707, 0.707);
 
-  gl_FragColor = vec4(color.rgb, color.a * u_opacity);
+  // Active chromatic RGB shift and liquid pixel displacement
+  float activeShift = u_rgbShift * h * edgeDamp;
+  float activeDisplace = u_pixelDisplace * h * edgeDamp * (0.5 + 0.5 * luma);
+
+  vec2 displaceOffset = vec2(-dir.y, dir.x) * activeDisplace;
+  vec2 centerUv = clamp(uv + displaceOffset, 0.001, 0.999);
+
+  // RGB chromatic split
+  vec2 rUv = clamp(centerUv + dir * activeShift, 0.001, 0.999);
+  vec2 gUv = centerUv;
+  vec2 bUv = clamp(centerUv - dir * activeShift, 0.001, 0.999);
+
+  float r = texture2D(u_texture, rUv).r;
+  float g = texture2D(u_texture, gUv).g;
+  float b = texture2D(u_texture, bUv).b;
+
+  vec3 col = vec3(r, g, b);
+
+  // Interactive holographic sheen moving with cursor
+  vec2 mouseUv = u_mouse * 0.5 + 0.5;
+  float distToMouse = distance(uv, mouseUv);
+  float sheen = pow(max(0.0, 1.0 - distToMouse * 1.3), 2.2) * h * 0.22;
+  col += vec3(sheen * 0.25, sheen * 0.8, sheen * 1.0);
+
+  gl_FragColor = vec4(col, u_opacity);
 }
 `;
 
@@ -102,31 +122,29 @@ export interface ChromaCardProps {
   cameraFov?: number;
   cameraZ?: number;
   borderRadius?: number;
-  imageOffsetY?: number;
 }
 
 export const ChromaCard: React.FC<ChromaCardProps> = ({
-  width = 460,
-  height = 540,
+  width = 370,
+  height = 505,
   className = '',
   children,
   imageSrc = 'assets/images/profile.jpg',
-  imageAspectRatio = 0.75,
-  cardWidth = 6.8,
-  cardHeight = 8.4,
-  zoomLevel = 0.22,
-  rgbShiftAmount = 0.016,
-  pixelDisplaceAmount = 0.035,
-  hoverDuration = 1.6,
-  rotationIntensity = 0.15,
+  imageAspectRatio = 0.7326,
+  cardWidth = 5.2,
+  cardHeight = 7.1,
+  zoomLevel = 0.16,
+  rgbShiftAmount = 0.034,
+  pixelDisplaceAmount = 0.045,
+  hoverDuration = 0.65,
+  rotationIntensity = 0.45,
   scaleIntensity = 0.05,
-  positionIntensity = 0.22,
-  interactionDuration = 0.4,
+  positionIntensity = 0.32,
+  interactionDuration = 0.25,
   opacity = 1,
   cameraFov = 50,
   cameraZ = 7,
   borderRadius = 24,
-  imageOffsetY = 0.8,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -147,7 +165,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         powerPreference: 'high-performance',
       });
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     } catch {
       return;
     }
@@ -158,9 +176,6 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     const camera = new THREE.PerspectiveCamera(cameraFov, widthPx / heightPx, 0.1, 100);
     camera.position.set(0, 0, cameraZ);
-
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2(-999, -999);
 
     const textureLoader = new THREE.TextureLoader();
     const texture = textureLoader.load(imageSrc, (tex) => {
@@ -182,7 +197,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       u_zoomLevel: { value: zoomLevel },
       u_rgbShift: { value: rgbShiftAmount },
       u_pixelDisplace: { value: pixelDisplaceAmount },
-      u_borderRadius: { value: borderRadius },
+      u_mouse: { value: new THREE.Vector2(0, 0) },
       u_resolution: { value: new THREE.Vector2(widthPx, heightPx) },
     };
 
@@ -194,7 +209,6 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     });
 
     const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.y = imageOffsetY;
     scene.add(mesh);
 
     const updateSize = () => {
@@ -212,36 +226,34 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     const handleMouseMove = (e: MouseEvent) => {
       if (!container || !mesh || !material) return;
       const rect = container.getBoundingClientRect();
-      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+      const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const normY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
 
-      raycaster.setFromCamera(mouse, camera);
-      const intersects = raycaster.intersectObject(mesh);
-      const isHovered = intersects.length > 0;
+      material.uniforms.u_mouse.value.set(normX, normY);
 
       gsap.to(material.uniforms.u_hover, {
-        value: isHovered ? 1.0 : 0.0,
-        duration: hoverDuration,
+        value: 1.0,
+        duration: 0.35,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.scale, {
-        x: 1 - mouse.y * scaleIntensity,
-        y: 1 - mouse.y * scaleIntensity,
+        x: 1.0 + scaleIntensity,
+        y: 1.0 + scaleIntensity,
         duration: interactionDuration,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.position, {
-        x: mouse.x * positionIntensity,
-        y: imageOffsetY,
+        x: normX * positionIntensity,
+        y: normY * (positionIntensity * 0.7),
         duration: interactionDuration,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.rotation, {
-        x: -mouse.y * (Math.PI / 3) * rotationIntensity,
-        y: mouse.x * (Math.PI / 3) * rotationIntensity,
+        x: -normY * (Math.PI / 7) * rotationIntensity,
+        y: normX * (Math.PI / 7) * rotationIntensity,
         duration: interactionDuration,
         ease: 'power2.out',
       });
@@ -258,21 +270,21 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       gsap.to(mesh.scale, {
         x: 1.0,
         y: 1.0,
-        duration: interactionDuration,
+        duration: interactionDuration * 1.6,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.position, {
         x: 0.0,
-        y: imageOffsetY,
-        duration: interactionDuration,
+        y: 0.0,
+        duration: interactionDuration * 1.6,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.rotation, {
         x: 0.0,
         y: 0.0,
-        duration: interactionDuration,
+        duration: interactionDuration * 1.6,
         ease: 'power2.out',
       });
     };
@@ -339,7 +351,6 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     positionIntensity,
     interactionDuration,
     opacity,
-    imageOffsetY,
     cameraFov,
     cameraZ,
     borderRadius,
