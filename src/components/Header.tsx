@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export interface HeaderProps {
@@ -6,17 +6,24 @@ export interface HeaderProps {
   onToggleTheme: () => void;
 }
 
-const NAV_ITEMS = [
-  { label: 'About', href: '#about', id: 'about' },
-  { label: 'Projects', href: '#projects', id: 'projects' },
-  { label: 'Skills', href: '#skills', id: 'skills' },
-  { label: 'Experience', href: '#experience', id: 'experience' },
-  { label: 'Contact', href: '#contact', id: 'contact' },
+interface NavItem {
+  id: string;
+  label: string;
+  href: string;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { id: 'about', label: 'About', href: '#about' },
+  { id: 'projects', label: 'Projects', href: '#projects' },
+  { id: 'skills', label: 'Skills', href: '#skills' },
+  { id: 'experience', label: 'Experience', href: '#experience' },
+  { id: 'contact', label: 'Contact', href: '#contact' },
 ];
 
 export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
   const [timeStr, setTimeStr] = useState<string>('--:--');
   const [activeSection, setActiveSection] = useState<string>('about');
+  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const headerRef = useRef<HTMLElement | null>(null);
 
@@ -43,7 +50,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const el = document.getElementById(sectionIds[i]);
         if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(sectionIds[i]);
+          setActiveSection((prev) => (prev !== sectionIds[i] ? sectionIds[i] : prev));
           break;
         }
       }
@@ -61,8 +68,9 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
         setMobileMenuOpen(false);
       }
     };
+
     const handleClickOutside = (e: MouseEvent) => {
-      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node) && mobileMenuOpen) {
         setMobileMenuOpen(false);
       }
     };
@@ -77,32 +85,85 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
     };
   }, [mobileMenuOpen]);
 
+  const isLight = theme === 'light';
+
   return (
-    <header ref={headerRef} className="site-header">
+    <motion.header
+      ref={headerRef}
+      initial={{ y: -24, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+      className="site-header"
+    >
       <div className="site-header-inner">
         {/* Brand with Monogram Badge */}
-        <a href="#about" className="brand-link group" aria-label="Sujeevakumar Sivodayan">
-          <span className="font-anton text-base sm:text-lg tracking-wider text-white group-hover:text-[#44f0ff] transition-colors">
+        <motion.a
+          href="#about"
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+          className="brand-link group"
+          aria-label="Sujeevakumar Sivodayan"
+        >
+          <span className="font-anton text-base sm:text-lg tracking-wider text-white [data-theme=light]:text-slate-900 group-hover:text-[#38bdf8] transition-colors drop-shadow-sm">
             Sivodayan
           </span>
-        </a>
+        </motion.a>
 
-        {/* Desktop Nav Links (Hidden on small mobile phones, shown on sm+) */}
+        {/* Desktop Nav Links with Sliding Active & Hover Pills */}
         <nav className="nav-actions">
-          <div className="hidden sm:flex items-center gap-1 sm:gap-1.5">
+          <div
+            className="hidden sm:flex items-center gap-1 relative p-0.5 rounded-full"
+            onMouseLeave={() => setHoveredSection(null)}
+          >
             {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.id;
+              const isHovered = hoveredSection === item.id;
+
               return (
                 <a
                   key={item.id}
                   href={item.href}
-                  className={`px-2.5 sm:px-3 py-1 rounded-full text-xs sm:text-[13px] font-medium transition-all ${
+                  onMouseEnter={() => setHoveredSection(item.id)}
+                  className={`relative px-3 sm:px-3.5 py-1.5 rounded-full text-xs sm:text-[13px] font-medium transition-colors z-10 select-none ${
                     isActive
-                      ? 'bg-white/15 text-[#44f0ff] font-semibold border border-white/20 shadow-[0_0_12px_rgba(68,240,255,0.25)]'
-                      : 'text-[#cbd5e1] hover:text-white hover:bg-white/5'
+                      ? isLight
+                        ? 'text-sky-600 font-semibold'
+                        : 'text-[#38bdf8] font-semibold'
+                      : isHovered
+                      ? isLight
+                        ? 'text-slate-900'
+                        : 'text-white'
+                      : isLight
+                      ? 'text-slate-600 hover:text-slate-900'
+                      : 'text-[#cbd5e1] hover:text-white'
                   }`}
                 >
-                  {item.label}
+                  {/* Sliding Active Capsule (Springs fluidly between active tabs) */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="navbar-active-pill"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      className={`absolute inset-0 rounded-full z-[-1] border shadow-sm ${
+                        isLight
+                          ? 'bg-sky-500/10 border-sky-500/30 shadow-[0_0_12px_rgba(2,132,199,0.2)]'
+                          : 'bg-white/15 border-white/20 shadow-[0_0_14px_rgba(56,189,248,0.25)]'
+                      }`}
+                    />
+                  )}
+
+                  {/* Magnetic Hover Capsule (Glides smoothly under cursor) */}
+                  {isHovered && !isActive && (
+                    <motion.div
+                      layoutId="navbar-hover-pill"
+                      transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                      className={`absolute inset-0 rounded-full z-[-1] ${
+                        isLight ? 'bg-slate-200/60' : 'bg-white/[0.08]'
+                      }`}
+                    />
+                  )}
+
+                  <span>{item.label}</span>
                 </a>
               );
             })}
@@ -110,113 +171,153 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
 
           <div className="flex items-center gap-1.5 sm:gap-2.5 ml-1">
             {/* Live Jaffna Time Pill (Visible on md+ screens) */}
-            <span className="live-clock-pill hidden md:inline-flex">
+            <span className="live-clock-pill hidden md:inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-mono border backdrop-blur-md">
               <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
               </span>
-              <span>Jaffna</span>
-              <span className="font-semibold text-white">{timeStr}</span>
+              <span className="text-[11px] text-slate-400 [data-theme=light]:text-slate-500">Jaffna</span>
+              <span className="font-semibold text-white [data-theme=light]:text-slate-800 text-[11px]">{timeStr}</span>
             </span>
 
-            {/* Tactile Theme Switcher Icon */}
-            <button
+            {/* Tactile Animated Theme Switcher Button */}
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92, rotate: 180 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               onClick={onToggleTheme}
-              className="theme-toggle-btn"
+              className="theme-toggle-btn cursor-pointer overflow-hidden"
               title={theme === 'dark' ? 'Switch to Light mode' : 'Switch to Dark mode'}
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? (
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="5"></circle>
-                  <line x1="12" y1="1" x2="12" y2="3"></line>
-                  <line x1="12" y1="21" x2="12" y2="23"></line>
-                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                  <line x1="1" y1="12" x2="3" y2="12"></line>
-                  <line x1="21" y1="12" x2="23" y2="12"></line>
-                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-              ) : (
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-              )}
-            </button>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={theme}
+                  initial={{ rotate: -90, scale: 0, opacity: 0 }}
+                  animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                  exit={{ rotate: 90, scale: 0, opacity: 0 }}
+                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-center justify-center"
+                >
+                  {theme === 'dark' ? (
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="5"></circle>
+                      <line x1="12" y1="1" x2="12" y2="3"></line>
+                      <line x1="12" y1="21" x2="12" y2="23"></line>
+                      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                      <line x1="1" y1="12" x2="3" y2="12"></line>
+                      <line x1="21" y1="12" x2="23" y2="12"></line>
+                      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                  ) : (
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </motion.button>
 
-            {/* Mobile Hamburger / Menu Toggle Button (Visible only on < sm) */}
-            <button
+            {/* Mobile Hamburger / Menu Toggle Button */}
+            <motion.button
+              whileTap={{ scale: 0.92 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="sm:hidden flex items-center justify-center w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white transition-colors"
-              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              className="sm:hidden flex items-center justify-center w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 [data-theme=light]:bg-black/5 [data-theme=light]:hover:bg-black/10 border border-white/15 [data-theme=light]:border-black/10 text-white [data-theme=light]:text-slate-800 transition-colors cursor-pointer"
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? (
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              ) : (
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="4" y1="7" x2="20" y2="7"></line>
-                  <line x1="4" y1="12" x2="20" y2="12"></line>
-                  <line x1="4" y1="17" x2="20" y2="17"></line>
-                </svg>
-              )}
-            </button>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={mobileMenuOpen ? 'open' : 'closed'}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.16 }}
+                >
+                  {mobileMenuOpen ? (
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  ) : (
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="4" y1="7" x2="20" y2="7"></line>
+                      <line x1="4" y1="12" x2="20" y2="12"></line>
+                      <line x1="4" y1="17" x2="20" y2="17"></line>
+                    </svg>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </motion.button>
           </div>
         </nav>
       </div>
 
-      {/* Mobile Animated Dropdown Drawer */}
+      {/* Mobile Animated Dropdown Drawer with Cascading Stagger */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            initial={{ opacity: 0, y: -12, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, y: -12, scale: 0.97 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className="mobile-nav-drawer"
           >
-            <div className="flex flex-col gap-1 p-2.5">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{
+                visible: { transition: { staggerChildren: 0.04 } },
+              }}
+              className="flex flex-col gap-1 p-2.5"
+            >
               {NAV_ITEMS.map((item) => {
                 const isActive = activeSection === item.id;
                 return (
-                  <a
+                  <motion.a
                     key={item.id}
+                    variants={{
+                      hidden: { opacity: 0, x: -8 },
+                      visible: { opacity: 1, x: 0 },
+                    }}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between transition-all ${
+                    className={`px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between transition-colors ${
                       isActive
-                        ? 'bg-white/15 text-[#44f0ff] border border-white/20'
+                        ? isLight
+                          ? 'bg-sky-500/10 text-sky-600 border border-sky-500/30'
+                          : 'bg-white/15 text-[#38bdf8] border border-white/20'
+                        : isLight
+                        ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                         : 'text-[#cbd5e1] hover:text-white hover:bg-white/5'
                     }`}
                   >
                     <span>{item.label}</span>
                     {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#44f0ff] shadow-[0_0_8px_#44f0ff]"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_#38bdf8]" />
                     )}
-                  </a>
+                  </motion.a>
                 );
               })}
 
               {/* Live Jaffna Time status inside mobile drawer */}
-              <div className="pt-2 mt-1 border-t border-white/10 flex items-center justify-between px-2.5 text-[11px] font-mono text-[#94a3b8]">
+              <div className="pt-2 mt-1 border-t border-white/10 [data-theme=light]:border-slate-200 flex items-center justify-between px-2.5 text-[11px] font-mono text-[#94a3b8]">
                 <span className="flex items-center gap-1.5">
                   <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
                   </span>
                   <span>Jaffna, Sri Lanka</span>
                 </span>
-                <span className="font-semibold text-white">{timeStr}</span>
+                <span className="font-semibold text-white [data-theme=light]:text-slate-800">{timeStr}</span>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };
 
