@@ -24,8 +24,8 @@ const PROJECTS_DATA: ProjectData[] = [
     desc: 'Multi-node early warning telemetry dashboard engineered by Team Void Warriors to monitor waterways. Ultrasonic sensors on ESP32 & Arduino stream live hydrometric trends and SMS alerts over GSM.',
     tags: ['ESP32', 'FastAPI ML', 'Arduino', 'GSM SIM800L', 'MQTT', 'C++'],
     links: [
-      { label: 'GitHub ↗', href: 'https://github.com/Sivodayan/KCC-Project' },
-      { label: 'Live Demo ↗', href: 'https://jkcc.edu.lk' },
+      { label: 'View Source  ↗', href: 'https://github.com/Sivodayan/Flood-Alert-System' },
+      { label: 'Live Demo ↗', href: 'https://github.com/Sivodayan/Flood-Alert-System' },
     ],
   },
   {
@@ -37,20 +37,20 @@ const PROJECTS_DATA: ProjectData[] = [
     desc: 'Performant modern web portal built with React 19 and Tailwind CSS for J/Kopay Christian College (est. 1852 in Jaffna), featuring academic performance boards, faculty gallery, and event calendar.',
     tags: ['React 19', 'Tailwind CSS', 'Vite', 'TypeScript'],
     links: [
-      { label: 'GitHub ↗', href: 'https://github.com/Sivodayan/JHC_WEBSITE' },
-      { label: 'Live Demo ↗', href: 'https://sivodayan.github.io/JHC_WEBSITE/' },
+      { label: 'View Source  ↗', href: 'https://github.com/Sivodayan/KCC-Project' },
+      { label: 'Live Demo ↗', href: 'https://jkcc.edu.lk' },
     ],
   },
   {
     id: 'uom-redesign',
-    title: 'University of Moratuwa Redesign',
+    title: 'UoM Website Redesign',
     tag: 'UI Concept',
     image: 'assets/images/projects/uom_redesign.jpg',
     imageAlt: 'University of Moratuwa Portal Concept Redesign',
     desc: 'Responsive concept redesign for the official University of Moratuwa website, featuring a frosted-glass navigation system, fluid faculty explorer, and seamless responsive scaling.',
     tags: ['HTML5', 'Modern CSS', 'JavaScript', 'UI/UX'],
     links: [
-      { label: 'GitHub ↗', href: 'https://github.com/Sivodayan/UoM-Redesign' },
+      { label: 'View Source  ↗', href: 'https://github.com/Sivodayan/UoM-Redesign' },
       { label: 'Live Demo ↗', href: 'https://sivodayan.github.io/UoM-Redesign/' },
     ],
   },
@@ -63,7 +63,7 @@ const PROJECTS_DATA: ProjectData[] = [
     desc: 'Interactive travel and expedition log interface designed for university student club trips, featuring visual itinerary cards, route checkpoints, and packing lists.',
     tags: ['HTML5', 'CSS3', 'JavaScript'],
     links: [
-      { label: 'View on GitHub ↗', href: 'https://github.com/Sivodayan/MORA-Travels' },
+      { label: 'View Source  ↗', href: 'https://github.com/Sivodayan/MORA-Travels' },
       { label: 'Live Demo ↗', href: 'https://sivodayan.github.io/MORA-Travels/' },
     ],
   },
@@ -145,9 +145,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           >
             {project.title}
           </TextEngine>
-          
 
-          
+
+
         </div>
 
         <p className="project-desc !text-xs !leading-relaxed text-[#cbd5e1] !mb-2 line-clamp-3">
