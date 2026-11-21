@@ -107,8 +107,8 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-4 sm:mb-6"
         >
-          <div>
-            <GlitchHeading>
+          <div className="min-w-0">
+            <GlitchHeading className="whitespace-nowrap">
               <TextEngine
                 tag="h2"
                 mode="once"
@@ -116,14 +116,16 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                 letterIn={{ opacity: 1, scale: 1 }}
                 letterConfig={{ tension: 426, friction: 17 }}
                 letterStagger={27}
-                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-bold tracking-tight text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none whitespace-nowrap"
+                style={{ whiteSpace: 'nowrap' }}
+                wrapWordClassName="whitespace-nowrap"
+                className="section-heading !mb-0 !border-none !pb-0 text-lg min-[360px]:text-xl sm:text-2xl font-bold tracking-tight text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none whitespace-nowrap"
               >
                 Education &amp; Experience
               </TextEngine>
             </GlitchHeading>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             {milestones.map((m) => (
               <button
                 key={m.id}

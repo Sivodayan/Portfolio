@@ -374,6 +374,15 @@ html[data-theme-transition] *::after {
   transition: none !important;
 }
 
+/* Ensure all headings in Experience section strictly stay on a single line */
+#experience .section-heading,
+#experience h2,
+#experience h3,
+#experience .line-word,
+#experience .word {
+  white-space: nowrap !important;
+}
+
 .theme-fallback-ripple {
   will-change: clip-path;
   transition: opacity 0.3s ease-out;
