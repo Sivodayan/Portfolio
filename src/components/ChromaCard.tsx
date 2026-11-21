@@ -370,7 +370,8 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       style={{
         width: resolvedWidth,
         maxWidth: '100%',
-        height: resolvedHeight,
+        height: resolvedHeight === 'auto' ? 'auto' : resolvedHeight,
+        aspectRatio: '370 / 505',
         borderRadius: typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
       }}
     >
