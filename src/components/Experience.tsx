@@ -359,17 +359,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
                         </span>
                       </div>
 
-                      <div
-                        className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono font-semibold border"
-                        style={{
-                          backgroundColor: `${item.accentColor}18`,
-                          color: item.accentColor,
-                          borderColor: `${item.accentColor}35`,
-                        }}
-                      >
-                        <Calendar className="w-3 h-3" />
-                        <span>{item.period}</span>
-                      </div>
+                      
                     </div>
 
                     {/* Role Title */}
@@ -393,14 +383,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
                         {item.icon}
                         <span>{item.org}</span>
                       </div>
-                      <div
-                        className={`flex items-center gap-1 text-[11px] ${
-                          isLight ? 'text-slate-500' : 'text-white/50'
-                        }`}
-                      >
-                        <MapPin className="w-3 h-3" />
-                        <span>{item.location}</span>
-                      </div>
+                     
                     </div>
 
                     {/* Bullet Points */}

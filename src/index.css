@@ -168,15 +168,21 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   pointer-events: none;
 }
 
+@media (min-width: 640px) {
+  .site-header {
+    padding: 0 1.5rem;
+  }
+}
+
 .site-header-inner {
   pointer-events: auto;
   width: 100%;
-  max-width: 980px;
+  max-width: var(--max-w, 1260px);
   height: 3.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0.75rem 0 1rem;
+  padding: 0 1rem 0 1.25rem;
   background: rgba(8, 10, 15, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -1138,7 +1144,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 .mobile-nav-drawer {
   pointer-events: auto;
   width: 100%;
-  max-width: 980px;
+  max-width: var(--max-w, 1260px);
   margin-top: 0.4rem;
   background: rgba(8, 10, 15, 0.95);
   backdrop-filter: blur(20px);
