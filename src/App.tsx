@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 import { AnimatePresence } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
 import AsciiStream from './components/AsciiStream';
@@ -44,20 +45,28 @@ export const App: React.FC = () => {
   const toggleTheme = (e?: React.MouseEvent) => {
     const next = theme === 'dark' ? 'light' : 'dark';
 
-    // Circular View Transition: Spreads color outward from button coordinates
-    const doc = typeof document !== 'undefined' ? (document as any) : null;
-    if (doc && typeof doc.startViewTransition === 'function') {
-      const x = e ? e.clientX : window.innerWidth - 60;
-      const y = e ? e.clientY : 30;
-      const endRadius = Math.hypot(
-        Math.max(x, window.innerWidth - x),
-        Math.max(y, window.innerHeight - y)
-      );
+    // Locate exact center of the theme toggle button for the circular origin
+    const button = (e?.currentTarget as HTMLElement) || (document.querySelector('.theme-toggle-btn') as HTMLElement | null);
+    const rect = button?.getBoundingClientRect();
+    const x = rect ? rect.left + rect.width / 2 : (e?.clientX || window.innerWidth - 60);
+    const y = rect ? rect.top + rect.height / 2 : (e?.clientY || 30);
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
 
+    const doc = typeof document !== 'undefined' ? (document as any) : null;
+
+    // Native Circular View Transition (Chrome, Edge, Safari 18+)
+    if (doc && typeof doc.startViewTransition === 'function') {
       const transition = doc.startViewTransition(() => {
-        setTheme(next);
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('sivodayan-theme', next);
+        // flushSync forces React to synchronously apply the new theme to the entire DOM
+        // so the browser captures the full light/dark theme snapshot instantly
+        flushSync(() => {
+          setTheme(next);
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('sivodayan-theme', next);
+        });
       });
 
       transition.ready.then(() => {
@@ -69,21 +78,50 @@ export const App: React.FC = () => {
             ],
           },
           {
-            duration: 650,
+            duration: 680,
             easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
             pseudoElement: '::view-transition-new(root)',
           }
         );
+      }).catch(() => {
+        // Graceful fallback if pseudo-element animation is rejected
       });
 
       showToast(`Switched to ${next} mode`);
       return;
     }
 
-    // Direct fallback
-    setTheme(next);
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('sivodayan-theme', next);
+    // High-Fidelity Circular Spreading Ripple Fallback (Firefox, older iOS Safari)
+    const ripple = document.createElement('div');
+    ripple.className = 'theme-fallback-ripple';
+    ripple.style.position = 'fixed';
+    ripple.style.inset = '0';
+    ripple.style.zIndex = '999999';
+    ripple.style.pointerEvents = 'none';
+    ripple.style.backgroundColor = next === 'light' ? '#f8fafc' : '#07080b';
+    document.body.appendChild(ripple);
+
+    const anim = ripple.animate(
+      [
+        { clipPath: `circle(0px at ${x}px ${y}px)` },
+        { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
+      ],
+      {
+        duration: 650,
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      }
+    );
+
+    setTimeout(() => {
+      setTheme(next);
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('sivodayan-theme', next);
+    }, 280);
+
+    anim.onfinish = () => {
+      ripple.remove();
+    };
+
     showToast(`Switched to ${next} mode`);
   };
 

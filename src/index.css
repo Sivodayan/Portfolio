@@ -316,6 +316,11 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 }
 
 /* --- Circular View Transition: Theme Spreading Outward from Toggle Button --- */
+::view-transition-group(root) {
+  animation-duration: 0.68s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -328,6 +333,11 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 
 ::view-transition-new(root) {
   z-index: 999999;
+}
+
+.theme-fallback-ripple {
+  will-change: clip-path;
+  transition: opacity 0.3s ease-out;
 }
 
 /* --- Hero Section & ASCII Stream Integration --- */
