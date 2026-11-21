@@ -74,8 +74,9 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-  overflow-x: clip;
-  max-width: 100vw;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -85,13 +86,40 @@ html {
   }
 }
 
+/* Fluid responsive zoom-out on mobile for breathable, proportional scaling */
+@media (max-width: 768px) {
+  html {
+    font-size: 13.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 12px;
+  }
+}
+
 body {
   min-height: 100vh;
   position: relative;
-  overflow-x: clip;
-  max-width: 100vw;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
   transition: background-color var(--transition), color var(--transition);
   -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
 }
 
 a, button, input, select, textarea {

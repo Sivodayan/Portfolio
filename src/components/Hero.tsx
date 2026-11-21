@@ -23,7 +23,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
   }, [isIntroDone]);
 
   return (
-    <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none py-10 sm:py-14" id="about">
+    <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none py-10 sm:py-14 overflow-hidden" id="about">
       {/* Two-Column Arrangement: Left photo / Right text & bio */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}

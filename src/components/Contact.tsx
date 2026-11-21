@@ -44,12 +44,12 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
   return (
     <section
-      className="section relative w-full min-h-[100dvh] flex flex-col justify-between pt-12 sm:pt-16 pb-6 !pb-4"
+      className="section relative w-full min-h-[100dvh] flex flex-col justify-between pt-12 sm:pt-16 pb-6 !pb-4 overflow-hidden"
       id="contact"
     >
       {/* React Bits Pro: Rising Lines Background - Seamless Upward Fade */}
       <div
-        className={`absolute -inset-x-8 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 ${
+        className={`absolute inset-x-0 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 ${
           theme === 'light' ? 'opacity-25' : 'opacity-40'
         } overflow-hidden`}
         style={{

@@ -484,7 +484,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     >
       <canvas
         ref={canvasRef}
-        className="absolute -inset-10 sm:-inset-16 w-[calc(100%+5rem)] sm:w-[calc(100%+8rem)] h-[calc(100%+5rem)] sm:h-[calc(100%+8rem)] pointer-events-none"
+        className="absolute -inset-4 sm:-inset-16 w-[calc(100%+2rem)] sm:w-[calc(100%+8rem)] h-[calc(100%+2rem)] sm:h-[calc(100%+8rem)] pointer-events-none"
       />
       {children && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
