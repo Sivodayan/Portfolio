@@ -93,7 +93,7 @@ export const App: React.FC = () => {
           <Hero onShowToast={showToast} isIntroDone={isIntroDone} />
           <Projects />
           <SkillsShowcase theme={theme} />
-          <Experience />
+          <Experience theme={theme} />
           <Contact onShowToast={showToast} theme={theme} />
         </main>
       </div>
