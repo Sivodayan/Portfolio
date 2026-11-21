@@ -187,15 +187,10 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       }
     });
 
-    const aspect = widthPx / heightPx;
-    const dynamicCardHeight = cardHeight;
-    const dynamicCardWidth = dynamicCardHeight * aspect;
-
-    const geometry = new THREE.PlaneGeometry(dynamicCardWidth, dynamicCardHeight);
     const uniforms = {
       u_texture: { value: texture },
       u_imageAspectRatio: { value: imageAspectRatio },
-      u_aspectRatio: { value: dynamicCardWidth / dynamicCardHeight },
+      u_aspectRatio: { value: widthPx / heightPx },
       u_opacity: { value: opacity },
       u_hover: { value: 0.0 },
       u_zoomLevel: { value: zoomLevel },
@@ -213,16 +208,30 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     });
     materialRef.current = material;
 
-    const mesh = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
     scene.add(mesh);
 
     const updateSize = () => {
-      if (!container || !renderer) return;
+      if (!container || !renderer || !canvas) return;
+      const cw = canvas.clientWidth || (container.clientWidth ? container.clientWidth + 128 : 448);
+      const ch = canvas.clientHeight || (container.clientHeight ? container.clientHeight + 128 : 613);
+      renderer.setSize(cw, ch, false);
+      camera.aspect = cw / ch;
+      camera.updateProjectionMatrix();
+
       const w = container.clientWidth || 320;
       const h = container.clientHeight || 440;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
+
+      // Compute camera visible frustum height at z = 0
+      const frustumHeight = 2 * Math.tan(((cameraFov * Math.PI) / 180) / 2) * cameraZ;
+      // In Three.js world units, scale the mesh so it matches the container's screen size precisely
+      const meshHeight = frustumHeight * (h / ch);
+      const meshWidth = meshHeight * (w / h);
+
+      if (mesh.geometry) {
+        mesh.geometry.dispose();
+      }
+      mesh.geometry = new THREE.PlaneGeometry(meshWidth, meshHeight);
 
       uniforms.u_resolution.value.set(w, h);
       uniforms.u_aspectRatio.value = w / h;
@@ -230,20 +239,35 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     updateSize();
 
+    const resizeObserver = new ResizeObserver(() => {
+      updateSize();
+    });
+    resizeObserver.observe(container);
+
     let isHovering = false;
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!container || !mesh || !material) return;
-      const rect = container.getBoundingClientRect();
-      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+      if (!container || !mesh || !material || !canvas) return;
+      const canvasRect = canvas.getBoundingClientRect();
+      const canvasMouseX = ((e.clientX - canvasRect.left) / canvasRect.width) * 2 - 1;
+      const canvasMouseY = -(((e.clientY - canvasRect.top) / canvasRect.height) * 2 - 1);
 
+      mouse.set(canvasMouseX, canvasMouseY);
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObject(mesh);
       const isIntersected = intersects.length > 0;
 
-      if (isIntersected !== isHovering) {
-        isHovering = isIntersected;
+      const containerRect = container.getBoundingClientRect();
+      const isOverContainer = (
+        e.clientX >= containerRect.left &&
+        e.clientX <= containerRect.right &&
+        e.clientY >= containerRect.top &&
+        e.clientY <= containerRect.bottom
+      );
+      const shouldHover = isIntersected || isOverContainer;
+
+      if (shouldHover !== isHovering) {
+        isHovering = shouldHover;
         gsap.to(material.uniforms.u_hover, {
           value: isHovering ? 1.0 : 0.0,
           duration: hoverDuration,
@@ -252,25 +276,28 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       }
 
       if (isHovering) {
+        const normX = Math.max(-1, Math.min(1, ((e.clientX - containerRect.left) / containerRect.width) * 2 - 1));
+        const normY = Math.max(-1, Math.min(1, -(((e.clientY - containerRect.top) / containerRect.height) * 2 - 1)));
+
         gsap.to(mesh.scale, {
-          x: 1 - mouse.y * scaleIntensity,
-          y: 1 - mouse.y * scaleIntensity,
+          x: 1 - normY * scaleIntensity,
+          y: 1 - normY * scaleIntensity,
           duration: interactionDuration,
           ease: 'power2.out',
           overwrite: 'auto',
         });
 
         gsap.to(mesh.position, {
-          x: mouse.x * positionIntensity,
-          y: mouse.y * positionIntensity * 0.5,
+          x: normX * positionIntensity,
+          y: normY * positionIntensity * 0.5,
           duration: interactionDuration,
           ease: 'power2.out',
           overwrite: 'auto',
         });
 
         gsap.to(mesh.rotation, {
-          x: -mouse.y * (Math.PI / 4) * rotationIntensity,
-          y: mouse.x * (Math.PI / 4) * rotationIntensity,
+          x: -normY * (Math.PI / 4) * rotationIntensity,
+          y: normX * (Math.PI / 4) * rotationIntensity,
           duration: interactionDuration,
           ease: 'power2.out',
           overwrite: 'auto',
@@ -330,13 +357,14 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', updateSize);
+      resizeObserver.disconnect();
 
       gsap.killTweensOf(material.uniforms.u_hover);
       gsap.killTweensOf(mesh.scale);
       gsap.killTweensOf(mesh.position);
       gsap.killTweensOf(mesh.rotation);
 
-      geometry.dispose();
+      mesh.geometry?.dispose();
       material.dispose();
       texture.dispose();
       renderer?.dispose();
@@ -379,13 +407,16 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('relative overflow-hidden cursor-pointer select-none', className)}
+      className={cn('relative overflow-visible cursor-pointer select-none', className)}
       style={{
         width: resolvedWidth,
         height: resolvedHeight === 'auto' ? 'auto' : resolvedHeight,
       }}
     >
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full pointer-events-none" />
+      <canvas
+        ref={canvasRef}
+        className="absolute -inset-10 sm:-inset-16 w-[calc(100%+5rem)] sm:w-[calc(100%+8rem)] h-[calc(100%+5rem)] sm:h-[calc(100%+8rem)] pointer-events-none"
+      />
       {children && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           {children}

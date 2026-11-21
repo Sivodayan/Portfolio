@@ -32,18 +32,18 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
         className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-10 lg:gap-14 my-auto"
       >
 
-        {/* Left Column: Pure ChromaCard Picture */}
+        {/* Left Column: Pure ChromaCard 3D Floating Picture */}
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 15 }}
           animate={isIntroDone ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.92, y: 15 }}
           transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="shrink-0 relative flex items-center justify-center select-none self-center w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[360px]"
+          className="shrink-0 relative flex items-center justify-center select-none self-center w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[360px] overflow-visible"
         >
           <ChromaCard
             width="100%"
             height="auto"
             triggerGlitch={isGlitching}
-            className="aspect-[370/505] w-full bg-transparent shadow-none border-0"
+            className="aspect-[370/505] w-full"
           />
         </motion.div>
 
