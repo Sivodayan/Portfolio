@@ -20,19 +20,34 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
   return (
     <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none py-10 sm:py-14" id="about">
       {/* Two-Column Arrangement: Left photo / Right text & bio */}
-      <div className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-10 lg:gap-14 my-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-10 lg:gap-14 my-auto"
+      >
 
         {/* Left Column: Pure ChromaCard Picture */}
-        <div className="shrink-0 relative flex items-center justify-center select-none self-center w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[360px]">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.93 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.75, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="shrink-0 relative flex items-center justify-center select-none self-center w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[360px]"
+        >
           <ChromaCard
             width="100%"
             height="auto"
             className="rounded-[22px] sm:rounded-[26px] aspect-[370/505] w-full shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)]"
           />
-        </div>
+        </motion.div>
 
         {/* Right Column: Kicker, Display Name, Bio, Links & Badges */}
-        <div className="flex-1 max-w-xl lg:max-w-2xl text-left flex flex-col justify-center">
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.75, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="flex-1 max-w-xl lg:max-w-2xl text-left flex flex-col justify-center"
+        >
           {/* Uppercase Kicker Tagline */}
           <div className="text-xs sm:text-[13px] font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-2.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
             <span className="block text-[#38bdf8]">Computer Science &amp; Engineering Undergraduate</span>
@@ -140,9 +155,9 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
               </motion.span>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-      </div>
+      </motion.div>
     </section>
   );
 };

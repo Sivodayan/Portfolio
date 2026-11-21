@@ -1,10 +1,17 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import TextEngine from 'spring-text-engine';
 
 export const Experience: React.FC = () => {
   return (
     <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16" id="experience">
-      <div className="w-full my-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full my-auto"
+      >
         <div className="mb-3 sm:mb-4">
           <TextEngine
             tag="h2"
@@ -19,9 +26,32 @@ export const Experience: React.FC = () => {
           </TextEngine>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 items-stretch">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.1 },
+            },
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 items-stretch"
+        >
           {/* Jaffna Hindu College Card */}
-          <div className="p-4 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-0 sm:min-h-[350px]">
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 24, scale: 0.98 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+              },
+            }}
+            className="p-4 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-0 sm:min-h-[350px]"
+          >
             <div>
               <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#38bdf8]/15 text-[#38bdf8] border border-[#38bdf8]/30 font-semibold mb-3">
                 Jan 2016 — Apr 2025
@@ -47,10 +77,21 @@ export const Experience: React.FC = () => {
                 <li>Active leadership across inter-school academic and cultural societies.</li>
               </ul>
             </div>
-          </div>
+          </motion.div>
 
           {/* University of Moratuwa Card */}
-          <div className="p-4 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-0 sm:min-h-[350px]">
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 24, scale: 0.98 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+              },
+            }}
+            className="p-4 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-0 sm:min-h-[350px]"
+          >
             <div>
               <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#38bdf8]/15 text-[#38bdf8] border border-[#38bdf8]/30 font-semibold mb-3">
                 Nov 2025 — Present
@@ -76,10 +117,21 @@ export const Experience: React.FC = () => {
                 <li>Coordinated university flagship tech events and freshers' induction programs.</li>
               </ul>
             </div>
-          </div>
+          </motion.div>
 
           {/* TRCSL IT Volunteer Card */}
-          <div className="p-4 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-0 sm:min-h-[350px]">
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 24, scale: 0.98 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+              },
+            }}
+            className="p-4 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-0 sm:min-h-[350px]"
+          >
             <div>
               <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#44f0ff]/15 text-[#44f0ff] border border-[#44f0ff]/30 font-semibold mb-3">
                 TRCSL Initiative
@@ -105,10 +157,10 @@ export const Experience: React.FC = () => {
                 <li>Supported digital infrastructure complementing the official college web portal.</li>
               </ul>
             </div>
-          </div>
+          </motion.div>
 
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

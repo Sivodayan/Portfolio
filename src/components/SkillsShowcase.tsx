@@ -137,7 +137,13 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
 
   return (
     <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16" id="skills">
-      <div className="w-full my-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full my-auto"
+      >
         <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div>
             <TextEngine
@@ -158,7 +164,11 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
         </div>
 
         {/* Spectral Tiles Background Container - Generously Spanning the Screen */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           className="relative overflow-hidden rounded-2xl"
           style={{
             maskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
@@ -175,14 +185,17 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
             lightSize={1.1}
             style={{ minHeight: 'clamp(400px, 55vh, 560px)' }}
           >
-            {/* Skill Tiles Overlaid on top of 3D Spectral Tiles */}
+            {/* Skill Tiles Overlaid on top of 3D Spectral Tiles with subtle stagger */}
             <div className="relative z-10 p-3 sm:p-6 flex flex-col justify-center h-full bg-transparent">
               <div className="grid grid-cols-2 min-[460px]:grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-4.5">
-                {skills.map((skill) => (
+                {skills.map((skill, idx) => (
                   <motion.div
                     key={skill.name}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
                     whileHover={{ scale: 1.05, y: -3 }}
-                    transition={{ type: 'spring', stiffness: 350, damping: 22 }}
                     className="group relative p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-black/45 hover:bg-black/70 border border-white/10 hover:border-[#DDF8F3]/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(44,122,120,0.45)] flex flex-col items-center justify-center text-center gap-2 sm:gap-3 cursor-default"
                   >
                     <div className="w-11 h-11 sm:w-16 sm:h-16 flex items-center justify-center rounded-xl sm:rounded-2xl bg-black/60 border border-white/10 group-hover:border-[#2C7A78] group-hover:scale-110 transition-all flex-shrink-0 shadow-sm">
@@ -196,8 +209,8 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
               </div>
             </div>
           </SpectralTiles>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

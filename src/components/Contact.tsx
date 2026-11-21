@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import TextEngine from 'spring-text-engine';
 import RisingLines from './RisingLines';
 
@@ -43,7 +44,13 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         />
       </div>
 
-      <div className="relative z-10 w-full my-auto py-2">
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 w-full my-auto py-2"
+      >
         <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div>
             <TextEngine
@@ -63,11 +70,29 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
           </div>
         </div>
 
-        {/* Contact Content - Spacious 2-Column Responsive Grid */}
+        {/* Contact Content - Spacious 2-Column Responsive Grid with staggered reveal */}
         <div className="w-full max-w-4xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4 mb-3 sm:mb-4">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.08 },
+              },
+            }}
+            className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4 mb-3 sm:mb-4"
+          >
             {/* Email Tile */}
-            <div className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+              }}
+              className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm"
+            >
               <div className="truncate mr-3">
                 <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">Direct Email</div>
                 <a href="mailto:sivodayan17@gmail.com" className="text-xs sm:text-sm text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
@@ -80,10 +105,16 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               >
                 Copy
               </button>
-            </div>
+            </motion.div>
 
             {/* Phone Tile */}
-            <div className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+              }}
+              className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm"
+            >
               <div className="truncate mr-3">
                 <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">Phone / WhatsApp</div>
                 <a href="tel:+94705891710" className="text-xs sm:text-sm text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
@@ -96,10 +127,14 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               >
                 Copy
               </button>
-            </div>
+            </motion.div>
 
             {/* LinkedIn Tile */}
-            <a
+            <motion.a
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+              }}
               href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
               target="_blank"
               rel="noopener noreferrer"
@@ -111,10 +146,14 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   sivodayan-sujeevakumar ↗
                 </div>
               </div>
-            </a>
+            </motion.a>
 
             {/* GitHub Tile */}
-            <a
+            <motion.a
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+              }}
               href="https://github.com/Sivodayan"
               target="_blank"
               rel="noopener noreferrer"
@@ -126,8 +165,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   github.com/Sivodayan ↗
                 </div>
               </div>
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
 
           {/* Location & Status Bar */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-mono text-[#cbd5e1] pt-3 border-t border-white/10">
@@ -136,7 +175,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             <span>Open to Engineering Internships</span>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Embedded Clean Single-Screen Footer */}
       <footer className="relative z-10 w-full pt-2.5 pb-2 sm:pb-2.5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] sm:text-[11px] text-center sm:text-left font-mono text-[#94a3b8]">

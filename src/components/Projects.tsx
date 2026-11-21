@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import TextEngine from 'spring-text-engine';
 
 interface ProjectData {
@@ -192,7 +193,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 export const Projects: React.FC = () => {
   return (
     <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16" id="projects">
-      <div className="relative z-10 w-full my-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 w-full my-auto"
+      >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 sm:mb-4">
           <div>
             <TextEngine
@@ -212,13 +219,41 @@ export const Projects: React.FC = () => {
           </div>
         </div>
 
-        {/* Clean Grid Layout Spanning the Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 items-stretch">
+        {/* Clean Grid Layout Spanning the Section with staggered card entry */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.08,
+              },
+            },
+          }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 items-stretch"
+        >
           {PROJECTS_DATA.map((proj) => (
-            <ProjectCard key={proj.id} project={proj} />
+            <motion.div
+              key={proj.id}
+              variants={{
+                hidden: { opacity: 0, y: 24, scale: 0.98 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                },
+              }}
+              className="h-full"
+            >
+              <ProjectCard project={proj} />
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
