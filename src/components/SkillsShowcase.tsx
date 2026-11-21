@@ -178,13 +178,18 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
           }}
         >
           <SpectralTiles
-            color={theme === 'light' ? "#bae6fd" : "#2C7A78"}
-            glowColor={theme === 'light' ? "#0284c7" : "#DDF8F3"}
+            color={"#9A5B2C"}
+            glowColor={"#ffe5db"}
+            tilt={40}
+            zoom={1.1}
+            lightSize={1.65}
+            frost={0.55}
+            gap={0.065}
+            scatter={0.59}
+            fog={0.51}
+            lift={1.4500000000000002}
+            lean={1.25}
             backgroundColor={theme === 'light' ? "#f8fafc" : "#000000"}
-            tilt={36}
-            zoom={1.2}
-            lights={3}
-            lightSize={1.1}
             style={{ minHeight: 'clamp(460px, 60vh, 560px)' }}
           >
             <div className="relative z-10 p-3 sm:p-6 flex flex-col justify-center h-full bg-transparent">
@@ -197,12 +202,12 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
                     whileHover={{ scale: 1.05, y: -3 }}
-                    className="group relative p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-black/45 hover:bg-black/70 border border-white/10 hover:border-[#DDF8F3]/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(44,122,120,0.45)] flex flex-col items-center justify-center text-center gap-2 sm:gap-3 cursor-default"
+                    className="group relative p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-black/45 hover:bg-black/70 border border-white/10 hover:border-[#ffe5db]/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(154,91,44,0.45)] flex flex-col items-center justify-center text-center gap-2 sm:gap-3 cursor-default"
                   >
-                    <div className="w-11 h-11 sm:w-16 sm:h-16 flex items-center justify-center rounded-xl sm:rounded-2xl bg-black/60 border border-white/10 group-hover:border-[#2C7A78] group-hover:scale-110 transition-all flex-shrink-0 shadow-sm">
+                    <div className="w-11 h-11 sm:w-16 sm:h-16 flex items-center justify-center rounded-xl sm:rounded-2xl bg-black/60 border border-white/10 group-hover:border-[#9A5B2C] group-hover:scale-110 transition-all flex-shrink-0 shadow-sm">
                       {skill.icon}
                     </div>
-                    <span className="text-[11px] sm:text-sm font-bold text-white tracking-tight group-hover:text-[#DDF8F3] transition-colors drop-shadow-sm">
+                    <span className="text-[11px] sm:text-sm font-bold text-white tracking-tight group-hover:text-[#ffe5db] transition-colors drop-shadow-sm">
                       {skill.name}
                     </span>
                   </motion.div>
