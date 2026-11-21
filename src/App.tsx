@@ -44,6 +44,7 @@ export const App: React.FC = () => {
 
   const toggleTheme = (e?: React.MouseEvent) => {
     const next = theme === 'dark' ? 'light' : 'dark';
+    const isToLight = next === 'light';
 
     // Locate exact center of the theme toggle button for the circular origin
     const button = (e?.currentTarget as HTMLElement) || (document.querySelector('.theme-toggle-btn') as HTMLElement | null);
@@ -59,9 +60,9 @@ export const App: React.FC = () => {
 
     // Native Circular View Transition (Chrome, Edge, Safari 18+)
     if (doc && typeof doc.startViewTransition === 'function') {
+      document.documentElement.dataset.themeTransition = isToLight ? 'to-light' : 'to-dark';
+
       const transition = doc.startViewTransition(() => {
-        // flushSync forces React to synchronously apply the new theme to the entire DOM
-        // so the browser captures the full light/dark theme snapshot instantly
         flushSync(() => {
           setTheme(next);
           document.documentElement.setAttribute('data-theme', next);
@@ -70,57 +71,102 @@ export const App: React.FC = () => {
       });
 
       transition.ready.then(() => {
-        document.documentElement.animate(
-          {
-            clipPath: [
-              `circle(0px at ${x}px ${y}px)`,
-              `circle(${endRadius}px at ${x}px ${y}px)`,
-            ],
-          },
-          {
-            duration: 680,
-            easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-            pseudoElement: '::view-transition-new(root)',
-          }
-        );
+        if (isToLight) {
+          // Light mode spreads OUTward across the screen
+          document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${endRadius}px at ${x}px ${y}px)`,
+              ],
+            },
+            {
+              duration: 680,
+              easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+              pseudoElement: '::view-transition-new(root)',
+            }
+          );
+        } else {
+          // Light mode spreads INward (contracts back into the button)
+          document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(${endRadius}px at ${x}px ${y}px)`,
+                `circle(0px at ${x}px ${y}px)`,
+              ],
+            },
+            {
+              duration: 680,
+              easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+              pseudoElement: '::view-transition-old(root)',
+            }
+          );
+        }
       }).catch(() => {
-        // Graceful fallback if pseudo-element animation is rejected
+        // Fallback if pseudoElement animation fails
+      });
+
+      transition.finished.finally(() => {
+        delete document.documentElement.dataset.themeTransition;
       });
 
       showToast(`Switched to ${next} mode`);
       return;
     }
 
-    // High-Fidelity Circular Spreading Ripple Fallback (Firefox, older iOS Safari)
+    // Circular Spreading Ripple Fallback
     const ripple = document.createElement('div');
     ripple.className = 'theme-fallback-ripple';
     ripple.style.position = 'fixed';
     ripple.style.inset = '0';
     ripple.style.zIndex = '999999';
     ripple.style.pointerEvents = 'none';
-    ripple.style.backgroundColor = next === 'light' ? '#f8fafc' : '#07080b';
-    document.body.appendChild(ripple);
 
-    const anim = ripple.animate(
-      [
-        { clipPath: `circle(0px at ${x}px ${y}px)` },
-        { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
-      ],
-      {
-        duration: 650,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-      }
-    );
+    if (isToLight) {
+      // Light spreads OUT
+      ripple.style.backgroundColor = '#f8fafc';
+      document.body.appendChild(ripple);
 
-    setTimeout(() => {
-      setTheme(next);
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('sivodayan-theme', next);
-    }, 280);
+      const anim = ripple.animate(
+        [
+          { clipPath: `circle(0px at ${x}px ${y}px)` },
+          { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
+        ],
+        {
+          duration: 650,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        }
+      );
 
-    anim.onfinish = () => {
-      ripple.remove();
-    };
+      setTimeout(() => {
+        setTheme('light');
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('sivodayan-theme', 'light');
+      }, 280);
+
+      anim.onfinish = () => ripple.remove();
+    } else {
+      // Light spreads IN
+      ripple.style.backgroundColor = '#f8fafc';
+      document.body.appendChild(ripple);
+
+      setTheme('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('sivodayan-theme', 'dark');
+
+      const anim = ripple.animate(
+        [
+          { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
+          { clipPath: `circle(0px at ${x}px ${y}px)` },
+        ],
+        {
+          duration: 650,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        }
+      );
+
+      anim.onfinish = () => ripple.remove();
+    }
 
     showToast(`Switched to ${next} mode`);
   };
