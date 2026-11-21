@@ -121,10 +121,10 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                 key={m.id}
                 type="button"
                 onClick={() => scrollToMilestone(m.id)}
-                className={`px-2.5 py-1 rounded-full text-[11px] font-mono transition-all cursor-pointer border ${
+                className={`px-3 py-1.5 min-h-[32px] rounded-full text-[11px] font-mono transition-all touch-manipulation active:scale-95 cursor-pointer border ${
                   activeIndex === m.id
                     ? 'bg-[#38bdf8]/20 border-[#38bdf8] text-[#38bdf8] font-bold shadow-[0_0_12px_rgba(56,189,248,0.3)]'
-                    : 'bg-white/5 border-white/10 [data-theme=light]:bg-slate-200 [data-theme=light]:border-slate-300 text-[#94a3b8] [data-theme=light]:text-slate-600 hover:text-white [data-theme=light]:hover:text-slate-900'
+                    : 'bg-white/5 border-white/10 [data-theme=light]:bg-slate-200 [data-theme=light]:border-slate-300 text-[#94a3b8] [data-theme=light]:text-slate-600 hover:text-white [data-theme=light]:hover:text-slate-900 active:bg-white/10'
                 }`}
                 title={`Jump to ${m.label}`}
               >

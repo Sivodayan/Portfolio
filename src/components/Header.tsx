@@ -69,8 +69,9 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
       }
     };
 
-    const handleClickOutside = (e: MouseEvent) => {
-      if (headerRef.current && !headerRef.current.contains(e.target as Node) && mobileMenuOpen) {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node | null;
+      if (headerRef.current && target && !headerRef.current.contains(target) && mobileMenuOpen) {
         setMobileMenuOpen(false);
       }
     };
@@ -78,10 +79,12 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
     if (mobileMenuOpen) {
       window.addEventListener('keydown', handleKeyDown);
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside, { passive: true });
     }
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
     };
   }, [mobileMenuOpen]);
 
@@ -93,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
       initial={{ y: -24, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-      className="site-header"
+      className="site-header flex-col"
     >
       <div className="site-header-inner">
         {/* Brand with Monogram Badge */}
@@ -222,9 +225,9 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
 
             {/* Mobile Hamburger / Menu Toggle Button */}
             <motion.button
-              whileTap={{ scale: 0.92 }}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="sm:hidden flex items-center justify-center w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 [data-theme=light]:bg-black/5 [data-theme=light]:hover:bg-black/10 border border-white/15 [data-theme=light]:border-black/10 text-white [data-theme=light]:text-slate-800 transition-colors cursor-pointer"
+              whileTap={{ scale: 0.88 }}
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              className="sm:hidden flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-full bg-white/10 hover:bg-white/15 active:bg-[#38bdf8]/25 [data-theme=light]:bg-black/5 [data-theme=light]:hover:bg-black/10 [data-theme=light]:active:bg-sky-500/20 border border-white/20 [data-theme=light]:border-black/15 text-white [data-theme=light]:text-slate-800 transition-all touch-manipulation cursor-pointer shadow-sm select-none"
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={mobileMenuOpen}
             >
@@ -237,12 +240,12 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                   transition={{ duration: 0.16 }}
                 >
                   {mobileMenuOpen ? (
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="18" y1="6" x2="6" y2="18"></line>
                       <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                   ) : (
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="4" y1="7" x2="20" y2="7"></line>
                       <line x1="4" y1="12" x2="20" y2="12"></line>
                       <line x1="4" y1="17" x2="20" y2="17"></line>

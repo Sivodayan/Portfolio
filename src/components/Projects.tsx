@@ -77,6 +77,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [transformStyle, setTransformStyle] = useState('perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)');
   const [shinePos, setShinePos] = useState({ x: -999, y: -999, opacity: 0 });
+  const [showAllTags, setShowAllTags] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
@@ -156,16 +157,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       </div>
 
       <div>
-        <div className="project-tech !gap-1 !mb-2">
-          {project.tags.slice(0, 4).map((t, idx) => (
+        <div className="project-tech !gap-1 !mb-2 flex flex-wrap items-center">
+          {(showAllTags ? project.tags : project.tags.slice(0, 4)).map((t, idx) => (
             <span key={idx} className="tech-badge !text-[10px] !px-1.5 !py-0.5 !rounded">
               {t}
             </span>
           ))}
           {project.tags.length > 4 && (
-            <span className="text-[10px] font-mono text-[#cbd5e1] self-center">
-              +{project.tags.length - 4}
-            </span>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowAllTags(!showAllTags);
+              }}
+              className="text-[10px] font-mono text-[#38bdf8] hover:text-[#44f0ff] active:scale-95 bg-white/5 hover:bg-white/10 active:bg-[#38bdf8]/20 px-1.5 py-0.5 rounded border border-[#38bdf8]/30 transition-all cursor-pointer touch-manipulation select-none self-center"
+              title={showAllTags ? "Show fewer tags" : "Show more tags"}
+              aria-label={showAllTags ? "Show fewer tags" : "Show more tags"}
+            >
+              {showAllTags ? 'less' : `+${project.tags.length - 4} more`}
+            </button>
           )}
         </div>
 
