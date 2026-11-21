@@ -197,9 +197,10 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
     const pad = targetPadding;
     const w = rect.width + pad * 2;
     const h = rect.height + pad * 2;
-    const isCircle = Math.abs(rect.width - rect.height) < 4;
+    const computedRadius = parseFloat(window.getComputedStyle(el).borderRadius) || 0;
+    const isSquare = Math.abs(rect.width - rect.height) < 4;
+    const isCircle = isSquare && computedRadius >= rect.width / 2 - 2;
 
-    const computedRadius = parseFloat(window.getComputedStyle(el).borderRadius) || 12;
     const targetRadius = isCircle ? w / 2 : Math.min(computedRadius + pad, h / 2);
 
     ringTargetW.set(w);

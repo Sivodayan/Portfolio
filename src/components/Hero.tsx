@@ -95,7 +95,8 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true, the
                 href="https://github.com/Sivodayan"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 light:hover:border-[#b45309] text-white hover:text-[#e5a93c] light:text-slate-900 light:hover:text-[#b45309] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
+                data-cursor-target
+                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 light:hover:border-[#b45309] text-white hover:text-[#e5a93c] light:text-slate-900 light:hover:text-[#b45309] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer focus:outline-none"
                 title="GitHub Profile"
                 aria-label="GitHub"
               >
@@ -108,7 +109,8 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true, the
                 href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 light:hover:border-[#b45309] text-white hover:text-[#e5a93c] light:text-slate-900 light:hover:text-[#b45309] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
+                data-cursor-target
+                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 light:hover:border-[#b45309] text-white hover:text-[#e5a93c] light:text-slate-900 light:hover:text-[#b45309] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer focus:outline-none"
                 title="LinkedIn Profile"
                 aria-label="LinkedIn"
               >
@@ -121,7 +123,8 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true, the
 
               <a
                 href="mailto:sivodayan17@gmail.com"
-                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 light:hover:border-[#b45309] text-white hover:text-[#e5a93c] light:text-slate-900 light:hover:text-[#b45309] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
+                data-cursor-target
+                className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 light:hover:border-[#b45309] text-white hover:text-[#e5a93c] light:text-slate-900 light:hover:text-[#b45309] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer focus:outline-none"
                 title="Send Direct Email"
                 aria-label="Send Direct Email"
               >
