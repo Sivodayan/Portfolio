@@ -5,19 +5,11 @@ import RisingLines from './RisingLines';
 import GlitchHeading from './GlitchHeading';
 
 export interface ContactProps {
-  onShowToast: (msg: string) => void;
+  onShowToast?: (msg: string) => void;
   theme?: 'dark' | 'light';
 }
 
-export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' }) => {
-  const copyText = (text: string, label: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      onShowToast(label);
-    }).catch(() => {
-      onShowToast(text);
-    });
-  };
-
+export const Contact: React.FC<ContactProps> = ({ theme = 'dark' }) => {
   return (
     <section className="section relative w-full min-h-[100dvh] flex flex-col justify-between pt-12 sm:pt-16 !pb-0" id="contact">
       {/* React Bits Pro: Rising Lines Background - Seamless Upward Fade */}
@@ -88,49 +80,47 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             }}
             className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4 mb-3 sm:mb-4"
           >
-            {/* Email Tile */}
-            <motion.div
+            {/* Direct Email Tile */}
+            <motion.a
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
               }}
-              className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm"
+              href="mailto:sivodayan17@gmail.com"
+              className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm group"
             >
               <div className="truncate mr-3">
                 <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">Direct Email</div>
-                <a href="mailto:sivodayan17@gmail.com" className="text-xs sm:text-sm text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
+                <div className="text-xs sm:text-sm text-white group-hover:text-[#44f0ff] font-semibold truncate transition-colors">
                   sivodayan17@gmail.com
-                </a>
+                </div>
               </div>
-              <button
-                className="copy-pill flex-shrink-0 text-xs font-mono font-bold px-2.5 py-1"
-                onClick={() => copyText('sivodayan17@gmail.com', 'Email copied')}
-              >
-                Copy
-              </button>
-            </motion.div>
+              <span className="copy-pill flex-shrink-0 text-xs font-mono font-bold px-2.5 py-1 text-[#44f0ff] group-hover:bg-[#44f0ff]/20 transition-colors">
+                Send Email ↗
+              </span>
+            </motion.a>
 
-            {/* Phone Tile */}
-            <motion.div
+            {/* Direct WhatsApp / Phone Tile */}
+            <motion.a
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
               }}
-              className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm"
+              href="https://wa.me/94705891710"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#34d399]/40 backdrop-blur-md transition-all shadow-sm group"
             >
               <div className="truncate mr-3">
-                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">Phone / WhatsApp</div>
-                <a href="tel:+94705891710" className="text-xs sm:text-sm text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
+                <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">WhatsApp / Phone</div>
+                <div className="text-xs sm:text-sm text-white group-hover:text-[#34d399] font-semibold truncate transition-colors">
                   +94 70 589 1710
-                </a>
+                </div>
               </div>
-              <button
-                className="copy-pill flex-shrink-0 text-xs font-mono font-bold px-2.5 py-1"
-                onClick={() => copyText('+94 70 589 1710', 'Phone copied')}
-              >
-                Copy
-              </button>
-            </motion.div>
+              <span className="copy-pill flex-shrink-0 text-xs font-mono font-bold px-2.5 py-1 text-[#34d399] group-hover:bg-[#34d399]/20 transition-colors">
+                WhatsApp ↗
+              </span>
+            </motion.a>
 
             {/* LinkedIn Tile */}
             <motion.a

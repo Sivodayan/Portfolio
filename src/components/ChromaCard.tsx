@@ -385,26 +385,9 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
             className="absolute inset-0 pointer-events-none z-10 [data-theme=light]:opacity-20 opacity-0 bg-black transition-opacity duration-300"
           />
 
-          {/* Layer 8: HUD Micro-Markers (Top Bar) */}
-          <div className="absolute top-3 left-3 right-3 z-30 flex items-center justify-between pointer-events-none">
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-mono text-white/90 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8] animate-pulse" />
-              <span className="font-semibold tracking-wider">CHROMA // 01</span>
-            </div>
+          
 
-            <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-mono text-emerald-400 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span className="text-[9px] font-bold tracking-widest">ACTIVE</span>
-            </div>
-          </div>
-
-          {/* Layer 9: HUD Bottom Bar */}
-          <div className="absolute bottom-3 left-3 right-3 z-30 flex items-center justify-between px-3 py-1.5 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 text-[10px] font-mono text-white/80 pointer-events-none shadow-sm">
-            <span className="font-medium tracking-wide">SIVODAYAN • CSE</span>
-            <span ref={angleBadgeRef} className="text-[#38bdf8] font-bold font-mono">
-              0° / 0°
-            </span>
-          </div>
+          
 
           {/* Optional Children Overlay */}
           {children && (
