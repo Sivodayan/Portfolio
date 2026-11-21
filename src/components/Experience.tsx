@@ -52,9 +52,9 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
   // Track active milestone index from scroll progress
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (latest) => {
-      if (latest < 0.35) {
+      if (latest < 0.38) {
         setActiveIndex(0);
-      } else if (latest < 0.7) {
+      } else if (latest < 0.72) {
         setActiveIndex(1);
       } else {
         setActiveIndex(2);
@@ -63,9 +63,9 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
     return () => unsubscribe();
   }, [scrollYProgress]);
 
-  // High-fidelity spring: instant responsiveness without mushy lag or rubber-banding
-  const rawX = useTransform(scrollYProgress, [0, 1], [0, -maxScroll]);
-  const smoothX = useSpring(rawX, { damping: 38, stiffness: 260, mass: 0.08, restDelta: 0.001 });
+  // Lead-in and lead-out bounds so the first & last cards rest comfortably before unlock
+  const rawX = useTransform(scrollYProgress, [0.06, 0.94], [0, -maxScroll], { clamp: true });
+  const smoothX = useSpring(rawX, { damping: 36, stiffness: 280, mass: 0.08, restDelta: 0.001 });
 
   // Smooth jump to milestone when indicator is clicked
   const scrollToMilestone = (index: number) => {
@@ -74,7 +74,8 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const startY = scrollTop + rect.top;
     const totalScrollableDistance = containerRef.current.offsetHeight - window.innerHeight;
-    const targetY = startY + (index / 2) * totalScrollableDistance;
+    const targets = [0.06, 0.5, 0.94];
+    const targetY = startY + targets[index] * totalScrollableDistance;
     window.scrollTo({ top: targetY, behavior: 'smooth' });
   };
 
@@ -88,10 +89,10 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
     <section
       id="experience"
       ref={containerRef}
-      className={isOverflowing ? 'relative w-full h-[160vh] sm:h-[180vh]' : 'relative w-full py-16 sm:py-20'}
+      className={isOverflowing ? 'relative w-full h-[280vh] sm:h-[320vh]' : 'relative w-full py-16 sm:py-20'}
     >
-      {/* Sticky Viewport Container */}
-      <div className={isOverflowing ? 'sticky top-0 min-h-[100dvh] sm:h-screen w-full flex flex-col justify-center overflow-hidden py-4 sm:py-8' : 'w-full flex flex-col justify-center'}>
+      {/* Sticky Locked Viewport Container */}
+      <div className={isOverflowing ? 'sticky top-0 h-[100dvh] w-full flex flex-col justify-center overflow-hidden py-4 sm:py-8 z-10' : 'w-full flex flex-col justify-center'}>
         
         {/* Section Heading & Interactive Milestones Bar */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-4 sm:mb-6">
