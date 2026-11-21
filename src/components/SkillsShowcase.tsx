@@ -39,7 +39,7 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
           />
           <path
             d="M11 9.5a3 3 0 100 5 3 3 0 000-5zm4 1.5h1v1h1v1h-1v1h-1v-1h-1v-1h1v-1zm4 0h1v1h1v1h-1v1h-1v-1h-1v-1h1v-1z"
-            fill="#38bdf8"
+            fill={theme === 'light' ? '#0369a1' : '#38bdf8'}
           />
         </svg>
       ),
@@ -47,11 +47,11 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
     {
       name: 'React 19',
       icon: (
-        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke="#44f0ff" strokeWidth="1.6">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke={theme === 'light' ? '#0284c7' : '#44f0ff'} strokeWidth="1.6">
           <ellipse cx="12" cy="12" rx="10" ry="4.2" />
           <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)" />
           <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)" />
-          <circle cx="12" cy="12" r="1.6" fill="#44f0ff" />
+          <circle cx="12" cy="12" r="1.6" fill={theme === 'light' ? '#0284c7' : '#44f0ff'} />
         </svg>
       ),
     },
@@ -82,7 +82,7 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
     {
       name: 'DSA & Algorithms',
       icon: (
-        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.7">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke={theme === 'light' ? '#0284c7' : '#38bdf8'} strokeWidth="1.7">
           <circle cx="12" cy="5" r="3" />
           <circle cx="6" cy="19" r="3" />
           <circle cx="18" cy="19" r="3" />
@@ -93,7 +93,7 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
     {
       name: 'ESP32 & IoT',
       icon: (
-        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="1.8">
+        <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke={theme === 'light' ? '#16a34a' : '#22c55e'} strokeWidth="1.8">
           <rect x="5" y="5" width="14" height="14" rx="2" />
           <path d="M9 9h6v6H9z" />
           <path d="M2 9h3m-3 6h3m14-6h3m-3 6h3M9 2v3m6-3v3m-6 14v3m6-3v3" />
@@ -106,7 +106,7 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
         <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none">
           <path
             d="M12 6c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.9.2 1.6.9 2.3 1.6 1.2 1.2 2.6 2.6 5.5 2.6 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.6-1.2-1.2-2.6-2.6-5.5-2.6zm-6 6c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.9.2 1.6.9 2.3 1.6 1.2 1.2 2.6 2.6 5.5 2.6 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.6-1.2-1.2-2.6-2.6-5.5-2.6z"
-            fill="#38bdf8"
+            fill={theme === 'light' ? '#0284c7' : '#38bdf8'}
           />
         </svg>
       ),
@@ -128,7 +128,7 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
         <svg className="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none">
           <path
             d="M12 2C6.47 2 2 6.47 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"
-            fill="#f4f4f5"
+            fill={theme === 'light' ? '#0f172a' : '#f4f4f5'}
           />
         </svg>
       ),
