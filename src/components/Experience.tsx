@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useInView, type Variants } from 'framer-motion';
 import TextEngine from 'spring-text-engine';
 import GlitchHeading from './GlitchHeading';
 
@@ -7,6 +7,21 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+
+  const isSectionInView = useInView(containerRef, { once: true, amount: 0.12 });
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, x: 180 },
+    visible: (custom: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.82,
+        delay: 0.08 + custom * 0.12,
+        ease: [0.16, 1, 0.3, 1] as const,
+      },
+    }),
+  };
 
   const [maxScroll, setMaxScroll] = useState<number>(0);
   const [isOverflowing, setIsOverflowing] = useState<boolean>(true);
@@ -167,10 +182,10 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
           >
             {/* Card 1: Secondary Education */}
             <motion.div
-              initial={{ opacity: 0, x: 140 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              custom={0}
+              variants={cardVariants}
+              initial="hidden"
+              animate={isSectionInView ? 'visible' : 'hidden'}
               className="w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
             >
               <div>
@@ -191,10 +206,10 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
 
             {/* Card 2: B.Sc. Engineering */}
             <motion.div
-              initial={{ opacity: 0, x: 220 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.9, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              custom={1}
+              variants={cardVariants}
+              initial="hidden"
+              animate={isSectionInView ? 'visible' : 'hidden'}
               className="w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
             >
               <div>
@@ -215,10 +230,10 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
 
             {/* Card 3: TRCSL IT Volunteer */}
             <motion.div
-              initial={{ opacity: 0, x: 300 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.95, delay: 0.34, ease: [0.16, 1, 0.3, 1] }}
+              custom={2}
+              variants={cardVariants}
+              initial="hidden"
+              animate={isSectionInView ? 'visible' : 'hidden'}
               className="w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#f3ba63]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
             >
               <div>
