@@ -102,10 +102,10 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 sm:px-3.5 py-2 rounded-xl bg-black/60 hover:bg-black/90 [data-theme=light]:bg-white/85 [data-theme=light]:hover:bg-white border border-white/20 hover:border-[#38bdf8] [data-theme=light]:border-slate-300 text-white [data-theme=light]:text-slate-900 font-mono text-xs sm:text-[13px] font-semibold flex items-center gap-1.5 transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
+              className="px-3 sm:px-3.5 py-2 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#38bdf8] light:border-slate-300 text-white light:text-slate-900 font-mono text-xs sm:text-[13px] font-semibold flex items-center gap-1.5 transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
               title="View Resume in Browser (PDF)"
             >
-              <FileText className="w-3.5 h-3.5 text-[#38bdf8] [data-theme=light]:text-[#0284c7]" />
+              <FileText className="w-3.5 h-3.5 text-[#38bdf8] light:text-[#0284c7]" />
               <span>View CV</span>
             </a>
 
@@ -113,7 +113,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               href="https://github.com/Sivodayan"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 border border-white/20 hover:border-[#44f0ff] text-white hover:text-[#44f0ff] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)]"
+              className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#44f0ff] light:border-slate-300 light:hover:border-[#0284c7] text-white hover:text-[#44f0ff] light:text-slate-900 light:hover:text-[#0284c7] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
               title="GitHub Profile"
               aria-label="GitHub"
             >
@@ -126,7 +126,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 border border-white/20 hover:border-[#44f0ff] text-white hover:text-[#44f0ff] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)]"
+              className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#44f0ff] light:border-slate-300 light:hover:border-[#0284c7] text-white hover:text-[#44f0ff] light:text-slate-900 light:hover:text-[#0284c7] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
               title="LinkedIn Profile"
               aria-label="LinkedIn"
             >
@@ -139,7 +139,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
 
             <a
               href="mailto:sivodayan17@gmail.com"
-              className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 border border-white/20 hover:border-[#44f0ff] text-white hover:text-[#44f0ff] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
+              className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#44f0ff] light:border-slate-300 light:hover:border-[#0284c7] text-white hover:text-[#44f0ff] light:text-slate-900 light:hover:text-[#0284c7] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
               title="Send Direct Email"
               aria-label="Send Direct Email"
             >

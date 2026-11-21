@@ -96,11 +96,11 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350, theme = '
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: 10, scale: 0.9 }}
                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute right-14 px-3 py-1.5 rounded-full bg-black/85 [data-theme=light]:bg-white/95 text-white [data-theme=light]:text-slate-900 border border-white/15 [data-theme=light]:border-slate-300 text-xs font-mono font-semibold shadow-[0_8px_25px_rgba(0,0,0,0.5)] backdrop-blur-md whitespace-nowrap pointer-events-none flex items-center gap-1.5"
+                className="absolute right-14 px-3 py-1.5 rounded-full bg-black/85 light:bg-white/95 text-white light:text-slate-900 border border-white/15 light:border-slate-300 text-xs font-mono font-semibold shadow-[0_8px_25px_rgba(0,0,0,0.5)] backdrop-blur-md whitespace-nowrap pointer-events-none flex items-center gap-1.5"
               >
                 <span>Back to top</span>
-                <span className="text-[#38bdf8] [data-theme=light]:text-[#0284c7]">•</span>
-                <span className="text-[#38bdf8] [data-theme=light]:text-[#0284c7] font-bold">{scrollPercent}%</span>
+                <span className="text-[#38bdf8] light:text-[#0284c7]">•</span>
+                <span className="text-[#38bdf8] light:text-[#0284c7] font-bold">{scrollPercent}%</span>
               </motion.div>
             )}
           </AnimatePresence>
@@ -117,10 +117,10 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350, theme = '
             whileTap={{ scale: 0.92 }}
             aria-label={`Back to top, ${scrollPercent}% scrolled`}
             title="Back to top"
-            className="group relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] touch-manipulation rounded-full bg-black/60 hover:bg-black/90 [data-theme=light]:bg-white/85 [data-theme=light]:hover:bg-white text-white [data-theme=light]:text-slate-900 border border-white/20 hover:border-[#38bdf8]/60 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/60 backdrop-blur-md shadow-[0_8px_25px_rgba(0,0,0,0.45)] hover:shadow-[0_0_28px_rgba(56,189,248,0.38)] transition-colors duration-300 cursor-pointer"
+            className="group relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] touch-manipulation rounded-full bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white text-white light:text-slate-900 border border-white/20 hover:border-[#38bdf8]/60 light:border-slate-300 light:hover:border-[#0284c7]/60 backdrop-blur-md shadow-[0_8px_25px_rgba(0,0,0,0.45)] hover:shadow-[0_0_28px_rgba(56,189,248,0.38)] transition-colors duration-300 cursor-pointer"
           >
             {/* Ambient Aura Glow */}
-            <div className="absolute inset-0 rounded-full bg-[#38bdf8]/25 [data-theme=light]:bg-[#0284c7]/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none -z-10 scale-125" />
+            <div className="absolute inset-0 rounded-full bg-[#38bdf8]/25 light:bg-[#0284c7]/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none -z-10 scale-125" />
 
             {/* SVG Circular Progress Track */}
             <svg
@@ -133,7 +133,7 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350, theme = '
                 cx="24"
                 cy="24"
                 r="20"
-                className="stroke-white/10 [data-theme=light]:stroke-slate-200 fill-none"
+                className="stroke-white/10 light:stroke-slate-200 fill-none"
                 strokeWidth="2.5"
               />
               {/* Spring-Driven Progress Circle */}
@@ -141,7 +141,7 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350, theme = '
                 cx="24"
                 cy="24"
                 r="20"
-                className="stroke-[#38bdf8] [data-theme=light]:stroke-[#0284c7] fill-none"
+                className="stroke-[#38bdf8] light:stroke-[#0284c7] fill-none"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 style={{
@@ -153,9 +153,9 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350, theme = '
             {/* Dual Arrow Kinetic Slide Container */}
             <div className="relative w-5 h-5 overflow-hidden flex items-center justify-center">
               {/* Resting Arrow (slides out on hover) */}
-              <ArrowUp className="absolute inset-0 w-5 h-5 text-white [data-theme=light]:text-slate-900 group-hover:-translate-y-5 group-hover:opacity-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <ArrowUp className="absolute inset-0 w-5 h-5 text-white light:text-slate-900 group-hover:-translate-y-5 group-hover:opacity-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
               {/* Incoming Arrow (slides in from below on hover) */}
-              <ArrowUp className="absolute inset-0 w-5 h-5 text-[#38bdf8] [data-theme=light]:text-[#0284c7] translate-y-5 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <ArrowUp className="absolute inset-0 w-5 h-5 text-[#38bdf8] light:text-[#0284c7] translate-y-5 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
             </div>
           </motion.button>
         </motion.div>

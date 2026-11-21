@@ -107,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
           className="brand-link group"
           aria-label="Sujeevakumar Sivodayan"
         >
-          <span className="font-anton text-base sm:text-lg tracking-wider text-white [data-theme=light]:text-slate-900 group-hover:text-[#38bdf8] transition-colors drop-shadow-sm">
+          <span className="font-anton text-base sm:text-lg tracking-wider text-white light:text-slate-900 group-hover:text-[#38bdf8] transition-colors drop-shadow-sm">
             Sivodayan
           </span>
         </motion.a>
@@ -174,8 +174,8 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
               </span>
-              <span className="text-[11px] text-slate-400 [data-theme=light]:text-slate-500">Jaffna</span>
-              <span className="font-semibold text-white [data-theme=light]:text-slate-800 text-[11px]">{timeStr}</span>
+              <span className="text-[11px] text-slate-400 light:text-slate-500">Jaffna</span>
+              <span className="font-semibold text-white light:text-slate-800 text-[11px]">{timeStr}</span>
             </span>
 
             <motion.button
@@ -220,7 +220,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
             <motion.button
               whileTap={{ scale: 0.88 }}
               onClick={() => setMobileMenuOpen((prev) => !prev)}
-              className="sm:hidden flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-full bg-white/10 hover:bg-white/15 active:bg-[#38bdf8]/25 [data-theme=light]:bg-black/5 [data-theme=light]:hover:bg-black/10 [data-theme=light]:active:bg-sky-500/20 border border-white/20 [data-theme=light]:border-black/15 text-white [data-theme=light]:text-slate-800 transition-all touch-manipulation cursor-pointer shadow-sm select-none"
+              className="sm:hidden flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-full bg-white/10 hover:bg-white/15 active:bg-[#38bdf8]/25 light:bg-black/5 light:hover:bg-black/10 light:active:bg-sky-500/20 border border-white/20 light:border-black/15 text-white light:text-slate-800 transition-all touch-manipulation cursor-pointer shadow-sm select-none"
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={mobileMenuOpen}
             >
@@ -298,7 +298,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
               })}
 
               {/* Live Jaffna Time status inside mobile drawer */}
-              <div className="pt-2 mt-1 border-t border-white/10 [data-theme=light]:border-slate-200 flex items-center justify-between px-2.5 text-[11px] font-mono text-[#94a3b8]">
+              <div className="pt-2 mt-1 border-t border-white/10 light:border-slate-200 flex items-center justify-between px-2.5 text-[11px] font-mono text-[#94a3b8]">
                 <span className="flex items-center gap-1.5">
                   <span className="relative flex h-1.5 w-1.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -306,7 +306,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                   </span>
                   <span>Jaffna, Sri Lanka</span>
                 </span>
-                <span className="font-semibold text-white [data-theme=light]:text-slate-800">{timeStr}</span>
+                <span className="font-semibold text-white light:text-slate-800">{timeStr}</span>
               </div>
             </motion.div>
           </motion.div>

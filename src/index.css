@@ -1371,11 +1371,17 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   color: #0284c7;
 }
 
+[data-theme="light"] a[download]:hover,
+[data-theme="light"] a[download]:hover * {
+  color: #ffffff !important;
+}
+
 /* Card, Glass Tile & Container Overrides */
 [data-theme="light"] .bg-black\/40,
 [data-theme="light"] .bg-black\/45,
 [data-theme="light"] .bg-black\/65,
-[data-theme="light"] .bg-black\/70 {
+[data-theme="light"] .bg-black\/70,
+[data-theme="light"] .bg-\[\#0c101a\]\/95 {
   background-color: rgba(255, 255, 255, 0.88) !important;
   border-color: rgba(0, 0, 0, 0.08) !important;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
@@ -1450,6 +1456,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 [data-theme="light"] a[aria-label="Resume"],
 [data-theme="light"] a[aria-label="GitHub"],
 [data-theme="light"] a[aria-label="LinkedIn"],
+[data-theme="light"] a[aria-label="Send Direct Email"],
 [data-theme="light"] button[aria-label="Copy Email"] {
   background: rgba(255, 255, 255, 0.92) !important;
   border-color: rgba(0, 0, 0, 0.12) !important;
@@ -1460,6 +1467,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 [data-theme="light"] a[aria-label="Resume"]:hover,
 [data-theme="light"] a[aria-label="GitHub"]:hover,
 [data-theme="light"] a[aria-label="LinkedIn"]:hover,
+[data-theme="light"] a[aria-label="Send Direct Email"]:hover,
 [data-theme="light"] button[aria-label="Copy Email"]:hover {
   background: #ffffff !important;
   border-color: #0284c7 !important;
