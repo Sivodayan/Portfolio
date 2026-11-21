@@ -281,6 +281,14 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     container.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('resize', updateSize);
 
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(() => {
+        updateSize();
+      });
+      resizeObserver.observe(container);
+    }
+
     let isVisible = true;
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -302,6 +310,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     return () => {
       cancelAnimationFrame(animationFrameId);
       observer.disconnect();
+      resizeObserver?.disconnect();
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', updateSize);
@@ -343,12 +352,13 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     <div
       ref={containerRef}
       className={cn(
-        'relative overflow-hidden cursor-pointer select-none',
+        'relative overflow-hidden cursor-pointer select-none max-w-full',
         'isolate [transform:translateZ(0)] [-webkit-mask-image:-webkit-radial-gradient(white,black)]',
         className
       )}
       style={{
         width: resolvedWidth,
+        maxWidth: '100%',
         height: resolvedHeight,
         borderRadius: typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
       }}

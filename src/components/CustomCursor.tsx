@@ -219,15 +219,17 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
 
   // Global mouse tracking and element detection
   useEffect(() => {
-    const isTouch =
-      'ontouchstart' in window ||
-      navigator.maxTouchPoints > 0 ||
-      Boolean((navigator as any).msMaxTouchPoints && (navigator as any).msMaxTouchPoints > 0);
-    setIsTouchDevice(isTouch);
+    const isPureTouch =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(pointer: coarse)').matches &&
+      !window.matchMedia('(pointer: fine)').matches;
+    setIsTouchDevice(isPureTouch);
 
-    if (isTouch && !showOnTouch) return;
+    if (isPureTouch && !showOnTouch) return;
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (isTouchDevice) setIsTouchDevice(false);
       rawMouseX.set(e.clientX);
       rawMouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);

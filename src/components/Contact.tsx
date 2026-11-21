@@ -64,9 +64,9 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
 
         {/* Contact Content - Spacious 2-Column Responsive Grid */}
         <div className="w-full max-w-4xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4 mb-3 sm:mb-4">
             {/* Email Tile */}
-            <div className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
+            <div className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
               <div className="truncate mr-3">
                 <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">Direct Email</div>
                 <a href="mailto:sivodayan17@gmail.com" className="text-xs sm:text-sm text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
@@ -82,7 +82,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
             </div>
 
             {/* Phone Tile */}
-            <div className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
+            <div className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm">
               <div className="truncate mr-3">
                 <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">Phone / WhatsApp</div>
                 <a href="tel:+94705891710" className="text-xs sm:text-sm text-white hover:text-[#44f0ff] font-semibold truncate block transition-colors">
@@ -102,7 +102,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
               href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm group"
+              className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm group"
             >
               <div>
                 <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">LinkedIn Network</div>
@@ -117,7 +117,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
               href="https://github.com/Sivodayan"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm group"
+              className="flex items-center justify-between p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm group"
             >
               <div>
                 <div className="text-[10px] font-mono uppercase text-[#cbd5e1] font-semibold mb-1">Codebase Repository</div>
@@ -129,16 +129,16 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
           </div>
 
           {/* Location & Status Bar */}
-          <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[#cbd5e1] pt-3 border-t border-white/10">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-mono text-[#cbd5e1] pt-3 border-t border-white/10">
             <span>📍 Department of Computer Science &amp; Engineering, University of Moratuwa</span>
-            <span>•</span>
+            <span className="hidden sm:inline">•</span>
             <span>Open to Engineering Internships</span>
           </div>
         </div>
       </div>
 
       {/* Embedded Clean Single-Screen Footer */}
-      <footer className="relative z-10 w-full pt-2.5 pb-2 sm:pb-2.5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-1 text-[11px] font-mono text-[#94a3b8]">
+      <footer className="relative z-10 w-full pt-2.5 pb-2 sm:pb-2.5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] sm:text-[11px] text-center sm:text-left font-mono text-[#94a3b8]">
         <div>© {new Date().getFullYear()} Sujeevakumar Sivodayan</div>
         <div>Computer Science &amp; Engineering - University of Moratuwa</div>
       </footer>

@@ -24,7 +24,7 @@ export const Experience: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4 items-stretch">
           {/* University of Moratuwa Card */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-[340px] sm:min-h-[370px]">
+          <div className="p-4 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-0 md:min-h-[370px]">
             <div>
               <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#38bdf8]/15 text-[#38bdf8] border border-[#38bdf8]/30 font-semibold mb-3">
                 Nov 2025 — Present
@@ -53,7 +53,7 @@ export const Experience: React.FC = () => {
           </div>
 
           {/* TRCSL IT Volunteer Card */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-[340px] sm:min-h-[370px]">
+          <div className="p-4 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-0 md:min-h-[370px]">
             <div>
               <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#44f0ff]/15 text-[#44f0ff] border border-[#44f0ff]/30 font-semibold mb-3">
                 TRCSL Initiative
@@ -82,7 +82,7 @@ export const Experience: React.FC = () => {
           </div>
 
           {/* Jaffna Hindu College Card */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-[340px] sm:min-h-[370px]">
+          <div className="p-4 sm:p-6 rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#38bdf8]/40 backdrop-blur-md transition-all shadow-sm flex flex-col justify-between min-h-0 md:min-h-[370px]">
             <div>
               <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#38bdf8]/15 text-[#38bdf8] border border-[#38bdf8]/30 font-semibold mb-3">
                 Jan 2016 — Apr 2025

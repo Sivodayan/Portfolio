@@ -26,18 +26,18 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
       <div className="w-full flex flex-col lg:flex-row items-center lg:items-center justify-between gap-8 lg:gap-12 my-auto">
 
         {/* Left Column: Pure ChromaCard Picture (No borders, No underlying cards) */}
-        <div className="shrink-0 relative flex items-center justify-center select-none self-center">
+        <div className="shrink-0 relative flex items-center justify-center select-none self-center w-full max-w-[280px] sm:max-w-[330px] lg:max-w-[370px]">
           <ChromaCard
-            width={370}
-            height={505}
-            className="rounded-[24px]"
+            width="100%"
+            height="clamp(370px, 48vh, 505px)"
+            className="rounded-[20px] sm:rounded-[24px] aspect-[370/505] w-full"
           />
         </div>
 
         {/* Right Column: Kicker, Display Name, Bio, Links & Badges */}
         <div className="flex-1 max-w-2xl text-left">
           {/* Uppercase Kicker Tagline */}
-          <div className="text-xs sm:text-sm font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-2 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+          <div className="text-[11px] sm:text-sm font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-2 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
             <span>COMPUTER SCIENCE &amp; ENGINEERING UNDERGRADUATE</span><br />
             <span className="text-[#93c5fd]">University of Moratuwa • Sri Lanka</span>
           </div>
@@ -50,13 +50,13 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
             letterIn={{ opacity: 1, scale: 1 }}
             letterConfig={{ tension: 426, friction: 17 }}
             letterStagger={27}
-            className="font-anton text-4xl sm:text-5xl lg:text-[3.6rem] tracking-wide text-white mb-3 leading-[1.08] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
+            className="font-anton text-3xl min-[420px]:text-4xl sm:text-5xl lg:text-[3.6rem] tracking-wide text-white mb-3 leading-[1.08] drop-shadow-[0_3px_14px_rgba(0,0,0,0.95)]"
           >
             Sivodayan Sujeevakumar
           </TextEngine>
 
           {/* Bio Description */}
-          <p className="text-sm sm:text-base text-[#f1f5f9] leading-relaxed mb-4 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+          <p className="text-xs sm:text-base text-[#f1f5f9] leading-relaxed mb-4 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
             Department Representative for Computer Science &amp; Engineering. I build full-stack web applications, embedded IoT telemetries, and performant developer software using React, TypeScript, Python, and C++.
           </p>
 
@@ -136,7 +136,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
                 dragElastic={0.2}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="draggable-badge"
+                className="draggable-badge text-xs sm:text-[13px] !py-1 !px-2.5 sm:!px-3"
               >
                 <span>{b.emoji}</span>
                 <span>{b.label}</span>

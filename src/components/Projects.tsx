@@ -105,7 +105,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <article
       ref={cardRef}
-      className="project-item !p-4 !rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/50 backdrop-blur-md transition-all flex flex-col justify-between h-full min-h-[440px] sm:min-h-[460px]"
+      className="project-item !p-4 !rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/50 backdrop-blur-md transition-all flex flex-col justify-between h-full min-h-0 sm:min-h-[440px] lg:min-h-[460px]"
       style={{
         transform: transformStyle,
         transition: 'transform 0.15s ease-out, border-color 0.2s, background-color 0.2s',
@@ -174,8 +174,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
 
         {project.links && project.links.length > 0 && (
-          <div className="project-links !mt-1 !text-xs flex items-center justify-between border-t border-white/10 pt-2">
-            <div className="flex items-center gap-2">
+          <div className="project-links !mt-1 !text-xs flex flex-wrap items-center justify-between gap-y-1.5 border-t border-white/10 pt-2">
+            <div className="flex flex-wrap items-center gap-2">
               {project.links.map((link, idx) => (
                 <React.Fragment key={idx}>
                   <a

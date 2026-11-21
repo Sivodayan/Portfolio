@@ -74,6 +74,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 @media (min-width: 1280px) {
@@ -85,7 +86,7 @@ html {
 body {
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
   transition: background-color var(--transition), color var(--transition);
 }
 
@@ -881,7 +882,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   cursor: grab;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.18s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.18s ease;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 .draggable-badge:hover {
@@ -1038,15 +1039,32 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   }
 
   .site-header-inner {
-    height: 2.85rem;
-    padding: 0 0.5rem 0 0.65rem;
-  }
-
-  .brand-link span:last-child {
-    display: none;
+    height: 3rem;
+    padding: 0 0.65rem 0 0.85rem;
   }
 
   .live-clock-pill {
     display: none;
   }
+}
+
+/* Mobile Navigation Dropdown */
+.mobile-nav-drawer {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 980px;
+  margin-top: 0.4rem;
+  background: rgba(8, 10, 15, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+[data-theme="light"] .mobile-nav-drawer {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.15);
 }
