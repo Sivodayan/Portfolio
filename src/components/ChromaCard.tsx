@@ -63,18 +63,19 @@ void main() {
   uv.y *= u;
   uv.y -= (u) / 2. - .5;
 
-  float hoverLevel = smootherstep(min(1., (distance(vec2(.5), uv) * u_hover) + u_hover));
-  uv *= 1. - u_zoomLevel * hoverLevel;
-  uv += u_zoomLevel / 2. * hoverLevel;
+  float zoomProgress = smootherstep(u_hover);
+  uv *= 1. - u_zoomLevel * zoomProgress;
+  uv += u_zoomLevel / 2. * zoomProgress;
   uv = clamp(uv, 0., 1.);
   vec4 color = texture2D(u_texture, uv);
 
-  if(hoverLevel > 0.) {
-    hoverLevel = 1. - abs(hoverLevel - .5) * 2.;
-    uv.y += color.r * hoverLevel * u_pixelDisplace;
+  float glitchWave = smootherstep(min(1., (distance(vec2(.5), uv) * u_hover) + u_hover));
+  if(glitchWave > 0. && glitchWave < 1.) {
+    float wave = 1. - abs(glitchWave - .5) * 2.;
+    uv.y += color.r * wave * u_pixelDisplace;
     color = texture2D(u_texture, uv);
-    color.r = texture2D(u_texture, uv + (hoverLevel) * u_rgbShift).r;
-    color.g = texture2D(u_texture, uv - (hoverLevel) * u_rgbShift).g;
+    color.r = texture2D(u_texture, uv + wave * u_rgbShift).r;
+    color.g = texture2D(u_texture, uv - wave * u_rgbShift).g;
   }
 
   gl_FragColor = vec4(color.rgb, color.a * u_opacity * alpha);
@@ -94,6 +95,7 @@ export interface ChromaCardProps {
   rgbShiftAmount?: number;
   pixelDisplaceAmount?: number;
   hoverDuration?: number;
+  zoomInDuration?: number;
   zoomOutDuration?: number;
   rotationIntensity?: number;
   scaleIntensity?: number;
@@ -119,6 +121,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   rgbShiftAmount = 0.025,
   pixelDisplaceAmount = 0.08,
   hoverDuration = 1.8,
+  zoomInDuration = 0.75,
   zoomOutDuration = 0.85,
   rotationIntensity = 0.22,
   scaleIntensity = 0.08,
@@ -241,7 +244,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       if (isHovered) {
         gsap.to(material.uniforms.u_hover, {
           value: 1.0,
-          duration: Math.min(hoverDuration, 0.45),
+          duration: zoomInDuration,
           ease: 'power2.out',
         });
 
@@ -331,13 +334,13 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
       gsap.to(material.uniforms.u_hover, {
         value: isMobileActive ? 1.0 : 0.0,
-        duration: isMobileActive ? 0.5 : zoomOutDuration,
+        duration: isMobileActive ? zoomInDuration : zoomOutDuration,
         ease: 'power2.out',
       });
       gsap.to(mesh.scale, {
         x: isMobileActive ? 1 + scaleIntensity : 1.0,
         y: isMobileActive ? 1 + scaleIntensity : 1.0,
-        duration: isMobileActive ? 0.5 : zoomOutDuration,
+        duration: isMobileActive ? zoomInDuration : zoomOutDuration,
         ease: 'power2.out',
       });
     };
@@ -401,6 +404,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     rgbShiftAmount,
     pixelDisplaceAmount,
     hoverDuration,
+    zoomInDuration,
     zoomOutDuration,
     rotationIntensity,
     scaleIntensity,
