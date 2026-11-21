@@ -91,6 +91,7 @@ export interface ChromaCardProps {
   imageAspectRatio?: number;
   cardWidth?: number;
   cardHeight?: number;
+  overflowBleed?: number;
   zoomLevel?: number;
   rgbShiftAmount?: number;
   pixelDisplaceAmount?: number;
@@ -115,21 +116,22 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   children,
   imageSrc = '/assets/images/profile.jpg',
   imageAspectRatio = 0.75,
-  cardWidth = 4.2,
-  cardHeight = 5.6,
+  cardWidth = 4.8,
+  cardHeight = 6.4,
+  overflowBleed = 90,
   zoomLevel = 0.28,
   rgbShiftAmount = 0.025,
   pixelDisplaceAmount = 0.08,
   hoverDuration = 1.8,
   zoomInDuration = 0.75,
   zoomOutDuration = 0.85,
-  rotationIntensity = 0.18,
-  scaleIntensity = 0.06,
-  positionIntensity = 0.2,
+  rotationIntensity = 0.22,
+  scaleIntensity = 0.08,
+  positionIntensity = 0.28,
   interactionDuration = 0.4,
   opacity = 1,
   cameraFov = 50,
-  cameraZ = 8.4,
+  cameraZ = 7.7,
   borderRadius = 32,
   triggerGlitch = false,
 }) => {
@@ -204,13 +206,20 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     scene.add(mesh);
 
     const updateSize = () => {
-      if (!container || !renderer) return;
-      const w = container.clientWidth ||  400;
-      const h = container.clientHeight || 500;
+      if (!container || !renderer || !canvas) return;
+      const baseW = container.clientWidth || 380;
+      const baseH = container.clientHeight || 480;
+      const w = Math.round(baseW + overflowBleed * 2);
+      const h = Math.round(baseH + overflowBleed * 2);
+
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
+
+      const scaleFactor = h / baseH;
+      camera.position.z = cameraZ * scaleFactor;
       camera.updateProjectionMatrix();
-      uniforms.u_resolution.value.set(w, h);
+
+      uniforms.u_resolution.value.set(baseW, baseH);
     };
 
     updateSize();
@@ -237,7 +246,18 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       mouse.x = Math.max(-1.1, Math.min(1.1, ((e.clientX - rect.left) / rect.width) * 2 - 1));
       mouse.y = Math.max(-1.1, Math.min(1.1, -(((e.clientY - rect.top) / rect.height) * 2 - 1)));
 
-      raycaster.setFromCamera(mouse, camera);
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const canvasRect = canvas.getBoundingClientRect();
+        const canvasMouse = new THREE.Vector2(
+          ((e.clientX - canvasRect.left) / canvasRect.width) * 2 - 1,
+          -(((e.clientY - canvasRect.top) / canvasRect.height) * 2 - 1)
+        );
+        raycaster.setFromCamera(canvasMouse, camera);
+      } else {
+        raycaster.setFromCamera(mouse, camera);
+      }
+
       const intersects = raycaster.intersectObject(mesh);
       const isHovered = isWithinBounds || intersects.length > 0;
 
@@ -400,6 +420,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     imageAspectRatio,
     cardWidth,
     cardHeight,
+    overflowBleed,
     zoomLevel,
     rgbShiftAmount,
     pixelDisplaceAmount,
@@ -446,7 +467,16 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         height: resolvedHeight === 'auto' ? undefined : resolvedHeight,
       }}
     >
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full pointer-events-none" />
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute"
+        style={{
+          top: -overflowBleed,
+          left: -overflowBleed,
+          width: `calc(100% + ${overflowBleed * 2}px)`,
+          height: `calc(100% + ${overflowBleed * 2}px)`,
+        }}
+      />
       {children && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           {children}
