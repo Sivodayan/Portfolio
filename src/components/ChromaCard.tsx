@@ -312,14 +312,34 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     container.addEventListener('touchend', handleTouchEnd, { passive: true });
     window.addEventListener('resize', updateSize);
 
+    let isIntersecting = true;
     const render = () => {
+      if (!isIntersecting) {
+        animationFrameId = 0;
+        return;
+      }
       renderer?.render(scene, camera);
       animationFrameId = requestAnimationFrame(render);
     };
 
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+        if (isIntersecting && !animationFrameId) {
+          render();
+        } else if (!isIntersecting && animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = 0;
+        }
+      },
+      { rootMargin: '100px' }
+    );
+    visibilityObserver.observe(container);
+
     render();
 
     return () => {
+      visibilityObserver.disconnect();
       cancelAnimationFrame(animationFrameId);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);

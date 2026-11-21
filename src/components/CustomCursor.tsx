@@ -313,8 +313,8 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
     window.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('mouseenter', handleMouseEnter);
     document.addEventListener('mouseleave', handleMouseLeave);
-    window.addEventListener('scroll', handleScrollOrResize, true);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScrollOrResize, { passive: true, capture: true });
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);

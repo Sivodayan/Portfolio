@@ -80,8 +80,8 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const [transformStyle, setTransformStyle] = useState('perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)');
-  const [shinePos, setShinePos] = useState({ x: -999, y: -999, opacity: 0 });
+  const shineRef = useRef<HTMLDivElement | null>(null);
+  const rafId = useRef<number>(0);
   const [showAllTags, setShowAllTags] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -95,13 +95,26 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     const rotX = ((y - centerY) / centerY) * -3;
     const rotY = ((x - centerX) / centerX) * 3;
 
-    setTransformStyle(`perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-2px)`);
-    setShinePos({ x, y, opacity: 1 });
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+    rafId.current = requestAnimationFrame(() => {
+      if (cardRef.current) {
+        cardRef.current.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-2px)`;
+      }
+      if (shineRef.current) {
+        shineRef.current.style.background = `radial-gradient(280px circle at ${x}px ${y}px, rgba(255, 255, 255, 0.08), transparent 60%)`;
+        shineRef.current.style.opacity = '1';
+      }
+    });
   };
 
   const handleMouseLeave = () => {
-    setTransformStyle('perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)');
-    setShinePos({ x: -999, y: -999, opacity: 0 });
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+    if (cardRef.current) {
+      cardRef.current.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+    }
+    if (shineRef.current) {
+      shineRef.current.style.opacity = '0';
+    }
   };
 
   return (
@@ -109,17 +122,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       ref={cardRef}
       className="project-item !p-4 !rounded-2xl bg-black/40 hover:bg-black/65 border border-white/10 hover:border-[#44f0ff]/50 backdrop-blur-md transition-all flex flex-col justify-between h-full min-h-0 sm:min-h-[440px] lg:min-h-[460px]"
       style={{
-        transform: transformStyle,
+        transform: 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)',
         transition: 'transform 0.15s ease-out, border-color 0.2s, background-color 0.2s',
       }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       <div
+        ref={shineRef}
         className="project-shine"
         style={{
-          background: `radial-gradient(280px circle at ${shinePos.x}px ${shinePos.y}px, rgba(255, 255, 255, 0.08), transparent 60%)`,
-          opacity: shinePos.opacity,
+          background: 'radial-gradient(280px circle at -999px -999px, rgba(255, 255, 255, 0.08), transparent 60%)',
+          opacity: 0,
         }}
         aria-hidden="true"
       />
