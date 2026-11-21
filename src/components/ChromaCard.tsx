@@ -224,8 +224,14 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     let touchStartY = 0;
 
     const resetToNeutral = () => {
+      lastTouchTime = Date.now();
       if (!material || !mesh) return;
       isMobileActive = false;
+      gsap.killTweensOf(material.uniforms.u_hover);
+      gsap.killTweensOf(mesh.scale);
+      gsap.killTweensOf(mesh.position);
+      gsap.killTweensOf(mesh.rotation);
+
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
         duration: 0.45,
@@ -252,6 +258,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     };
 
     const activateMobileEffect = (clientX: number, clientY: number) => {
+      lastTouchTime = Date.now();
       if (!container || !material || !mesh) return;
       isMobileActive = true;
       const rect = container.getBoundingClientRect();
@@ -259,6 +266,11 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       const tapY = -(((clientY - rect.top) / rect.height) * 2 - 1);
       const clampedX = Math.max(-1, Math.min(1, tapX));
       const clampedY = Math.max(-1, Math.min(1, tapY));
+
+      gsap.killTweensOf(material.uniforms.u_hover);
+      gsap.killTweensOf(mesh.scale);
+      gsap.killTweensOf(mesh.position);
+      gsap.killTweensOf(mesh.rotation);
 
       gsap.to(material.uniforms.u_hover, {
         value: 1.0,
@@ -285,7 +297,9 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (Date.now() - lastTouchTime < 1000) return;
+      // Disallow mouse hover emulation on touchscreens / mobile devices
+      if (!window.matchMedia('(hover: hover)').matches) return;
+      if (Date.now() - lastTouchTime < 2000) return;
       if (!container || !mesh || !material) return;
       const rect = container.getBoundingClientRect();
       mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -302,21 +316,21 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       });
 
       gsap.to(mesh.scale, {
-        x: 1 - mouse.y * scaleIntensity,
-        y: 1 - mouse.y * scaleIntensity,
+        x: isHovered ? 1 - mouse.y * scaleIntensity : 1.0,
+        y: isHovered ? 1 - mouse.y * scaleIntensity : 1.0,
         duration: interactionDuration,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.position, {
-        x: mouse.x * positionIntensity,
+        x: isHovered ? mouse.x * positionIntensity : 0.0,
         duration: interactionDuration,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.rotation, {
-        x: -mouse.y * (Math.PI / 3) * rotationIntensity,
-        y: mouse.x * (Math.PI / 3) * rotationIntensity,
+        x: isHovered ? -mouse.y * (Math.PI / 3) * rotationIntensity : 0.0,
+        y: isHovered ? mouse.x * (Math.PI / 3) * rotationIntensity : 0.0,
         duration: interactionDuration,
         ease: 'power2.out',
       });
@@ -328,6 +342,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     };
 
     const handleTouchStart = (e: TouchEvent) => {
+      lastTouchTime = Date.now();
       if (e.touches.length > 0) {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
@@ -361,6 +376,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     };
 
     const handleWindowScroll = () => {
+      lastTouchTime = Date.now();
       if (isMobileActive) {
         resetToNeutral();
       }
