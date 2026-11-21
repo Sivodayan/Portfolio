@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 export interface HeaderProps {
   theme: 'dark' | 'light';
@@ -19,6 +19,84 @@ const NAV_ITEMS: NavItem[] = [
   { id: 'experience', label: 'Experience', href: '#experience' },
   { id: 'contact', label: 'Contact', href: '#contact' },
 ];
+
+const mobileDrawerVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: -12,
+    scale: 0.96,
+    transition: {
+      duration: 0.2,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.28,
+      ease: [0.16, 1, 0.3, 1] as const,
+      staggerChildren: 0.05,
+      delayChildren: 0.03,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    scale: 0.96,
+    transition: {
+      duration: 0.18,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+};
+
+const mobileNavItemVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: -10,
+    x: -6,
+    scale: 0.96,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    x: 0,
+    scale: 1,
+    transition: {
+      type: 'spring',
+      stiffness: 420,
+      damping: 28,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -6,
+    scale: 0.96,
+    transition: { duration: 0.15 },
+  },
+};
+
+const mobileFooterVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: -6,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.25,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -4,
+    transition: { duration: 0.12 },
+  },
+};
 
 export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
   const [timeStr, setTimeStr] = useState<string>('--:--');
@@ -223,7 +301,9 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
             </motion.button>
 
             <motion.button
-              whileTap={{ scale: 0.88 }}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               onClick={(e) => {
                 e.stopPropagation();
                 setMobileMenuOpen((prev) => !prev);
@@ -231,28 +311,30 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
               onTouchEnd={(e) => {
                 e.stopPropagation();
               }}
-              className="sm:hidden flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-full bg-white/10 hover:bg-white/15 active:bg-[#38bdf8]/25 light:bg-black/5 light:hover:bg-black/10 light:active:bg-sky-500/20 border border-white/20 light:border-black/15 text-white light:text-slate-800 transition-all touch-manipulation cursor-pointer shadow-sm select-none"
+              className="theme-toggle-btn sm:hidden cursor-pointer overflow-hidden touch-manipulation select-none"
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={mobileMenuOpen}
+              title={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={mobileMenuOpen ? 'open' : 'closed'}
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.16 }}
+                  initial={{ rotate: -90, scale: 0.6, opacity: 0 }}
+                  animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                  exit={{ rotate: 90, scale: 0.6, opacity: 0 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-center justify-center"
                 >
                   {mobileMenuOpen ? (
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="18" y1="6" x2="6" y2="18"></line>
                       <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                   ) : (
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="4" y1="7" x2="20" y2="7"></line>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="4" y1="6" x2="20" y2="6"></line>
                       <line x1="4" y1="12" x2="20" y2="12"></line>
-                      <line x1="4" y1="17" x2="20" y2="17"></line>
+                      <line x1="4" y1="18" x2="20" y2="18"></line>
                     </svg>
                   )}
                 </motion.div>
@@ -265,29 +347,20 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -12, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -12, scale: 0.97 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            variants={mobileDrawerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             className="mobile-nav-drawer"
           >
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={{
-                visible: { transition: { staggerChildren: 0.04 } },
-              }}
-              className="flex flex-col gap-1 p-2.5"
-            >
+            <div className="flex flex-col gap-1 p-2.5">
               {NAV_ITEMS.map((item) => {
                 const isActive = activeSection === item.id;
                 return (
                   <motion.a
                     key={item.id}
-                    variants={{
-                      hidden: { opacity: 0, x: -8 },
-                      visible: { opacity: 1, x: 0 },
-                    }}
+                    variants={mobileNavItemVariants}
+                    whileTap={{ scale: 0.98 }}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between transition-colors ${
@@ -309,7 +382,10 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
               })}
 
               {/* Live Jaffna Time status inside mobile drawer */}
-              <div className="pt-2 mt-1 border-t border-white/10 light:border-slate-200 flex items-center justify-between px-2.5 text-[11px] font-mono text-[#94a3b8]">
+              <motion.div
+                variants={mobileFooterVariants}
+                className="pt-2 mt-1 border-t border-white/10 light:border-slate-200 flex items-center justify-between px-2.5 text-[11px] font-mono text-[#94a3b8]"
+              >
                 <span className="flex items-center gap-1.5">
                   <span className="relative flex h-1.5 w-1.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -318,8 +394,8 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                   <span>Jaffna, Sri Lanka</span>
                 </span>
                 <span className="font-semibold text-white light:text-slate-800">{timeStr}</span>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
