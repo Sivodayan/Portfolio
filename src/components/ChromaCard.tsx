@@ -203,7 +203,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     const updateSize = () => {
       if (!container || !renderer) return;
-      const w = container.clientWidth || 400;
+      const w = container.clientWidth ||  400;
       const h = container.clientHeight || 500;
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
@@ -220,86 +220,9 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     let isMobileActive = false;
     let lastTouchTime = 0;
-    let touchStartX = 0;
-    let touchStartY = 0;
-
-    const resetToNeutral = () => {
-      lastTouchTime = Date.now();
-      if (!material || !mesh) return;
-      isMobileActive = false;
-      gsap.killTweensOf(material.uniforms.u_hover);
-      gsap.killTweensOf(mesh.scale);
-      gsap.killTweensOf(mesh.position);
-      gsap.killTweensOf(mesh.rotation);
-
-      gsap.to(material.uniforms.u_hover, {
-        value: 0.0,
-        duration: 0.15,
-        ease: 'power2.out',
-      });
-      gsap.to(mesh.scale, {
-        x: 1.0,
-        y: 1.0,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
-      gsap.to(mesh.position, {
-        x: 0.0,
-        y: 0.0,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
-      gsap.to(mesh.rotation, {
-        x: 0.0,
-        y: 0.0,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
-    };
-
-    const activateMobileEffect = (clientX: number, clientY: number) => {
-      lastTouchTime = Date.now();
-      if (!container || !material || !mesh) return;
-      isMobileActive = true;
-      const rect = container.getBoundingClientRect();
-      const tapX = ((clientX - rect.left) / rect.width) * 2 - 1;
-      const tapY = -(((clientY - rect.top) / rect.height) * 2 - 1);
-      const clampedX = Math.max(-1, Math.min(1, tapX));
-      const clampedY = Math.max(-1, Math.min(1, tapY));
-
-      gsap.killTweensOf(material.uniforms.u_hover);
-      gsap.killTweensOf(mesh.scale);
-      gsap.killTweensOf(mesh.position);
-      gsap.killTweensOf(mesh.rotation);
-
-      gsap.to(material.uniforms.u_hover, {
-        value: 1.0,
-        duration: hoverDuration,
-        ease: 'power2.out',
-      });
-      gsap.to(mesh.scale, {
-        x: 1 + scaleIntensity,
-        y: 1 + scaleIntensity,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
-      gsap.to(mesh.position, {
-        x: clampedX * positionIntensity * 0.7,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
-      gsap.to(mesh.rotation, {
-        x: -clampedY * (Math.PI / 3) * rotationIntensity * 0.7,
-        y: clampedX * (Math.PI / 3) * rotationIntensity * 0.7,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
-    };
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Disallow mouse hover emulation on touchscreens / mobile devices
-      if (!window.matchMedia('(hover: hover)').matches) return;
-      if (Date.now() - lastTouchTime < 2000) return;
+      if (Date.now() - lastTouchTime < 1000) return;
       if (!container || !mesh || !material) return;
       const rect = container.getBoundingClientRect();
       mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -316,21 +239,21 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       });
 
       gsap.to(mesh.scale, {
-        x: isHovered ? 1 - mouse.y * scaleIntensity : 1.0,
-        y: isHovered ? 1 - mouse.y * scaleIntensity : 1.0,
+        x: 1 - mouse.y * scaleIntensity,
+        y: 1 - mouse.y * scaleIntensity,
         duration: interactionDuration,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.position, {
-        x: isHovered ? mouse.x * positionIntensity : 0.0,
+        x: mouse.x * positionIntensity,
         duration: interactionDuration,
         ease: 'power2.out',
       });
 
       gsap.to(mesh.rotation, {
-        x: isHovered ? -mouse.y * (Math.PI / 3) * rotationIntensity : 0.0,
-        y: isHovered ? mouse.x * (Math.PI / 3) * rotationIntensity : 0.0,
+        x: -mouse.y * (Math.PI / 3) * rotationIntensity,
+        y: mouse.x * (Math.PI / 3) * rotationIntensity,
         duration: interactionDuration,
         ease: 'power2.out',
       });
@@ -338,56 +261,55 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     const handleMouseLeave = () => {
       if (!material || !mesh || isMobileActive) return;
-      resetToNeutral();
+      gsap.to(material.uniforms.u_hover, {
+        value: 0.0,
+        duration: hoverDuration,
+        ease: 'power2.out',
+      });
+
+      gsap.to(mesh.scale, {
+        x: 1.0,
+        y: 1.0,
+        duration: interactionDuration,
+        ease: 'power2.out',
+      });
+
+      gsap.to(mesh.position, {
+        x: 0.0,
+        y: 0.0,
+        duration: interactionDuration,
+        ease: 'power2.out',
+      });
+
+      gsap.to(mesh.rotation, {
+        x: 0.0,
+        y: 0.0,
+        duration: interactionDuration,
+        ease: 'power2.out',
+      });
     };
 
-    const handleTouchStart = (e: TouchEvent) => {
-      lastTouchTime = Date.now();
-      if (e.touches.length > 0) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
+    const handleTouchEnd = () => {
       lastTouchTime = Date.now();
       if (!material || !mesh) return;
-      if (e.changedTouches.length === 0) return;
+      isMobileActive = !isMobileActive;
 
-      const touch = e.changedTouches[0];
-      const dx = touch.clientX - touchStartX;
-      const dy = touch.clientY - touchStartY;
-      const dist = Math.hypot(dx, dy);
-
-      // If dragged more than 12px, user was scrolling the page - ignore!
-      if (dist > 12) return;
-
-      if (isMobileActive) {
-        resetToNeutral();
-      } else {
-        activateMobileEffect(touch.clientX, touch.clientY);
-      }
-    };
-
-    const handleDocumentTouch = (e: TouchEvent) => {
-      if (!isMobileActive || !container) return;
-      if (e.target && container.contains(e.target as Node)) return;
-      resetToNeutral();
-    };
-
-    const handleWindowScroll = () => {
-      lastTouchTime = Date.now();
-      if (isMobileActive) {
-        resetToNeutral();
-      }
+      gsap.to(material.uniforms.u_hover, {
+        value: isMobileActive ? 1.0 : 0.0,
+        duration: hoverDuration,
+        ease: 'power2.out',
+      });
+      gsap.to(mesh.scale, {
+        x: isMobileActive ? 1 + scaleIntensity : 1.0,
+        y: isMobileActive ? 1 + scaleIntensity : 1.0,
+        duration: interactionDuration,
+        ease: 'power2.out',
+      });
     };
 
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
-    container.addEventListener('touchstart', handleTouchStart, { passive: true });
     container.addEventListener('touchend', handleTouchEnd, { passive: true });
-    window.addEventListener('scroll', handleWindowScroll, { passive: true });
-    document.addEventListener('touchstart', handleDocumentTouch, { passive: true });
     window.addEventListener('resize', updateSize);
 
     let isIntersecting = true;
@@ -421,10 +343,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       cancelAnimationFrame(animationFrameId);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
-      container.removeEventListener('touchstart', handleTouchStart);
       container.removeEventListener('touchend', handleTouchEnd);
-      window.removeEventListener('scroll', handleWindowScroll);
-      document.removeEventListener('touchstart', handleDocumentTouch);
       window.removeEventListener('resize', updateSize);
       resizeObserver.disconnect();
 
@@ -466,7 +385,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         { value: 0.0 },
         {
           value: 1.0,
-          duration: 0.95,
+          duration: 0.65,
           ease: 'power2.out',
           yoyo: true,
           repeat: 1,
@@ -481,11 +400,10 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('relative overflow-visible cursor-pointer select-none touch-pan-y', className)}
+      className={cn('relative overflow-visible cursor-pointer select-none', className)}
       style={{
         width: resolvedWidth === 'auto' ? undefined : resolvedWidth,
         height: resolvedHeight === 'auto' ? undefined : resolvedHeight,
-        touchAction: 'pan-y',
       }}
     >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full pointer-events-none" />
