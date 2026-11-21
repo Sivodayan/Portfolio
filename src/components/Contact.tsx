@@ -16,7 +16,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
   };
 
   return (
-    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-between py-12 sm:py-16" id="contact">
+    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-between pt-12 sm:pt-16 !pb-0" id="contact">
       {/* React Bits Pro: Rising Lines Background - Seamless Upward Fade */}
       <div
         className="absolute -inset-x-8 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 opacity-40 overflow-hidden"
@@ -138,7 +138,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
       </div>
 
       {/* Embedded Clean Single-Screen Footer */}
-      <footer className="relative z-10 w-full py-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-1 text-[11px] font-mono text-[#94a3b8]">
+      <footer className="relative z-10 w-full pt-2.5 pb-2 sm:pb-2.5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-1 text-[11px] font-mono text-[#94a3b8]">
         <div>© {new Date().getFullYear()} Sujeevakumar Sivodayan</div>
         <div>Computer Science &amp; Engineering - University of Moratuwa</div>
       </footer>

@@ -496,6 +496,10 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   padding: 3.5rem 0;
 }
 
+#contact.section {
+  padding-bottom: 0;
+}
+
 .section-heading {
   font-size: 1.05rem;
   font-family: var(--font-mono);
