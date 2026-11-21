@@ -29,15 +29,9 @@ uniform float u_rgbShift;
 uniform float u_pixelDisplace;
 uniform float u_borderRadius;
 uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+uniform float u_time;
 varying vec2 vUv;
-
-float exponentialInOut(float t) {
-  return t == 0.0 || t == 1.0
-    ? t
-    : t < 0.5
-      ? +0.5 * pow(2.0, (20.0 * t) - 10.0)
-      : -0.5 * pow(2.0, 10.0 - (t * 20.0)) + 1.0;
-}
 
 float roundedBoxSDF(vec2 p, vec2 b, float r) {
   vec2 q = abs(p) - b + r;
@@ -45,42 +39,57 @@ float roundedBoxSDF(vec2 p, vec2 b, float r) {
 }
 
 void main() {
-  vec2 uv = vUv;
-
+  // Signed Distance Field (SDF) rounded rectangle for realistic card shape
   vec2 pixelCoord = vUv * u_resolution;
-  vec2 center = u_resolution * 0.5;
+  vec2 centerPx = u_resolution * 0.5;
   vec2 halfSize = u_resolution * 0.5;
-  float dist = roundedBoxSDF(pixelCoord - center, halfSize, u_borderRadius);
+  float dist = roundedBoxSDF(pixelCoord - centerPx, halfSize, u_borderRadius);
 
   if (dist > 0.0) {
     discard;
   }
+  float alpha = 1.0 - smoothstep(-0.8, 0.2, dist);
 
-  float alpha = 1.0 - smoothstep(-1.0, 1.0, dist);
-
+  // Aspect-ratio cover mapping for the portrait photo
+  vec2 uv = vUv;
   float u = u_imageAspectRatio / u_aspectRatio;
-  if(u_imageAspectRatio > u_aspectRatio) {
-    u = 1. / u;
+  if (u_imageAspectRatio > u_aspectRatio) {
+    u = 1.0 / u;
   }
-
   uv.y *= u;
-  uv.y -= (u) / 2. - .5;
+  uv.y -= (u) / 2.0 - 0.5;
 
-  float hoverLevel = exponentialInOut(min(1., (distance(vec2(.5), uv) * u_hover) + u_hover));
-  uv *= 1. - u_zoomLevel * hoverLevel;
-  uv += u_zoomLevel / 2. * hoverLevel;
-  uv = clamp(uv, 0., 1.);
-  vec4 color = texture2D(u_texture, uv);
+  // Realistic uniform center zoom on hover (preserves flat, crisp corners with zero folding)
+  vec2 center = vec2(0.5);
+  uv = (uv - center) * (1.0 - u_zoomLevel * u_hover) + center;
 
-  if(hoverLevel > 0.) {
-    hoverLevel = 1. - abs(hoverLevel - .5) * 2.;
-    uv.y += color.r * hoverLevel * u_pixelDisplace;
-    color = texture2D(u_texture, uv);
-    color.r = texture2D(u_texture, uv + (hoverLevel) * u_rgbShift).r;
-    color.g = texture2D(u_texture, uv - (hoverLevel) * u_rgbShift).g;
-  }
+  // Realistic chromatic aberration (RGB split) tracking 3D tilt direction
+  vec2 mouseDir = length(u_mouse) > 0.02 ? normalize(u_mouse) : vec2(0.707, 0.707);
+  float dynamicShift = u_rgbShift * u_hover * (0.6 + 0.4 * length(u_mouse));
+  vec2 shift = mouseDir * dynamicShift;
 
-  gl_FragColor = vec4(color.rgb, color.a * u_opacity * alpha);
+  // Horizontal digital glitch scanline effect on hover
+  float glitchLine = step(0.93, sin(uv.y * 36.0 + u_time * 20.0)) * u_pixelDisplace * u_hover;
+  float glitchScan = sin(uv.y * 70.0 - u_time * 15.0);
+  vec2 glitch = vec2(glitchLine * glitchScan * 0.5, 0.0);
+
+  // Sample channels with chromatic split & glitch
+  vec2 uvR = clamp(uv + shift + glitch, 0.0, 1.0);
+  vec2 uvG = clamp(uv + glitch * 0.3, 0.0, 1.0);
+  vec2 uvB = clamp(uv - shift - glitch * 0.2, 0.0, 1.0);
+
+  float r = texture2D(u_texture, uvR).r;
+  float g = texture2D(u_texture, uvG).g;
+  float b = texture2D(u_texture, uvB).b;
+  vec4 base = texture2D(u_texture, clamp(uv, 0.0, 1.0));
+
+  vec3 col = vec3(r, g, b);
+
+  // Subtle interactive light refraction sheen when card tilts in 3D
+  float sheen = max(0.0, 1.0 - abs(dot(vUv - 0.5, mouseDir)) * 3.2) * 0.12 * u_hover;
+  col += sheen * vec3(0.3, 0.75, 1.0);
+
+  gl_FragColor = vec4(col, base.a * u_opacity * alpha);
 }
 `;
 
@@ -109,7 +118,7 @@ export interface ChromaCardProps {
 }
 
 /**
- * ChromaCard — Original React Bits Pro Component
+ * ChromaCard — Original React Bits Pro Component (@reactbits-starter/chroma-card-tw)
  * Docs: https://pro.reactbits.dev/docs/components/chroma-card
  *
  * Authentic OG React Bits WebGL Shader Implementation:
@@ -127,14 +136,14 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   imageAspectRatio = 370 / 505,
   cardWidth = 4.8,
   cardHeight = 6.4,
-  zoomLevel = 0.22,
-  rgbShiftAmount = 0.025,
-  pixelDisplaceAmount = 0.065,
-  hoverDuration = 1.4,
-  rotationIntensity = 0.24,
-  scaleIntensity = 0.06,
-  positionIntensity = 0.28,
-  interactionDuration = 0.45,
+  zoomLevel = 0.08,
+  rgbShiftAmount = 0.032,
+  pixelDisplaceAmount = 0.038,
+  hoverDuration = 0.35,
+  rotationIntensity = 0.22,
+  scaleIntensity = 0.04,
+  positionIntensity = 0.2,
+  interactionDuration = 0.35,
   opacity = 1,
   cameraFov = 50,
   cameraZ = 7,
@@ -198,6 +207,8 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       u_pixelDisplace: { value: pixelDisplaceAmount },
       u_borderRadius: { value: borderRadius },
       u_resolution: { value: new THREE.Vector2(widthPx, heightPx) },
+      u_mouse: { value: new THREE.Vector2(0, 0) },
+      u_time: { value: 0 },
     };
 
     const material = new THREE.ShaderMaterial({
@@ -279,6 +290,14 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         const normX = Math.max(-1, Math.min(1, ((e.clientX - containerRect.left) / containerRect.width) * 2 - 1));
         const normY = Math.max(-1, Math.min(1, -(((e.clientY - containerRect.top) / containerRect.height) * 2 - 1)));
 
+        gsap.to(material.uniforms.u_mouse.value, {
+          x: normX,
+          y: normY,
+          duration: interactionDuration,
+          ease: 'power2.out',
+          overwrite: 'auto',
+        });
+
         gsap.to(mesh.scale, {
           x: 1 - normY * scaleIntensity,
           y: 1 - normY * scaleIntensity,
@@ -311,6 +330,14 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
+        duration: hoverDuration,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      });
+
+      gsap.to(material.uniforms.u_mouse.value, {
+        x: 0.0,
+        y: 0.0,
         duration: hoverDuration,
         ease: 'power2.out',
         overwrite: 'auto',
@@ -349,6 +376,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
         const normY = Math.max(-1, Math.min(1, -(((touch.clientY - containerRect.top) / containerRect.height) * 2 - 1)));
 
         gsap.to(material.uniforms.u_hover, { value: 1.0, duration: 0.35, ease: 'power2.out' });
+        gsap.to(material.uniforms.u_mouse.value, { x: normX, y: normY, duration: 0.3, ease: 'power2.out' });
         gsap.to(mesh.scale, { x: 1 + scaleIntensity * 0.8, y: 1 + scaleIntensity * 0.8, duration: 0.3, ease: 'power2.out' });
         gsap.to(mesh.rotation, {
           x: -normY * (Math.PI / 4) * rotationIntensity,
@@ -370,12 +398,15 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     container.addEventListener('touchcancel', handleTouchEnd, { passive: true });
     window.addEventListener('resize', updateSize);
 
-    const render = () => {
+    const render = (time: number) => {
+      if (material) {
+        material.uniforms.u_time.value = time * 0.001;
+      }
       renderer?.render(scene, camera);
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -388,6 +419,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       resizeObserver.disconnect();
 
       gsap.killTweensOf(material.uniforms.u_hover);
+      gsap.killTweensOf(material.uniforms.u_mouse.value);
       gsap.killTweensOf(mesh.scale);
       gsap.killTweensOf(mesh.position);
       gsap.killTweensOf(mesh.rotation);
@@ -421,7 +453,15 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     if (triggerGlitch && materialRef.current) {
       gsap.to(materialRef.current.uniforms.u_hover, {
         value: 1.0,
-        duration: 0.35,
+        duration: 0.28,
+        ease: 'power2.out',
+        yoyo: true,
+        repeat: 1,
+      });
+      gsap.to(materialRef.current.uniforms.u_mouse.value, {
+        x: 0.6,
+        y: -0.4,
+        duration: 0.28,
         ease: 'power2.out',
         yoyo: true,
         repeat: 1,
