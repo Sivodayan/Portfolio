@@ -116,15 +116,30 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                 letterIn={{ opacity: 1, scale: 1 }}
                 letterConfig={{ tension: 426, friction: 17 }}
                 letterStagger={27}
-                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-bold tracking-tight text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none"
+                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-bold tracking-tight text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none whitespace-nowrap"
               >
                 Education &amp; Experience
               </TextEngine>
             </GlitchHeading>
-          
           </div>
 
-         
+          <div className="flex items-center gap-2">
+            {milestones.map((m) => (
+              <button
+                key={m.id}
+                type="button"
+                onClick={() => scrollToMilestone(m.id)}
+                className={`px-3 py-1.5 min-h-[32px] rounded-full text-[11px] font-mono transition-all touch-manipulation active:scale-95 cursor-pointer border ${
+                  activeIndex === m.id
+                    ? 'bg-[#e5a93c]/20 border-[#e5a93c] text-[#e5a93c] light:border-amber-500/40 light:text-amber-600 light:bg-amber-500/10 font-bold shadow-[0_0_12px_rgba(229,169,60,0.3)]'
+                    : 'bg-white/5 border-white/10 light:bg-slate-200 light:border-slate-300 text-[#94a3b8] light:text-slate-600 hover:text-white light:hover:text-slate-900 active:bg-white/10'
+                }`}
+                title={`Jump to ${m.label}`}
+              >
+                0{m.id + 1}
+              </button>
+            ))}
+          </div>
         </motion.div>
 
         <motion.div
@@ -154,11 +169,10 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
+              className="w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
             >
               <div>
-                
-                <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
+                <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap">
                   Secondary Education
                 </h3>
                 <div className="text-xs text-[#e5a93c] light:text-[#b45309] font-mono mb-3.5 font-medium">
@@ -179,11 +193,10 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.9, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
+              className="w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
             >
               <div>
-               
-                <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
+                <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap">
                   B.Sc. (Hons) in Engineering
                 </h3>
                 <div className="text-xs text-[#e5a93c] light:text-[#b45309] font-mono mb-3.5 font-medium">
@@ -204,11 +217,10 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.95, delay: 0.34, ease: [0.16, 1, 0.3, 1] }}
-              className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#f3ba63]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
+              className="w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#f3ba63]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
             >
               <div>
-               
-                <h3 className="text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1">
+                <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap">
                   TRCSL IT Volunteer
                 </h3>
                 <div className="text-xs text-[#f3ba63] light:text-[#b45309] font-mono mb-3.5 font-medium">

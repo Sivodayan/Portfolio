@@ -128,37 +128,20 @@ export const App: React.FC = () => {
       });
 
       transition.ready.then(() => {
-        if (isToLight) {
-          // Light mode spreads OUTward across the screen
-          document.documentElement.animate(
-            {
-              clipPath: [
-                `circle(0px at ${x}px ${y}px)`,
-                `circle(${endRadius}px at ${x}px ${y}px)`,
-              ],
-            },
-            {
-              duration: 680,
-              easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-              pseudoElement: '::view-transition-new(root)',
-            }
-          );
-        } else {
-          // Light mode spreads INward (contracts back into the button)
-          document.documentElement.animate(
-            {
-              clipPath: [
-                `circle(${endRadius}px at ${x}px ${y}px)`,
-                `circle(0px at ${x}px ${y}px)`,
-              ],
-            },
-            {
-              duration: 680,
-              easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-              pseudoElement: '::view-transition-old(root)',
-            }
-          );
-        }
+        // Smooth cinematic circular expansion from the toggle button
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 720,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            pseudoElement: '::view-transition-new(root)',
+          }
+        );
       }).catch(() => {
         // Fallback if pseudoElement animation fails
       });
@@ -178,52 +161,27 @@ export const App: React.FC = () => {
     ripple.style.inset = '0';
     ripple.style.zIndex = '999999';
     ripple.style.pointerEvents = 'none';
+    ripple.style.backgroundColor = isToLight ? '#f8fafc' : '#07080b';
+    document.body.appendChild(ripple);
 
-    if (isToLight) {
-      // Light spreads OUT
-      ripple.style.backgroundColor = '#f8fafc';
-      document.body.appendChild(ripple);
+    const anim = ripple.animate(
+      [
+        { clipPath: `circle(0px at ${x}px ${y}px)` },
+        { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
+      ],
+      {
+        duration: 720,
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+      }
+    );
 
-      const anim = ripple.animate(
-        [
-          { clipPath: `circle(0px at ${x}px ${y}px)` },
-          { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
-        ],
-        {
-          duration: 650,
-          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-        }
-      );
+    setTimeout(() => {
+      setTheme(next);
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('sivodayan-theme', next);
+    }, 320);
 
-      setTimeout(() => {
-        setTheme('light');
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('sivodayan-theme', 'light');
-      }, 280);
-
-      anim.onfinish = () => ripple.remove();
-    } else {
-      // Light spreads IN
-      ripple.style.backgroundColor = '#f8fafc';
-      document.body.appendChild(ripple);
-
-      setTheme('dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('sivodayan-theme', 'dark');
-
-      const anim = ripple.animate(
-        [
-          { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
-          { clipPath: `circle(0px at ${x}px ${y}px)` },
-        ],
-        {
-          duration: 650,
-          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-        }
-      );
-
-      anim.onfinish = () => ripple.remove();
-    }
+    anim.onfinish = () => ripple.remove();
 
     showToast(`Switched to ${next} mode`);
   };

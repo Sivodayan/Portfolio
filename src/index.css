@@ -349,8 +349,8 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 
 /* --- Circular View Transition: Directional Theme Spreading --- */
 ::view-transition-group(root) {
-  animation-duration: 0.68s;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-duration: 0.72s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 ::view-transition-old(root),
@@ -359,28 +359,19 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   mix-blend-mode: normal;
 }
 
-/* When activating Light Mode: light mode (new) is on top and spreads OUT */
-[data-theme-transition="to-light"]::view-transition-old(root) {
-  z-index: 1;
-}
-[data-theme-transition="to-light"]::view-transition-new(root) {
-  z-index: 999999;
-}
-
-/* When deactivating Light Mode: light mode (old) is on top and spreads IN */
-[data-theme-transition="to-dark"]::view-transition-old(root) {
-  z-index: 999999;
-}
-[data-theme-transition="to-dark"]::view-transition-new(root) {
-  z-index: 1;
-}
-
-/* Default stacking */
 ::view-transition-old(root) {
   z-index: 1;
 }
+
 ::view-transition-new(root) {
   z-index: 999999;
+}
+
+/* Suppress micro-transitions during view transition snapshot reveal so elements don't stutter */
+html[data-theme-transition] *,
+html[data-theme-transition] *::before,
+html[data-theme-transition] *::after {
+  transition: none !important;
 }
 
 .theme-fallback-ripple {
