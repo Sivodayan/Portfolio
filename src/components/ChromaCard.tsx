@@ -234,31 +234,34 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       gsap.killTweensOf(mesh.position);
       gsap.killTweensOf(mesh.rotation);
 
+      const ease = 'power3.out';
+      const duration = 0.7;
+
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
-        duration: 0.35,
-        ease: 'power2.out',
+        duration,
+        ease,
         overwrite: true,
       });
       gsap.to(mesh.scale, {
         x: 1.0,
         y: 1.0,
-        duration: 0.45,
-        ease: 'power2.out',
+        duration,
+        ease,
         overwrite: true,
       });
       gsap.to(mesh.position, {
         x: 0.0,
         y: 0.0,
-        duration: 0.45,
-        ease: 'power2.out',
+        duration,
+        ease,
         overwrite: true,
       });
       gsap.to(mesh.rotation, {
         x: 0.0,
         y: 0.0,
-        duration: 0.45,
-        ease: 'power2.out',
+        duration,
+        ease,
         overwrite: true,
       });
     };
@@ -278,30 +281,33 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       gsap.killTweensOf(mesh.position);
       gsap.killTweensOf(mesh.rotation);
 
+      const ease = 'power3.out';
+      const duration = 0.75;
+
       gsap.to(material.uniforms.u_hover, {
         value: 1.0,
-        duration: hoverDuration,
-        ease: 'power2.out',
+        duration,
+        ease,
         overwrite: true,
       });
       gsap.to(mesh.scale, {
         x: 1 + scaleIntensity,
         y: 1 + scaleIntensity,
-        duration: interactionDuration,
-        ease: 'power2.out',
+        duration,
+        ease,
         overwrite: true,
       });
       gsap.to(mesh.position, {
         x: clampedX * positionIntensity * 0.7,
-        duration: interactionDuration,
-        ease: 'power2.out',
+        duration,
+        ease,
         overwrite: true,
       });
       gsap.to(mesh.rotation, {
         x: -clampedY * (Math.PI / 3) * rotationIntensity * 0.7,
         y: clampedX * (Math.PI / 3) * rotationIntensity * 0.7,
-        duration: interactionDuration,
-        ease: 'power2.out',
+        duration,
+        ease,
         overwrite: true,
       });
     };
@@ -319,30 +325,33 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       const intersects = raycaster.intersectObject(mesh);
       const isHovered = intersects.length > 0;
 
+      const ease = 'power2.out';
+      const duration = 0.55;
+
       gsap.to(material.uniforms.u_hover, {
         value: isHovered ? 1.0 : 0.0,
-        duration: hoverDuration,
-        ease: 'power2.out',
+        duration: isHovered ? 0.65 : 0.5,
+        ease,
       });
 
       gsap.to(mesh.scale, {
         x: isHovered ? 1 - mouse.y * scaleIntensity : 1.0,
         y: isHovered ? 1 - mouse.y * scaleIntensity : 1.0,
-        duration: interactionDuration,
-        ease: 'power2.out',
+        duration,
+        ease,
       });
 
       gsap.to(mesh.position, {
         x: isHovered ? mouse.x * positionIntensity : 0.0,
-        duration: interactionDuration,
-        ease: 'power2.out',
+        duration,
+        ease,
       });
 
       gsap.to(mesh.rotation, {
         x: isHovered ? -mouse.y * (Math.PI / 3) * rotationIntensity : 0.0,
         y: isHovered ? mouse.x * (Math.PI / 3) * rotationIntensity : 0.0,
-        duration: interactionDuration,
-        ease: 'power2.out',
+        duration,
+        ease,
       });
     };
 
