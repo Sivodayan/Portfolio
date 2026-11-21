@@ -225,16 +225,23 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       if (Date.now() - lastTouchTime < 1000) return;
       if (!container || !mesh || !material) return;
       const rect = container.getBoundingClientRect();
-      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+
+      const isWithinBounds =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      mouse.x = Math.max(-1.1, Math.min(1.1, ((e.clientX - rect.left) / rect.width) * 2 - 1));
+      mouse.y = Math.max(-1.1, Math.min(1.1, -(((e.clientY - rect.top) / rect.height) * 2 - 1)));
 
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObject(mesh);
-      const isHovered = intersects.length > 0;
+      const isHovered = isWithinBounds || intersects.length > 0;
 
       gsap.to(material.uniforms.u_hover, {
         value: isHovered ? 1.0 : 0.0,
-        duration: hoverDuration,
+        duration: isHovered ? Math.min(hoverDuration, 0.45) : 0.45,
         ease: 'power2.out',
       });
 
@@ -263,7 +270,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       if (!material || !mesh || isMobileActive) return;
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
-        duration: hoverDuration,
+        duration: 0.45,
         ease: 'power2.out',
       });
 
