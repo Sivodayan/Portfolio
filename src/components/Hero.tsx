@@ -5,9 +5,10 @@ import ChromaCard from './ChromaCard';
 
 export interface HeroProps {
   onShowToast: (msg: string) => void;
+  isIntroDone?: boolean;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
+export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) => {
   const copyEmail = (e: React.MouseEvent) => {
     e.preventDefault();
     navigator.clipboard.writeText('sivodayan17@gmail.com').then(() => {
@@ -21,17 +22,17 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
     <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none py-10 sm:py-14" id="about">
       {/* Two-Column Arrangement: Left photo / Right text & bio */}
       <motion.div
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-10 lg:gap-14 my-auto"
       >
 
         {/* Left Column: Pure ChromaCard Picture */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.93 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.75, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, scale: 0.92, y: 15 }}
+          animate={isIntroDone ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.92, y: 15 }}
+          transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           className="shrink-0 relative flex items-center justify-center select-none self-center w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[360px]"
         >
           <ChromaCard
@@ -43,19 +44,25 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
 
         {/* Right Column: Kicker, Display Name, Bio, Links & Badges */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.75, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, x: 22 }}
+          animate={isIntroDone ? { opacity: 1, x: 0 } : { opacity: 0, x: 22 }}
+          transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="flex-1 max-w-xl lg:max-w-2xl text-left flex flex-col justify-center"
         >
           {/* Uppercase Kicker Tagline */}
-          <div className="text-xs sm:text-[13px] font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-2.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-xs sm:text-[13px] font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-2.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]"
+          >
             <span className="block text-[#38bdf8]">Computer Science &amp; Engineering Undergraduate</span>
             <span className="block text-[#93c5fd] text-[11px] sm:text-xs font-medium tracking-normal mt-0.5">University of Moratuwa • Sri Lanka</span>
-          </div>
+          </motion.div>
 
-          {/* Large Bold Display Heading with Pop Scale spring overshoot */}
+          {/* Large Bold Display Heading with Pop Scale spring overshoot triggered after intro */}
           <TextEngine
+            key={isIntroDone ? 'intro-done' : 'intro-waiting'}
             tag="h1"
             mode="once"
             letterOut={{ opacity: 0, scale: 0 }}
@@ -68,12 +75,22 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
           </TextEngine>
 
           {/* Bio Description */}
-          <p className="text-sm sm:text-[15px] lg:text-base text-[#f1f5f9] leading-relaxed mb-5 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] max-w-xl">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.65, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
+            className="text-sm sm:text-[15px] lg:text-base text-[#f1f5f9] leading-relaxed mb-5 font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] max-w-xl"
+          >
             Department Representative for Computer Science &amp; Engineering. I build full-stack web applications, embedded IoT telemetries, and performant developer software using React, TypeScript, Python, and C++.
-          </p>
+          </motion.p>
 
           {/* Social & Contact Icon Action Row */}
-          <div className="flex items-center gap-2.5 sm:gap-3 mb-4">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-2.5 sm:gap-3 mb-4"
+          >
             {/* Resume / Document Icon */}
             <a
               href="assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
@@ -130,19 +147,27 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
             </button>
-          </div>
+          </motion.div>
 
           {/* Interactive Badges Playground */}
-          <div className="flex flex-wrap items-center gap-2 pt-2.5 border-t border-white/10">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.6, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-wrap items-center gap-2 pt-2.5 border-t border-white/10"
+          >
             {[
               { id: 'uom', emoji: '🎓', label: 'Moratuwa CSE' },
               { id: 'rep', emoji: '🏛️', label: 'Dept. Representative' },
               { id: 'loc', emoji: '📍', label: 'Jaffna, Sri Lanka' },
               { id: 'stack', emoji: '⚡', label: 'Full-Stack & Systems' },
               { id: 'iot', emoji: '🛠️', label: 'IoT & Telemetry' },
-            ].map((b) => (
+            ].map((b, idx) => (
               <motion.span
                 key={b.id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isIntroDone ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.4, delay: 0.4 + idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
                 drag
                 dragConstraints={{ left: -25, right: 25, top: -15, bottom: 15 }}
                 dragElastic={0.2}
@@ -154,7 +179,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
                 <span>{b.label}</span>
               </motion.span>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
 
       </motion.div>

@@ -16,6 +16,14 @@ export const App: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isIntroDone, setIsIntroDone] = useState<boolean>(false);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+    setTimeout(() => {
+      setIsIntroDone(true);
+    }, 180);
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem('sivodayan-theme') as 'dark' | 'light' | null;
@@ -26,7 +34,7 @@ export const App: React.FC = () => {
     // ESC key closes loading screen early
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isLoading) {
-        setIsLoading(false);
+        handleLoadingComplete();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -53,7 +61,7 @@ export const App: React.FC = () => {
       {/* Circuit Flash Loading Screen */}
       <AnimatePresence>
         {isLoading && (
-          <LoadingScreen onComplete={() => setIsLoading(false)} />
+          <LoadingScreen onComplete={handleLoadingComplete} />
         )}
       </AnimatePresence>
 
@@ -83,7 +91,7 @@ export const App: React.FC = () => {
 
       <div className="page-container">
         <main>
-          <Hero onShowToast={showToast} />
+          <Hero onShowToast={showToast} isIntroDone={isIntroDone} />
           <Projects />
           <SkillsShowcase theme={theme} />
           <Experience />
