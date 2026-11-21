@@ -38,7 +38,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
   return (
     <section
-      className="section relative w-full min-h-[100dvh] flex flex-col justify-between py-12 sm:py-16 overflow-hidden"
+      className="section relative w-full min-h-[100dvh] flex flex-col justify-between pt-12 sm:pt-16 pb-16 sm:pb-20 overflow-hidden"
       id="contact"
     >
       <div
@@ -224,13 +224,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             <ExternalLink className="w-4 h-4 text-[#94a3b8] group-hover:text-white light:group-hover:text-slate-900 transition-colors shrink-0 ml-2" />
           </a>
         </div>
-
-      
-       
       </motion.div>
 
       {/* Minimal Footer */}
-      <footer className="relative z-10 w-full max-w-4xl mx-auto pt-6 border-t border-white/10 light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-[#94a3b8] light:text-slate-500">
+      <footer className="relative z-10 w-full max-w-4xl mx-auto pt-6 mb-6 sm:mb-10 border-t border-white/10 light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-[#94a3b8] light:text-slate-500">
         <div>© {new Date().getFullYear()} Sivodayan Sujeevakumar</div>
         <div>Computer Science &amp; Engineering • University of Moratuwa</div>
       </footer>
