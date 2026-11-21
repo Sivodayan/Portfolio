@@ -4,9 +4,10 @@ import RisingLines from './RisingLines';
 
 export interface ContactProps {
   onShowToast: (msg: string) => void;
+  theme?: 'dark' | 'light';
 }
 
-export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
+export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' }) => {
   const copyText = (text: string, label: string) => {
     navigator.clipboard.writeText(text).then(() => {
       onShowToast(label);
@@ -19,24 +20,24 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast }) => {
     <section className="section relative w-full min-h-[100dvh] flex flex-col justify-between pt-12 sm:pt-16 !pb-0" id="contact">
       {/* React Bits Pro: Rising Lines Background - Seamless Upward Fade */}
       <div
-        className="absolute -inset-x-8 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 opacity-40 overflow-hidden"
+        className={`absolute -inset-x-8 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 ${theme === 'light' ? 'opacity-25' : 'opacity-40'} overflow-hidden`}
         style={{
           maskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 100%)',
         }}
       >
         <RisingLines
-          colors={["#44f0ff", "#ff087b"]}
-          color="#ff087b"
-          horizonColor="#44f0ff"
-          haloColor="#38bdf8"
+          colors={theme === 'light' ? ["#0284c7", "#0d9488"] : ["#44f0ff", "#ff087b"]}
+          color={theme === 'light' ? "#0284c7" : "#ff087b"}
+          horizonColor={theme === 'light' ? "#bae6fd" : "#44f0ff"}
+          haloColor={theme === 'light' ? "#0284c7" : "#38bdf8"}
           horizonHeight={-0.45}
           speed={0.6}
           density={1.1}
           lineWidth={1.2}
           lineLength={1.1}
           interactive={true}
-          horizonGlow={1.2}
+          horizonGlow={theme === 'light' ? 0.7 : 1.2}
           particles={1}
           className="w-full h-full pointer-events-auto"
         />

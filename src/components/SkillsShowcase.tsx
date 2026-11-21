@@ -8,7 +8,11 @@ interface SkillItem {
   icon: React.ReactNode;
 }
 
-export const SkillsShowcase: React.FC = () => {
+export interface SkillsShowcaseProps {
+  theme?: 'dark' | 'light';
+}
+
+export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }) => {
   const skills: SkillItem[] = [
     {
       name: 'Python',
@@ -162,8 +166,9 @@ export const SkillsShowcase: React.FC = () => {
           }}
         >
           <SpectralTiles
-            color={"#2C7A78"}
-            glowColor={"#DDF8F3"}
+            color={theme === 'light' ? "#bae6fd" : "#2C7A78"}
+            glowColor={theme === 'light' ? "#0284c7" : "#DDF8F3"}
+            backgroundColor={theme === 'light' ? "#f8fafc" : "#000000"}
             tilt={36}
             zoom={1.2}
             lights={3}

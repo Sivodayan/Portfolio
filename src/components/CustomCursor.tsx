@@ -9,6 +9,7 @@ import {
 } from 'framer-motion';
 
 export interface CustomCursorProps {
+  theme?: 'dark' | 'light';
   circleSize?: number;
   dotSize?: number;
   circleColor?: string;
@@ -46,10 +47,11 @@ export interface CustomCursorProps {
  * - Touch-device safety and zero pointer interference (pointer-events-none)
  */
 export const CustomCursor: React.FC<CustomCursorProps> = ({
+  theme = 'dark',
   circleSize = 38,
   dotSize = 5,
-  circleColor = 'rgba(244, 244, 245, 0.5)',
-  dotColor = '#44f0ff',
+  circleColor,
+  dotColor,
   circleStiffness = 320,
   circleDamping = 24,
   dotStiffness = 500,
@@ -70,6 +72,12 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   mixBlendMode,
   children,
 }) => {
+  const effectiveCircleColor = circleColor || (theme === 'light' ? 'rgba(15, 23, 42, 0.45)' : 'rgba(244, 244, 245, 0.5)');
+  const effectiveDotColor = dotColor || (theme === 'light' ? '#0284c7' : '#44f0ff');
+  const morphBorderColor = theme === 'light' ? '#0284c7' : '#44f0ff';
+  const morphBgColor = theme === 'light' ? 'rgba(2, 132, 199, 0.08)' : 'rgba(68, 240, 255, 0.05)';
+  const morphShadow = theme === 'light' ? '0 0 16px rgba(2, 132, 199, 0.25)' : '0 0 20px rgba(68, 240, 255, 0.3), inset 0 0 10px rgba(68, 240, 255, 0.08)';
+
   const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -342,11 +350,9 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
         className={`absolute flex items-center justify-center ${circleClassName}`}
         animate={{
           scale: isMorphed ? 1 : isClicked ? 0.82 : 1,
-          borderColor: isMorphed ? '#44f0ff' : circleColor,
-          backgroundColor: isMorphed ? 'rgba(68, 240, 255, 0.05)' : 'transparent',
-          boxShadow: isMorphed
-            ? '0 0 20px rgba(68, 240, 255, 0.3), inset 0 0 10px rgba(68, 240, 255, 0.08)'
-            : '0 0 0px transparent',
+          borderColor: isMorphed ? morphBorderColor : effectiveCircleColor,
+          backgroundColor: isMorphed ? morphBgColor : 'transparent',
+          boxShadow: isMorphed ? morphShadow : '0 0 0px transparent',
         }}
         transition={{ type: 'spring', stiffness: 400, damping: 28 }}
         style={{
@@ -384,9 +390,9 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
           top: dotY,
           x: '-50%',
           y: '-50%',
-          backgroundColor: dotColor,
+          backgroundColor: effectiveDotColor,
           mixBlendMode,
-          boxShadow: `0 0 10px ${dotColor}`,
+          boxShadow: `0 0 10px ${effectiveDotColor}`,
           willChange: 'transform, opacity',
         }}
       />

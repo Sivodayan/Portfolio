@@ -17,9 +17,6 @@ export const Experience: React.FC = () => {
           >
             Education &amp; Experience
           </TextEngine>
-          <p className="text-xs text-[#cbd5e1] mt-0.5 font-mono">
-            Academic milestones, technical volunteering &amp; leadership appointments
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4 items-stretch">

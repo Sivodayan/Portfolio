@@ -39,24 +39,24 @@
 }
 
 [data-theme="light"] {
-  --bg-body: #fbfbfb;
+  --bg-body: #f8fafc;
   --bg-card: #ffffff;
-  --bg-card-hover: #f4f4f5;
-  --bg-subtle: rgba(0, 0, 0, 0.03);
+  --bg-card-hover: #f1f5f9;
+  --bg-subtle: rgba(0, 0, 0, 0.04);
 
-  --border-color: rgba(0, 0, 0, 0.08);
-  --border-hover: rgba(0, 0, 0, 0.16);
+  --border-color: rgba(0, 0, 0, 0.09);
+  --border-hover: rgba(0, 0, 0, 0.18);
 
-  --text-primary: #18181b;
-  --text-secondary: #52525b;
-  --text-muted: #a1a1aa;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
 
   --accent: #0284c7;
-  --accent-soft: rgba(2, 132, 199, 0.08);
+  --accent-soft: rgba(2, 132, 199, 0.1);
   --accent-text: #0369a1;
 
   --emerald: #059669;
-  --emerald-soft: rgba(5, 150, 105, 0.08);
+  --emerald-soft: rgba(5, 150, 105, 0.1);
 }
 
 *, *::before, *::after {
@@ -114,11 +114,11 @@ body {
 }
 
 [data-theme="light"] .ascii-stream-fullscreen {
-  opacity: 0.65;
+  opacity: 0.52;
 }
 
 [data-theme="light"] .ascii-stream-fullscreen::after {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(248, 250, 252, 0.55);
 }
 
 /* Global Typography High-Legibility Shadows */
@@ -1067,4 +1067,236 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   background: rgba(255, 255, 255, 0.96);
   border-color: rgba(0, 0, 0, 0.12);
   box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   Comprehensive Light Mode Design System Enhancements
+   ========================================================================== */
+
+/* Typography & Headings in Light Mode */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+  color: #0f172a !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] p,
+[data-theme="light"] .hero-bio,
+[data-theme="light"] .project-desc,
+[data-theme="light"] .timeline-details,
+[data-theme="light"] .skills-content,
+[data-theme="light"] .contact-text {
+  color: #334155 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .text-white {
+  color: #0f172a !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .text-\[\#f1f5f9\] {
+  color: #334155 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .text-\[\#cbd5e1\] {
+  color: #64748b !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .text-\[\#94a3b8\] {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .text-\[\#93c5fd\] {
+  color: #0284c7 !important;
+}
+
+[data-theme="light"] .text-\[\#38bdf8\] {
+  color: #0284c7 !important;
+}
+
+[data-theme="light"] .text-\[\#44f0ff\] {
+  color: #0284c7 !important;
+}
+
+/* Card, Glass Tile & Container Overrides */
+[data-theme="light"] .bg-black\/40,
+[data-theme="light"] .bg-black\/45,
+[data-theme="light"] .bg-black\/65,
+[data-theme="light"] .bg-black\/70 {
+  background-color: rgba(255, 255, 255, 0.82) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .bg-black\/40:hover,
+[data-theme="light"] .bg-black\/45:hover,
+[data-theme="light"] .bg-black\/65:hover,
+[data-theme="light"] .bg-black\/70:hover {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-color: rgba(2, 132, 199, 0.35) !important;
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(2, 132, 199, 0.15) !important;
+}
+
+[data-theme="light"] .bg-black\/60 {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .border-white\/10,
+[data-theme="light"] .border-white\/15,
+[data-theme="light"] .border-white\/20 {
+  border-color: rgba(0, 0, 0, 0.09) !important;
+}
+
+/* Project Card & Drawer */
+[data-theme="light"] .project-item {
+  background-color: rgba(255, 255, 255, 0.82) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .project-item:hover {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-color: rgba(2, 132, 199, 0.35) !important;
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(2, 132, 199, 0.15) !important;
+}
+
+[data-theme="light"] .tech-badge {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.09) !important;
+  color: #1e293b !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .project-image-wrap {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background: #f1f5f9 !important;
+}
+
+[data-theme="light"] .project-image-overlay {
+  background: linear-gradient(180deg, transparent 60%, rgba(255, 255, 255, 0.5) 100%) !important;
+}
+
+/* Hero Social Action Buttons & Badges */
+[data-theme="light"] a[aria-label="Resume"],
+[data-theme="light"] a[aria-label="GitHub"],
+[data-theme="light"] a[aria-label="LinkedIn"],
+[data-theme="light"] button[aria-label="Copy Email"] {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #0f172a !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] a[aria-label="Resume"]:hover,
+[data-theme="light"] a[aria-label="GitHub"]:hover,
+[data-theme="light"] a[aria-label="LinkedIn"]:hover,
+[data-theme="light"] button[aria-label="Copy Email"]:hover {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+  color: #0284c7 !important;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.2) !important;
+}
+
+[data-theme="light"] .draggable-badge {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #0f172a !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .draggable-badge:hover {
+  border-color: #0284c7 !important;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.16) !important;
+}
+
+/* Skills Showcase Tile Enhancements */
+[data-theme="light"] #skills .group {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] #skills .group:hover {
+  background-color: #ffffff !important;
+  border-color: rgba(2, 132, 199, 0.4) !important;
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.18) !important;
+}
+
+[data-theme="light"] #skills .group:hover span {
+  color: #0284c7 !important;
+}
+
+/* Copy Pill & Toast */
+[data-theme="light"] .copy-pill {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #334155 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .copy-pill:hover {
+  background: #f8fafc !important;
+  border-color: #0284c7 !important;
+  color: #0284c7 !important;
+}
+
+[data-theme="light"] .minimal-toast {
+  background: #0f172a;
+  color: #f8fafc;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.18);
+}
+
+/* Header & Mobile Drawer in Light Mode */
+[data-theme="light"] .brand-link span {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .brand-link:hover span {
+  color: #0284c7 !important;
+}
+
+[data-theme="light"] .nav-actions .bg-white\/15 {
+  background: rgba(2, 132, 199, 0.1) !important;
+  color: #0284c7 !important;
+  border-color: rgba(2, 132, 199, 0.25) !important;
+  box-shadow: 0 0 12px rgba(2, 132, 199, 0.15) !important;
+}
+
+[data-theme="light"] .nav-actions .text-\[\#cbd5e1\] {
+  color: #475569 !important;
+}
+
+[data-theme="light"] .nav-actions .hover\:bg-white\/5:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .mobile-nav-drawer a {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .mobile-nav-drawer a:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .mobile-nav-drawer .bg-white\/15 {
+  background: rgba(2, 132, 199, 0.1) !important;
+  color: #0284c7 !important;
+  border-color: rgba(2, 132, 199, 0.25) !important;
+}
+
+[data-theme="light"] button[aria-label="Open navigation menu"],
+[data-theme="light"] button[aria-label="Close navigation menu"] {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #0f172a !important;
 }

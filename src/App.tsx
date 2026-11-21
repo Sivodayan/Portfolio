@@ -58,22 +58,22 @@ export const App: React.FC = () => {
       </AnimatePresence>
 
       {/* React Bits Pro: Custom Cursor */}
-      <CustomCursor />
+      <CustomCursor theme={theme} />
 
       {/* React Bits Pro: AsciiStream Full-Screen Background */}
       <div className="ascii-stream-fullscreen" aria-hidden="true">
         <AsciiStream
-          colors={["#44f0ff", "#ff087b"]}
+          colors={theme === 'light' ? ["#0284c7", "#0d9488"] : ["#44f0ff", "#ff087b"]}
           text={"dev sivodayan @cse"}
           pulse={1.05}
           flare={1.0}
           glow={1.1}
-          intensity={1.15}
+          intensity={theme === 'light' ? 0.75 : 1.15}
           grain={0.05}
           quality={0.65}
           burst={0.8}
           speed={1.8}
-          backgroundColor="#07080b"
+          backgroundColor={theme === 'light' ? "#f8fafc" : "#07080b"}
           className="w-full h-full"
         />
       </div>
@@ -85,9 +85,9 @@ export const App: React.FC = () => {
         <main>
           <Hero onShowToast={showToast} />
           <Projects />
-          <SkillsShowcase />
+          <SkillsShowcase theme={theme} />
           <Experience />
-          <Contact onShowToast={showToast} />
+          <Contact onShowToast={showToast} theme={theme} />
         </main>
       </div>
 

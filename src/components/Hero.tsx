@@ -119,32 +119,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast }) => {
               </svg>
             </button>
           </div>
-
-          {/* Interactive Badges Playground */}
-          <div className="flex flex-wrap items-center gap-2">
-            {[
-              { id: 'uom', emoji: '🎓', label: 'Moratuwa CSE' },
-              { id: 'rep', emoji: '🏛️', label: 'Dept. Representative' },
-              { id: 'loc', emoji: '📍', label: 'Jaffna, Sri Lanka' },
-              { id: 'stack', emoji: '⚡', label: 'Full-Stack & Systems' },
-              { id: 'iot', emoji: '🛠️', label: 'IoT & Telemetry' },
-            ].map((b) => (
-              <motion.span
-                key={b.id}
-                drag
-                dragConstraints={{ left: -25, right: 25, top: -15, bottom: 15 }}
-                dragElastic={0.2}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="draggable-badge text-xs sm:text-[13px] !py-1 !px-2.5 sm:!px-3"
-              >
-                <span>{b.emoji}</span>
-                <span>{b.label}</span>
-              </motion.span>
-            ))}
-          </div>
         </div>
-
       </div>
     </section>
   );
