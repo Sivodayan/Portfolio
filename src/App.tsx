@@ -9,7 +9,6 @@ import SkillsShowcase from './components/SkillsShowcase';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import LoadingScreen from './components/LoadingScreen';
-import { Analytics } from "@vercel/analytics/next";
 
 
 export const App: React.FC = () => {

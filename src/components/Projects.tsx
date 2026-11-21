@@ -24,7 +24,8 @@ const PROJECTS_DATA: ProjectData[] = [
     desc: 'Multi-node early warning telemetry dashboard engineered by Team Void Warriors to monitor waterways. Ultrasonic sensors on ESP32 & Arduino stream live hydrometric trends and SMS alerts over GSM.',
     tags: ['ESP32', 'FastAPI ML', 'Arduino', 'GSM SIM800L', 'MQTT', 'C++'],
     links: [
-      { label: 'Team Void Warriors', href: 'https://github.com/Sivodayan' },
+      { label: 'GitHub ↗', href: 'https://github.com/Sivodayan/KCC-Project' },
+      { label: 'Live Demo ↗', href: 'https://jkcc.edu.lk' },
     ],
   },
   {
@@ -63,6 +64,7 @@ const PROJECTS_DATA: ProjectData[] = [
     tags: ['HTML5', 'CSS3', 'JavaScript'],
     links: [
       { label: 'View on GitHub ↗', href: 'https://github.com/Sivodayan/MORA-Travels' },
+      { label: 'Live Demo ↗', href: 'https://sivodayan.github.io/MORA-Travels/' },
     ],
   },
 ];
