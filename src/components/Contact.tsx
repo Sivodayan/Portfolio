@@ -7,13 +7,12 @@ import {
   MessageCircle,
   Linkedin,
   Github,
-  MapPin,
-  Clock,
   ExternalLink,
   Send,
   Copy,
   Check,
-  ArrowUp,
+  Download,
+  FileText,
 } from 'lucide-react';
 import GlitchHeading from './GlitchHeading';
 import RisingLines from './RisingLines';
@@ -222,6 +221,30 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               </div>
             </div>
             <ExternalLink className="w-4 h-4 text-[#94a3b8] group-hover:text-white light:group-hover:text-slate-900 transition-colors shrink-0 ml-2" />
+          </a>
+        </div>
+
+        {/* CV Actions */}
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <a
+            href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3.5 py-2 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#38bdf8] light:border-slate-300 text-white light:text-slate-900 font-mono text-xs sm:text-[13px] font-semibold flex items-center gap-1.5 transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
+            title="View Resume in Browser (PDF)"
+          >
+            <FileText className="w-3.5 h-3.5 text-[#38bdf8] light:text-[#0284c7]" />
+            <span>View CV</span>
+          </a>
+
+          <a
+            href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
+            download="Sivodayan_Sujeevakumar_CV.pdf"
+            className="px-3.5 py-2 rounded-xl bg-[#38bdf8] hover:bg-[#0284c7] text-[#07080b] hover:text-white font-mono text-xs sm:text-[13px] font-bold flex items-center gap-1.5 shadow-[0_0_16px_rgba(56,189,248,0.35)] hover:shadow-[0_0_22px_rgba(56,189,248,0.5)] transition-all cursor-pointer border border-[#38bdf8] hover:border-[#0284c7]"
+            title="Download Resume (PDF)"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Download CV</span>
           </a>
         </div>
       </motion.div>
