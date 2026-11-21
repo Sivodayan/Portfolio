@@ -166,6 +166,17 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
    */
   const getInteractiveTarget = useCallback((target: HTMLElement | null): HTMLElement | null => {
     if (!target) return null;
+
+    // If target is inside an enclosing cursor card, lock framing to the card as a whole
+    const enclosingCard = target.closest<HTMLElement>('[data-cursor-card]');
+    if (enclosingCard) {
+      return enclosingCard;
+    }
+
+    if (target.closest('[data-cursor-ignore]')) {
+      return null;
+    }
+
     return target.closest<HTMLElement>(
       'a, button, input, textarea, select, [role="button"], .draggable-badge, .theme-toggle-btn, .timeline-node, [data-cursor-target]'
     );

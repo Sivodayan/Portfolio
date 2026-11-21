@@ -102,6 +102,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             role="button"
             tabIndex={0}
             data-cursor-target
+            data-cursor-card
             onClick={() => {
               window.location.href = 'mailto:sivodayan17@gmail.com';
             }}
@@ -110,7 +111,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 window.location.href = 'mailto:sivodayan17@gmail.com';
               }
             }}
-            className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/40 backdrop-blur-md transition-all shadow-sm group cursor-pointer"
+            className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/40 backdrop-blur-md transition-all shadow-sm group cursor-pointer focus:outline-none focus:ring-0"
           >
             <div className="flex items-center gap-3 min-w-0">
               <span className="p-2.5 rounded-lg bg-[#e5a93c]/10 text-[#e5a93c] light:text-[#b45309] shrink-0">
@@ -132,7 +133,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             <div className="flex items-center gap-1.5 shrink-0 ml-2 relative z-10" onClick={(e) => e.stopPropagation()}>
               <a
                 href="mailto:sivodayan17@gmail.com"
-                className="p-2 rounded-lg bg-[#e5a93c]/15 hover:bg-[#e5a93c]/25 light:bg-[#b45309]/10 light:hover:bg-[#b45309]/20 border border-white/10 light:border-slate-300 text-[#e5a93c] light:text-[#b45309] transition-colors cursor-pointer"
+                data-cursor-ignore
+                className="p-2 rounded-lg bg-[#e5a93c]/15 hover:bg-[#e5a93c]/25 light:bg-[#b45309]/10 light:hover:bg-[#b45309]/20 border border-white/10 light:border-slate-300 text-[#e5a93c] light:text-[#b45309] transition-colors cursor-pointer focus:outline-none"
                 title="Send Mail"
                 aria-label="Send Mail"
               >
@@ -140,11 +142,12 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               </a>
               <button
                 type="button"
+                data-cursor-ignore
                 onClick={(e) => {
                   e.stopPropagation();
                   handleCopy('sivodayan17@gmail.com', 'Email', 'email');
                 }}
-                className="p-2 rounded-lg bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
+                className="p-2 rounded-lg bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer focus:outline-none"
                 title="Copy email address"
                 aria-label="Copy email address"
               >
@@ -158,6 +161,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             role="button"
             tabIndex={0}
             data-cursor-target
+            data-cursor-card
             onClick={() => {
               window.open('https://wa.me/94705891710', '_blank', 'noopener,noreferrer');
             }}
@@ -166,7 +170,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 window.open('https://wa.me/94705891710', '_blank', 'noopener,noreferrer');
               }
             }}
-            className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-emerald-500/40 light:border-slate-200 light:hover:border-emerald-600/40 backdrop-blur-md transition-all shadow-sm group cursor-pointer"
+            className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-emerald-500/40 light:border-slate-200 light:hover:border-emerald-600/40 backdrop-blur-md transition-all shadow-sm group cursor-pointer focus:outline-none focus:ring-0"
           >
             <div className="flex items-center gap-3 min-w-0">
               <span className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 light:text-emerald-700 shrink-0">
@@ -187,7 +191,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 href="https://wa.me/94705891710"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 light:bg-emerald-600/10 light:hover:bg-emerald-600/20 border border-white/10 light:border-slate-300 text-emerald-400 light:text-emerald-700 transition-colors cursor-pointer"
+                data-cursor-ignore
+                className="p-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 light:bg-emerald-600/10 light:hover:bg-emerald-600/20 border border-white/10 light:border-slate-300 text-emerald-400 light:text-emerald-700 transition-colors cursor-pointer focus:outline-none"
                 title="Chat on WhatsApp"
                 aria-label="Chat on WhatsApp"
               >
@@ -195,11 +200,12 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               </a>
               <button
                 type="button"
+                data-cursor-ignore
                 onClick={(e) => {
                   e.stopPropagation();
                   handleCopy('+94 70 589 1710', 'Phone number', 'phone');
                 }}
-                className="p-2 rounded-lg bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
+                className="p-2 rounded-lg bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer focus:outline-none"
                 title="Copy phone number"
                 aria-label="Copy phone number"
               >
@@ -213,7 +219,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/40 backdrop-blur-md transition-all shadow-sm group"
+            data-cursor-card
+            className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/40 backdrop-blur-md transition-all shadow-sm group focus:outline-none focus:ring-0"
           >
             <div className="flex items-center gap-3 min-w-0">
               <span className="p-2.5 rounded-lg bg-[#e5a93c]/10 text-[#e5a93c] light:text-[#b45309] shrink-0">
@@ -236,7 +243,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             href="https://github.com/Sivodayan"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-white/30 light:border-slate-200 light:hover:border-slate-400 backdrop-blur-md transition-all shadow-sm group"
+            data-cursor-card
+            className="flex items-center justify-between p-4 rounded-xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-white/30 light:border-slate-200 light:hover:border-slate-400 backdrop-blur-md transition-all shadow-sm group focus:outline-none focus:ring-0"
           >
             <div className="flex items-center gap-3 min-w-0">
               <span className="p-2.5 rounded-lg bg-white/10 light:bg-slate-100 text-white light:text-slate-900 shrink-0">
