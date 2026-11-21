@@ -24,15 +24,12 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
 
   return (
     <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none py-10 sm:py-14 overflow-hidden" id="about">
-      {/* Two-Column Arrangement: Left photo / Right text & bio */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-10 lg:gap-14 my-auto"
       >
-
-        {/* Left Column: Pure ChromaCard 3D Floating Picture */}
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 15 }}
           animate={isIntroDone ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.92, y: 15 }}
@@ -45,14 +42,12 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
           />
         </motion.div>
 
-        {/* Right Column: Kicker, Display Name, Bio, Links & Badges */}
         <motion.div
           initial={{ opacity: 0, x: 22 }}
           animate={isIntroDone ? { opacity: 1, x: 0 } : { opacity: 0, x: 22 }}
           transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="flex-1 max-w-xl lg:max-w-2xl text-left flex flex-col justify-center"
         >
-          {/* Uppercase Kicker Tagline */}
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
@@ -60,10 +55,9 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
             className="text-xs sm:text-[13px] font-mono font-bold tracking-wider text-[#38bdf8] uppercase mb-2.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]"
           >
             <span className="block text-[#38bdf8]">Computer Science &amp; Engineering Undergraduate</span>
-            <span className="block text-[#93c5fd] text-[11px] sm:text-xs font-medium tracking-normal mt-0.5">University of Moratuwa • Sri Lanka</span>
+            <span className="block text-[#93c5fd] text-[11px] sm:text-xs font-medium tracking-normal mt-0.5">University of Moratuwa </span>
           </motion.div>
 
-          {/* Large Bold Display Heading with Cyber Glitch Entry Transition */}
           <div className={isGlitching ? 'glitch-transition' : ''}>
             <TextEngine
               key={isIntroDone ? 'intro-done' : 'intro-waiting'}
@@ -79,7 +73,6 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
             </TextEngine>
           </div>
 
-          {/* Bio Description */}
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
@@ -89,14 +82,12 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
             Department Representative for Computer Science &amp; Engineering. I build full-stack web applications, embedded IoT telemetries, and performant developer software using React, TypeScript, Python, and C++.
           </motion.p>
 
-          {/* Social & Contact Icon Action Row */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4"
           >
-            {/* Download CV Action Button */}
             <a
               href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
               download="Sivodayan_Sujeevakumar_CV.pdf"
@@ -107,7 +98,6 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               <span>Download CV</span>
             </a>
 
-            {/* View CV Action Button */}
             <a
               href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
               target="_blank"
@@ -118,7 +108,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               <FileText className="w-3.5 h-3.5 text-[#38bdf8] [data-theme=light]:text-[#0284c7]" />
               <span>View CV</span>
             </a>
-            {/* GitHub Profile */}
+
             <a
               href="https://github.com/Sivodayan"
               target="_blank"
@@ -132,7 +122,6 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               </svg>
             </a>
 
-            {/* LinkedIn Profile */}
             <a
               href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
               target="_blank"
@@ -148,11 +137,10 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               </svg>
             </a>
 
-            {/* Direct Email Link */}
             <a
               href="mailto:sivodayan17@gmail.com"
               className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 border border-white/20 hover:border-[#44f0ff] text-white hover:text-[#44f0ff] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer"
-              title="Send Direct Email (sivodayan17@gmail.com)"
+              title="Send Direct Email"
               aria-label="Send Direct Email"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -161,10 +149,7 @@ export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true }) =
               </svg>
             </a>
           </motion.div>
-
-          
         </motion.div>
-
       </motion.div>
     </section>
   );

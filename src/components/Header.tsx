@@ -99,7 +99,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
       className="site-header flex-col"
     >
       <div className="site-header-inner">
-        {/* Brand with Monogram Badge */}
         <motion.a
           href="#about"
           whileHover={{ scale: 1.04 }}
@@ -113,7 +112,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
           </span>
         </motion.a>
 
-        {/* Desktop Nav Links with Sliding Active & Hover Pills */}
         <nav className="nav-actions">
           <div
             className="hidden sm:flex items-center gap-1 relative p-0.5 rounded-full"
@@ -142,7 +140,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                       : 'text-[#cbd5e1] hover:text-white'
                   }`}
                 >
-                  {/* Sliding Active Capsule (Springs fluidly between active tabs) */}
                   {isActive && (
                     <motion.div
                       layoutId="navbar-active-pill"
@@ -155,7 +152,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                     />
                   )}
 
-                  {/* Magnetic Hover Capsule (Glides smoothly under cursor) */}
                   {isHovered && !isActive && (
                     <motion.div
                       layoutId="navbar-hover-pill"
@@ -173,7 +169,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2.5 ml-1">
-            {/* Live Jaffna Time Pill (Visible on md+ screens) */}
             <span className="live-clock-pill hidden md:inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-mono border backdrop-blur-md">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -183,7 +178,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
               <span className="font-semibold text-white [data-theme=light]:text-slate-800 text-[11px]">{timeStr}</span>
             </span>
 
-            {/* Tactile Animated Theme Switcher Button */}
             <motion.button
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92, rotate: 180 }}
@@ -223,7 +217,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
               </AnimatePresence>
             </motion.button>
 
-            {/* Mobile Hamburger / Menu Toggle Button */}
             <motion.button
               whileTap={{ scale: 0.88 }}
               onClick={() => setMobileMenuOpen((prev) => !prev)}
@@ -258,7 +251,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
         </nav>
       </div>
 
-      {/* Mobile Animated Dropdown Drawer with Cascading Stagger */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div

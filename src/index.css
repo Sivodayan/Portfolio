@@ -42,21 +42,21 @@
   --bg-body: #f8fafc;
   --bg-card: #ffffff;
   --bg-card-hover: #f1f5f9;
-  --bg-subtle: rgba(0, 0, 0, 0.04);
+  --bg-subtle: rgba(0, 0, 0, 0.03);
 
-  --border-color: rgba(0, 0, 0, 0.09);
-  --border-hover: rgba(0, 0, 0, 0.18);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.16);
 
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
+  --text-primary: #090d16;
+  --text-secondary: #27303f;
+  --text-muted: #596780;
 
   --accent: #0284c7;
-  --accent-soft: rgba(2, 132, 199, 0.1);
-  --accent-text: #0369a1;
+  --accent-soft: rgba(2, 132, 199, 0.08);
+  --accent-text: #0284c7;
 
   --emerald: #059669;
-  --emerald-soft: rgba(5, 150, 105, 0.1);
+  --emerald-soft: rgba(5, 150, 105, 0.08);
 }
 
 *, *::before, *::after {
@@ -115,6 +115,28 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+[data-theme="light"] body {
+  background-color: #f8fafc;
+  background-image:
+    radial-gradient(ellipse 85% 55% at 50% -8%, rgba(56, 189, 248, 0.14), transparent 70%),
+    radial-gradient(ellipse 65% 50% at 92% 48%, rgba(99, 102, 241, 0.07), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 8% 85%, rgba(14, 165, 233, 0.06), transparent 65%);
+  background-attachment: fixed;
+}
+
+/* Subtle, crisp architectural dot grid for light mode */
+[data-theme="light"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(15, 23, 42, 0.075) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 85% 85% at 50% 40%, black 45%, transparent 95%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 40%, black 45%, transparent 95%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 #root {
   overflow-x: clip;
   width: 100%;
@@ -133,7 +155,7 @@ a, button, input, select, textarea {
   }
 }
 
-/* Full-Screen React Bits Pro ASCII Stream Background */
+/* Full-screen ASCII stream canvas background */
 .ascii-stream-fullscreen {
   position: fixed;
   inset: 0;
@@ -159,11 +181,12 @@ a, button, input, select, textarea {
 }
 
 [data-theme="light"] .ascii-stream-fullscreen {
-  opacity: 0.92;
+  opacity: 0.38;
+  mix-blend-mode: multiply;
 }
 
 [data-theme="light"] .ascii-stream-fullscreen::after {
-  background: rgba(248, 250, 252, 0.42);
+  background: radial-gradient(circle at 50% 30%, transparent 40%, rgba(248, 250, 252, 0.45) 100%);
 }
 
 /* Global Typography High-Legibility Shadows */
@@ -356,7 +379,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   align-items: center;
 }
 
-/* ASCII Stream Canvas Frame (React Bits Pro component container) */
+/* ASCII stream canvas frame */
 .ascii-stream-frame {
   position: relative;
   width: 100%;

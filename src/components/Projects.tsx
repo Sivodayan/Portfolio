@@ -110,7 +110,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Specular sheen effect */}
       <div
         className="project-shine"
         style={{
@@ -121,7 +120,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       />
 
       <div>
-        {/* Project Screenshot Cover */}
         {project.image && (
           <div className="project-image-wrap !mb-2 !rounded-lg overflow-hidden border border-white/10 aspect-[16/9]">
             <img
@@ -146,9 +144,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           >
             {project.title}
           </TextEngine>
-
-
-
         </div>
 
         <p className="project-desc !text-xs !leading-relaxed text-[#cbd5e1] !mb-2 line-clamp-3">
@@ -231,7 +226,6 @@ export const Projects: React.FC = () => {
           </div>
         </div>
 
-        {/* Clean Grid Layout Spanning the Section with staggered card entry */}
         <motion.div
           initial="hidden"
           whileInView="visible"

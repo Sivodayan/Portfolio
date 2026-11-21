@@ -8,15 +8,9 @@ export interface BackToTopProps {
 }
 
 /**
- * BackToTop — Smooth Floating Action Button
+ * BackToTop
  *
- * Features:
- * - Fluid spring-driven circular scroll progress ring (via Framer Motion pathLength)
- * - Magnetic cursor attraction physics on hover
- * - Dual-arrow smooth kinetic launch cycle on hover
- * - Ambient backdrop blur with glowing radial aura
- * - Interactive scroll percentage tooltip pill
- * - Smooth cubic-bezier scroll-to-top transition
+ * Floating scroll-to-top control with progress ring indicator.
  */
 export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350, theme = 'dark' }) => {
   const [isVisible, setIsVisible] = useState(false);

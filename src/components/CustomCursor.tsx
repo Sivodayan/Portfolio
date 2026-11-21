@@ -36,15 +36,9 @@ export interface CustomCursorProps {
 }
 
 /**
- * CustomCursor — Refined React Bits Pro Component (@reactbits-starter/custom-cursor-tw)
- * Docs: https://pro.reactbits.dev/docs/components/custom-cursor
+ * CustomCursor
  *
- * Features:
- * - Fluid single-spring pointer physics (no double-spring lag)
- * - Intelligent magnetic highlighting of actual interactive elements (buttons, links, pills, badges)
- * - Exact bounding-box morphing with dynamic border-radius matching
- * - Smooth fade-out of inner dot when morphed over buttons to prevent text obstruction
- * - Touch-device safety and zero pointer interference (pointer-events-none)
+ * Spring-driven pointer with dynamic magnetic targeting and element snapping.
  */
 export const CustomCursor: React.FC<CustomCursorProps> = ({
   theme = 'dark',

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Directives for Googlebot
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+Sitemap: https://sivodayan.github.io/Portfolio/sitemap.xml

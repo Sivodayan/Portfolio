@@ -91,10 +91,8 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
       ref={containerRef}
       className={isOverflowing ? 'relative w-full h-[280vh] sm:h-[320vh]' : 'relative w-full py-16 sm:py-20'}
     >
-      {/* Sticky Locked Viewport Container */}
+      {/* Sticky locked track container */}
       <div className={isOverflowing ? 'sticky top-0 h-[100dvh] w-full flex flex-col justify-center overflow-hidden py-4 sm:py-8 z-10' : 'w-full flex flex-col justify-center'}>
-        
-        {/* Section Heading & Interactive Milestones Bar */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-4 sm:mb-6">
           <div>
             <GlitchHeading>
@@ -115,7 +113,6 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
             </p>
           </div>
 
-          {/* Interactive Milestone Indicator Buttons */}
           <div className="flex items-center gap-2">
             {milestones.map((m) => (
               <button
@@ -135,7 +132,6 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
           </div>
         </div>
 
-        {/* Progress Track Rail */}
         <div className="relative h-1 w-full bg-white/10 [data-theme=light]:bg-slate-200 rounded-full mb-6 overflow-hidden">
           <motion.div
             style={{ scaleX: scrollYProgress }}
@@ -143,7 +139,6 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
           />
         </div>
 
-        {/* Sliding Cards Track */}
         <div ref={wrapperRef} className="w-full overflow-hidden">
           <motion.div
             ref={trackRef}
@@ -152,7 +147,6 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               !isOverflowing ? 'justify-center flex-wrap' : ''
             }`}
           >
-            {/* Card 1: Jaffna Hindu College */}
             <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 [data-theme=light]:bg-white/95 border border-white/12 hover:border-[#38bdf8]/45 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
                 <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#38bdf8]/15 text-[#38bdf8] border border-[#38bdf8]/30 font-semibold mb-3">
@@ -173,7 +167,6 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               </div>
             </div>
 
-            {/* Card 2: University of Moratuwa */}
             <div className="w-[275px] min-[360px]:w-[315px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-[#0c101a]/95 [data-theme=light]:bg-white/95 border border-white/12 hover:border-[#38bdf8]/45 [data-theme=light]:border-slate-300 [data-theme=light]:hover:border-[#0284c7]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
               <div>
                 <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#38bdf8]/15 text-[#38bdf8] border border-[#38bdf8]/30 font-semibold mb-3">

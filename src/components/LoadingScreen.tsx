@@ -33,14 +33,12 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }}
     >
-      {/* React Bits Pro: Circuit Flash Component with exact requested config */}
       <div className="absolute inset-0 w-full h-full pointer-events-auto">
         <CircuitFlash
           colors={["#44f0ff", "#ff087b"]}
         />
       </div>
 
-      {/* Cybernetic HUD Center Card */}
       <motion.div
         className="relative z-20 flex flex-col items-center max-w-sm px-6 py-5 mx-4 rounded-xl bg-[#090b10]/85 border border-[#44f0ff]/30 shadow-[0_0_50px_rgba(68,240,255,0.18)] backdrop-blur-md"
         initial={{ scale: 0.92, opacity: 0 }}

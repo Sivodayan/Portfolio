@@ -1,0 +1,22 @@
+{
+  "name": "Sujeevakumar Sivodayan — Developer Portfolio",
+  "short_name": "Sivodayan",
+  "description": "Computer Science & Engineering Undergraduate & Department Representative at University of Moratuwa.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07080b",
+  "theme_color": "#07080b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

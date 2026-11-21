@@ -166,7 +166,6 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
           </div>
         </div>
 
-        {/* Spectral Tiles Background Container - Generously Spanning the Screen */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -188,7 +187,6 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
             lightSize={1.1}
             style={{ minHeight: 'clamp(460px, 60vh, 560px)' }}
           >
-            {/* Skill Tiles Overlaid on top of 3D Spectral Tiles with subtle stagger */}
             <div className="relative z-10 p-3 sm:p-6 flex flex-col justify-center h-full bg-transparent">
               <div className="grid grid-cols-2 min-[460px]:grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-4.5">
                 {skills.map((skill, idx) => (

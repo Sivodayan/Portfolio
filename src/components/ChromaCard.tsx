@@ -74,7 +74,7 @@ void main() {
   float dynamicShift = u_rgbShift * (u_hover * 0.5 + activeIntensity * 0.9) * (0.65 + 0.35 * length(u_mouse));
   vec2 shift = mouseDir * dynamicShift;
 
-  // Authentic liquid sinusoidal wave displacement (matching original React Bits Pro Chroma Card)
+  // Sinusoidal wave displacement for chromatic distortion
   float wave1 = sin(uv.y * 14.0 + u_time * 4.8);
   float wave2 = cos(uv.x * 11.0 - u_time * 3.6);
   vec2 liquidWave = vec2(wave1, wave2 * 0.45) * u_pixelDisplace * activeIntensity;

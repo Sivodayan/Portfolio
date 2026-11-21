@@ -134,35 +134,31 @@ export const App: React.FC = () => {
 
   return (
     <>
-      {/* Circuit Flash Loading Screen */}
       <AnimatePresence>
         {isLoading && (
           <LoadingScreen onComplete={handleLoadingComplete} />
         )}
       </AnimatePresence>
 
-      {/* React Bits Pro: Custom Cursor */}
       <CustomCursor theme={theme} />
 
-      {/* React Bits Pro: AsciiStream Full-Screen Background (Optimized for 60/120fps) */}
       <div className="ascii-stream-fullscreen" aria-hidden="true">
         <AsciiStream
-          colors={theme === 'light' ? ["#0284c7", "#6366f1"] : ["#44f0ff", "#ff087b"]}
+          colors={theme === 'light' ? ["#0284c7", "#4f46e5"] : ["#44f0ff", "#ff087b"]}
           text={"dev sivodayan @cse"}
           pulse={0.9}
-          flare={theme === 'light' ? 0.75 : 0.6}
-          glow={theme === 'light' ? 0.95 : 0.8}
-          intensity={theme === 'light' ? 0.95 : 1.05}
+          flare={theme === 'light' ? 0.35 : 0.6}
+          glow={theme === 'light' ? 0.45 : 0.8}
+          intensity={theme === 'light' ? 0.65 : 1.05}
           grain={0}
           quality={0.45}
           burst={0.4}
           speed={1.5}
-          backgroundColor={theme === 'light' ? "#f8fafc" : "#07080b"}
+          backgroundColor={theme === 'light' ? "#ffffff" : "#07080b"}
           className="w-full h-full"
         />
       </div>
 
-      {/* Sticky Fixed Glass Header */}
       <Header theme={theme} onToggleTheme={toggleTheme} />
 
       <div className="page-container">
@@ -175,10 +171,8 @@ export const App: React.FC = () => {
         </main>
       </div>
 
-      {/* Floating Back to Top Button */}
       <BackToTop theme={theme} />
 
-      {/* Toast feedback */}
       <div className={`minimal-toast ${toastMsg ? 'visible' : ''}`}>
         {toastMsg}
       </div>
