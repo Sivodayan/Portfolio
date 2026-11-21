@@ -71,21 +71,26 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
 
     const handleClickOutside = (e: MouseEvent | TouchEvent) => {
       const target = e.target as Node | null;
-      if (headerRef.current && target && !headerRef.current.contains(target) && mobileMenuOpen) {
+      if (!target || !document.body.contains(target)) return;
+      if (headerRef.current && !headerRef.current.contains(target) && mobileMenuOpen) {
         setMobileMenuOpen(false);
       }
     };
 
     if (mobileMenuOpen) {
       window.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('touchstart', handleClickOutside, { passive: true });
+      const timer = setTimeout(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside, { passive: true });
+      }, 50);
+
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener('touchstart', handleClickOutside);
+      };
     }
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
-    };
   }, [mobileMenuOpen]);
 
   const isLight = theme === 'light';
@@ -219,7 +224,13 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
 
             <motion.button
               whileTap={{ scale: 0.88 }}
-              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setMobileMenuOpen((prev) => !prev);
+              }}
+              onTouchEnd={(e) => {
+                e.stopPropagation();
+              }}
               className="sm:hidden flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-full bg-white/10 hover:bg-white/15 active:bg-[#38bdf8]/25 light:bg-black/5 light:hover:bg-black/10 light:active:bg-sky-500/20 border border-white/20 light:border-black/15 text-white light:text-slate-800 transition-all touch-manipulation cursor-pointer shadow-sm select-none"
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={mobileMenuOpen}
