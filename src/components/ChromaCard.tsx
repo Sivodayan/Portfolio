@@ -220,6 +220,69 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     let isMobileActive = false;
     let lastTouchTime = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    const resetToNeutral = () => {
+      if (!material || !mesh) return;
+      isMobileActive = false;
+      gsap.to(material.uniforms.u_hover, {
+        value: 0.0,
+        duration: 0.45,
+        ease: 'power2.out',
+      });
+      gsap.to(mesh.scale, {
+        x: 1.0,
+        y: 1.0,
+        duration: interactionDuration,
+        ease: 'power2.out',
+      });
+      gsap.to(mesh.position, {
+        x: 0.0,
+        y: 0.0,
+        duration: interactionDuration,
+        ease: 'power2.out',
+      });
+      gsap.to(mesh.rotation, {
+        x: 0.0,
+        y: 0.0,
+        duration: interactionDuration,
+        ease: 'power2.out',
+      });
+    };
+
+    const activateMobileEffect = (clientX: number, clientY: number) => {
+      if (!container || !material || !mesh) return;
+      isMobileActive = true;
+      const rect = container.getBoundingClientRect();
+      const tapX = ((clientX - rect.left) / rect.width) * 2 - 1;
+      const tapY = -(((clientY - rect.top) / rect.height) * 2 - 1);
+      const clampedX = Math.max(-1, Math.min(1, tapX));
+      const clampedY = Math.max(-1, Math.min(1, tapY));
+
+      gsap.to(material.uniforms.u_hover, {
+        value: 1.0,
+        duration: hoverDuration,
+        ease: 'power2.out',
+      });
+      gsap.to(mesh.scale, {
+        x: 1 + scaleIntensity,
+        y: 1 + scaleIntensity,
+        duration: interactionDuration,
+        ease: 'power2.out',
+      });
+      gsap.to(mesh.position, {
+        x: clampedX * positionIntensity * 0.7,
+        duration: interactionDuration,
+        ease: 'power2.out',
+      });
+      gsap.to(mesh.rotation, {
+        x: -clampedY * (Math.PI / 3) * rotationIntensity * 0.7,
+        y: clampedX * (Math.PI / 3) * rotationIntensity * 0.7,
+        duration: interactionDuration,
+        ease: 'power2.out',
+      });
+    };
 
     const handleMouseMove = (e: MouseEvent) => {
       if (Date.now() - lastTouchTime < 1000) return;
@@ -261,55 +324,54 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     const handleMouseLeave = () => {
       if (!material || !mesh || isMobileActive) return;
-      gsap.to(material.uniforms.u_hover, {
-        value: 0.0,
-        duration: hoverDuration,
-        ease: 'power2.out',
-      });
-
-      gsap.to(mesh.scale, {
-        x: 1.0,
-        y: 1.0,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
-
-      gsap.to(mesh.position, {
-        x: 0.0,
-        y: 0.0,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
-
-      gsap.to(mesh.rotation, {
-        x: 0.0,
-        y: 0.0,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
+      resetToNeutral();
     };
 
-    const handleTouchEnd = () => {
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
       lastTouchTime = Date.now();
       if (!material || !mesh) return;
-      isMobileActive = !isMobileActive;
+      if (e.changedTouches.length === 0) return;
 
-      gsap.to(material.uniforms.u_hover, {
-        value: isMobileActive ? 1.0 : 0.0,
-        duration: hoverDuration,
-        ease: 'power2.out',
-      });
-      gsap.to(mesh.scale, {
-        x: isMobileActive ? 1 + scaleIntensity : 1.0,
-        y: isMobileActive ? 1 + scaleIntensity : 1.0,
-        duration: interactionDuration,
-        ease: 'power2.out',
-      });
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+      const dist = Math.hypot(dx, dy);
+
+      // If dragged more than 12px, user was scrolling the page - ignore!
+      if (dist > 12) return;
+
+      if (isMobileActive) {
+        resetToNeutral();
+      } else {
+        activateMobileEffect(touch.clientX, touch.clientY);
+      }
+    };
+
+    const handleDocumentTouch = (e: TouchEvent) => {
+      if (!isMobileActive || !container) return;
+      if (e.target && container.contains(e.target as Node)) return;
+      resetToNeutral();
+    };
+
+    const handleWindowScroll = () => {
+      if (isMobileActive) {
+        resetToNeutral();
+      }
     };
 
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('touchstart', handleTouchStart, { passive: true });
     container.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
+    document.addEventListener('touchstart', handleDocumentTouch, { passive: true });
     window.addEventListener('resize', updateSize);
 
     let isIntersecting = true;
@@ -343,7 +405,10 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       cancelAnimationFrame(animationFrameId);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('touchstart', handleTouchStart);
       container.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('scroll', handleWindowScroll);
+      document.removeEventListener('touchstart', handleDocumentTouch);
       window.removeEventListener('resize', updateSize);
       resizeObserver.disconnect();
 
@@ -400,10 +465,11 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('relative overflow-visible cursor-pointer select-none', className)}
+      className={cn('relative overflow-visible cursor-pointer select-none touch-pan-y', className)}
       style={{
         width: resolvedWidth === 'auto' ? undefined : resolvedWidth,
         height: resolvedHeight === 'auto' ? undefined : resolvedHeight,
+        touchAction: 'pan-y',
       }}
     >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full pointer-events-none" />
