@@ -147,12 +147,12 @@ export const App: React.FC = () => {
       {/* React Bits Pro: AsciiStream Full-Screen Background (Optimized for 60/120fps) */}
       <div className="ascii-stream-fullscreen" aria-hidden="true">
         <AsciiStream
-          colors={theme === 'light' ? ["#0284c7", "#0d9488"] : ["#44f0ff", "#ff087b"]}
+          colors={theme === 'light' ? ["#0284c7", "#6366f1"] : ["#44f0ff", "#ff087b"]}
           text={"dev sivodayan @cse"}
           pulse={0.9}
-          flare={0.6}
-          glow={0.8}
-          intensity={theme === 'light' ? 0.75 : 1.05}
+          flare={theme === 'light' ? 0.75 : 0.6}
+          glow={theme === 'light' ? 0.95 : 0.8}
+          intensity={theme === 'light' ? 0.95 : 1.05}
           grain={0}
           quality={0.45}
           burst={0.4}

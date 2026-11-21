@@ -58,17 +58,17 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         }}
       >
         <RisingLines
-          colors={theme === 'light' ? ['#0284c7', '#0d9488'] : ['#44f0ff', '#ff087b']}
+          colors={theme === 'light' ? ['#0284c7', '#6366f1'] : ['#44f0ff', '#ff087b']}
           color={theme === 'light' ? '#0284c7' : '#ff087b'}
-          horizonColor={theme === 'light' ? '#bae6fd' : '#44f0ff'}
-          haloColor={theme === 'light' ? '#0284c7' : '#38bdf8'}
+          horizonColor={theme === 'light' ? '#38bdf8' : '#44f0ff'}
+          haloColor={theme === 'light' ? '#0ea5e9' : '#38bdf8'}
           horizonHeight={-0.45}
           speed={0.6}
           density={1.1}
           lineWidth={1.2}
           lineLength={1.1}
           interactive={true}
-          horizonGlow={theme === 'light' ? 0.7 : 1.2}
+          horizonGlow={theme === 'light' ? 0.9 : 1.2}
           particles={1}
           className="w-full h-full pointer-events-auto"
         />

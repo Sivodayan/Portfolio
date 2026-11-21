@@ -159,11 +159,11 @@ a, button, input, select, textarea {
 }
 
 [data-theme="light"] .ascii-stream-fullscreen {
-  opacity: 0.85;
+  opacity: 0.92;
 }
 
 [data-theme="light"] .ascii-stream-fullscreen::after {
-  background: rgba(0, 0, 0, 0.32);
+  background: rgba(248, 250, 252, 0.42);
 }
 
 /* Global Typography High-Legibility Shadows */
