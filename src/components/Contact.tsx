@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import GlitchHeading from './GlitchHeading';
 import RisingLines from './RisingLines';
+import { sendContactMessage } from '../services/smtpService';
 
 export interface ContactProps {
   onShowToast?: (msg: string) => void;
@@ -48,6 +49,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const [formError, setFormError] = useState<string | null>(null);
+  const [sendProvider, setSendProvider] = useState<string | null>(null);
 
   const handleCopy = (text: string, label: string, key: string) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -67,7 +69,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
     if (formError) setFormError(null);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const name = formData.name.trim();
@@ -94,30 +96,33 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
     setFormStatus('submitting');
     setFormError(null);
 
-    const subjectLine = subject || `Portfolio Message from ${name}`;
-    const bodyContent = `Hi Sivodayan,\n\n${message}\n\n---\nSender: ${name}\nEmail: ${email}`;
-    const mailtoUrl = `mailto:sivodayan17@gmail.com?subject=${encodeURIComponent(
-      subjectLine
-    )}&body=${encodeURIComponent(bodyContent)}`;
+    try {
+      const result = await sendContactMessage({
+        name,
+        email,
+        subject,
+        message,
+      });
 
-    setTimeout(() => {
-      navigator.clipboard.writeText(bodyContent).catch(() => {});
-
-      const mailLink = document.createElement('a');
-      mailLink.href = mailtoUrl;
-      document.body.appendChild(mailLink);
-      mailLink.click();
-      mailLink.remove();
-
+      setSendProvider(result.provider);
       setFormStatus('success');
-      onShowToast?.('Message drafted in email client! (Copied to clipboard)');
-    }, 600);
+
+      if (result.provider === 'fallback-mailto') {
+        onShowToast?.('Message drafted in your email client! (Copied to clipboard)');
+      } else {
+        onShowToast?.('Message dispatched successfully via SMTP API!');
+      }
+    } catch (err: any) {
+      setFormStatus('idle');
+      setFormError(err?.message || 'Failed to dispatch message via SMTP API.');
+    }
   };
 
   const resetForm = () => {
     setFormData({ name: '', email: '', subject: '', message: '' });
     setFormStatus('idle');
     setFormError(null);
+    setSendProvider(null);
   };
 
   return (
@@ -406,9 +411,12 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 </div>
               </div>
 
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/5 light:bg-slate-100 text-[10px] font-mono text-[#94a3b8] light:text-slate-600 border border-white/10">
-                <Sparkles className="w-3 h-3 text-[#e5a93c] light:text-[#b45309]" />
-                <span>Instant Dispatch</span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 light:bg-emerald-50 text-[10px] font-mono text-emerald-400 light:text-emerald-700 border border-emerald-500/20">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                </span>
+                <span>SMTP API Active</span>
               </span>
             </div>
 
@@ -427,10 +435,14 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-white light:text-slate-900 mb-0.5">
-                      Message Prepared &amp; Email Client Opened!
+                      {sendProvider === 'fallback-mailto'
+                        ? 'Message Prepared in Email Client!'
+                        : 'Message Dispatched via SMTP API!'}
                     </h4>
                     <p className="text-xs font-mono text-[#94a3b8] light:text-slate-600 max-w-sm mx-auto">
-                      Your draft is open in your email client. A copy was also saved to your clipboard.
+                      {sendProvider === 'fallback-mailto'
+                        ? 'A mailto draft has been opened and message details copied to your clipboard.'
+                        : 'Your message was transmitted directly to sivodayan17@gmail.com via SMTP API.'}
                     </p>
                   </div>
                   <button
@@ -535,12 +547,12 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                       {formStatus === 'submitting' ? (
                         <>
                           <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                          <span>Dispatching...</span>
+                          <span>Dispatching via SMTP...</span>
                         </>
                       ) : (
                         <>
                           <Send className="w-3.5 h-3.5" />
-                          <span>Send Message</span>
+                          <span>Send Instant Message</span>
                         </>
                       )}
                     </button>
