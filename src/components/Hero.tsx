@@ -23,7 +23,7 @@ export const Hero: React.FC<HeroProps> = ({ isIntroDone = true, theme = 'dark' }
   }, [isIntroDone]);
 
   return (
-    <section className="hero relative w-full min-h-[100dvh] flex flex-col justify-center select-none pt-16 pb-6 sm:py-14 overflow-hidden" id="about">
+    <section className="hero relative w-full min-h-[90vh] sm:min-h-[calc(100vh-4rem)] flex flex-col justify-center select-none pt-12 pb-4 sm:pt-14 sm:pb-6 overflow-hidden" id="about">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={isIntroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}

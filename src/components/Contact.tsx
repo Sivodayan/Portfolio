@@ -37,7 +37,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
   return (
     <section
-      className="section relative w-full min-h-0 sm:min-h-[100dvh] flex flex-col justify-start sm:justify-between pt-16 pb-12 sm:pt-16 sm:pb-20 overflow-hidden"
+      className="section relative w-full min-h-[calc(100vh-3.5rem)] flex flex-col justify-start pt-3 sm:pt-5 pb-48 sm:pb-64 overflow-hidden"
       id="contact"
     >
       <div
@@ -72,7 +72,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-4xl mx-auto my-0 sm:my-auto flex flex-col justify-center"
+        className="relative z-10 w-full max-w-4xl mx-auto my-0 flex flex-col justify-start"
       >
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 sm:mb-8">
           <div>

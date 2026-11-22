@@ -85,12 +85,31 @@ export const App: React.FC = () => {
       if (targetElement) {
         e.preventDefault();
         const isMobile = window.innerWidth <= 640;
-        const navOffset = isMobile ? 0 : -68;
-        lenis.scrollTo(targetElement as HTMLElement, {
-          offset: navOffset,
-          duration: 1.25,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        });
+        const isAbout = href === '#about';
+        const isExp = href === '#experience';
+
+        let targetY: number | HTMLElement = targetElement as HTMLElement;
+        let navOffset = isMobile ? -56 : -60;
+
+        if (isAbout) {
+          targetY = 0;
+          navOffset = 0;
+        } else if (isExp) {
+          navOffset = 0;
+        }
+
+        if (lenis) {
+          lenis.scrollTo(targetY, {
+            offset: navOffset,
+            duration: 1.0,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
+        } else {
+          const top = typeof targetY === 'number'
+            ? targetY
+            : (targetY as HTMLElement).getBoundingClientRect().top + window.pageYOffset + navOffset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
       }
     };
 

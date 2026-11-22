@@ -680,26 +680,21 @@ html[data-theme-transition] *::after {
 
 /* Shared section layout */
 .section {
-  min-height: 100dvh;
+  min-height: auto;
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 3.5rem 0;
+  justify-content: flex-start;
   contain: layout style;
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 3.75rem;
 }
 
 .hero {
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 3.75rem;
 }
 
 #experience {
-  scroll-margin-top: 4.5rem;
-}
-
-#contact.section {
-  padding-bottom: 0;
+  scroll-margin-top: 0;
 }
 
 .section-heading {
@@ -1284,29 +1279,20 @@ html[data-theme-transition] *::after {
 /* Viewport breakpoints */
 @media (max-width: 640px) {
   .page-container {
-    padding-top: 0;
+    padding-top: 0.5rem;
   }
 
   .section {
     min-height: auto;
-    padding-top: 4.25rem !important;
-    padding-bottom: 2rem !important;
-    scroll-margin-top: 0;
+    scroll-margin-top: 3.5rem;
   }
 
   .hero {
-    padding-top: 4.25rem !important;
-    padding-bottom: 2rem !important;
-    scroll-margin-top: 0;
+    scroll-margin-top: 3.5rem;
   }
 
   #experience {
     scroll-margin-top: 0;
-  }
-
-  #contact.section {
-    padding-top: 4.25rem !important;
-    padding-bottom: 3.5rem !important;
   }
 
   .ascii-stream-frame {

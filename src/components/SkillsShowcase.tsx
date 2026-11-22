@@ -137,13 +137,13 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
   ];
 
   return (
-    <section className="section relative w-full min-h-0 sm:min-h-[100dvh] flex flex-col justify-start sm:justify-center pt-16 pb-6 sm:py-16" id="skills">
+    <section className="section relative w-full min-h-0 flex flex-col justify-start pt-3 sm:pt-5 pb-8 sm:pb-12" id="skills">
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full my-0 sm:my-auto"
+        className="w-full"
       >
         <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div>
