@@ -25,7 +25,6 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
   cardVariants,
 }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const shineRef = useRef<HTMLDivElement | null>(null);
   const rafId = useRef<number>(0);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -44,13 +43,6 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
       if (cardRef.current) {
         cardRef.current.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
       }
-      if (shineRef.current) {
-        shineRef.current.style.background =
-          theme === 'light'
-            ? `radial-gradient(320px circle at ${x}px ${y}px, rgba(217, 119, 6, 0.12), transparent 70%)`
-            : `radial-gradient(320px circle at ${x}px ${y}px, rgba(229, 169, 60, 0.16), transparent 70%)`;
-        shineRef.current.style.opacity = '1';
-      }
     });
   };
 
@@ -58,9 +50,6 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
     if (rafId.current) cancelAnimationFrame(rafId.current);
     if (cardRef.current) {
       cardRef.current.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)';
-    }
-    if (shineRef.current) {
-      shineRef.current.style.opacity = '0';
     }
   };
 
@@ -73,8 +62,8 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
       animate={isSectionInView ? 'visible' : 'hidden'}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      data-cursor-target
-      className={`group relative overflow-hidden w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl cursor-pointer ${
+      data-cursor-ignore
+      className={`group relative overflow-hidden w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl ${
         theme === 'light'
           ? 'bg-white/95 border border-slate-300 hover:border-amber-500/60 shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)] hover:shadow-[0_20px_35px_-12px_rgba(217,119,6,0.18)]'
           : 'bg-black border border-white/12 hover:border-[#e5a93c]/60 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_-12px_rgba(229,169,60,0.25)]'
@@ -84,17 +73,6 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
         transition: 'transform 0.18s ease-out, border-color 0.25s, box-shadow 0.25s',
       }}
     >
-      {/* Dynamic Cursor Spotlight / Shine Effect */}
-      <div
-        ref={shineRef}
-        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
-        style={{
-          background: 'radial-gradient(320px circle at -999px -999px, rgba(229, 169, 60, 0.16), transparent 70%)',
-          opacity: 0,
-        }}
-        aria-hidden="true"
-      />
-
       {/* Subtle Top Accent Glow on Hover */}
       <div
         className="pointer-events-none absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#e5a93c] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -111,9 +89,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
           } font-mono mb-3.5 font-medium flex items-center justify-between`}
         >
           <span>{subtitle}</span>
-          <span className="text-[10px] text-white/30 light:text-slate-400 font-mono tracking-wider">
-            0{index + 1}
-          </span>
+          
         </div>
         <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
           {items.map((item, idx) => (
@@ -204,6 +180,8 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
     };
   }, [calculateDistance]);
 
+
+
   // Update active milestone indicator based on normalized scroll progress
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (latest) => {
@@ -245,6 +223,8 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
     { id: 1, label: 'B.Sc. Engineering', place: 'University of Moratuwa' },
     { id: 2, label: 'TRCSL Volunteer', place: 'Kopay Christian College' },
   ];
+
+ 
 
   return (
     <section
