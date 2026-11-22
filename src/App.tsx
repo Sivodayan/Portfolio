@@ -141,26 +141,42 @@ export const App: React.FC = () => {
       });
 
       transition.ready.then(() => {
-        document.documentElement.animate(
-          {
-            clipPath: [
-              `circle(0px at ${x}px ${y}px)`,
-              `circle(${endRadius}px at ${x}px ${y}px)`,
-            ],
-          },
-          {
-            duration: 720,
-            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-            pseudoElement: '::view-transition-new(root)',
-          }
-        );
+        if (isToLight) {
+          document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${endRadius}px at ${x}px ${y}px)`,
+              ],
+            },
+            {
+              duration: 720,
+              easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              pseudoElement: '::view-transition-new(root)',
+            }
+          );
+        } else {
+          // Shrink light theme snapshot back into the toggle button
+          document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(${endRadius}px at ${x}px ${y}px)`,
+                `circle(0px at ${x}px ${y}px)`,
+              ],
+            },
+            {
+              duration: 720,
+              easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              pseudoElement: '::view-transition-old(root)',
+            }
+          );
+        }
       }).catch(() => {});
 
       transition.finished.finally(() => {
         delete document.documentElement.dataset.themeTransition;
       });
 
-      
       return;
     }
 
@@ -171,27 +187,51 @@ export const App: React.FC = () => {
     ripple.style.inset = '0';
     ripple.style.zIndex = '999999';
     ripple.style.pointerEvents = 'none';
-    ripple.style.backgroundColor = isToLight ? '#f8fafc' : '#07080b';
-    document.body.appendChild(ripple);
 
-    const anim = ripple.animate(
-      [
-        { clipPath: `circle(0px at ${x}px ${y}px)` },
-        { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
-      ],
-      {
-        duration: 720,
-        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-      }
-    );
+    if (isToLight) {
+      ripple.style.backgroundColor = '#f8fafc';
+      document.body.appendChild(ripple);
 
-    setTimeout(() => {
+      const anim = ripple.animate(
+        [
+          { clipPath: `circle(0px at ${x}px ${y}px)` },
+          { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
+        ],
+        {
+          duration: 720,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        }
+      );
+
+      setTimeout(() => {
+        setTheme(next);
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('sivodayan-theme', next);
+      }, 320);
+
+      anim.onfinish = () => ripple.remove();
+    } else {
+      // Shrink light overlay back into the toggle button
+      ripple.style.backgroundColor = '#f8fafc';
+      document.body.appendChild(ripple);
+
       setTheme(next);
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('sivodayan-theme', next);
-    }, 320);
 
-    anim.onfinish = () => ripple.remove();
+      const anim = ripple.animate(
+        [
+          { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
+          { clipPath: `circle(0px at ${x}px ${y}px)` },
+        ],
+        {
+          duration: 720,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        }
+      );
+
+      anim.onfinish = () => ripple.remove();
+    }
 
     
   };

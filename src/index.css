@@ -381,7 +381,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   border-color: rgba(0, 0, 0, 0.2);
 }
 
-/* View Transitions API: circular clip-path expansion */
+/* View Transitions API: circular clip-path expansion & contraction */
 ::view-transition-group(root) {
   animation-duration: 0.72s;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
@@ -399,6 +399,14 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 
 ::view-transition-new(root) {
   z-index: 999999;
+}
+
+html[data-theme-transition="to-dark"]::view-transition-old(root) {
+  z-index: 999999;
+}
+
+html[data-theme-transition="to-dark"]::view-transition-new(root) {
+  z-index: 1;
 }
 
 /* Suppress intermediate CSS transitions during document view transitions */
