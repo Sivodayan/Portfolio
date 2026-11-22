@@ -33,14 +33,30 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
     offset: ['start start', 'end end'],
   });
 
-  // Calculate horizontal translation delta (content scrollWidth vs viewport clientWidth)
+  // Calculate horizontal translation delta based on actual card positions
   const calculateDistance = useCallback(() => {
     if (trackRef.current && wrapperRef.current) {
-      const totalTrackWidth = trackRef.current.scrollWidth;
+      const cards = trackRef.current.querySelectorAll('.rounded-2xl');
+      const lastCard = cards[cards.length - 1] as HTMLElement | null;
       const visibleWidth = wrapperRef.current.clientWidth;
-      const padding = window.innerWidth < 640 ? 24 : 48;
-      const distance = totalTrackWidth - visibleWidth + padding;
 
+      if (lastCard && visibleWidth > 0) {
+        const lastCardEnd = lastCard.offsetLeft + lastCard.offsetWidth;
+        const padding = window.innerWidth < 640 ? 12 : 24;
+        const distance = Math.max(0, lastCardEnd - visibleWidth + padding);
+
+        if (distance > 20) {
+          setIsOverflowing(true);
+          setMaxScroll(distance);
+        } else {
+          setIsOverflowing(false);
+          setMaxScroll(0);
+        }
+        return;
+      }
+
+      const totalTrackWidth = trackRef.current.scrollWidth;
+      const distance = Math.max(0, totalTrackWidth - visibleWidth);
       if (distance > 20) {
         setIsOverflowing(true);
         setMaxScroll(distance);
@@ -79,7 +95,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
   }, [scrollYProgress]);
 
   // Clamp mapping bounds to allow the first and last cards to rest before container unpins
-  const rawX = useTransform(scrollYProgress, [0.06, 0.94], [0, -maxScroll], { clamp: true });
+  const rawX = useTransform(scrollYProgress, [0.03, 0.97], [0, -maxScroll], { clamp: true });
   const smoothX = useSpring(rawX, { damping: 36, stiffness: 280, mass: 0.08, restDelta: 0.001 });
 
   const scrollToMilestone = (index: number) => {
@@ -88,7 +104,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const startY = scrollTop + rect.top;
     const totalScrollableDistance = containerRef.current.offsetHeight - window.innerHeight;
-    const targets = [0.06, 0.5, 0.94];
+    const targets = [0.04, 0.5, 0.96];
     const targetY = startY + targets[index] * totalScrollableDistance;
     if ((window as any).lenis) {
       (window as any).lenis.scrollTo(targetY, {
@@ -110,9 +126,9 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
     <section
       id="experience"
       ref={containerRef}
-      className={isOverflowing ? 'relative w-full h-[240vh] sm:h-[280vh]' : 'relative w-full pt-3 sm:pt-5 pb-8 sm:pb-12'}
+      className={isOverflowing ? 'relative w-full h-[160vh] sm:h-[280vh]' : 'relative w-full pt-3 sm:pt-5 pb-8 sm:pb-12'}
     >
-      <div className={isOverflowing ? 'sticky top-0 h-[100dvh] w-full flex flex-col justify-start pt-18 sm:pt-20 pb-4 overflow-hidden z-10' : 'w-full flex flex-col justify-start pt-3 sm:pt-5 pb-8'}>
+      <div className={isOverflowing ? 'sticky top-0 h-[460px] min-[360px]:h-[480px] sm:h-[100dvh] w-full flex flex-col justify-start pt-16 sm:pt-20 pb-2 sm:pb-4 overflow-hidden z-10' : 'w-full flex flex-col justify-start pt-3 sm:pt-5 pb-8'}>
         <motion.div
           initial={{ opacity: 0, x: 80 }}
           whileInView={{ opacity: 1, x: 0 }}

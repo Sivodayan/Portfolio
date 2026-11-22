@@ -37,7 +37,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
   return (
     <section
-      className="section relative w-full min-h-screen flex flex-col justify-start pt-3 sm:pt-5 pb-32 sm:pb-44 overflow-hidden"
+      className="section relative w-full min-h-screen flex flex-col justify-start pt-2 sm:pt-5 pb-24 sm:pb-44 overflow-hidden"
       id="contact"
     >
       <div
@@ -75,7 +75,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         className="relative z-10 w-full max-w-4xl mx-auto my-0 flex-1 flex flex-col justify-start"
       >
         {/* Header with status pill and subtitle */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-3 sm:mb-6">
           <div>
             <GlitchHeading>
               <TextEngine
