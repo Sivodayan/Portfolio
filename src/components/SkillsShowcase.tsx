@@ -176,18 +176,22 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
           }}
         >
           <SpectralTiles
-            color={theme === 'light' ? "#d97706" : "#9A5B2C"}
-            glowColor={theme === 'light' ? "#fef3c7" : "#ffe5db"}
+            intro={false}
+            color={theme === 'light' ? "#b45309" : "#9A5B2C"}
+            glowColor={theme === 'light' ? "#fde68a" : "#ffe5db"}
             tilt={40}
             zoom={1.1}
             lightSize={1.65}
             frost={0.55}
             gap={0.065}
             scatter={0.59}
-            fog={0.51}
+            fog={theme === 'light' ? 0.2 : 0.51}
+            edgeGlow={theme === 'light' ? 2.4 : 1}
+            rim={theme === 'light' ? 2.2 : 1}
+            lightIntensity={theme === 'light' ? 2.5 : 1}
             lift={1.4500000000000002}
             lean={1.25}
-            backgroundColor={theme === 'light' ? "#f8fafc" : "#000000"}
+            backgroundColor={theme === 'light' ? "#f1f5f9" : "#000000"}
             style={{ minHeight: 'clamp(460px, 60vh, 560px)' }}
           >
             <div className="relative z-10 p-3 sm:p-6 flex flex-col justify-center h-full bg-transparent">
