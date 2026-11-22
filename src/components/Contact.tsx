@@ -51,6 +51,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
   const [sendProvider, setSendProvider] = useState<string | null>(null);
   const [activationNeeded, setActivationNeeded] = useState<boolean>(false);
 
+  const formRef = React.useRef<HTMLFormElement>(null);
+
   const handleCopy = (text: string, label: string, key: string) => {
     navigator.clipboard.writeText(text).then(() => {
       setCopiedKey(key);
@@ -116,6 +118,15 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
     } catch (err: any) {
       setFormStatus('idle');
       setFormError(err?.message || 'Failed to dispatch message via SMTP API.');
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (formRef.current) {
+        formRef.current.requestSubmit();
+      }
     }
   };
 
@@ -429,6 +440,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               ) : (
                 <motion.form
                   key="form"
+                  ref={formRef}
                   onSubmit={handleFormSubmit}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -489,8 +501,9 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
+                      onKeyDown={handleKeyDown}
                       rows={3}
-                      placeholder="Write your message here..."
+                      placeholder="Write your message here... (Press Enter to send, Shift+Enter for new line)"
                       required
                       className="w-full p-3 rounded-xl bg-black/30 light:bg-white border border-white/20 light:border-[#79747e]/40 text-xs sm:text-sm text-white light:text-slate-900 placeholder:text-white/30 light:placeholder:text-slate-400 focus:outline-none focus:border-[#e5a93c] light:focus:border-[#b45309] focus:ring-2 focus:ring-[#e5a93c]/20 transition-all resize-none min-h-[82px] sm:min-h-[92px]"
                     />
