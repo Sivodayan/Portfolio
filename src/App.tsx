@@ -68,7 +68,8 @@ export const App: React.FC = () => {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Apple/Studio-Freight momentum ease-out
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.0,
+      syncTouch: true,
       infinite: false,
     });
 
