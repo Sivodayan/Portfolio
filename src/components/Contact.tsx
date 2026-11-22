@@ -42,7 +42,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
     >
       <div
         className={`absolute inset-x-0 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 ${
-          theme === 'light' ? 'opacity-25' : 'opacity-40'
+          theme === 'light' ? 'opacity-85' : 'opacity-40'
         } overflow-hidden`}
         style={{
           maskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 100%)',
@@ -50,18 +50,19 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         }}
       >
         <RisingLines
-          colors={theme === 'light' ? ['#d97706', '#e11d48'] : ['#e5a93c', '#ff087b']}
-          color={theme === 'light' ? '#d97706' : '#ff087b'}
-          horizonColor={theme === 'light' ? '#f59e0b' : '#f3ba63'}
-          haloColor={theme === 'light' ? '#b45309' : '#e5a93c'}
+          colors={theme === 'light' ? ['#f59e0b', '#e11d48'] : ['#e5a93c', '#ff087b']}
+          color={theme === 'light' ? '#e11d48' : '#ff087b'}
+          horizonColor={theme === 'light' ? '#d97706' : '#f3ba63'}
+          haloColor={theme === 'light' ? '#f59e0b' : '#e5a93c'}
           horizonHeight={-0.45}
           speed={0.6}
-          density={1.1}
-          lineWidth={1.2}
-          lineLength={1.1}
+          density={theme === 'light' ? 1.3 : 1.1}
+          lineWidth={theme === 'light' ? 1.6 : 1.2}
+          lineLength={theme === 'light' ? 1.3 : 1.1}
           interactive={true}
-          horizonGlow={theme === 'light' ? 0.9 : 1.2}
+          horizonGlow={theme === 'light' ? 0.6 : 1.2}
           particles={1}
+          brightness={theme === 'light' ? 1.2 : 1.0}
           className="w-full h-full pointer-events-auto"
         />
       </div>
