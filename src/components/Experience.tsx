@@ -241,13 +241,13 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
                   B.Sc. (Hons) in Engineering
                 </h3>
                 <div className="text-xs text-[#e5a93c] light:text-[#b45309] font-mono mb-3.5 font-medium">
-                  University of Moratuwa • CSE
+                  University of Moratuwa - CSE
                 </div>
                 <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
                   <li><strong className="text-white light:text-slate-900 font-semibold">Department Representative</strong> for CSE Department.</li>
                   <li>Maintaining <strong className="text-white light:text-slate-900 font-semibold">CGPA 3.54</strong> across core algorithms and engineering.</li>
                   <li>Member of <strong className="text-white light:text-slate-900 font-semibold">CXP Team in AIESEC</strong> &amp; <strong className="text-white light:text-slate-900 font-semibold">Mora Lenz Club</strong>.</li>
-                  <li>Coordinated university flagship tech events and freshers&apos; induction programs.</li>
+                  <li>Coordinated university flagship tech events and freshers&apos; induction programs like <strong className="text-white light:text-slate-900 font-semibold">Wibhawi Prathiba.</strong></li>
                 </ul>
               </div>
             </motion.div>
@@ -271,6 +271,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
                   J/Kopay Christian College
                 </div>
                 <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
+                  <li>Conducted workshops on <strong className="text-white light:text-slate-900 font-semibold">AI and Digital Security</strong> for students and teachers.</li>
                   <li>Contributed to the <strong className="text-white light:text-slate-900 font-semibold">TRCSL</strong> school computer lab and IT development program.</li>
                   <li>Assisted in workstation maintenance, local networking, and operating systems setup.</li>
                   <li>Mentored students in <strong className="text-white light:text-slate-900 font-semibold">ICT literacy</strong> and fundamental digital skills.</li>

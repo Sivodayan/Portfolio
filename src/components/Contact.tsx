@@ -232,7 +232,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     Direct Email
                   </div>
                   <span className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 truncate block mt-0.5">
-                    sivodayan18@gmail.com
+                    sivodayan17@gmail.com
                   </span>
                 </div>
               </div>
@@ -503,7 +503,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                       onChange={handleInputChange}
                       onKeyDown={handleKeyDown}
                       rows={3}
-                      placeholder="Write your message here... (Press Enter to send, Shift+Enter for new line)"
+                      placeholder="Write your message here"
                       required
                       className="w-full p-3 rounded-xl bg-black/30 light:bg-white border border-white/20 light:border-[#79747e]/40 text-xs sm:text-sm text-white light:text-slate-900 placeholder:text-white/30 light:placeholder:text-slate-400 focus:outline-none focus:border-[#e5a93c] light:focus:border-[#b45309] focus:ring-2 focus:ring-[#e5a93c]/20 transition-all resize-none min-h-[82px] sm:min-h-[92px]"
                     />
@@ -553,13 +553,13 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
       <footer className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto pt-3 pb-2 border-t border-white/[0.08] light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left text-xs text-slate-400 light:text-slate-500 mt-auto">
         <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
           <span>© {new Date().getFullYear()} Sivodayan Sujeevakumar</span>
-          <span className="hidden sm:inline text-white/20 light:text-slate-300">·</span>
+          <span className="hidden sm:inline text-white/20 light:text-slate-300">-</span>
           <span className="text-white/70 light:text-slate-700 font-medium">Computer Science &amp; Engineering</span>
         </div>
 
         <div className="flex items-center gap-2 text-xs text-slate-400 light:text-slate-500">
           <span>University of Moratuwa</span>
-          <span className="text-white/20 light:text-slate-300">·</span>
+          
           <span className="text-[#e5a93c] light:text-[#b45309] font-medium">Colombo, LK</span>
         </div>
       </footer>
