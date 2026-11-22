@@ -116,15 +116,17 @@ export const App: React.FC = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
     const isToLight = next === 'light';
 
-    // Calculate radial geometry from button center to farthest viewport corner
+    // Calculate radial geometry from button center to farthest viewport corner with buffer
     const button = (e?.currentTarget as HTMLElement) || (document.querySelector('.theme-toggle-btn') as HTMLElement | null);
     const rect = button?.getBoundingClientRect();
     const x = rect ? rect.left + rect.width / 2 : (e?.clientX || window.innerWidth - 60);
     const y = rect ? rect.top + rect.height / 2 : (e?.clientY || 30);
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
+    const endRadius = Math.ceil(
+      Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
+      )
+    ) + 6;
 
     const doc = typeof document !== 'undefined' ? (document as any) : null;
 
@@ -150,13 +152,13 @@ export const App: React.FC = () => {
               ],
             },
             {
-              duration: 720,
-              easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              duration: 480,
+              easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
               pseudoElement: '::view-transition-new(root)',
             }
           );
         } else {
-          // Shrink light theme snapshot back into the toggle button
+          // Shrink light theme snapshot smoothly back into the toggle button
           document.documentElement.animate(
             {
               clipPath: [
@@ -165,8 +167,8 @@ export const App: React.FC = () => {
               ],
             },
             {
-              duration: 720,
-              easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              duration: 480,
+              easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
               pseudoElement: '::view-transition-old(root)',
             }
           );
@@ -198,8 +200,8 @@ export const App: React.FC = () => {
           { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
         ],
         {
-          duration: 720,
-          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          duration: 480,
+          easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
         }
       );
 
@@ -207,7 +209,7 @@ export const App: React.FC = () => {
         setTheme(next);
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('sivodayan-theme', next);
-      }, 320);
+      }, 200);
 
       anim.onfinish = () => ripple.remove();
     } else {
@@ -225,8 +227,8 @@ export const App: React.FC = () => {
           { clipPath: `circle(0px at ${x}px ${y}px)` },
         ],
         {
-          duration: 720,
-          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          duration: 480,
+          easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
         }
       );
 

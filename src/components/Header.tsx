@@ -273,7 +273,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
 
             <motion.button
               whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.92, rotate: 180 }}
+              whileTap={{ scale: 0.92 }}
               transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               onClick={(e) => onToggleTheme(e)}
               className="theme-toggle-btn cursor-pointer overflow-hidden"
@@ -283,10 +283,10 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={theme}
-                  initial={{ rotate: -90, scale: 0, opacity: 0 }}
+                  initial={{ rotate: -70, scale: 0.5, opacity: 0 }}
                   animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                  exit={{ rotate: 90, scale: 0, opacity: 0 }}
-                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ rotate: 70, scale: 0.5, opacity: 0 }}
+                  transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                   className="flex items-center justify-center"
                 >
                   {theme === 'dark' ? (

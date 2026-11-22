@@ -383,8 +383,8 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 
 /* View Transitions API: circular clip-path expansion & contraction */
 ::view-transition-group(root) {
-  animation-duration: 0.72s;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-duration: 0.48s;
+  animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 ::view-transition-old(root),
