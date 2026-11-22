@@ -5,7 +5,11 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
+# Ensure Google Favicon & Image Crawler has full access
 User-agent: Googlebot-Image
 Allow: /
+Allow: /*.ico$
+Allow: /*.png$
+Allow: /*.svg$
 
-Sitemap: https://sivodayan.github.io/Portfolio/sitemap.xml
+Sitemap: https://sivodayan.devs.surf/sitemap.xml

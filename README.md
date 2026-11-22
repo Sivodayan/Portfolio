@@ -2,7 +2,7 @@
 
 A modern developer portfolio engineered with **React 19, TypeScript, Vite 6, Tailwind CSS, Three.js, and React Bits Pro components**. Built for high visual impact, tactile micro-interactions, and seamless typography clarity.
 
-Live Demo: [https://sivodayan.github.io/Portfolio/](https://sivodayan.github.io/Portfolio/)
+Live Demo: [https://sivodayan.devs.surf](https://sivodayan.devs.surf)
 
 ---
 
