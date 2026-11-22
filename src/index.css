@@ -398,6 +398,30 @@ html[data-theme-transition] *::after {
   white-space: nowrap !important;
 }
 
+/* Light mode styling for Experience section */
+[data-theme="light"] #experience .rounded-2xl {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="light"] #experience .rounded-2xl:hover {
+  border-color: rgba(180, 83, 9, 0.45) !important;
+  box-shadow: 0 12px 32px -10px rgba(180, 83, 9, 0.12) !important;
+}
+
+[data-theme="light"] #experience .rounded-2xl h3 {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] #experience .rounded-2xl ul {
+  color: #334155 !important;
+}
+
+[data-theme="light"] #experience .rounded-2xl strong {
+  color: #0f172a !important;
+}
+
 .theme-fallback-ripple {
   will-change: clip-path;
   transition: opacity 0.3s ease-out;

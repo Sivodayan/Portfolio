@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, useSpring, useInView, type Variants } 
 import TextEngine from 'spring-text-engine';
 import GlitchHeading from './GlitchHeading';
 
-export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
+export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'dark' }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -148,8 +148,12 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
                 onClick={() => scrollToMilestone(m.id)}
                 className={`px-3 py-1.5 min-h-[32px] rounded-full text-[11px] font-mono transition-all touch-manipulation active:scale-95 cursor-pointer border ${
                   activeIndex === m.id
-                    ? 'bg-[#e5a93c]/20 border-[#e5a93c] text-[#e5a93c] light:border-amber-500/40 light:text-amber-600 light:bg-amber-500/10 font-bold shadow-[0_0_12px_rgba(229,169,60,0.3)]'
-                    : 'bg-white/5 border-white/10 light:bg-slate-200 light:border-slate-300 text-[#94a3b8] light:text-slate-600 hover:text-white light:hover:text-slate-900 active:bg-white/10'
+                    ? theme === 'light'
+                      ? 'border-amber-500/40 text-amber-600 bg-amber-500/10 font-bold shadow-[0_0_12px_rgba(245,158,11,0.2)]'
+                      : 'bg-[#e5a93c]/20 border-[#e5a93c] text-[#e5a93c] font-bold shadow-[0_0_12px_rgba(229,169,60,0.3)]'
+                    : theme === 'light'
+                      ? 'bg-slate-200 border-slate-300 text-slate-600 hover:text-slate-900 active:bg-slate-300'
+                      : 'bg-white/5 border-white/10 text-[#94a3b8] hover:text-white active:bg-white/10'
                 }`}
                 title={`Jump to ${m.label}`}
               >
@@ -186,7 +190,11 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isSectionInView ? 'visible' : 'hidden'}
-              className="w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
+              className={`w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl ${
+                theme === 'light'
+                  ? 'bg-white/95 border-slate-300 hover:border-[#b45309]/45 shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)]'
+                  : 'bg-black border-white/12 hover:border-[#e5a93c]/45 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]'
+              } light:bg-white/95 light:border-slate-300 light:hover:border-[#b45309]/45 light:shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)] transition-colors duration-200 flex flex-col justify-between min-h-[300px] sm:min-h-[350px]`}
             >
               <div>
                 <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap">
@@ -210,7 +218,11 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isSectionInView ? 'visible' : 'hidden'}
-              className="w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#e5a93c]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
+              className={`w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl ${
+                theme === 'light'
+                  ? 'bg-white/95 border-slate-300 hover:border-[#b45309]/45 shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)]'
+                  : 'bg-black border-white/12 hover:border-[#e5a93c]/45 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]'
+              } light:bg-white/95 light:border-slate-300 light:hover:border-[#b45309]/45 light:shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)] transition-colors duration-200 flex flex-col justify-between min-h-[300px] sm:min-h-[350px]`}
             >
               <div>
                 <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap">
@@ -234,7 +246,11 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isSectionInView ? 'visible' : 'hidden'}
-              className="w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl bg-black light:bg-white/95 border border-white/12 hover:border-[#f3ba63]/45 light:border-slate-300 light:hover:border-[#b45309]/45 transition-colors duration-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
+              className={`w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl ${
+                theme === 'light'
+                  ? 'bg-white/95 border-slate-300 hover:border-[#b45309]/45 shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)]'
+                  : 'bg-black border-white/12 hover:border-[#f3ba63]/45 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]'
+              } light:bg-white/95 light:border-slate-300 light:hover:border-[#b45309]/45 light:shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)] transition-colors duration-200 flex flex-col justify-between min-h-[300px] sm:min-h-[350px]`}
             >
               <div>
                 <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap">
