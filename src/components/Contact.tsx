@@ -127,7 +127,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
   return (
     <section
-      className="section relative w-full min-h-screen lg:min-h-[calc(100vh-3.75rem)] lg:h-[calc(100vh-3.75rem)] flex flex-col justify-between pt-1 sm:pt-2 pb-2 sm:pb-3 overflow-hidden"
+      className="section relative w-full min-h-screen lg:min-h-[calc(100vh-3.75rem)] flex flex-col justify-between pt-5 sm:pt-7 lg:pt-8 pb-3 sm:pb-4 overflow-hidden px-4 sm:px-6 lg:px-8"
       id="contact"
     >
       <div
@@ -162,10 +162,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto my-0 flex-1 flex flex-col justify-start pt-1 sm:pt-1.5"
+        className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col justify-start"
       >
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-3 sm:mb-4 lg:mb-4.5">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5 mb-4 sm:mb-5 lg:mb-6">
           <div>
             <GlitchHeading>
               <TextEngine
@@ -175,29 +175,29 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 letterIn={{ opacity: 1, scale: 1 }}
                 letterConfig={{ tension: 426, friction: 17 }}
                 letterStagger={27}
-                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white light:text-slate-900 drop-shadow-sm"
+                className="section-heading !mb-0 !border-none !pb-0 text-2xl sm:text-3xl font-extrabold tracking-tight text-white light:text-slate-900 drop-shadow-sm"
               >
                 Get in Touch
               </TextEngine>
             </GlitchHeading>
-            <p className="text-[11px] sm:text-xs font-mono text-[#94a3b8] light:text-slate-600 mt-1">
+            <p className="text-xs sm:text-sm font-mono text-[#94a3b8] light:text-slate-600 mt-1 max-w-xl">
               Have an idea, project collaboration, or engineering role? Reach out directly below.
             </p>
           </div>
 
-          <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 light:text-emerald-700 text-[10px] font-mono font-medium">
-            <span className="relative flex h-1.5 w-1.5">
+          <div className="self-start sm:self-auto inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 light:text-emerald-700 text-[11px] font-mono font-medium">
+            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
             <span>Available for opportunities</span>
           </div>
         </div>
 
         {/* 2-Column Desktop Grid / 1-Column Mobile */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 lg:gap-6 items-stretch flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch">
           {/* Left Column: Direct Channels & CV */}
-          <div className="lg:col-span-5 flex flex-col gap-2.5 sm:gap-3 lg:gap-3.5 justify-between">
+          <div className="lg:col-span-5 flex flex-col justify-between gap-3 sm:gap-3.5">
             {/* Email Card */}
             <div
               role="button"
@@ -212,7 +212,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   window.location.href = 'mailto:sivodayan17@gmail.com';
                 }
               }}
-              className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/50 light:border-slate-200 light:hover:border-[#b45309]/40 backdrop-blur-xl shadow-[0_4px_16px_-2px_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.05),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-200 hover:-translate-y-0.5 group cursor-pointer focus:outline-none"
+              className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/50 light:border-slate-200 light:hover:border-[#b45309]/40 backdrop-blur-xl shadow-[0_4px_16px_-2px_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.05),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-200 hover:-translate-y-0.5 group cursor-pointer focus:outline-none"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <span className="p-2.5 rounded-xl bg-[#e5a93c]/10 text-[#e5a93c] light:bg-amber-50 light:text-[#b45309] border border-[#e5a93c]/20 light:border-amber-200/60 shrink-0 group-hover:scale-105 transition-transform">
@@ -232,7 +232,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 <a
                   href="mailto:sivodayan17@gmail.com"
                   data-cursor-ignore
-                  className="p-1.5 sm:p-2 rounded-xl bg-[#e5a93c]/15 hover:bg-[#e5a93c]/25 light:bg-[#b45309]/10 light:hover:bg-[#b45309]/20 border border-white/10 light:border-slate-300 text-[#e5a93c] light:text-[#b45309] transition-colors cursor-pointer"
+                  className="p-2 rounded-xl bg-[#e5a93c]/15 hover:bg-[#e5a93c]/25 light:bg-[#b45309]/10 light:hover:bg-[#b45309]/20 border border-white/10 light:border-slate-300 text-[#e5a93c] light:text-[#b45309] transition-colors cursor-pointer"
                   title="Send Mail"
                   aria-label="Send Mail"
                 >
@@ -245,7 +245,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     e.stopPropagation();
                     handleCopy('sivodayan17@gmail.com', 'Email', 'email');
                   }}
-                  className="p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
+                  className="p-2 rounded-xl bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
                   title="Copy email address"
                   aria-label="Copy email address"
                 >
@@ -268,7 +268,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   window.open('https://wa.me/94705891710', '_blank', 'noopener,noreferrer');
                 }
               }}
-              className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-emerald-500/50 light:border-slate-200 light:hover:border-emerald-600/40 backdrop-blur-xl shadow-[0_4px_16px_-2px_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.05),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-200 hover:-translate-y-0.5 group cursor-pointer focus:outline-none"
+              className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-emerald-500/50 light:border-slate-200 light:hover:border-emerald-600/40 backdrop-blur-xl shadow-[0_4px_16px_-2px_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.05),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-200 hover:-translate-y-0.5 group cursor-pointer focus:outline-none"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <span className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 light:bg-emerald-50 light:text-emerald-700 border border-emerald-500/20 light:border-emerald-200/60 shrink-0 group-hover:scale-105 transition-transform">
@@ -290,7 +290,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   target="_blank"
                   rel="noopener noreferrer"
                   data-cursor-ignore
-                  className="p-1.5 sm:p-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 light:bg-emerald-600/10 light:hover:bg-emerald-600/20 border border-white/10 light:border-slate-300 text-emerald-400 light:text-emerald-700 transition-colors cursor-pointer"
+                  className="p-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 light:bg-emerald-600/10 light:hover:bg-emerald-600/20 border border-white/10 light:border-slate-300 text-emerald-400 light:text-emerald-700 transition-colors cursor-pointer"
                   title="Chat on WhatsApp"
                   aria-label="Chat on WhatsApp"
                 >
@@ -303,7 +303,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     e.stopPropagation();
                     handleCopy('+94 70 589 1710', 'Phone number', 'phone');
                   }}
-                  className="p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
+                  className="p-2 rounded-xl bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
                   title="Copy phone number"
                   aria-label="Copy phone number"
                 >
@@ -313,13 +313,13 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             </div>
 
             {/* LinkedIn & GitHub in Compact Row */}
-            <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+            <div className="grid grid-cols-2 gap-3 sm:gap-3.5">
               <a
                 href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor-card
-                className="flex items-center justify-between p-2.5 sm:p-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-sky-500/50 light:border-slate-200 light:hover:border-sky-600/40 backdrop-blur-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 group focus:outline-none"
+                className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-sky-500/50 light:border-slate-200 light:hover:border-sky-600/40 backdrop-blur-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 group focus:outline-none"
               >
                 <div className="flex items-center gap-2.5 min-w-0">
                   <span className="p-2 rounded-xl bg-sky-500/10 text-sky-400 light:bg-sky-50 light:text-sky-700 border border-sky-500/20 shrink-0">
@@ -337,7 +337,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor-card
-                className="flex items-center justify-between p-2.5 sm:p-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-purple-400/50 light:border-slate-200 light:hover:border-slate-400 backdrop-blur-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 group focus:outline-none"
+                className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-purple-400/50 light:border-slate-200 light:hover:border-slate-400 backdrop-blur-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 group focus:outline-none"
               >
                 <div className="flex items-center gap-2.5 min-w-0">
                   <span className="p-2 rounded-xl bg-purple-500/10 text-purple-300 light:bg-slate-100 light:text-slate-900 border border-purple-500/20 shrink-0">
@@ -352,7 +352,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             </div>
 
             {/* Curriculum Vitae (CV) Card */}
-            <div className="p-3 sm:p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.07] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/30 backdrop-blur-xl shadow-sm transition-all duration-200 flex items-center justify-between gap-2.5">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.07] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/30 backdrop-blur-xl shadow-sm transition-all duration-200 flex items-center justify-between gap-2.5">
               <div className="flex items-center gap-3 min-w-0">
                 <span className="p-2.5 rounded-xl bg-gradient-to-br from-[#e5a93c]/20 to-[#ff087b]/20 text-[#e5a93c] light:text-[#b45309] border border-[#e5a93c]/30 shrink-0">
                   <FileText className="w-4 h-4" />
@@ -372,12 +372,12 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5 shrink-0">
+              <div className="flex items-center gap-2 shrink-0">
                 <a
                   href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 px-3 py-1.5 sm:py-2 rounded-xl bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 text-white light:text-slate-900 font-mono text-xs font-semibold transition-all group cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 text-white light:text-slate-900 font-mono text-xs font-semibold transition-all group cursor-pointer"
                   title="View Resume in Browser (PDF)"
                 >
                   <FileText className="w-3.5 h-3.5 text-[#e5a93c] light:text-[#b45309]" />
@@ -387,7 +387,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 <a
                   href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
                   download="Sivodayan_Sujeevakumar_CV.pdf"
-                  className="inline-flex items-center gap-1 px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-[#e5a93c] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#d97706] text-black font-mono text-xs font-bold shadow-sm transition-all group cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-[#e5a93c] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#d97706] text-black font-mono text-xs font-bold shadow-sm transition-all group cursor-pointer"
                   title="Download Resume (PDF)"
                 >
                   <Download className="w-3.5 h-3.5 text-black" />
@@ -398,8 +398,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
           </div>
 
           {/* Right Column: Workable Contact Form */}
-          <div className="lg:col-span-7 p-4 sm:p-5 lg:p-5.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.06] light:bg-white/95 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200/90 light:hover:border-amber-500/40 backdrop-blur-xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.06),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-200 flex flex-col justify-between">
-            <div className="flex items-center justify-between gap-2 mb-2 sm:mb-2.5">
+          <div className="lg:col-span-7 p-5 sm:p-6 lg:p-6 rounded-2xl bg-white/[0.04] hover:bg-white/[0.06] light:bg-white/95 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200/90 light:hover:border-amber-500/40 backdrop-blur-xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.06),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-200 flex flex-col justify-between">
+            <div className="flex items-center justify-between gap-2 mb-3.5">
               <div className="flex items-center gap-2.5">
                 <span className="p-2 rounded-xl bg-[#e5a93c]/15 text-[#e5a93c] light:bg-amber-100 light:text-[#b45309] border border-[#e5a93c]/30 shrink-0">
                   <MessageSquare className="w-4 h-4" />
@@ -428,13 +428,13 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className="py-6 px-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center flex flex-col items-center gap-2.5 my-auto"
+                  className="py-8 px-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center flex flex-col items-center gap-3 my-auto"
                 >
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
-                    <CheckCircle2 className="w-5 h-5" />
+                  <div className="w-11 h-11 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
+                    <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white light:text-slate-900 mb-0.5">
+                    <h4 className="text-sm sm:text-base font-bold text-white light:text-slate-900 mb-1">
                       {sendProvider === 'fallback-mailto'
                         ? 'Message Prepared in Email Client!'
                         : 'Message Dispatched via SMTP API!'}
@@ -448,7 +448,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="mt-1.5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 light:bg-slate-200 text-white light:text-slate-900 text-xs font-mono font-semibold transition-all cursor-pointer"
+                    className="mt-1 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 light:bg-slate-200 text-white light:text-slate-900 text-xs font-mono font-semibold transition-all cursor-pointer"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                     <span>Send Another Message</span>
@@ -461,9 +461,9 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="space-y-2 sm:space-y-2.5 flex-1 flex flex-col justify-between"
+                  className="space-y-3 flex flex-col justify-between"
                 >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <div className="relative">
                         <input
@@ -474,9 +474,9 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                           onChange={handleInputChange}
                           placeholder="Your Name *"
                           required
-                          className="w-full px-3.5 py-2 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all"
+                          className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all"
                         />
-                        <User className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
+                        <User className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-3 pointer-events-none" />
                       </div>
                     </div>
 
@@ -490,9 +490,9 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                           onChange={handleInputChange}
                           placeholder="Your Email *"
                           required
-                          className="w-full px-3.5 py-2 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all"
+                          className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all"
                         />
-                        <Mail className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
+                        <Mail className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-3 pointer-events-none" />
                       </div>
                     </div>
                   </div>
@@ -505,9 +505,9 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                       value={formData.subject}
                       onChange={handleInputChange}
                       placeholder="Subject (Optional)"
-                      className="w-full px-3.5 py-2 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all"
+                      className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all"
                     />
-                    <Sparkles className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
+                    <Sparkles className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-3 pointer-events-none" />
                   </div>
 
                   <div>
@@ -519,7 +519,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                       rows={3}
                       placeholder="Write your message here..."
                       required
-                      className="w-full p-2.5 sm:p-3 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all resize-none min-h-[72px] sm:min-h-[82px]"
+                      className="w-full p-3 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all resize-none min-h-[82px] sm:min-h-[92px]"
                     />
                   </div>
 
@@ -534,7 +534,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     </motion.div>
                   )}
 
-                  <div className="flex items-center justify-between gap-2 pt-1">
+                  <div className="flex items-center justify-between gap-2 pt-1.5">
                     <p className="text-[10px] font-mono text-white/40 light:text-slate-500 truncate">
                       To <span className="text-white/70 light:text-slate-700 font-medium">sivodayan17@gmail.com</span>
                     </p>
@@ -542,7 +542,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     <button
                       type="submit"
                       disabled={formStatus === 'submitting'}
-                      className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-[#e5a93c] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#d97706] disabled:opacity-70 text-black font-mono text-xs font-bold shadow-md shadow-[#e5a93c]/20 hover:shadow-[#e5a93c]/35 transition-all cursor-pointer focus:outline-none active:scale-[0.98]"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#e5a93c] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#d97706] disabled:opacity-70 text-black font-mono text-xs sm:text-sm font-bold shadow-md shadow-[#e5a93c]/20 hover:shadow-[#e5a93c]/35 transition-all cursor-pointer focus:outline-none active:scale-[0.98]"
                     >
                       {formStatus === 'submitting' ? (
                         <>
@@ -565,14 +565,14 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
       </motion.div>
 
       {/* Copyright / Credits / Footer ("cc") */}
-      <footer className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto pt-2.5 sm:pt-3 pb-1 border-t border-white/10 light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-1.5 text-center sm:text-left text-[11px] font-mono text-[#94a3b8] light:text-slate-500 mt-2 sm:mt-3">
+      <footer className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto pt-4 pb-2 border-t border-white/10 light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left text-xs font-mono text-[#94a3b8] light:text-slate-500 mt-6 sm:mt-8">
         <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
           <span>© {new Date().getFullYear()} Sivodayan Sujeevakumar</span>
           <span className="hidden sm:inline text-white/20 light:text-slate-300">•</span>
           <span className="text-white/60 light:text-slate-600 font-medium">Computer Science &amp; Engineering</span>
         </div>
 
-        <div className="flex items-center gap-1.5 text-[10px] text-[#94a3b8] light:text-slate-500">
+        <div className="flex items-center gap-1.5 text-[11px] text-[#94a3b8] light:text-slate-500">
           <span>University of Moratuwa</span>
           <span className="text-white/20 light:text-slate-300">•</span>
           <span>Colombo, LK</span>
