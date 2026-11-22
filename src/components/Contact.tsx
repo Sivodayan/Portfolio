@@ -339,45 +339,32 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               </a>
             </div>
 
-            {/* M3 Channel Tile 4: Curriculum Vitae */}
-            <div className="p-3 rounded-2xl bg-white/[0.04] light:bg-white border border-white/[0.06] light:border-[#79747e]/20 shadow-sm flex items-center justify-between gap-2">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-full bg-amber-500/15 text-[#e5a93c] light:text-[#785900] flex items-center justify-center shrink-0">
-                  <FileText className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 truncate">
-                      Curriculum Vitae
-                    </span>
-                    <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-white/10 light:bg-slate-200 text-white/80 light:text-slate-700">
-                      PDF
-                    </span>
-                  </div>
-                  <span className="text-[10px] text-slate-400 light:text-slate-500 block truncate mt-0.5">
-                    Engineering records
-                  </span>
-                </div>
-              </div>
+            {/* M3 Channel Tile 4: CV Actions (Only View & Download Buttons) */}
+            <div className="grid grid-cols-2 gap-2.5">
+              <a
+                href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white light:hover:bg-slate-50 border border-white/[0.06] light:border-[#79747e]/20 shadow-sm flex items-center justify-center gap-2 group transition-all"
+                title="View Resume in Browser (PDF)"
+              >
+                <FileText className="w-4 h-4 text-[#e5a93c] light:text-[#785900]" />
+                <span className="text-xs font-semibold text-white light:text-slate-900 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309] transition-colors">
+                  View CV
+                </span>
+              </a>
 
-              <div className="flex items-center gap-1.5 shrink-0">
-                <a
-                  href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-full border border-white/20 light:border-slate-300 hover:bg-white/10 light:hover:bg-slate-100 text-white light:text-slate-900 text-xs font-medium transition-colors"
-                >
-                  View
-                </a>
-                <a
-                  href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
-                  download="Sivodayan_Sujeevakumar_CV.pdf"
-                  className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-[#e5a93c] hover:bg-[#f59e0b] text-black text-xs font-bold shadow-sm transition-all"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>CV</span>
-                </a>
-              </div>
+              <a
+                href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
+                download="Sivodayan_Sujeevakumar_CV.pdf"
+                className="p-2.5 rounded-2xl bg-[#e5a93c] hover:bg-[#f59e0b] active:scale-[0.98] text-black shadow-sm flex items-center justify-center gap-2 font-bold transition-all"
+                title="Download Resume (PDF)"
+              >
+                <Download className="w-4 h-4" />
+                <span className="text-xs font-bold">
+                  Download CV
+                </span>
+              </a>
             </div>
           </div>
 
