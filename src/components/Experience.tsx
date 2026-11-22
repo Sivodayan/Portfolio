@@ -217,6 +217,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
                   Jaffna Hindu College
                 </div>
                 <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
+                  <li>Cleared GCE A/L Examination with <strong className="text-white light:text-slate-900 font-semibold">3As</strong> and GCE O/L Examination with <strong className="text-white light:text-slate-900 font-semibold">9As</strong></li>
                   <li>Member of the <strong className="text-white light:text-slate-900 font-semibold">Board of Prefects</strong>.</li>
                   <li>President of the <strong className="text-white light:text-slate-900 font-semibold">Cycling Club</strong>.</li>
                   <li>Leader in the <strong className="text-white light:text-slate-900 font-semibold">Eastern Band</strong> &amp; Secretary of <strong className="text-white light:text-slate-900 font-semibold">Red Cross</strong>.</li>
