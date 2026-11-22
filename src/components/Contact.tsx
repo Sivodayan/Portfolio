@@ -111,7 +111,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
       if (result.activationNeeded) {
         onShowToast?.('Activation email sent! Please check your inbox.');
       } else {
-        onShowToast?.('Message dispatched directly to sivodayan18@gmail.com!');
+        onShowToast?.('Message dispatched directly!');
       }
     } catch (err: any) {
       setFormStatus('idle');
@@ -138,9 +138,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
     >
       {/* Ambient Visual Atmosphere */}
       <div
-        className={`absolute inset-x-0 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 ${
-          theme === 'light' ? 'opacity-85' : 'opacity-40'
-        } overflow-hidden`}
+        className={`absolute inset-x-0 sm:-inset-x-16 -bottom-16 top-0 pointer-events-none z-0 ${theme === 'light' ? 'opacity-85' : 'opacity-40'
+          } overflow-hidden`}
         style={{
           maskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 100%)',
@@ -192,14 +191,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             </p>
           </div>
 
-          {/* Material 3 Suggestion Chip */}
-          <div className="self-start sm:self-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1e2330] light:bg-[#e8def8] border border-white/10 light:border-[#79747e]/30 text-emerald-400 light:text-[#386a20] text-xs font-medium shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span>Available for opportunities</span>
-          </div>
+
         </div>
 
         {/* Material Design 3 Cards Grid */}
@@ -376,19 +368,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 <h3 className="text-sm sm:text-base font-bold text-white light:text-slate-900 tracking-tight">
                   Send a Message
                 </h3>
-                <p className="text-[11px] text-slate-400 light:text-slate-500 mt-0.5">
-                  Delivered directly to my inbox with zero drafts
-                </p>
+
               </div>
 
-              {/* M3 Status Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1b3724] light:bg-[#c4eed0] text-[11px] font-medium text-emerald-300 light:text-[#0b6b2e]">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                </span>
-                <span>Direct Relay Active</span>
-              </div>
+
             </div>
 
             <AnimatePresence mode="wait">
@@ -399,18 +382,16 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className={`py-8 px-4 rounded-2xl ${
-                    activationNeeded
+                  className={`py-8 px-4 rounded-2xl ${activationNeeded
                       ? 'bg-amber-500/[0.08] border border-amber-500/25'
                       : 'bg-emerald-500/[0.08] border border-emerald-500/20'
-                  } text-center flex flex-col items-center gap-3 my-auto`}
+                    } text-center flex flex-col items-center gap-3 my-auto`}
                 >
                   <div
-                    className={`w-12 h-12 rounded-full ${
-                      activationNeeded
+                    className={`w-12 h-12 rounded-full ${activationNeeded
                         ? 'bg-amber-500/20 text-[#e5a93c]'
                         : 'bg-emerald-500/20 text-emerald-400'
-                    } flex items-center justify-center shadow-inner`}
+                      } flex items-center justify-center shadow-inner`}
                   >
                     {activationNeeded ? (
                       <Mail className="w-6 h-6" />
@@ -536,9 +517,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
                   {/* Form Actions: Supporting Text + M3 Filled Button */}
                   <div className="flex items-center justify-between gap-2 pt-1">
-                    <p className="text-[11px] text-slate-400 light:text-slate-500 truncate">
-                      To <span className="text-white/80 light:text-slate-700 font-medium">sivodayan18@gmail.com</span>
-                    </p>
+                  
 
                     <button
                       type="submit"
