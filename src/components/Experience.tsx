@@ -110,9 +110,9 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
     <section
       id="experience"
       ref={containerRef}
-      className={isOverflowing ? 'relative w-full h-[280vh] sm:h-[320vh]' : 'relative w-full py-16 sm:py-20'}
+      className={isOverflowing ? 'relative w-full h-[280vh] sm:h-[320vh]' : 'relative w-full pt-16 pb-6 sm:py-20'}
     >
-      <div className={isOverflowing ? 'sticky top-0 h-[100dvh] w-full flex flex-col justify-center overflow-hidden py-4 sm:py-8 z-10' : 'w-full flex flex-col justify-center'}>
+      <div className={isOverflowing ? 'sticky top-0 h-[100dvh] w-full flex flex-col justify-start pt-20 pb-4 sm:justify-center sm:py-8 overflow-hidden z-10' : 'w-full flex flex-col justify-center'}>
         <motion.div
           initial={{ opacity: 0, x: 80 }}
           whileInView={{ opacity: 1, x: 0 }}

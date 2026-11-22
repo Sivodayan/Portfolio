@@ -84,8 +84,10 @@ export const App: React.FC = () => {
       const targetElement = document.querySelector(href);
       if (targetElement) {
         e.preventDefault();
+        const isMobile = window.innerWidth <= 640;
+        const navOffset = isMobile ? 0 : -68;
         lenis.scrollTo(targetElement as HTMLElement, {
-          offset: -68,
+          offset: navOffset,
           duration: 1.25,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });

@@ -222,13 +222,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
 export const Projects: React.FC<ProjectsProps> = () => {
   return (
-    <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16" id="projects">
+    <section className="section relative w-full min-h-0 sm:min-h-[100dvh] flex flex-col justify-start sm:justify-center pt-16 pb-6 sm:py-16" id="projects">
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full my-auto"
+        className="relative z-10 w-full my-0 sm:my-auto"
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 sm:mb-4">
           <div>

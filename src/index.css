@@ -687,6 +687,15 @@ html[data-theme-transition] *::after {
   justify-content: center;
   padding: 3.5rem 0;
   contain: layout style;
+  scroll-margin-top: 4.5rem;
+}
+
+.hero {
+  scroll-margin-top: 4.5rem;
+}
+
+#experience {
+  scroll-margin-top: 4.5rem;
 }
 
 #contact.section {
@@ -1275,7 +1284,29 @@ html[data-theme-transition] *::after {
 /* Viewport breakpoints */
 @media (max-width: 640px) {
   .page-container {
-    padding-top: 2.5rem;
+    padding-top: 0;
+  }
+
+  .section {
+    min-height: auto;
+    padding-top: 4.25rem !important;
+    padding-bottom: 2rem !important;
+    scroll-margin-top: 0;
+  }
+
+  .hero {
+    padding-top: 4.25rem !important;
+    padding-bottom: 2rem !important;
+    scroll-margin-top: 0;
+  }
+
+  #experience {
+    scroll-margin-top: 0;
+  }
+
+  #contact.section {
+    padding-top: 4.25rem !important;
+    padding-bottom: 3.5rem !important;
   }
 
   .ascii-stream-frame {
