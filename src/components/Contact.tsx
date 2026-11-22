@@ -50,6 +50,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const [formError, setFormError] = useState<string | null>(null);
   const [sendProvider, setSendProvider] = useState<string | null>(null);
+  const [activationNeeded, setActivationNeeded] = useState<boolean>(false);
 
   const handleCopy = (text: string, label: string, key: string) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -105,12 +106,13 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
       });
 
       setSendProvider(result.provider);
+      setActivationNeeded(Boolean(result.activationNeeded));
       setFormStatus('success');
 
-      if (result.provider === 'fallback-mailto') {
-        onShowToast?.('Message drafted in your email client! (Copied to clipboard)');
+      if (result.activationNeeded) {
+        onShowToast?.('Activation email sent! Please check your inbox.');
       } else {
-        onShowToast?.('Message dispatched successfully via SMTP API!');
+        onShowToast?.('Message dispatched directly to sivodayan17@gmail.com!');
       }
     } catch (err: any) {
       setFormStatus('idle');
@@ -123,6 +125,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
     setFormStatus('idle');
     setFormError(null);
     setSendProvider(null);
+    setActivationNeeded(false);
   };
 
   return (
@@ -458,21 +461,49 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className="py-8 px-4 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/20 text-center flex flex-col items-center gap-3 my-auto"
+                  className={`py-8 px-4 rounded-xl ${
+                    activationNeeded
+                      ? 'bg-amber-500/[0.06] border border-amber-500/25'
+                      : 'bg-emerald-500/[0.06] border border-emerald-500/20'
+                  } text-center flex flex-col items-center gap-3 my-auto`}
                 >
-                  <div className="w-11 h-11 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shadow-inner">
-                    <CheckCircle2 className="w-6 h-6" />
+                  <div
+                    className={`w-11 h-11 rounded-full ${
+                      activationNeeded
+                        ? 'bg-amber-500/20 border border-amber-500/30 text-[#e5a93c]'
+                        : 'bg-emerald-500/20 border border-emerald-500/30 text-emerald-400'
+                    } flex items-center justify-center shadow-inner`}
+                  >
+                    {activationNeeded ? (
+                      <Mail className="w-6 h-6" />
+                    ) : (
+                      <CheckCircle2 className="w-6 h-6" />
+                    )}
                   </div>
                   <div>
                     <h4 className="text-sm sm:text-base font-bold text-white light:text-slate-900 mb-1 font-mono">
-                      {sendProvider === 'fallback-mailto'
-                        ? '[TRANSMISSION QUEUED IN CLIENT]'
-                        : '[MESSAGE TRANSMITTED OVER SMTP]'}
+                      {activationNeeded
+                        ? '[ACTIVATION LINK SENT TO INBOX]'
+                        : '[MESSAGE DELIVERED DIRECTLY TO INBOX]'}
                     </h4>
-                    <p className="text-xs font-mono text-[#94a3b8] light:text-slate-600 max-w-sm mx-auto">
-                      {sendProvider === 'fallback-mailto'
-                        ? 'A mailto draft has been triggered and telemetry payload saved to your clipboard.'
-                        : 'Payload successfully received by the mail server for delivery to sivodayan17@gmail.com.'}
+                    <p className="text-xs font-mono text-[#94a3b8] light:text-slate-600 max-w-sm mx-auto leading-relaxed">
+                      {activationNeeded ? (
+                        <>
+                          A 1-click confirmation has been sent to{' '}
+                          <span className="text-[#e5a93c] light:text-[#b45309] font-semibold">
+                            sivodayan17@gmail.com
+                          </span>
+                          . Click <span className="underline">Activate Form</span> in that email once to authorize instant submissions!
+                        </>
+                      ) : (
+                        <>
+                          Message successfully transmitted directly to{' '}
+                          <span className="text-emerald-400 light:text-emerald-700 font-semibold">
+                            sivodayan17@gmail.com
+                          </span>
+                          . No drafts or external apps required!
+                        </>
+                      )}
                     </p>
                   </div>
                   <button

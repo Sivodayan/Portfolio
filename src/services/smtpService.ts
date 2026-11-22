@@ -12,8 +12,9 @@ export interface ContactMessagePayload {
 
 export interface SmtpSendResult {
   success: boolean;
-  provider: 'emailjs' | 'web3forms' | 'custom-smtp' | 'formsubmit' | 'fallback-mailto';
+  provider: 'emailjs' | 'web3forms' | 'custom-smtp' | 'formsubmit';
   message: string;
+  activationNeeded?: boolean;
 }
 
 const RECIPIENT_EMAIL = 'sivodayan17@gmail.com';
@@ -126,7 +127,7 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
     }
   }
 
-  // 4. Try AJAX SMTP Gateway (FormSubmit direct submission)
+  // 4. Direct AJAX SMTP Gateway (FormSubmit direct submission to recipient)
   try {
     const response = await fetch(`https://formsubmit.co/ajax/${RECIPIENT_EMAIL}`, {
       method: 'POST',
@@ -134,7 +135,7 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      signal: AbortSignal.timeout(3500),
+      signal: AbortSignal.timeout(6000),
       body: JSON.stringify({
         name,
         email,
@@ -146,39 +147,42 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
     });
 
     const data = await response.json().catch(() => null);
-    if (response.ok && data && (data.success === 'true' || data.success === true)) {
+
+    if (data && (data.success === 'true' || data.success === true)) {
       return {
         success: true,
         provider: 'formsubmit',
-        message: 'Message delivered via instant SMTP gateway.',
+        message: 'Message delivered directly to your inbox!',
+        activationNeeded: false,
       };
     }
-  } catch (err) {
-    console.warn('FormSubmit AJAX gateway failed:', err);
+
+    if (
+      data &&
+      typeof data.message === 'string' &&
+      data.message.toLowerCase().includes('activation')
+    ) {
+      return {
+        success: true,
+        provider: 'formsubmit',
+        message:
+          "Activation email sent to sivodayan17@gmail.com. Please click the 'Activate Form' link in your inbox once to complete setup.",
+        activationNeeded: true,
+      };
+    }
+
+    if (data && data.message) {
+      throw new Error(data.message);
+    }
+  } catch (err: any) {
+    if (err?.name === 'AbortError') {
+      throw new Error('Direct transmission timed out. Please check your network connection and retry.');
+    }
+    if (err?.message && !err.message.includes('fetch')) {
+      throw err;
+    }
+    console.warn('FormSubmit direct gateway failed:', err);
   }
 
-  // 5. If direct API transmission was blocked by ad-blocker or CORS, fallback to mailto draft
-  const mailtoUrl = `mailto:${RECIPIENT_EMAIL}?subject=${encodeURIComponent(
-    subjectLine
-  )}&body=${encodeURIComponent(
-    `Hi Sivodayan,\n\n${message}\n\n---\nSender: ${name}\nEmail: ${email}`
-  )}`;
-
-  // Save to clipboard for safety
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(`Sender: ${name}\nEmail: ${email}\n\n${message}`).catch(() => {});
-  }
-
-  // Trigger fallback link
-  const link = document.createElement('a');
-  link.href = mailtoUrl;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-
-  return {
-    success: true,
-    provider: 'fallback-mailto',
-    message: 'Message prepared in email client as backup.',
-  };
+  throw new Error('Unable to transmit directly over the network. Please verify your connection or try again.');
 }
