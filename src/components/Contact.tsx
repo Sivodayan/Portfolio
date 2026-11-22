@@ -111,7 +111,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
       if (result.activationNeeded) {
         onShowToast?.('Activation email sent! Please check your inbox.');
       } else {
-        onShowToast?.('Message dispatched directly to sivodayan17@gmail.com!');
+        onShowToast?.('Message dispatched directly to sivodayan18@gmail.com!');
       }
     } catch (err: any) {
       setFormStatus('idle');
@@ -207,11 +207,11 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               data-cursor-target
               data-cursor-card
               onClick={() => {
-                window.location.href = 'mailto:sivodayan17@gmail.com';
+                window.location.href = 'mailto:sivodayan18@gmail.com';
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                  window.location.href = 'mailto:sivodayan17@gmail.com';
+                  window.location.href = 'mailto:sivodayan18@gmail.com';
                 }
               }}
               className="relative group p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] light:bg-white light:hover:bg-slate-50 border border-white/[0.08] hover:border-[#e5a93c]/50 light:border-slate-200 light:hover:border-amber-600/40 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.5)] light:shadow-[0_4px_16px_-4px_rgba(15,23,42,0.06)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 cursor-pointer focus:outline-none"
@@ -226,14 +226,14 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                       Email
                     </div>
                     <span className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309] transition-colors truncate block mt-0.5">
-                      sivodayan17@gmail.com
+                      sivodayan18@gmail.com
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-1.5 shrink-0 ml-2 relative z-10" onClick={(e) => e.stopPropagation()}>
                   <a
-                    href="mailto:sivodayan17@gmail.com"
+                    href="mailto:sivodayan18@gmail.com"
                     data-cursor-ignore
                     className="p-2 rounded-xl bg-white/[0.06] hover:bg-[#e5a93c]/20 light:bg-slate-100 light:hover:bg-amber-100/70 border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-300 text-[#e5a93c] light:text-[#b45309] transition-all cursor-pointer active:translate-y-0.5"
                     title="Send Mail"
@@ -246,7 +246,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     data-cursor-ignore
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleCopy('sivodayan17@gmail.com', 'Email', 'email');
+                      handleCopy('sivodayan18@gmail.com', 'Email', 'email');
                     }}
                     className="p-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-slate-300 light:text-slate-700 transition-all cursor-pointer active:translate-y-0.5"
                     title="Copy email address"
@@ -473,7 +473,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                         <>
                           A confirmation link has been sent to{' '}
                           <span className="text-[#e5a93c] light:text-[#b45309] font-semibold">
-                            sivodayan17@gmail.com
+                            sivodayan18@gmail.com
                           </span>
                           . Please click <span className="underline">Activate Form</span> in that email once to authorize instant submissions!
                         </>
@@ -481,7 +481,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                         <>
                           Message successfully transmitted directly to{' '}
                           <span className="text-emerald-400 light:text-emerald-700 font-semibold">
-                            sivodayan17@gmail.com
+                            sivodayan18@gmail.com
                           </span>
                           .
                         </>
@@ -579,7 +579,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
                   <div className="flex items-center justify-between gap-2 pt-1.5">
                     <p className="text-[11px] text-slate-400 light:text-slate-500 truncate">
-                      To <span className="text-white/80 light:text-slate-700 font-medium">sivodayan17@gmail.com</span>
+                      To <span className="text-white/80 light:text-slate-700 font-medium">sivodayan18@gmail.com</span>
                     </p>
 
                     <button

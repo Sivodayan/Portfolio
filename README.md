@@ -144,7 +144,7 @@ Portfolio/
 
 **Sujeevakumar Sivodayan**
 - **Department**: Computer Science & Engineering, University of Moratuwa
-- **Email**: [sivodayan17@gmail.com](mailto:sivodayan17@gmail.com)
+- **Email**: [sivodayan18@gmail.com](mailto:sivodayan18@gmail.com)
 - **LinkedIn**: [sivodayan-sujeevakumar](https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/)
 - **GitHub**: [@Sivodayan](https://github.com/Sivodayan)
 

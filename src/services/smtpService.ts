@@ -17,7 +17,7 @@ export interface SmtpSendResult {
   activationNeeded?: boolean;
 }
 
-const RECIPIENT_EMAIL = 'sivodayan17@gmail.com';
+const RECIPIENT_EMAIL = 'sivodayan18@gmail.com';
 
 /**
  * Dispatches contact message through the best available SMTP / email API.
@@ -166,7 +166,7 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
         success: true,
         provider: 'formsubmit',
         message:
-          "Activation email sent to sivodayan17@gmail.com. Please click the 'Activate Form' link in your inbox once to complete setup.",
+          "Activation email sent to sivodayan18@gmail.com. Please click the 'Activate Form' link in your inbox once to complete setup.",
         activationNeeded: true,
       };
     }

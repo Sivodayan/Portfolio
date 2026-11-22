@@ -120,7 +120,7 @@ export const Hero: React.FC<HeroProps> = ({ isIntroDone = true, theme = 'dark' }
               </a>
 
               <a
-                href="mailto:sivodayan17@gmail.com"
+                href="mailto:sivodayan18@gmail.com"
                 data-cursor-target
                 className="p-2.5 sm:p-3 rounded-xl bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white border border-white/20 hover:border-[#e5a93c] light:border-slate-300 light:hover:border-[#b45309] text-white hover:text-[#e5a93c] light:text-slate-900 light:hover:text-[#b45309] transition-all shadow-[0_2px_10px_rgba(0,0,0,0.6)] cursor-pointer focus:outline-none"
                 title="Send Direct Email"
