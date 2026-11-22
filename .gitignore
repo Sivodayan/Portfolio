@@ -24,6 +24,10 @@ out/
 *.key
 *.cert
 
+# Vercel & Deployment
+.vercel/
+.netlify/
+
 # Firebase CLI & Deployment Cache
 .firebase/
 firebase-debug.log*

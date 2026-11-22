@@ -60,7 +60,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         </div>
 
         <div className="flex items-center justify-between w-48 text-[10px] font-mono text-[#71717a]">
-          <span>STATUS: ONLINE</span>
+         
           <span>{progress}%</span>
         </div>
 

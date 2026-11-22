@@ -10,6 +10,7 @@ import Projects from './components/Projects';
 import SkillsShowcase from './components/SkillsShowcase';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
+import {Analytics} from "@vercel/analytics/next"
 import LoadingScreen from './components/LoadingScreen';
 import BackToTop from './components/BackToTop';
 
