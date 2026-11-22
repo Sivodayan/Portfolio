@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import TextEngine from 'spring-text-engine';
 import {
   Mail,
@@ -13,6 +13,13 @@ import {
   Check,
   Download,
   FileText,
+  User,
+  MessageSquare,
+  Sparkles,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  RotateCcw,
 } from 'lucide-react';
 import GlitchHeading from './GlitchHeading';
 import RisingLines from './RisingLines';
@@ -22,8 +29,25 @@ export interface ContactProps {
   theme?: 'dark' | 'light';
 }
 
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
 export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' }) => {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  // Form state
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [formError, setFormError] = useState<string | null>(null);
 
   const handleCopy = (text: string, label: string, key: string) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -35,9 +59,74 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
     });
   };
 
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (formError) setFormError(null);
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Basic validation
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+    const subject = formData.subject.trim();
+
+    if (!name || name.length < 2) {
+      setFormError('Please enter your name.');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      setFormError('Please enter a valid email address.');
+      return;
+    }
+
+    if (!message || message.length < 8) {
+      setFormError('Please enter a message (at least 8 characters).');
+      return;
+    }
+
+    setFormStatus('submitting');
+    setFormError(null);
+
+    // Prepare mailto link with pre-filled content
+    const subjectLine = subject || `Portfolio Message from ${name}`;
+    const bodyContent = `Hi Sivodayan,\n\n${message}\n\n---\nSender: ${name}\nEmail: ${email}`;
+    const mailtoUrl = `mailto:sivodayan17@gmail.com?subject=${encodeURIComponent(
+      subjectLine
+    )}&body=${encodeURIComponent(bodyContent)}`;
+
+    setTimeout(() => {
+      // 1. Copy message to clipboard for safety
+      navigator.clipboard.writeText(bodyContent).catch(() => {});
+
+      // 2. Open email client via link trigger (preserves page state & animations)
+      const mailLink = document.createElement('a');
+      mailLink.href = mailtoUrl;
+      document.body.appendChild(mailLink);
+      mailLink.click();
+      mailLink.remove();
+
+      setFormStatus('success');
+      onShowToast?.('Message drafted in your email client! (Copied to clipboard)');
+    }, 600);
+  };
+
+  const resetForm = () => {
+    setFormData({ name: '', email: '', subject: '', message: '' });
+    setFormStatus('idle');
+    setFormError(null);
+  };
+
   return (
     <section
-      className="section relative w-full min-h-screen flex flex-col justify-start pt-2 sm:pt-5 pb-24 sm:pb-44 overflow-hidden"
+      className="section relative w-full min-h-screen flex flex-col justify-between pt-2 sm:pt-4 pb-8 sm:pb-12 overflow-hidden"
       id="contact"
     >
       <div
@@ -92,7 +181,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             </GlitchHeading>
 
             <p className="text-xs sm:text-sm font-mono text-[#94a3b8] light:text-slate-600 mt-2 max-w-xl">
-              Have an idea, project collaboration, or engineering role? Feel free to reach out directly through any channel below.
+              Have an idea, feelancing opportunity, project collaboration, or engineering role? Feel free to reach out directly through any of these below.
             </p>
           </div>
         </div>
@@ -266,7 +355,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         </div>
 
         {/* CV / Resume Section Card */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.07] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/30 backdrop-blur-xl shadow-[0_4px_24px_-4px_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.07] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/30 backdrop-blur-xl shadow-[0_4px_24px_-4px_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 sm:mb-6">
           <div className="flex items-center gap-3.5 min-w-0">
             <span className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-[#e5a93c]/20 to-[#ff087b]/20 text-[#e5a93c] light:text-[#b45309] border border-[#e5a93c]/30 light:border-amber-300/60 shrink-0">
               <FileText className="w-5 h-5" />
@@ -309,10 +398,192 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             </a>
           </div>
         </div>
+
+        {/* Workable Contact Form */}
+        <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.04] hover:bg-white/[0.06] light:bg-white/95 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200/90 light:hover:border-amber-500/40 backdrop-blur-xl shadow-[0_4px_24px_-4px_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-300">
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <div className="flex items-center gap-3">
+              <span className="p-2 rounded-lg bg-[#e5a93c]/15 text-[#e5a93c] light:bg-amber-100 light:text-[#b45309] border border-[#e5a93c]/30 light:border-amber-300 shrink-0">
+                <MessageSquare className="w-4 h-4" />
+              </span>
+              <div>
+                <h3 className="text-sm sm:text-base font-bold text-white light:text-slate-900 tracking-tight">
+                  Send a Direct Message
+                </h3>
+                <p className="text-[11px] sm:text-xs font-mono text-[#94a3b8] light:text-slate-500">
+                  Fill in your details below to dispatch a message directly to my inbox.
+                </p>
+              </div>
+            </div>
+
+           
+          </div>
+
+          <AnimatePresence mode="wait">
+            {formStatus === 'success' ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+                className="py-6 px-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center flex flex-col items-center gap-3"
+              >
+                <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="text-base font-bold text-white light:text-slate-900 mb-1">
+                    Message Prepared &amp; Email Client Opened!
+                  </h4>
+                  <p className="text-xs font-mono text-[#94a3b8] light:text-slate-600 max-w-md mx-auto">
+                    Your message draft has been generated in your email client. A full backup copy was also copied to your clipboard.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 light:bg-slate-200 light:hover:bg-slate-300 text-white light:text-slate-900 text-xs font-mono font-semibold transition-all cursor-pointer"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Send Another Message</span>
+                </button>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                onSubmit={handleFormSubmit}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="space-y-3.5"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label
+                      htmlFor="form-name"
+                      className="block text-[11px] font-mono uppercase tracking-wider text-[#94a3b8] light:text-slate-600 font-semibold mb-1"
+                    >
+                      Your Name <span className="text-[#f60a0a]">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        id="form-name"
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="e.g. Alex Smith"
+                        required
+                        className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs sm:text-[13px] text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 focus:ring-1 focus:ring-[#e5a93c]/50 transition-all"
+                      />
+                      <User className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-3 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="form-email"
+                      className="block text-[11px] font-mono uppercase tracking-wider text-[#94a3b8] light:text-slate-600 font-semibold mb-1"
+                    >
+                      Your Email <span className="text-[#f60a0a]">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        id="form-email"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="e.g. alex@example.com"
+                        required
+                        className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs sm:text-[13px] text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 focus:ring-1 focus:ring-[#e5a93c]/50 transition-all"
+                      />
+                      <Mail className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-3 pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="form-subject"
+                    className="block text-[11px] font-mono uppercase tracking-wider text-[#94a3b8] light:text-slate-600 font-semibold mb-1"
+                  >
+                    Subject
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="form-subject"
+                      type="text"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Software Engineering Opportunity / Project Inquiry"
+                      className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs sm:text-[13px] text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 focus:ring-1 focus:ring-[#e5a93c]/50 transition-all"
+                    />
+                    <Sparkles className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-3 pointer-events-none" />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="form-message"
+                    className="block text-[11px] font-mono uppercase tracking-wider text-[#94a3b8] light:text-slate-600 font-semibold mb-1"
+                  >
+                    Message <span className="text-[#f60a0a]">*</span>
+                  </label>
+                  <textarea
+                    id="form-message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows={4}
+                    placeholder="Hello Sivodayan, I wanted to reach out regarding..."
+                    required
+                    className="w-full p-3 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs sm:text-[13px] text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 focus:ring-1 focus:ring-[#e5a93c]/50 transition-all resize-y min-h-[96px]"
+                  />
+                </div>
+
+                {formError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-mono flex items-center gap-2"
+                  >
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{formError}</span>
+                  </motion.div>
+                )}
+
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
+                  
+
+                  <button
+                    type="submit"
+                    disabled={formStatus === 'submitting'}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#e5a93c] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#d97706] disabled:opacity-70 text-black font-mono text-xs sm:text-sm font-bold shadow-md shadow-[#e5a93c]/20 hover:shadow-[#e5a93c]/35 transition-all duration-200 cursor-pointer focus:outline-none active:scale-[0.98]"
+                  >
+                    {formStatus === 'submitting' ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Dispatching...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Send Message</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </motion.form>
+            )}
+          </AnimatePresence>
+        </div>
       </motion.div>
 
       {/* Copyright / Credits / Footer ("cc") */}
-      <footer className="relative z-10 w-full max-w-4xl mx-auto mt-12 sm:mt-16 pt-6 pb-6 border-t border-white/10 light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs font-mono text-[#94a3b8] light:text-slate-500">
+      <footer className="relative z-10 w-full max-w-4xl mx-auto mt-10 sm:mt-14 pt-6 pb-2 border-t border-white/10 light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs font-mono text-[#94a3b8] light:text-slate-500">
         <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5">
           <span>© {new Date().getFullYear()} Sivodayan Sujeevakumar</span>
           <span className="hidden sm:inline text-white/20 light:text-slate-300">•</span>
