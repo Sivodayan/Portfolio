@@ -24,74 +24,38 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
   theme,
   cardVariants,
 }) => {
-  const cardRef = useRef<HTMLDivElement | null>(null);
-  const rafId = useRef<number>(0);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotX = ((y - centerY) / centerY) * -4;
-    const rotY = ((x - centerX) / centerX) * 4;
-
-    if (rafId.current) cancelAnimationFrame(rafId.current);
-    rafId.current = requestAnimationFrame(() => {
-      if (cardRef.current) {
-        cardRef.current.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
-      }
-    });
-  };
-
-  const handleMouseLeave = () => {
-    if (rafId.current) cancelAnimationFrame(rafId.current);
-    if (cardRef.current) {
-      cardRef.current.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)';
-    }
-  };
-
   return (
     <motion.div
-      ref={cardRef}
       custom={index}
       variants={cardVariants}
       initial="hidden"
       animate={isSectionInView ? 'visible' : 'hidden'}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
       data-cursor-ignore
-      className={`group relative overflow-hidden w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl ${
+      className={`group relative w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl ${
         theme === 'light'
-          ? 'bg-white/95 border border-slate-300 hover:border-amber-500/60 shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)] hover:shadow-[0_20px_35px_-12px_rgba(217,119,6,0.18)]'
-          : 'bg-black border border-white/12 hover:border-[#e5a93c]/60 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_-12px_rgba(229,169,60,0.25)]'
-      } transition-[border-color,box-shadow] duration-300 flex flex-col justify-between min-h-[300px] sm:min-h-[350px]`}
-      style={{
-        transform: 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)',
-        transition: 'transform 0.18s ease-out, border-color 0.25s, box-shadow 0.25s',
-      }}
+          ? 'bg-white/95 border border-slate-300 hover:border-slate-400 hover:bg-white shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_28px_-6px_rgba(15,23,42,0.12)]'
+          : 'bg-[#0e1015] border border-white/10 hover:border-white/20 hover:bg-[#12151c] shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.6)]'
+      } hover:-translate-y-1 transition-all duration-300 ease-out flex flex-col justify-between min-h-[300px] sm:min-h-[350px]`}
     >
-      {/* Subtle Top Accent Glow on Hover */}
-      <div
-        className="pointer-events-none absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#e5a93c] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        aria-hidden="true"
-      />
+      <div>
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 whitespace-nowrap transition-colors duration-200 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309]">
+            {title}
+          </h3>
+          <span className="text-[11px] font-mono text-white/30 light:text-slate-400 font-medium pt-0.5">
+            0{index + 1}
+          </span>
+        </div>
 
-      <div className="relative z-10">
-        <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap transition-colors duration-200 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309]">
-          {title}
-        </h3>
         <div
           className={`text-xs ${
             subtitleColor || 'text-[#e5a93c] light:text-[#b45309]'
-          } font-mono mb-3.5 font-medium flex items-center justify-between`}
+          } font-mono mb-3.5 font-medium`}
         >
-          <span>{subtitle}</span>
-          
+          {subtitle}
         </div>
-        <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
+
+        <ul className="text-xs sm:text-[13px] text-slate-300 light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
           {items.map((item, idx) => (
             <li key={idx} className="transition-colors duration-150">
               {item}
