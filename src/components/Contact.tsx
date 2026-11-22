@@ -129,8 +129,12 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
   return (
     <section
-      className="section relative w-full min-h-screen lg:min-h-[calc(100vh-3.75rem)] flex flex-col justify-between pt-5 sm:pt-7 lg:pt-8 pb-3 sm:pb-4 overflow-hidden px-4 sm:px-6 lg:px-8"
+      className="section relative w-full min-h-screen lg:min-h-[calc(100vh-3.75rem)] lg:h-[calc(100vh-3.75rem)] flex flex-col justify-between pt-4 sm:pt-6 lg:pt-6 pb-2 sm:pb-3 overflow-hidden px-4 sm:px-6 lg:px-8"
       id="contact"
+      style={{
+        minHeight: 'calc(100vh - 3.75rem)',
+        justifyContent: 'space-between',
+      }}
     >
       {/* Ambient Visual Atmosphere */}
       <div
@@ -165,7 +169,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col justify-start"
+        className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col justify-start my-auto"
       >
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5 mb-4 sm:mb-5 lg:mb-6">
@@ -569,7 +573,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
       </motion.div>
 
       {/* Sleek Minimalist Editorial Footer ("cc") */}
-      <footer className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto pt-4 pb-2 border-t border-white/[0.08] light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left text-xs text-slate-400 light:text-slate-500 mt-6 sm:mt-8">
+      <footer className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto pt-3 pb-2 border-t border-white/[0.08] light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left text-xs text-slate-400 light:text-slate-500 mt-auto">
         <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
           <span>© {new Date().getFullYear()} Sivodayan Sujeevakumar</span>
           <span className="hidden sm:inline text-white/20 light:text-slate-300">·</span>
