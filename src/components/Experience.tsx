@@ -3,6 +3,130 @@ import { motion, useScroll, useTransform, useSpring, useInView, type Variants } 
 import TextEngine from 'spring-text-engine';
 import GlitchHeading from './GlitchHeading';
 
+interface ExperienceCardProps {
+  index: number;
+  title: string;
+  subtitle: string;
+  subtitleColor?: string;
+  items: React.ReactNode[];
+  isSectionInView: boolean;
+  theme: 'dark' | 'light';
+  cardVariants: Variants;
+}
+
+const ExperienceCard: React.FC<ExperienceCardProps> = ({
+  index,
+  title,
+  subtitle,
+  subtitleColor,
+  items,
+  isSectionInView,
+  theme,
+  cardVariants,
+}) => {
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const shineRef = useRef<HTMLDivElement | null>(null);
+  const rafId = useRef<number>(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotX = ((y - centerY) / centerY) * -4;
+    const rotY = ((x - centerX) / centerX) * 4;
+
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+    rafId.current = requestAnimationFrame(() => {
+      if (cardRef.current) {
+        cardRef.current.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
+      }
+      if (shineRef.current) {
+        shineRef.current.style.background =
+          theme === 'light'
+            ? `radial-gradient(320px circle at ${x}px ${y}px, rgba(217, 119, 6, 0.12), transparent 70%)`
+            : `radial-gradient(320px circle at ${x}px ${y}px, rgba(229, 169, 60, 0.16), transparent 70%)`;
+        shineRef.current.style.opacity = '1';
+      }
+    });
+  };
+
+  const handleMouseLeave = () => {
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+    if (cardRef.current) {
+      cardRef.current.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+    }
+    if (shineRef.current) {
+      shineRef.current.style.opacity = '0';
+    }
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      custom={index}
+      variants={cardVariants}
+      initial="hidden"
+      animate={isSectionInView ? 'visible' : 'hidden'}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      data-cursor-target
+      className={`group relative overflow-hidden w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl cursor-pointer ${
+        theme === 'light'
+          ? 'bg-white/95 border border-slate-300 hover:border-amber-500/60 shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)] hover:shadow-[0_20px_35px_-12px_rgba(217,119,6,0.18)]'
+          : 'bg-black border border-white/12 hover:border-[#e5a93c]/60 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_-12px_rgba(229,169,60,0.25)]'
+      } transition-[border-color,box-shadow] duration-300 flex flex-col justify-between min-h-[300px] sm:min-h-[350px]`}
+      style={{
+        transform: 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)',
+        transition: 'transform 0.18s ease-out, border-color 0.25s, box-shadow 0.25s',
+      }}
+    >
+      {/* Dynamic Cursor Spotlight / Shine Effect */}
+      <div
+        ref={shineRef}
+        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
+        style={{
+          background: 'radial-gradient(320px circle at -999px -999px, rgba(229, 169, 60, 0.16), transparent 70%)',
+          opacity: 0,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Subtle Top Accent Glow on Hover */}
+      <div
+        className="pointer-events-none absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#e5a93c] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10">
+        <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap transition-colors duration-200 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309]">
+          {title}
+        </h3>
+        <div
+          className={`text-xs ${
+            subtitleColor || 'text-[#e5a93c] light:text-[#b45309]'
+          } font-mono mb-3.5 font-medium flex items-center justify-between`}
+        >
+          <span>{subtitle}</span>
+          <span className="text-[10px] text-white/30 light:text-slate-400 font-mono tracking-wider">
+            0{index + 1}
+          </span>
+        </div>
+        <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
+          {items.map((item, idx) => (
+            <li key={idx} className="transition-colors duration-150">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
+  );
+};
+
 export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'dark' }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -198,89 +322,53 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
               !isOverflowing ? 'justify-center flex-wrap' : ''
             }`}
           >
-            <motion.div
-              custom={0}
-              variants={cardVariants}
-              initial="hidden"
-              animate={isSectionInView ? 'visible' : 'hidden'}
-              className={`w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl ${
-                theme === 'light'
-                  ? 'bg-white/95 border-slate-300 hover:border-[#b45309]/45 shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)]'
-                  : 'bg-black border-white/12 hover:border-[#e5a93c]/45 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]'
-              } light:bg-white/95 light:border-slate-300 light:hover:border-[#b45309]/45 light:shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)] transition-colors duration-200 flex flex-col justify-between min-h-[300px] sm:min-h-[350px]`}
-            >
-              <div>
-                <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap">
-                  Secondary Education
-                </h3>
-                <div className="text-xs text-[#e5a93c] light:text-[#b45309] font-mono mb-3.5 font-medium">
-                  Jaffna Hindu College
-                </div>
-                <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
-                  <li>Cleared GCE A/L Examination with <strong className="text-white light:text-slate-900 font-semibold">3As</strong> and GCE O/L Examination with <strong className="text-white light:text-slate-900 font-semibold">9As</strong></li>
-                  <li>Member of the <strong className="text-white light:text-slate-900 font-semibold">Board of Prefects</strong>.</li>
-                  <li>President of the <strong className="text-white light:text-slate-900 font-semibold">Cycling Club</strong>.</li>
-                  <li>Leader in the <strong className="text-white light:text-slate-900 font-semibold">Eastern Band</strong> &amp; Secretary of <strong className="text-white light:text-slate-900 font-semibold">Red Cross</strong>.</li>
-                  <li>Active leadership across inter-school academic and cultural societies.</li>
-                </ul>
-              </div>
-            </motion.div>
+            <ExperienceCard
+              index={0}
+              title="Secondary Education"
+              subtitle="Jaffna Hindu College"
+              isSectionInView={isSectionInView}
+              theme={theme}
+              cardVariants={cardVariants}
+              items={[
+                <>Cleared GCE A/L Examination with <strong className="text-white light:text-slate-900 font-semibold">3As</strong> and GCE O/L Examination with <strong className="text-white light:text-slate-900 font-semibold">9As</strong></>,
+                <>Member of the <strong className="text-white light:text-slate-900 font-semibold">Board of Prefects</strong>.</>,
+                <>President of the <strong className="text-white light:text-slate-900 font-semibold">Cycling Club</strong>.</>,
+                <>Leader in the <strong className="text-white light:text-slate-900 font-semibold">Eastern Band</strong> &amp; Secretary of <strong className="text-white light:text-slate-900 font-semibold">Red Cross</strong>.</>,
+                <>Active leadership across inter-school academic and cultural societies.</>,
+              ]}
+            />
 
-            <motion.div
-              custom={1}
-              variants={cardVariants}
-              initial="hidden"
-              animate={isSectionInView ? 'visible' : 'hidden'}
-              className={`w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl ${
-                theme === 'light'
-                  ? 'bg-white/95 border-slate-300 hover:border-[#b45309]/45 shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)]'
-                  : 'bg-black border-white/12 hover:border-[#e5a93c]/45 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]'
-              } light:bg-white/95 light:border-slate-300 light:hover:border-[#b45309]/45 light:shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)] transition-colors duration-200 flex flex-col justify-between min-h-[300px] sm:min-h-[350px]`}
-            >
-              <div>
-                <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap">
-                  B.Sc. (Hons) in Engineering
-                </h3>
-                <div className="text-xs text-[#e5a93c] light:text-[#b45309] font-mono mb-3.5 font-medium">
-                  University of Moratuwa - CSE
-                </div>
-                <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
-                  <li><strong className="text-white light:text-slate-900 font-semibold">Department Representative</strong> for CSE Department.</li>
-                  <li>Maintaining <strong className="text-white light:text-slate-900 font-semibold">CGPA 3.54</strong> across core algorithms and engineering.</li>
-                  <li>Member of <strong className="text-white light:text-slate-900 font-semibold">CXP Team in AIESEC</strong> &amp; <strong className="text-white light:text-slate-900 font-semibold">Mora Lenz Club</strong>.</li>
-                  <li>Coordinated university flagship tech events and freshers&apos; induction programs like <strong className="text-white light:text-slate-900 font-semibold">Wibhawi Prathiba.</strong></li>
-                </ul>
-              </div>
-            </motion.div>
+            <ExperienceCard
+              index={1}
+              title="B.Sc. (Hons) in Engineering"
+              subtitle="University of Moratuwa - CSE"
+              isSectionInView={isSectionInView}
+              theme={theme}
+              cardVariants={cardVariants}
+              items={[
+                <><strong className="text-white light:text-slate-900 font-semibold">Department Representative</strong> for CSE Department.</>,
+                <>Maintaining <strong className="text-white light:text-slate-900 font-semibold">CGPA 3.54</strong> across core algorithms and engineering.</>,
+                <>Member of <strong className="text-white light:text-slate-900 font-semibold">CXP Team in AIESEC</strong> &amp; <strong className="text-white light:text-slate-900 font-semibold">Mora Lenz Club</strong>.</>,
+                <>Coordinated university flagship tech events and freshers&apos; induction programs like <strong className="text-white light:text-slate-900 font-semibold">Wibhawi Prathiba.</strong></>,
+              ]}
+            />
 
-            <motion.div
-              custom={2}
-              variants={cardVariants}
-              initial="hidden"
-              animate={isSectionInView ? 'visible' : 'hidden'}
-              className={`w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl ${
-                theme === 'light'
-                  ? 'bg-white/95 border-slate-300 hover:border-[#b45309]/45 shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)]'
-                  : 'bg-black border-white/12 hover:border-[#f3ba63]/45 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]'
-              } light:bg-white/95 light:border-slate-300 light:hover:border-[#b45309]/45 light:shadow-[0_10px_30px_-10px_rgba(15,23,42,0.08)] transition-colors duration-200 flex flex-col justify-between min-h-[300px] sm:min-h-[350px]`}
-            >
-              <div>
-                <h3 className="text-[15px] min-[360px]:text-base sm:text-lg font-bold text-white light:text-slate-900 mb-1 whitespace-nowrap">
-                  TRCSL IT Volunteer
-                </h3>
-                <div className="text-xs text-[#f3ba63] light:text-[#b45309] font-mono mb-3.5 font-medium">
-                  J/Kopay Christian College
-                </div>
-                <ul className="text-xs sm:text-[13px] text-[#f1f5f9] light:text-slate-700 space-y-2 list-disc pl-4 font-normal leading-relaxed">
-                  <li>Conducted workshops on <strong className="text-white light:text-slate-900 font-semibold">AI and Digital Security</strong> for students and teachers.</li>
-                  <li>Contributed to the <strong className="text-white light:text-slate-900 font-semibold">TRCSL</strong> school computer lab and IT development program.</li>
-                  <li>Assisted in workstation maintenance, local networking, and operating systems setup.</li>
-                  <li>Mentored students in <strong className="text-white light:text-slate-900 font-semibold">ICT literacy</strong> and fundamental digital skills.</li>
-                  <li>Supported digital infrastructure complementing the official college web portal.</li>
-                </ul>
-              </div>
-            </motion.div>
-
+            <ExperienceCard
+              index={2}
+              title="TRCSL IT Volunteer"
+              subtitle="J/Kopay Christian College"
+              subtitleColor="text-[#f3ba63] light:text-[#b45309]"
+              isSectionInView={isSectionInView}
+              theme={theme}
+              cardVariants={cardVariants}
+              items={[
+                <>Conducted workshops on <strong className="text-white light:text-slate-900 font-semibold">AI and Digital Security</strong> for students and teachers.</>,
+                <>Contributed to the <strong className="text-white light:text-slate-900 font-semibold">TRCSL</strong> school computer lab and IT development program.</>,
+                <>Assisted in workstation maintenance, local networking, and operating systems setup.</>,
+                <>Mentored students in <strong className="text-white light:text-slate-900 font-semibold">ICT literacy</strong> and fundamental digital skills.</>,
+                <>Supported digital infrastructure complementing the official college web portal.</>,
+              ]}
+            />
           </motion.div>
         </div>
 
