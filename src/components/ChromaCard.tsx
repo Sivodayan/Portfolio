@@ -229,7 +229,6 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     });
     resizeObserver.observe(container);
 
-    let isMobileActive = false;
     let lastTouchTime = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -318,7 +317,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     };
 
     const handleMouseLeave = () => {
-      if (!material || !mesh || isMobileActive) return;
+      if (!material || !mesh) return;
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
         duration: zoomOutDuration,
@@ -349,20 +348,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     const handleTouchEnd = () => {
       lastTouchTime = Date.now();
-      if (!material || !mesh) return;
-      isMobileActive = !isMobileActive;
-
-      gsap.to(material.uniforms.u_hover, {
-        value: isMobileActive ? 1.0 : 0.0,
-        duration: isMobileActive ? zoomInDuration : zoomOutDuration,
-        ease: 'power2.out',
-      });
-      gsap.to(mesh.scale, {
-        x: isMobileActive ? 1 + scaleIntensity : 1.0,
-        y: isMobileActive ? 1 + scaleIntensity : 1.0,
-        duration: isMobileActive ? zoomInDuration : zoomOutDuration,
-        ease: 'power2.out',
-      });
+      // Suppress glitchWave ripple circle on mobile tap/click
     };
 
     container.addEventListener('mousemove', handleMouseMove);
@@ -465,6 +451,8 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       style={{
         width: resolvedWidth === 'auto' ? undefined : resolvedWidth,
         height: resolvedHeight === 'auto' ? undefined : resolvedHeight,
+        WebkitTapHighlightColor: 'transparent',
+        touchAction: 'manipulation',
       }}
     >
       <canvas

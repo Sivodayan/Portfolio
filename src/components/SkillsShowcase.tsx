@@ -204,9 +204,9 @@ export const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ theme = 'dark' }
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
                     whileHover={{ scale: 1.05, y: -3 }}
-                    className="group relative p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-black/45 hover:bg-black/70 light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#ffe5db]/60 light:border-slate-200 light:hover:border-amber-600/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(154,91,44,0.45)] light:shadow-sm flex flex-col items-center justify-center text-center gap-2 sm:gap-3 cursor-pointer focus:outline-none focus:ring-0"
+                    className="group relative p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-black/45 hover:bg-black/70 light:bg-slate-100/90 light:hover:bg-white border border-white/10 hover:border-[#ffe5db]/60 light:border-slate-300 light:hover:border-amber-600/60 backdrop-blur-md transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(154,91,44,0.45)] light:shadow-[0_4px_16px_-2px_rgba(15,23,42,0.08)] flex flex-col items-center justify-center text-center gap-2 sm:gap-3 cursor-pointer focus:outline-none focus:ring-0"
                   >
-                    <div className="w-11 h-11 sm:w-16 sm:h-16 flex items-center justify-center rounded-xl sm:rounded-2xl bg-black/60 light:bg-slate-100 border border-white/10 light:border-slate-200 group-hover:border-[#9A5B2C] light:group-hover:border-amber-600 group-hover:scale-110 transition-all flex-shrink-0 shadow-sm">
+                    <div className="w-11 h-11 sm:w-16 sm:h-16 flex items-center justify-center rounded-xl sm:rounded-2xl bg-black/60 light:bg-white border border-white/10 light:border-slate-200 group-hover:border-[#9A5B2C] light:group-hover:border-amber-600 group-hover:scale-110 transition-all flex-shrink-0 shadow-sm">
                       {skill.icon}
                     </div>
                     <span className="text-[11px] sm:text-sm font-bold text-white light:text-slate-900 tracking-tight group-hover:text-[#ffe5db] light:group-hover:text-amber-700 transition-colors drop-shadow-sm light:drop-shadow-none">

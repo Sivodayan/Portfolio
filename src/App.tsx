@@ -28,10 +28,17 @@ export const App: React.FC = () => {
   };
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const themeParam = params.get('theme') as 'dark' | 'light' | null;
     const saved = localStorage.getItem('sivodayan-theme') as 'dark' | 'light' | null;
-    const initial = saved || 'dark';
+    const initial = themeParam || saved || 'dark';
     setTheme(initial);
     document.documentElement.setAttribute('data-theme', initial);
+
+    if (params.get('noloading') === '1') {
+      setIsLoading(false);
+      setIsIntroDone(true);
+    }
 
     // ESC key closes loading screen early
     const handleKeyDown = (e: KeyboardEvent) => {

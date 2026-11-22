@@ -248,7 +248,10 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (isTouchDevice) setIsTouchDevice(false);
+      if (isTouchDevice) {
+        if (checkIsTouch()) return;
+        setIsTouchDevice(false);
+      }
       rawMouseX.set(e.clientX);
       rawMouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
@@ -340,18 +343,25 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
       });
     };
 
+    const handleTouchStart = () => {
+      setIsTouchDevice(true);
+      setIsVisible(false);
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mouseup', handleUp => handleMouseUp());
     document.addEventListener('mouseenter', handleMouseEnter);
     document.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('scroll', handleScrollOrResize, { passive: true, capture: true });
     window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mouseup', handleUp => handleMouseUp());
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('scroll', handleScrollOrResize, true);
