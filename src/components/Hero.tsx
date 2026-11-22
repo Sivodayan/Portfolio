@@ -88,7 +88,6 @@ export const Hero: React.FC<HeroProps> = ({ isIntroDone = true, theme = 'dark' }
             transition={{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-3 mb-4"
           >
-            {/* Social & Direct Contact Links */}
             <div className="flex items-center gap-2 sm:gap-2.5">
               <a
                 href="https://github.com/Sivodayan"
@@ -134,7 +133,6 @@ export const Hero: React.FC<HeroProps> = ({ isIntroDone = true, theme = 'dark' }
               </a>
             </div>
 
-            {/* Resume CV Actions */}
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <a
                 href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"

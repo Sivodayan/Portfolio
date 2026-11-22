@@ -11,7 +11,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
   useEffect(() => {
     const startTime = Date.now();
-    const duration = 2000; // 2 seconds total cinematic loading time
+    const duration = 2000; // Minimum presentation duration for initial assets & canvas pipeline
 
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
@@ -52,7 +52,6 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
         </div>
 
-        {/* Progress bar */}
         <div className="w-48 h-1.5 bg-white/10 rounded-full overflow-hidden mb-2">
           <motion.div
             className="h-full bg-gradient-to-r from-[#e5a93c] to-[#ff087b]"
@@ -65,7 +64,6 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           <span>{progress}%</span>
         </div>
 
-        {/* Skip button */}
         <button
           onClick={onComplete}
           className="mt-4 px-3.5 py-1.5 min-h-[36px] text-xs font-mono text-[#a1a1aa] hover:text-white border border-white/10 hover:border-[#e5a93c]/40 rounded-lg transition-colors touch-manipulation cursor-pointer flex items-center justify-center"

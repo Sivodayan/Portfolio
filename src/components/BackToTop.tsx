@@ -7,9 +7,7 @@ export interface BackToTopProps {
 }
 
 /**
- * BackToTop
- *
- * Floating scroll-to-top control with progress ring indicator.
+ * Floating viewport scroll progress ring with magnetic pointer snapping and Lenis scroll integration.
  */
 export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,7 +16,6 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350 }) => {
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Framer Motion scroll progress tracking
   const { scrollY, scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, {
     damping: 28,
@@ -27,7 +24,6 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350 }) => {
     restDelta: 0.001,
   });
 
-  // Track scroll position for threshold visibility & percentage readout
   useEffect(() => {
     const unsubscribeScroll = scrollY.on('change', (latest) => {
       setIsVisible(latest > threshold);
@@ -43,7 +39,7 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350 }) => {
     };
   }, [scrollY, scrollYProgress, threshold]);
 
-  // Magnetic cursor attraction physics
+  // Pointer proximity displacement (magnetic snapping within bounding box)
   const magnetX = useMotionValue(0);
   const magnetY = useMotionValue(0);
   const smoothMagnetX = useSpring(magnetX, { damping: 20, stiffness: 280, mass: 0.1 });
@@ -94,7 +90,6 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350 }) => {
           transition={{ type: 'spring', stiffness: 380, damping: 26 }}
           className="fixed bottom-5 right-4 sm:bottom-8 sm:right-8 z-40 select-none flex items-center"
         >
-          {/* Smooth Tooltip Pill on Hover */}
           <AnimatePresence>
             {isHovered && (
               <motion.div
@@ -111,7 +106,6 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350 }) => {
             )}
           </AnimatePresence>
 
-          {/* Magnetic Interactive Button */}
           <motion.button
             ref={buttonRef}
             type="button"
@@ -125,16 +119,13 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350 }) => {
             title="Back to top"
             className="group relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] touch-manipulation rounded-full bg-black/60 hover:bg-black/90 light:bg-white/85 light:hover:bg-white text-white light:text-slate-900 border border-white/20 hover:border-[#e5a93c]/60 light:border-slate-300 light:hover:border-[#b45309]/60 backdrop-blur-md shadow-[0_8px_25px_rgba(0,0,0,0.45)] hover:shadow-[0_0_28px_rgba(229,169,60,0.38)] transition-colors duration-300 cursor-pointer"
           >
-            {/* Ambient Aura Glow */}
             <div className="absolute inset-0 rounded-full bg-[#e5a93c]/25 light:bg-[#b45309]/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none -z-10 scale-125" />
 
-            {/* SVG Circular Progress Track */}
             <svg
               className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none p-0.5"
               viewBox="0 0 48 48"
               aria-hidden="true"
             >
-              {/* Subtle Track Background */}
               <circle
                 cx="24"
                 cy="24"
@@ -142,7 +133,6 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350 }) => {
                 className="stroke-white/10 light:stroke-slate-200 fill-none"
                 strokeWidth="2.5"
               />
-              {/* Spring-Driven Progress Circle */}
               <motion.circle
                 cx="24"
                 cy="24"
@@ -156,11 +146,8 @@ export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350 }) => {
               />
             </svg>
 
-            {/* Dual Arrow Kinetic Slide Container */}
             <div className="relative w-5 h-5 overflow-hidden flex items-center justify-center">
-              {/* Resting Arrow (slides out on hover) */}
               <ArrowUp className="absolute inset-0 w-5 h-5 text-white light:text-slate-900 group-hover:-translate-y-5 group-hover:opacity-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-              {/* Incoming Arrow (slides in from below on hover) */}
               <ArrowUp className="absolute inset-0 w-5 h-5 text-[#e5a93c] light:text-[#b45309] translate-y-5 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
             </div>
           </motion.button>

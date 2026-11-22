@@ -27,13 +27,13 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
   const [isOverflowing, setIsOverflowing] = useState<boolean>(true);
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
-  // Monitor vertical page scroll of this pinned section
+  // Track section scroll progress to drive the horizontal pinned track
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  // Calculate dynamic horizontal distance based on rendered card track width
+  // Calculate horizontal translation delta (content scrollWidth vs viewport clientWidth)
   const calculateDistance = useCallback(() => {
     if (trackRef.current && wrapperRef.current) {
       const totalTrackWidth = trackRef.current.scrollWidth;
@@ -64,7 +64,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
     };
   }, [calculateDistance]);
 
-  // Track active milestone index from scroll progress
+  // Update active milestone indicator based on normalized scroll progress
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (latest) => {
       if (latest < 0.38) {
@@ -78,11 +78,10 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
     return () => unsubscribe();
   }, [scrollYProgress]);
 
-  // Lead-in and lead-out bounds so the first & last cards rest comfortably before unlock
+  // Clamp mapping bounds to allow the first and last cards to rest before container unpins
   const rawX = useTransform(scrollYProgress, [0.06, 0.94], [0, -maxScroll], { clamp: true });
   const smoothX = useSpring(rawX, { damping: 36, stiffness: 280, mass: 0.08, restDelta: 0.001 });
 
-  // Smooth jump to milestone when indicator is clicked
   const scrollToMilestone = (index: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -113,7 +112,6 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
       ref={containerRef}
       className={isOverflowing ? 'relative w-full h-[280vh] sm:h-[320vh]' : 'relative w-full py-16 sm:py-20'}
     >
-      {/* Sticky locked track container */}
       <div className={isOverflowing ? 'sticky top-0 h-[100dvh] w-full flex flex-col justify-center overflow-hidden py-4 sm:py-8 z-10' : 'w-full flex flex-col justify-center'}>
         <motion.div
           initial={{ opacity: 0, x: 80 }}
@@ -184,7 +182,6 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
               !isOverflowing ? 'justify-center flex-wrap' : ''
             }`}
           >
-            {/* Card 1: Secondary Education */}
             <motion.div
               custom={0}
               variants={cardVariants}
@@ -212,7 +209,6 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
               </div>
             </motion.div>
 
-            {/* Card 2: B.Sc. Engineering */}
             <motion.div
               custom={1}
               variants={cardVariants}
@@ -240,7 +236,6 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
               </div>
             </motion.div>
 
-            {/* Card 3: TRCSL IT Volunteer */}
             <motion.div
               custom={2}
               variants={cardVariants}

@@ -224,7 +224,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                       : 'text-[#94a3b8] hover:text-[#f1f5f9]'
                   }`}
                 >
-                  {/* Active Ambient Upward Glow */}
                   {isActive && (
                     <motion.div
                       layoutId="navbar-active-flare"
@@ -237,7 +236,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                     />
                   )}
 
-                  {/* Active Underline Bar with Neon Accent */}
                   {isActive && (
                     <motion.div
                       layoutId="navbar-active-line"
@@ -250,7 +248,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                     />
                   )}
 
-                  {/* Hover Floating Underline Guide */}
                   {isHovered && !isActive && (
                     <motion.div
                       layoutId="navbar-hover-line"
@@ -272,14 +269,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2.5 ml-1">
-            <span className="live-clock-pill hidden md:inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-mono border backdrop-blur-md">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
-              </span>
-              <span className="text-[11px] text-slate-400 light:text-slate-500">Jaffna</span>
-              <span className="font-semibold text-white light:text-slate-800 text-[11px]">{timeStr}</span>
-            </span>
+           
 
             <motion.button
               whileHover={{ scale: 1.08 }}
@@ -401,20 +391,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                 );
               })}
 
-              {/* Live Jaffna Time status inside mobile drawer */}
-              <motion.div
-                variants={mobileFooterVariants}
-                className="pt-2 mt-1 border-t border-white/10 light:border-slate-200 flex items-center justify-between px-2.5 text-[11px] font-mono text-[#94a3b8]"
-              >
-                <span className="flex items-center gap-1.5">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
-                  </span>
-                  <span>Jaffna, Sri Lanka</span>
-                </span>
-                <span className="font-semibold text-white light:text-slate-800">{timeStr}</span>
-              </motion.div>
+              
             </div>
           </motion.div>
         )}

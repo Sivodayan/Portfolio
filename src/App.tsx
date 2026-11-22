@@ -45,7 +45,7 @@ export const App: React.FC = () => {
       setIsAsciiLoaded(true);
     }
 
-    // ESC key closes loading screen early
+    // Allow closing early via ESC
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isLoading) {
         handleLoadingComplete();
@@ -55,9 +55,9 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isLoading]);
 
-  // Silky inertial momentum smooth scrolling with Lenis
+  // Smooth scroll instance lifecycle (Lenis)
   useEffect(() => {
-    // Respect user's reduced motion preference
+    // Respect OS-level reduced motion preference
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
@@ -65,7 +65,7 @@ export const App: React.FC = () => {
     const lenis = new Lenis({
       autoRaf: true,
       duration: 1.25,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Apple/Studio-Freight momentum ease-out
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1.0,
       touchMultiplier: 1.0,
@@ -75,7 +75,7 @@ export const App: React.FC = () => {
 
     (window as any).lenis = lenis;
 
-    // Global smooth anchor navigation with header offset compensation
+    // Handle internal anchor links with header compensation
     const handleAnchorClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
       if (!anchor) return;
@@ -101,7 +101,7 @@ export const App: React.FC = () => {
     };
   }, []);
 
-  // Sync scroll locking with intro loading sequence
+  // Lock scrolling while splash loader is active
   useEffect(() => {
     const lenis = (window as any).lenis;
     if (!lenis) return;
@@ -116,7 +116,7 @@ export const App: React.FC = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
     const isToLight = next === 'light';
 
-    // Locate exact center of the theme toggle button for the circular origin
+    // Calculate radial geometry from button center to farthest viewport corner
     const button = (e?.currentTarget as HTMLElement) || (document.querySelector('.theme-toggle-btn') as HTMLElement | null);
     const rect = button?.getBoundingClientRect();
     const x = rect ? rect.left + rect.width / 2 : (e?.clientX || window.innerWidth - 60);
@@ -128,7 +128,7 @@ export const App: React.FC = () => {
 
     const doc = typeof document !== 'undefined' ? (document as any) : null;
 
-    // Native Circular View Transition (Chrome, Edge, Safari 18+)
+    // View Transitions API (Chromium 111+, Safari 18+)
     if (doc && typeof doc.startViewTransition === 'function') {
       document.documentElement.dataset.themeTransition = isToLight ? 'to-light' : 'to-dark';
 
@@ -141,7 +141,6 @@ export const App: React.FC = () => {
       });
 
       transition.ready.then(() => {
-        // Smooth cinematic circular expansion from the toggle button
         document.documentElement.animate(
           {
             clipPath: [
@@ -155,9 +154,7 @@ export const App: React.FC = () => {
             pseudoElement: '::view-transition-new(root)',
           }
         );
-      }).catch(() => {
-        // Fallback if pseudoElement animation fails
-      });
+      }).catch(() => {});
 
       transition.finished.finally(() => {
         delete document.documentElement.dataset.themeTransition;
@@ -167,7 +164,7 @@ export const App: React.FC = () => {
       return;
     }
 
-    // Circular Spreading Ripple Fallback
+    // Fallback radial clip-path transition for unsupported browsers
     const ripple = document.createElement('div');
     ripple.className = 'theme-fallback-ripple';
     ripple.style.position = 'fixed';

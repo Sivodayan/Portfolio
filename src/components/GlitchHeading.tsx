@@ -7,8 +7,8 @@ export interface GlitchHeadingProps {
 }
 
 /**
- * GlitchHeading — Executes a high-tech chromatic glitch effect strictly as an entry transition.
- * Once the 600ms transition completes, the glitch animation is permanently deactivated.
+ * Single-cycle entry glitch effect.
+ * Applies chromatic aberration on viewport entry for 600ms, then permanently unmounts animation classes.
  */
 export const GlitchHeading: React.FC<GlitchHeadingProps> = ({ children, className = '' }) => {
   const [isGlitching, setIsGlitching] = useState(false);

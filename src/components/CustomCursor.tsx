@@ -36,9 +36,8 @@ export interface CustomCursorProps {
 }
 
 /**
- * CustomCursor
- *
- * Spring-driven pointer with dynamic magnetic targeting and element snapping.
+ * Dual-layer custom cursor: a responsive primary dot tracking client coordinates,
+ * coupled with a spring-lagged outer follower that snaps to the bounding box of interactive elements.
  */
 export const CustomCursor: React.FC<CustomCursorProps> = ({
   theme = 'dark',
@@ -72,7 +71,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   const morphBgColor = theme === 'light' ? 'rgba(180, 83, 9, 0.08)' : 'rgba(229, 169, 60, 0.08)';
   const morphShadow = theme === 'light' ? '0 0 16px rgba(180, 83, 9, 0.25)' : '0 0 20px rgba(229, 169, 60, 0.3), inset 0 0 10px rgba(229, 169, 60, 0.08)';
 
-  // Visual styling for pointer circle when hovering clickable elements and focus is not in progress
+  // Active hover styles for unframed interactive elements
   const pointerBorderColor = theme === 'light' ? '#b45309' : '#e5a93c';
   const pointerBgColor = theme === 'light' ? 'rgba(180, 83, 9, 0.1)' : 'rgba(229, 169, 60, 0.14)';
   const pointerShadow = theme === 'light' ? '0 0 14px rgba(180, 83, 9, 0.25)' : '0 0 16px rgba(229, 169, 60, 0.35)';
@@ -88,11 +87,11 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   const rawMouseX = useMotionValue(typeof window !== 'undefined' ? window.innerWidth / 2 : 0);
   const rawMouseY = useMotionValue(typeof window !== 'undefined' ? window.innerHeight / 2 : 0);
 
-  // Responsive laser dot spring (tracks mouse directly with high precision)
+  // Primary pointer coordinates
   const dotX = useSpring(rawMouseX, { stiffness: dotStiffness, damping: dotDamping, mass: 0.1 });
   const dotY = useSpring(rawMouseY, { stiffness: dotStiffness, damping: dotDamping, mass: 0.1 });
 
-  // Unified spring targets for the outer ring (position & dimensions)
+  // Follower frame coordinate targets (position & dimensions)
   const ringTargetX = useMotionValue(typeof window !== 'undefined' ? window.innerWidth / 2 : 0);
   const ringTargetY = useMotionValue(typeof window !== 'undefined' ? window.innerHeight / 2 : 0);
   const ringTargetW = useMotionValue(circleSize);
@@ -113,16 +112,16 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   const scaleX = useTransform(velX, [-1200, 0, 1200], [0.85, 1, 1.15]);
   const scaleY = useTransform(velY, [-1200, 0, 1200], [0.85, 1, 1.15]);
 
-  // Ref to track hovered element for updates during scroll
+  // Currently framed DOM node; retained for scroll/resize re-measurements
   const currentElRef = useRef<HTMLElement | null>(null);
 
-  // WeakMap cache to store border check results with zero DOM layout thrashing
+  // Cache getComputedStyle checks to avoid layout thrashing during mousemove
   const borderCacheRef = useRef(new WeakMap<HTMLElement, boolean>());
 
   /**
-   * Check if an element has an active, visible border.
-   * Tailwind preflight sets default border-width to 0px across all elements,
-   * so an element has a border if and only if borderWidth > 0 and style is not none/hidden.
+   * Evaluates if a candidate target has visible borders.
+   * Browsers with Tailwind preflight set 0px border-width by default,
+   * so elements without explicit borders should not receive framed ring bounds.
    */
   const hasBorder = useCallback((el: HTMLElement): boolean => {
     if (!el || typeof window === 'undefined') return false;
@@ -168,7 +167,8 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
   }, []);
 
   /**
-   * Detection of interactive elements to evaluate for cursor framing.
+   * Traverses upwards from event target to determine valid interactive boundaries.
+   * Elements with data-cursor-ignore or nested inside data-cursor-card inherit specific behavior.
    */
   const getInteractiveTarget = useCallback((target: HTMLElement | null): HTMLElement | null => {
     if (!target) return null;
@@ -300,7 +300,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
         candidate = getInteractiveTarget(target);
       }
 
-      // ONLY focus elements that have an active visible border
+      // Only snap outer follower when element defines a visible structural boundary
       if (candidate && hasBorder(candidate)) {
         if (candidate !== currentElRef.current) {
           currentElRef.current = candidate;
@@ -382,7 +382,6 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
       style={{ zIndex }}
       aria-hidden="true"
     >
-      {/* Outer Spring Follower / Highlight Frame */}
       <motion.div
         className={`absolute flex items-center justify-center ${circleClassName}`}
         animate={{
@@ -432,7 +431,6 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
         {children}
       </motion.div>
 
-      {/* Center Laser Dot (fades cleanly when morphed so text isn't obscured) */}
       <motion.div
         className={`absolute rounded-full pointer-events-none ${dotClassName}`}
         animate={{
@@ -462,7 +460,6 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
         }}
       />
 
-      {/* Target Image Preview (if image targets are provided) */}
       {targets.map((selector, idx) => {
         const isHovered = activeTargetIdx === idx;
         const imageUrl = images[idx];

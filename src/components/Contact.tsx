@@ -74,7 +74,6 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-10 w-full max-w-4xl mx-auto my-auto flex flex-col justify-center"
       >
-        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 sm:mb-8">
           <div>
             <GlitchHeading>
@@ -96,9 +95,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
          
         </div>
 
-        {/* Compact 4-Card Contact Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 mb-6">
-          {/* Email Card */}
           <div
             role="button"
             tabIndex={0}
@@ -157,7 +154,6 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             </div>
           </div>
 
-          {/* WhatsApp & Phone Card */}
           <div
             role="button"
             tabIndex={0}
@@ -215,7 +211,6 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             </div>
           </div>
 
-          {/* LinkedIn Card */}
           <a
             href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
             target="_blank"
@@ -239,7 +234,6 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             <ExternalLink className="w-4 h-4 text-[#94a3b8] group-hover:text-[#e5a93c] light:group-hover:text-[#b45309] transition-colors shrink-0 ml-2" />
           </a>
 
-          {/* GitHub Card */}
           <a
             href="https://github.com/Sivodayan"
             target="_blank"
@@ -264,7 +258,6 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
           </a>
         </div>
 
-        {/* CV Actions */}
         <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
           <a
             href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
@@ -293,7 +286,6 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         </div>
       </motion.div>
 
-      {/* Minimal Footer */}
       <footer className="relative z-10 w-full max-w-4xl mx-auto pt-6 mb-6 sm:mb-10 border-t border-white/10 light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-[#94a3b8] light:text-slate-500">
         <div>© {new Date().getFullYear()} Sivodayan Sujeevakumar</div>
         <div>Computer Science &amp; Engineering • University of Moratuwa</div>

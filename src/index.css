@@ -4,12 +4,11 @@
 @tailwind utilities;
 
 /* ==========================================================================
-   Sujeevakumar Sivodayan — Personal Portfolio
-   Minimal, Human, Typography-First & Tactile Design
+   Design Tokens & Theme Variables
    ========================================================================== */
 
 :root {
-  /* Dark Mode (Default) — Ultra High-Contrast Text */
+  /* Dark mode theme tokens */
   --bg-body: #07080b;
   --bg-card: #111218;
   --bg-card-hover: #171922;
@@ -18,7 +17,7 @@
   --border-color: rgba(255, 255, 255, 0.14);
   --border-hover: rgba(255, 255, 255, 0.28);
   
-  /* High-legibility font palette */
+  /* Typography color tokens */
   --text-primary: #ffffff;
   --text-secondary: #f1f5f9;
   --text-muted: #cbd5e1;
@@ -95,7 +94,7 @@ html.lenis body {
   }
 }
 
-/* Fluid responsive zoom-out on mobile for breathable, proportional scaling */
+/* Fluid root font-size scaling across viewports */
 @media (max-width: 768px) {
   html {
     font-size: 13.5px;
@@ -136,7 +135,7 @@ body {
   background-attachment: fixed;
 }
 
-/* Subtle, crisp architectural dot grid for light mode */
+/* Architectural dot grid overlay for light theme */
 [data-theme="light"] body::before {
   content: "";
   position: fixed;
@@ -167,7 +166,7 @@ a, button, input, select, textarea {
   }
 }
 
-/* Full-screen ASCII stream canvas background */
+/* ASCII stream background canvas */
 @keyframes asciiStreamFadeIn {
   from {
     opacity: 0;
@@ -198,7 +197,7 @@ a, button, input, select, textarea {
 
 @media (max-width: 768px), (pointer: coarse) {
   .ascii-stream-fullscreen {
-    /* Extra height bleed downward so fast momentum swipe-up never reveals a gap when mobile address bar collapses */
+    /* Downward viewport bleed to prevent compositor gap when dynamic mobile browser chrome collapses */
     height: 125dvh;
     height: 125vh;
     min-height: 125dvh;
@@ -207,7 +206,7 @@ a, button, input, select, textarea {
   }
 }
 
-/* Subtle transparent overlay for maximum contrast and font legibility while keeping background razor sharp */
+/* Scrim overlay for content legibility */
 .ascii-stream-fullscreen::after {
   content: "";
   position: absolute;
@@ -231,7 +230,7 @@ a, button, input, select, textarea {
   );
 }
 
-/* Global Typography High-Legibility Shadows */
+/* Base text rendering utilities */
 .font-anton {
   font-family: var(--font-anton), 'Anton', sans-serif;
   letter-spacing: 0.03em;
@@ -247,7 +246,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
-/* Main Container — Streamlined Full-Screen Slide Container */
+/* Global layout container */
 .page-container {
   width: 100%;
   max-width: var(--max-w);
@@ -264,7 +263,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   }
 }
 
-/* --- Top Floating Navigation Header Capsule --- */
+/* Fixed header capsule */
 .site-header {
   position: fixed;
   top: 0.75rem;
@@ -382,7 +381,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   border-color: rgba(0, 0, 0, 0.2);
 }
 
-/* --- Circular View Transition: Directional Theme Spreading --- */
+/* View Transitions API: circular clip-path expansion */
 ::view-transition-group(root) {
   animation-duration: 0.72s;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
@@ -402,14 +401,14 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
   z-index: 999999;
 }
 
-/* Suppress micro-transitions during view transition snapshot reveal so elements don't stutter */
+/* Suppress intermediate CSS transitions during document view transitions */
 html[data-theme-transition] *,
 html[data-theme-transition] *::before,
 html[data-theme-transition] *::after {
   transition: none !important;
 }
 
-/* Ensure all headings in Experience section strictly stay on a single line */
+/* Prevent line wrapping on experience headers */
 #experience .section-heading,
 #experience h2,
 #experience h3,
@@ -418,7 +417,7 @@ html[data-theme-transition] *::after {
   white-space: nowrap !important;
 }
 
-/* Light mode styling for Experience section */
+/* Light theme overrides for experience cards */
 [data-theme="light"] #experience .rounded-2xl {
   background-color: rgba(255, 255, 255, 0.95) !important;
   border-color: #cbd5e1 !important;
@@ -447,7 +446,7 @@ html[data-theme-transition] *::after {
   transition: opacity 0.3s ease-out;
 }
 
-/* --- Hero Section & ASCII Stream Integration --- */
+/* Hero section */
 .hero {
   min-height: 100dvh;
   margin-bottom: 0;
@@ -463,7 +462,7 @@ html[data-theme-transition] *::after {
   align-items: center;
 }
 
-/* ASCII stream canvas frame */
+/* Hero media container */
 .ascii-stream-frame {
   position: relative;
   width: 100%;
@@ -525,7 +524,7 @@ html[data-theme-transition] *::after {
   50% { opacity: 0.3; transform: scale(0.85); }
 }
 
-/* Centered Hero Content Stack */
+/* Hero content stack */
 .hero-centered-content {
   position: relative;
   width: 100%;
@@ -671,7 +670,7 @@ html[data-theme-transition] *::after {
   transform: translateY(-1px);
 }
 
-/* --- Section Formatting --- */
+/* Shared section layout */
 .section {
   min-height: 100dvh;
   margin-bottom: 0;
@@ -699,7 +698,7 @@ html[data-theme-transition] *::after {
   border-bottom: 1px solid var(--border-color);
 }
 
-/* --- Projects Section --- */
+/* Projects section */
 .projects-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
@@ -850,7 +849,7 @@ html[data-theme-transition] *::after {
   text-decoration: underline;
 }
 
-/* --- Experience / Education Timeline --- */
+/* Experience and education timeline */
 .timeline-list {
   display: flex;
   flex-direction: column;
@@ -912,7 +911,7 @@ html[data-theme-transition] *::after {
   font-weight: bold;
 }
 
-/* --- Skills Section --- */
+/* Skills grid */
 .skills-block {
   display: grid;
   grid-template-columns: 160px 1fr;
@@ -933,7 +932,7 @@ html[data-theme-transition] *::after {
   line-height: 1.7;
 }
 
-/* --- Contact & Footer --- */
+/* Contact section & footer */
 .contact-section {
   padding-top: 1.5rem;
   border-top: 1px solid var(--border-color);
@@ -994,7 +993,7 @@ html[data-theme-transition] *::after {
   border-top: 1px solid var(--border-color);
 }
 
-/* Toast */
+/* Toast notification */
 .minimal-toast {
   position: fixed;
   bottom: 2rem;
@@ -1017,7 +1016,7 @@ html[data-theme-transition] *::after {
   transform: translateY(0);
 }
 
-/* --- Live Clock Pill in Header --- */
+/* Header clock pill */
 .live-clock-pill {
   display: inline-flex;
   align-items: center;
@@ -1043,7 +1042,7 @@ html[data-theme-transition] *::after {
   border-color: rgba(0, 0, 0, 0.08);
 }
 
-/* --- Interactive Draggable Craft Badges Playground --- */
+/* Draggable craft badges */
 .craft-badge-bar {
   display: flex;
   flex-wrap: wrap;
@@ -1082,7 +1081,7 @@ html[data-theme-transition] *::after {
   z-index: 100;
 }
 
-/* --- 3D Tilt Card & Specular Sheen --- */
+/* Card tilt & specular sheen */
 .project-item {
   position: relative;
   overflow: hidden;
@@ -1116,7 +1115,7 @@ html[data-theme-transition] *::after {
   opacity: 1;
 }
 
-/* --- High-Tech Temporary Cyber Glitch Entry Transition --- */
+/* Keyframe glitch entry effect */
 @keyframes glitch-transition {
   0% {
     transform: translate3d(-5px, 0, 0) skewX(-2deg);
@@ -1202,7 +1201,7 @@ html[data-theme-transition] *::after {
   animation-name: glitch-transition-light !important;
 }
 
-/* --- Project Expandable Quick-View Drawer --- */
+/* Project expandable quick-view drawer */
 .drawer-toggle-btn {
   background: none;
   border: none;
@@ -1265,7 +1264,7 @@ html[data-theme-transition] *::after {
   color: var(--text-muted);
 }
 
-/* Responsive */
+/* Viewport breakpoints */
 @media (max-width: 640px) {
   .page-container {
     padding-top: 2.5rem;
@@ -1319,7 +1318,7 @@ html[data-theme-transition] *::after {
   }
 }
 
-/* Mobile Navigation Dropdown */
+/* Mobile navigation drawer */
 .mobile-nav-drawer {
   pointer-events: auto;
   width: 100%;
@@ -1341,10 +1340,10 @@ html[data-theme-transition] *::after {
 }
 
 /* ==========================================================================
-   Comprehensive Light Mode Design System Enhancements
+   Light Mode Overrides
    ========================================================================== */
 
-/* Universal Clean Shadows: Eliminate dark filter halos on light background */
+/* Drop shadow and text shadow resets */
 [data-theme="light"] [class*="drop-shadow"] {
   filter: none !important;
 }
@@ -1362,7 +1361,7 @@ html[data-theme-transition] *::after {
   text-shadow: none !important;
 }
 
-/* Typography & Headings in Light Mode */
+/* Typography colors */
 [data-theme="light"] h1,
 [data-theme="light"] h2,
 [data-theme="light"] h3,
@@ -1377,7 +1376,7 @@ html[data-theme-transition] *::after {
   border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Hero Section in Light Mode — Crisp High-Contrast Legibility */
+/* Hero section typography */
 [data-theme="light"] .hero {
   color: #090d16 !important;
 }
@@ -1453,14 +1452,14 @@ html[data-theme-transition] *::after {
   color: #b45309 !important;
 }
 
-/* Separator dots & faint elements */
+/* Separator dots and borders */
 [data-theme="light"] .text-white\/30,
 [data-theme="light"] .text-white\/40,
 [data-theme="light"] .text-white\/50 {
   color: #94a3b8 !important;
 }
 
-/* Interactive link & hover colors */
+/* Interactive states and hover colors */
 [data-theme="light"] .hover\:text-\[\#44f0ff\]:hover,
 [data-theme="light"] .hover\:text-\[\#38bdf8\]:hover,
 [data-theme="light"] .hover\:text-\[\#e5a93c\]:hover,
@@ -1481,7 +1480,7 @@ html[data-theme-transition] *::after {
   color: #ffffff !important;
 }
 
-/* Card, Glass Tile & Container Overrides */
+/* Card and container surfaces */
 [data-theme="light"] .bg-black\/40,
 [data-theme="light"] .bg-black\/45,
 [data-theme="light"] .bg-black\/65,
@@ -1512,7 +1511,7 @@ html[data-theme-transition] *::after {
   border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Tag & Date Badges */
+/* Badges and tags */
 [data-theme="light"] .bg-\[\#38bdf8\]\/15,
 [data-theme="light"] .bg-\[\#44f0ff\]\/15 {
   background-color: rgba(2, 132, 199, 0.08) !important;
@@ -1520,7 +1519,7 @@ html[data-theme-transition] *::after {
   color: #0284c7 !important;
 }
 
-/* Project Card & Drawer */
+/* Project cards and details */
 [data-theme="light"] .project-item {
   background-color: rgba(255, 255, 255, 0.88) !important;
   border-color: rgba(0, 0, 0, 0.08) !important;
@@ -1557,7 +1556,7 @@ html[data-theme-transition] *::after {
   color: #0369a1 !important;
 }
 
-/* Hero Social Action Buttons & Badges */
+/* Action button surfaces */
 [data-theme="light"] a[aria-label="Resume"],
 [data-theme="light"] a[aria-label="GitHub"],
 [data-theme="light"] a[aria-label="LinkedIn"],
@@ -1592,7 +1591,7 @@ html[data-theme-transition] *::after {
   box-shadow: 0 4px 16px rgba(180, 83, 9, 0.18) !important;
 }
 
-/* Prevent tap highlight and ripple on ChromaCard */
+/* Touch interaction overrides */
 #about [data-cursor-ignore],
 #about canvas {
   -webkit-tap-highlight-color: transparent !important;
@@ -1607,7 +1606,7 @@ html[data-theme-transition] *::after {
   }
 }
 
-/* Skills Showcase Tile Enhancements */
+/* Skills tile contrast */
 [data-theme="light"] #skills .group {
   background-color: rgba(255, 255, 255, 0.94) !important;
   backdrop-filter: blur(8px) !important;
@@ -1640,7 +1639,7 @@ html[data-theme-transition] *::after {
   border-color: #b45309 !important;
 }
 
-/* Copy Pill & Toast */
+/* Toast notification */
 [data-theme="light"] .copy-pill {
   background: #ffffff !important;
   border-color: rgba(0, 0, 0, 0.12) !important;
@@ -1660,7 +1659,7 @@ html[data-theme-transition] *::after {
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.18);
 }
 
-/* Header & Mobile Drawer in Light Mode */
+/* Header and mobile drawer */
 [data-theme="light"] .brand-link span {
   color: #0f172a !important;
 }
