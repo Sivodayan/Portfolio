@@ -163,6 +163,15 @@ a, button, input, select, textarea {
 }
 
 /* Full-screen ASCII stream canvas background */
+@keyframes asciiStreamFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.92;
+  }
+}
+
 .ascii-stream-fullscreen {
   position: fixed;
   inset: 0;
@@ -174,6 +183,7 @@ a, button, input, select, textarea {
   opacity: 0.92;
   transform: translateZ(0);
   will-change: transform;
+  animation: asciiStreamFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   transition: opacity 0.3s ease;
 }
 

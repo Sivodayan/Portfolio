@@ -19,12 +19,16 @@ export const App: React.FC = () => {
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isIntroDone, setIsIntroDone] = useState<boolean>(false);
+  const [isAsciiLoaded, setIsAsciiLoaded] = useState<boolean>(false);
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
     setTimeout(() => {
       setIsIntroDone(true);
     }, 180);
+    setTimeout(() => {
+      setIsAsciiLoaded(true);
+    }, 800);
   };
 
   useEffect(() => {
@@ -38,6 +42,7 @@ export const App: React.FC = () => {
     if (params.get('noloading') === '1') {
       setIsLoading(false);
       setIsIntroDone(true);
+      setIsAsciiLoaded(true);
     }
 
     // ESC key closes loading screen early
@@ -202,7 +207,7 @@ export const App: React.FC = () => {
 
   return (
     <>
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={() => setIsAsciiLoaded(true)}>
         {isLoading && (
           <LoadingScreen onComplete={handleLoadingComplete} />
         )}
@@ -210,26 +215,28 @@ export const App: React.FC = () => {
 
       <CustomCursor theme={theme} />
 
-      <div className="ascii-stream-fullscreen" aria-hidden="true">
-        <AsciiStream
-          colors={theme === 'light' ? ["#d97706", "#e11d48"] : ["#e5a93c", "#ff087b"]}
-          text={"dev sivodayan @cse"}
-          pulse={0.9}
-          flare={theme === 'light' ? 0.35 : 0.45}
-          glow={theme === 'light' ? 0.2 : 0.35}
-          intensity={theme === 'light' ? 1.1 : 1.15}
-          grain={0}
-          quality={1.0}
-          size={14}
-          fontFamily="'JetBrains Mono', monospace"
-          burst={0.4}
-          speed={1.5}
-          interactive={true}
-          ignite={1.2}
-          backgroundColor={theme === 'light' ? "#f8fafc" : "#07080b"}
-          className="w-full h-full"
-        />
-      </div>
+      {isAsciiLoaded && (
+        <div className="ascii-stream-fullscreen" aria-hidden="true">
+          <AsciiStream
+            colors={theme === 'light' ? ["#d97706", "#e11d48"] : ["#e5a93c", "#ff087b"]}
+            text={"dev sivodayan @cse"}
+            pulse={0.9}
+            flare={theme === 'light' ? 0.35 : 0.45}
+            glow={theme === 'light' ? 0.2 : 0.35}
+            intensity={theme === 'light' ? 1.1 : 1.15}
+            grain={0}
+            quality={1.0}
+            size={14}
+            fontFamily="'JetBrains Mono', monospace"
+            burst={0.4}
+            speed={1.5}
+            interactive={true}
+            ignite={1.2}
+            backgroundColor={theme === 'light' ? "#f8fafc" : "#07080b"}
+            className="w-full h-full"
+          />
+        </div>
+      )}
 
       <Header theme={theme} onToggleTheme={toggleTheme} />
 
