@@ -28,7 +28,7 @@ export const App: React.FC = () => {
     }, 180);
     setTimeout(() => {
       setIsAsciiLoaded(true);
-    }, 800);
+    }, 10);
   };
 
   useEffect(() => {
