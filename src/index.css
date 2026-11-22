@@ -1649,20 +1649,12 @@ html[data-theme-transition] *::after {
   color: #b45309 !important;
 }
 
-[data-theme="light"] .nav-actions .bg-white\/15 {
-  background: rgba(180, 83, 9, 0.1) !important;
-  color: #b45309 !important;
-  border-color: rgba(180, 83, 9, 0.25) !important;
-  box-shadow: 0 0 12px rgba(180, 83, 9, 0.15) !important;
+[data-theme="light"] .nav-actions a {
+  color: #475569;
 }
 
-[data-theme="light"] .nav-actions .text-\[\#cbd5e1\] {
-  color: #475569 !important;
-}
-
-[data-theme="light"] .nav-actions .hover\:bg-white\/5:hover {
-  background: rgba(0, 0, 0, 0.05) !important;
-  color: #0f172a !important;
+[data-theme="light"] .nav-actions a:hover {
+  color: #0f172a;
 }
 
 [data-theme="light"] .mobile-nav-drawer a {

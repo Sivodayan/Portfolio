@@ -197,7 +197,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
 
         <nav className="nav-actions">
           <div
-            className="hidden sm:flex items-center gap-1 relative p-0.5 rounded-full"
+            className="hidden sm:flex items-center gap-1 relative py-1"
             onMouseLeave={() => setHoveredSection(null)}
           >
             {NAV_ITEMS.map((item) => {
@@ -205,48 +205,68 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
               const isHovered = hoveredSection === item.id;
 
               return (
-                <a
+                <motion.a
                   key={item.id}
                   href={item.href}
                   onMouseEnter={() => setHoveredSection(item.id)}
-                  className={`relative px-3 sm:px-3.5 py-1.5 rounded-full text-xs sm:text-[13px] font-medium transition-colors z-10 select-none ${
+                  whileTap={{ scale: 0.94 }}
+                  className={`group relative px-3 sm:px-3.5 py-2 text-xs sm:text-[13px] tracking-wide transition-colors duration-200 z-10 select-none ${
                     isActive
                       ? isLight
-                        ? 'text-amber-600 font-semibold'
-                        : 'text-[#e5a93c] font-semibold'
+                        ? 'text-[#b45309] font-semibold'
+                        : 'text-[#e5a93c] font-semibold drop-shadow-[0_0_10px_rgba(229,169,60,0.45)]'
                       : isHovered
                       ? isLight
                         ? 'text-slate-900'
                         : 'text-white'
                       : isLight
                       ? 'text-slate-600 hover:text-slate-900'
-                      : 'text-[#cbd5e1] hover:text-white'
+                      : 'text-[#94a3b8] hover:text-[#f1f5f9]'
                   }`}
                 >
+                  {/* Active Ambient Upward Glow */}
                   {isActive && (
                     <motion.div
-                      layoutId="navbar-active-pill"
+                      layoutId="navbar-active-flare"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      className={`absolute inset-0 rounded-full z-[-1] border shadow-sm ${
+                      className={`absolute inset-x-0.5 bottom-0.5 h-4 rounded-t-md pointer-events-none z-[-1] blur-[5px] ${
                         isLight
-                          ? 'bg-amber-500/10 border-amber-500/30 shadow-[0_0_12px_rgba(180,83,9,0.2)]'
-                          : 'bg-white/15 border-white/20 shadow-[0_0_14px_rgba(229,169,60,0.25)]'
+                          ? 'bg-gradient-to-t from-amber-500/25 to-transparent'
+                          : 'bg-gradient-to-t from-[#e5a93c]/35 to-transparent'
                       }`}
                     />
                   )}
 
+                  {/* Active Underline Bar with Neon Accent */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="navbar-active-line"
+                      transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                      className={`absolute bottom-0.5 left-1.5 right-1.5 h-[2.5px] rounded-full z-10 ${
+                        isLight
+                          ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-rose-500 shadow-[0_0_10px_rgba(217,119,6,0.75),0_1px_3px_rgba(217,119,6,0.5)]'
+                          : 'bg-gradient-to-r from-[#e5a93c] via-[#fde68a] to-[#e5a93c] shadow-[0_0_14px_rgba(229,169,60,0.95),0_1px_4px_rgba(229,169,60,0.7)]'
+                      }`}
+                    />
+                  )}
+
+                  {/* Hover Floating Underline Guide */}
                   {isHovered && !isActive && (
                     <motion.div
-                      layoutId="navbar-hover-pill"
+                      layoutId="navbar-hover-line"
                       transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                      className={`absolute inset-0 rounded-full z-[-1] ${
-                        isLight ? 'bg-slate-200/60' : 'bg-white/[0.08]'
+                      className={`absolute bottom-0.5 left-2 right-2 h-[2px] rounded-full z-10 ${
+                        isLight
+                          ? 'bg-slate-700/80 shadow-[0_0_6px_rgba(51,65,85,0.4)]'
+                          : 'bg-white/80 shadow-[0_0_10px_rgba(255,255,255,0.65)]'
                       }`}
                     />
                   )}
 
-                  <span>{item.label}</span>
-                </a>
+                  <span className="relative z-10 block transition-transform duration-200 group-hover:-translate-y-[1px]">
+                    {item.label}
+                  </span>
+                </motion.a>
               );
             })}
           </div>
@@ -363,19 +383,19 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                     whileTap={{ scale: 0.98 }}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between transition-colors ${
+                    className={`relative px-3 py-2.5 rounded-lg text-xs font-medium flex items-center justify-between transition-all duration-200 ${
                       isActive
                         ? isLight
-                          ? 'bg-amber-500/10 text-amber-600 border border-amber-500/30'
-                          : 'bg-white/15 text-[#e5a93c] border border-white/20'
+                          ? 'border-l-2 border-amber-600 bg-amber-500/5 text-amber-700 pl-3.5 font-semibold'
+                          : 'border-l-2 border-[#e5a93c] bg-white/[0.04] text-[#e5a93c] pl-3.5 font-semibold drop-shadow-[0_0_8px_rgba(229,169,60,0.3)]'
                         : isLight
-                        ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                        : 'text-[#cbd5e1] hover:text-white hover:bg-white/5'
+                        ? 'text-slate-600 hover:text-slate-900 hover:pl-3.5'
+                        : 'text-[#94a3b8] hover:text-white hover:pl-3.5'
                     }`}
                   >
                     <span>{item.label}</span>
                     {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#e5a93c] shadow-[0_0_8px_#e5a93c]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#e5a93c] light:bg-amber-600 shadow-[0_0_8px_#e5a93c]" />
                     )}
                   </motion.a>
                 );
