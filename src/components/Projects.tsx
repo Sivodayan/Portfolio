@@ -220,7 +220,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   );
 };
 
-export const Projects: React.FC<ProjectsProps> = ({ theme = 'dark' }) => {
+export const Projects: React.FC<ProjectsProps> = () => {
   return (
     <section className="section relative w-full min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16" id="projects">
       <motion.div

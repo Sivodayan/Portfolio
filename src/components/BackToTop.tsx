@@ -4,7 +4,6 @@ import { ArrowUp } from 'lucide-react';
 
 export interface BackToTopProps {
   threshold?: number;
-  theme?: 'dark' | 'light';
 }
 
 /**
@@ -12,7 +11,7 @@ export interface BackToTopProps {
  *
  * Floating scroll-to-top control with progress ring indicator.
  */
-export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350, theme = 'dark' }) => {
+export const BackToTop: React.FC<BackToTopProps> = ({ threshold = 350 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [scrollPercent, setScrollPercent] = useState(0);

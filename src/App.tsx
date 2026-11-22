@@ -163,7 +163,7 @@ export const App: React.FC = () => {
         delete document.documentElement.dataset.themeTransition;
       });
 
-      showToast(`Switched to ${next} mode`);
+      
       return;
     }
 
@@ -196,7 +196,7 @@ export const App: React.FC = () => {
 
     anim.onfinish = () => ripple.remove();
 
-    showToast(`Switched to ${next} mode`);
+    
   };
 
   const showToast = (msg: string) => {
@@ -243,15 +243,15 @@ export const App: React.FC = () => {
 
       <div className="page-container">
         <main>
-          <Hero onShowToast={showToast} isIntroDone={isIntroDone} theme={theme} />
-          <Projects theme={theme} />
+          <Hero isIntroDone={isIntroDone} theme={theme} />
+          <Projects />
           <SkillsShowcase theme={theme} />
           <Experience theme={theme} />
           <Contact onShowToast={showToast} theme={theme} />
         </main>
       </div>
 
-      <BackToTop theme={theme} />
+      <BackToTop />
 
       <div className={`minimal-toast ${toastMsg ? 'visible' : ''}`}>
         {toastMsg}

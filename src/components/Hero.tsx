@@ -5,12 +5,11 @@ import { Download, FileText } from 'lucide-react';
 import ChromaCard from './ChromaCard';
 
 export interface HeroProps {
-  onShowToast?: (msg: string) => void;
   isIntroDone?: boolean;
   theme?: 'dark' | 'light';
 }
 
-export const Hero: React.FC<HeroProps> = ({ onShowToast, isIntroDone = true, theme = 'dark' }) => {
+export const Hero: React.FC<HeroProps> = ({ isIntroDone = true, theme = 'dark' }) => {
   const [isGlitching, setIsGlitching] = React.useState(false);
 
   React.useEffect(() => {

@@ -351,7 +351,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleUp => handleMouseUp());
+    window.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('mouseenter', handleMouseEnter);
     document.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('scroll', handleScrollOrResize, { passive: true, capture: true });
@@ -361,7 +361,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleUp => handleMouseUp());
+      window.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('scroll', handleScrollOrResize, true);
