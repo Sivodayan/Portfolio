@@ -196,9 +196,9 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
         {/* 2-Column Desktop Grid / 1-Column Mobile */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch">
-          {/* Left Column: Direct Channels & CV */}
+          {/* Left Column: Precision Instrument Channels & CV */}
           <div className="lg:col-span-5 flex flex-col justify-between gap-3 sm:gap-3.5">
-            {/* Email Card */}
+            {/* Channel 01: Email */}
             <div
               role="button"
               tabIndex={0}
@@ -212,49 +212,57 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   window.location.href = 'mailto:sivodayan17@gmail.com';
                 }
               }}
-              className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/50 light:border-slate-200 light:hover:border-[#b45309]/40 backdrop-blur-xl shadow-[0_4px_16px_-2px_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.05),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-200 hover:-translate-y-0.5 group cursor-pointer focus:outline-none"
+              className="relative group p-4 rounded-2xl bg-[#0c0e14] hover:bg-[#11141c] light:bg-white light:hover:bg-slate-50 border border-white/[0.08] hover:border-[#e5a93c]/50 light:border-slate-200 light:hover:border-amber-600/40 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.6),0_1px_0_0_rgba(255,255,255,0.06)_inset] light:shadow-[0_2px_12px_-2px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 cursor-pointer focus:outline-none overflow-hidden"
             >
-              <div className="flex items-center gap-3 min-w-0">
-                <span className="p-2.5 rounded-xl bg-[#e5a93c]/10 text-[#e5a93c] light:bg-amber-50 light:text-[#b45309] border border-[#e5a93c]/20 light:border-amber-200/60 shrink-0 group-hover:scale-105 transition-transform">
-                  <Mail className="w-4 h-4" />
-                </span>
-                <div className="min-w-0">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[#94a3b8] light:text-slate-500 font-semibold">
-                    Email
-                  </div>
-                  <span className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309] transition-colors truncate block">
-                    sivodayan17@gmail.com
-                  </span>
-                </div>
+              {/* Corner accent registration tick */}
+              <div className="absolute top-0 right-0 w-8 h-8 pointer-events-none overflow-hidden">
+                <div className="absolute top-2 right-2 w-1.5 h-1.5 border-t border-r border-white/20 group-hover:border-[#e5a93c] light:border-slate-300 light:group-hover:border-amber-600 transition-colors" />
               </div>
 
-              <div className="flex items-center gap-1.5 shrink-0 ml-2 relative z-10" onClick={(e) => e.stopPropagation()}>
-                <a
-                  href="mailto:sivodayan17@gmail.com"
-                  data-cursor-ignore
-                  className="p-2 rounded-xl bg-[#e5a93c]/15 hover:bg-[#e5a93c]/25 light:bg-[#b45309]/10 light:hover:bg-[#b45309]/20 border border-white/10 light:border-slate-300 text-[#e5a93c] light:text-[#b45309] transition-colors cursor-pointer"
-                  title="Send Mail"
-                  aria-label="Send Mail"
-                >
-                  <Send className="w-3.5 h-3.5" />
-                </a>
-                <button
-                  type="button"
-                  data-cursor-ignore
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCopy('sivodayan17@gmail.com', 'Email', 'email');
-                  }}
-                  className="p-2 rounded-xl bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
-                  title="Copy email address"
-                  aria-label="Copy email address"
-                >
-                  {copiedKey === 'email' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                </button>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <div className="p-2.5 rounded-xl bg-gradient-to-b from-[#161922] to-[#0e1017] light:from-slate-100 light:to-slate-50 border border-white/10 light:border-slate-200 text-[#e5a93c] light:text-[#b45309] shadow-inner shrink-0 group-hover:scale-105 transition-transform">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-mono tracking-widest text-[#94a3b8] light:text-slate-500 font-medium flex items-center gap-1.5">
+                      <span className="text-[#e5a93c] light:text-[#b45309]">01 //</span>
+                      <span>DIRECT DISPATCH</span>
+                    </div>
+                    <span className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309] transition-colors truncate block mt-0.5">
+                      sivodayan17@gmail.com
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 shrink-0 ml-2 relative z-10" onClick={(e) => e.stopPropagation()}>
+                  <a
+                    href="mailto:sivodayan17@gmail.com"
+                    data-cursor-ignore
+                    className="p-2 rounded-xl bg-white/[0.06] hover:bg-[#e5a93c]/20 light:bg-slate-100 light:hover:bg-amber-100/70 border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-300 text-[#e5a93c] light:text-[#b45309] transition-all cursor-pointer active:translate-y-0.5"
+                    title="Send Mail"
+                    aria-label="Send Mail"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                  </a>
+                  <button
+                    type="button"
+                    data-cursor-ignore
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCopy('sivodayan17@gmail.com', 'Email', 'email');
+                    }}
+                    className="p-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-all cursor-pointer active:translate-y-0.5"
+                    title="Copy email address"
+                    aria-label="Copy email address"
+                  >
+                    {copiedKey === 'email' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* WhatsApp / Phone Card */}
+            {/* Channel 02: WhatsApp / Phone */}
             <div
               role="button"
               tabIndex={0}
@@ -268,68 +276,81 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   window.open('https://wa.me/94705891710', '_blank', 'noopener,noreferrer');
                 }
               }}
-              className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-emerald-500/50 light:border-slate-200 light:hover:border-emerald-600/40 backdrop-blur-xl shadow-[0_4px_16px_-2px_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.05),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-200 hover:-translate-y-0.5 group cursor-pointer focus:outline-none"
+              className="relative group p-4 rounded-2xl bg-[#0c0e14] hover:bg-[#11141c] light:bg-white light:hover:bg-slate-50 border border-white/[0.08] hover:border-emerald-500/50 light:border-slate-200 light:hover:border-emerald-600/40 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.6),0_1px_0_0_rgba(255,255,255,0.06)_inset] light:shadow-[0_2px_12px_-2px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 cursor-pointer focus:outline-none overflow-hidden"
             >
-              <div className="flex items-center gap-3 min-w-0">
-                <span className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 light:bg-emerald-50 light:text-emerald-700 border border-emerald-500/20 light:border-emerald-200/60 shrink-0 group-hover:scale-105 transition-transform">
-                  <Phone className="w-4 h-4" />
-                </span>
-                <div className="min-w-0">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[#94a3b8] light:text-slate-500 font-semibold">
-                    WhatsApp / Phone
-                  </div>
-                  <div className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 group-hover:text-emerald-400 light:group-hover:text-emerald-700 transition-colors truncate">
-                    +94 70 589 1710
-                  </div>
-                </div>
+              {/* Corner accent registration tick */}
+              <div className="absolute top-0 right-0 w-8 h-8 pointer-events-none overflow-hidden">
+                <div className="absolute top-2 right-2 w-1.5 h-1.5 border-t border-r border-white/20 group-hover:border-emerald-400 light:border-slate-300 light:group-hover:border-emerald-600 transition-colors" />
               </div>
 
-              <div className="flex items-center gap-1.5 shrink-0 ml-2 relative z-10" onClick={(e) => e.stopPropagation()}>
-                <a
-                  href="https://wa.me/94705891710"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cursor-ignore
-                  className="p-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 light:bg-emerald-600/10 light:hover:bg-emerald-600/20 border border-white/10 light:border-slate-300 text-emerald-400 light:text-emerald-700 transition-colors cursor-pointer"
-                  title="Chat on WhatsApp"
-                  aria-label="Chat on WhatsApp"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                </a>
-                <button
-                  type="button"
-                  data-cursor-ignore
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCopy('+94 70 589 1710', 'Phone number', 'phone');
-                  }}
-                  className="p-2 rounded-xl bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-colors cursor-pointer"
-                  title="Copy phone number"
-                  aria-label="Copy phone number"
-                >
-                  {copiedKey === 'phone' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                </button>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <div className="p-2.5 rounded-xl bg-gradient-to-b from-[#161922] to-[#0e1017] light:from-slate-100 light:to-slate-50 border border-white/10 light:border-slate-200 text-emerald-400 light:text-emerald-700 shadow-inner shrink-0 group-hover:scale-105 transition-transform">
+                    <Phone className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-mono tracking-widest text-[#94a3b8] light:text-slate-500 font-medium flex items-center gap-1.5">
+                      <span className="text-emerald-400 light:text-emerald-700">02 //</span>
+                      <span>SECURE CELL</span>
+                    </div>
+                    <div className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 group-hover:text-emerald-400 light:group-hover:text-emerald-700 transition-colors truncate mt-0.5">
+                      +94 70 589 1710
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 shrink-0 ml-2 relative z-10" onClick={(e) => e.stopPropagation()}>
+                  <a
+                    href="https://wa.me/94705891710"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor-ignore
+                    className="p-2 rounded-xl bg-white/[0.06] hover:bg-emerald-500/20 light:bg-slate-100 light:hover:bg-emerald-100/70 border border-white/10 hover:border-emerald-500/40 light:border-slate-300 text-emerald-400 light:text-emerald-700 transition-all cursor-pointer active:translate-y-0.5"
+                    title="Chat on WhatsApp"
+                    aria-label="Chat on WhatsApp"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                  </a>
+                  <button
+                    type="button"
+                    data-cursor-ignore
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCopy('+94 70 589 1710', 'Phone number', 'phone');
+                    }}
+                    className="p-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-[#cbd5e1] light:text-slate-700 transition-all cursor-pointer active:translate-y-0.5"
+                    title="Copy phone number"
+                    aria-label="Copy phone number"
+                  >
+                    {copiedKey === 'phone' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* LinkedIn & GitHub in Compact Row */}
+            {/* Channel 03: LinkedIn & GitHub Dual Mod */}
             <div className="grid grid-cols-2 gap-3 sm:gap-3.5">
               <a
                 href="https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor-card
-                className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-sky-500/50 light:border-slate-200 light:hover:border-sky-600/40 backdrop-blur-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 group focus:outline-none"
+                className="relative group p-3.5 rounded-2xl bg-[#0c0e14] hover:bg-[#11141c] light:bg-white light:hover:bg-slate-50 border border-white/[0.08] hover:border-sky-500/50 light:border-slate-200 light:hover:border-sky-600/40 shadow-[0_4px_16px_-4px_rgba(0,0,0,0.5),0_1px_0_0_rgba(255,255,255,0.06)_inset] light:shadow-[0_2px_8px_-2px_rgba(15,23,42,0.05)] transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-between focus:outline-none"
               >
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <span className="p-2 rounded-xl bg-sky-500/10 text-sky-400 light:bg-sky-50 light:text-sky-700 border border-sky-500/20 shrink-0">
+                  <span className="p-2 rounded-xl bg-gradient-to-b from-[#161922] to-[#0e1017] light:from-slate-100 light:to-slate-50 border border-white/10 light:border-slate-200 text-sky-400 light:text-sky-700 shrink-0">
                     <Linkedin className="w-4 h-4" />
                   </span>
-                  <span className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 group-hover:text-sky-400 light:group-hover:text-sky-700 transition-colors truncate">
-                    LinkedIn
-                  </span>
+                  <div className="min-w-0">
+                    <div className="text-[9px] font-mono tracking-wider text-[#94a3b8] light:text-slate-500">
+                      // 03A
+                    </div>
+                    <span className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 group-hover:text-sky-400 light:group-hover:text-sky-700 transition-colors truncate block">
+                      LinkedIn
+                    </span>
+                  </div>
                 </div>
-                <ExternalLink className="w-3.5 h-3.5 text-[#94a3b8] group-hover:text-sky-400 transition-colors shrink-0 ml-1" />
+                <ExternalLink className="w-3.5 h-3.5 text-[#94a3b8] group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all shrink-0 ml-1" />
               </a>
 
               <a
@@ -337,37 +358,45 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor-card
-                className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-purple-400/50 light:border-slate-200 light:hover:border-slate-400 backdrop-blur-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 group focus:outline-none"
+                className="relative group p-3.5 rounded-2xl bg-[#0c0e14] hover:bg-[#11141c] light:bg-white light:hover:bg-slate-50 border border-white/[0.08] hover:border-purple-400/50 light:border-slate-200 light:hover:border-slate-400 shadow-[0_4px_16px_-4px_rgba(0,0,0,0.5),0_1px_0_0_rgba(255,255,255,0.06)_inset] light:shadow-[0_2px_8px_-2px_rgba(15,23,42,0.05)] transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-between focus:outline-none"
               >
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <span className="p-2 rounded-xl bg-purple-500/10 text-purple-300 light:bg-slate-100 light:text-slate-900 border border-purple-500/20 shrink-0">
+                  <span className="p-2 rounded-xl bg-gradient-to-b from-[#161922] to-[#0e1017] light:from-slate-100 light:to-slate-50 border border-white/10 light:border-slate-200 text-purple-300 light:text-slate-900 shrink-0">
                     <Github className="w-4 h-4" />
                   </span>
-                  <span className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309] transition-colors truncate">
-                    GitHub
-                  </span>
+                  <div className="min-w-0">
+                    <div className="text-[9px] font-mono tracking-wider text-[#94a3b8] light:text-slate-500">
+                      // 03B
+                    </div>
+                    <span className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 group-hover:text-[#e5a93c] light:group-hover:text-[#b45309] transition-colors truncate block">
+                      GitHub
+                    </span>
+                  </div>
                 </div>
-                <ExternalLink className="w-3.5 h-3.5 text-[#94a3b8] group-hover:text-white transition-colors shrink-0 ml-1" />
+                <ExternalLink className="w-3.5 h-3.5 text-[#94a3b8] group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0 ml-1" />
               </a>
             </div>
 
-            {/* Curriculum Vitae (CV) Card */}
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.07] light:bg-white/90 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-[#b45309]/30 backdrop-blur-xl shadow-sm transition-all duration-200 flex items-center justify-between gap-2.5">
-              <div className="flex items-center gap-3 min-w-0">
-                <span className="p-2.5 rounded-xl bg-gradient-to-br from-[#e5a93c]/20 to-[#ff087b]/20 text-[#e5a93c] light:text-[#b45309] border border-[#e5a93c]/30 shrink-0">
+            {/* Channel 04: Curriculum Vitae (CV) */}
+            <div className="relative group p-4 rounded-2xl bg-[#0c0e14] hover:bg-[#11141c] light:bg-white light:hover:bg-slate-50 border border-white/[0.08] hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-amber-600/30 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.6),0_1px_0_0_rgba(255,255,255,0.06)_inset] light:shadow-[0_2px_12px_-2px_rgba(15,23,42,0.06)] transition-all duration-200 flex items-center justify-between gap-2.5 overflow-hidden">
+              <div className="flex items-center gap-3.5 min-w-0">
+                <span className="p-2.5 rounded-xl bg-gradient-to-b from-[#1e1a14] to-[#120f0a] light:from-amber-50 light:to-amber-100/50 text-[#e5a93c] light:text-[#b45309] border border-[#e5a93c]/30 shrink-0 shadow-inner">
                   <FileText className="w-4 h-4" />
                 </span>
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] font-mono tracking-widest text-[#94a3b8] light:text-slate-500 font-medium">
+                      <span className="text-[#e5a93c] light:text-[#b45309]">04 //</span>
+                    </span>
                     <h3 className="text-xs sm:text-sm font-bold text-white light:text-slate-900 tracking-tight">
                       Curriculum Vitae
                     </h3>
-                    <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-white/10 light:bg-slate-200 text-white/80 light:text-slate-700">
+                    <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-[#1e2330] light:bg-slate-200 text-white/80 light:text-slate-700 border border-white/10">
                       PDF
                     </span>
                   </div>
-                  <p className="text-[10px] sm:text-[11px] font-mono text-[#94a3b8] light:text-slate-500 truncate">
-                    Engineering resume
+                  <p className="text-[10px] sm:text-[11px] font-mono text-[#94a3b8] light:text-slate-500 truncate mt-0.5">
+                    Engineering resume &amp; academic records
                   </p>
                 </div>
               </div>
@@ -377,7 +406,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl bg-white/5 hover:bg-white/15 light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 text-white light:text-slate-900 font-mono text-xs font-semibold transition-all group cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] light:bg-slate-100 light:hover:bg-slate-200 border border-white/10 light:border-slate-300 text-white light:text-slate-900 font-mono text-xs font-semibold transition-all group cursor-pointer active:translate-y-0.5"
                   title="View Resume in Browser (PDF)"
                 >
                   <FileText className="w-3.5 h-3.5 text-[#e5a93c] light:text-[#b45309]" />
@@ -387,7 +416,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 <a
                   href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
                   download="Sivodayan_Sujeevakumar_CV.pdf"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-[#e5a93c] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#d97706] text-black font-mono text-xs font-bold shadow-sm transition-all group cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-[#e5a93c] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#d97706] text-black font-mono text-xs font-bold shadow-sm transition-all group cursor-pointer active:translate-y-0.5"
                   title="Download Resume (PDF)"
                 >
                   <Download className="w-3.5 h-3.5 text-black" />
@@ -397,27 +426,28 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
             </div>
           </div>
 
-          {/* Right Column: Workable Contact Form */}
-          <div className="lg:col-span-7 p-5 sm:p-6 lg:p-6 rounded-2xl bg-white/[0.04] hover:bg-white/[0.06] light:bg-white/95 light:hover:bg-white border border-white/10 hover:border-[#e5a93c]/40 light:border-slate-200/90 light:hover:border-amber-500/40 backdrop-blur-xl shadow-[0_4px_20px_-2px_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.06)] light:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.06),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all duration-200 flex flex-col justify-between">
-            <div className="flex items-center justify-between gap-2 mb-3.5">
+          {/* Right Column: Precision Dispatch Console */}
+          <div className="lg:col-span-7 p-5 sm:p-6 lg:p-6 rounded-2xl bg-[#0c0e14] light:bg-white border border-white/[0.08] hover:border-[#e5a93c]/40 light:border-slate-200 light:hover:border-amber-600/30 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.6),0_1px_0_0_rgba(255,255,255,0.06)_inset] light:shadow-[0_2px_16px_-2px_rgba(15,23,42,0.06)] transition-all duration-200 flex flex-col justify-between">
+            {/* Console Header Bar */}
+            <div className="flex items-center justify-between gap-2 mb-3.5 pb-2.5 border-b border-white/[0.06] light:border-slate-100">
               <div className="flex items-center gap-2.5">
-                <span className="p-2 rounded-xl bg-[#e5a93c]/15 text-[#e5a93c] light:bg-amber-100 light:text-[#b45309] border border-[#e5a93c]/30 shrink-0">
+                <span className="p-2 rounded-xl bg-gradient-to-b from-[#1e1a14] to-[#120f0a] light:from-amber-50 light:to-amber-100/50 text-[#e5a93c] light:text-[#b45309] border border-[#e5a93c]/30 shrink-0 shadow-inner">
                   <MessageSquare className="w-4 h-4" />
                 </span>
                 <div>
-                  <h3 className="text-xs sm:text-sm font-bold text-white light:text-slate-900 tracking-tight">
-                    Send a Direct Message
+                  <h3 className="text-xs sm:text-sm font-bold text-white light:text-slate-900 tracking-tight font-mono">
+                    DISPATCH CONSOLE
                   </h3>
                 </div>
               </div>
 
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 light:bg-emerald-50 text-[10px] font-mono text-emerald-400 light:text-emerald-700 border border-emerald-500/20">
-                <span className="relative flex h-1.5 w-1.5">
+              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-[#06070a] light:bg-slate-100 border border-white/[0.08] light:border-slate-200 text-[10px] font-mono">
+                <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                <span>SMTP API Active</span>
-              </span>
+                <span className="text-emerald-400 light:text-emerald-700 font-semibold">SMTP RELAY ACTIVE</span>
+              </div>
             </div>
 
             <AnimatePresence mode="wait">
@@ -428,27 +458,27 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className="py-8 px-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center flex flex-col items-center gap-3 my-auto"
+                  className="py-8 px-4 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/20 text-center flex flex-col items-center gap-3 my-auto"
                 >
-                  <div className="w-11 h-11 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
+                  <div className="w-11 h-11 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shadow-inner">
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="text-sm sm:text-base font-bold text-white light:text-slate-900 mb-1">
+                    <h4 className="text-sm sm:text-base font-bold text-white light:text-slate-900 mb-1 font-mono">
                       {sendProvider === 'fallback-mailto'
-                        ? 'Message Prepared in Email Client!'
-                        : 'Message Dispatched via SMTP API!'}
+                        ? '[TRANSMISSION QUEUED IN CLIENT]'
+                        : '[MESSAGE TRANSMITTED OVER SMTP]'}
                     </h4>
                     <p className="text-xs font-mono text-[#94a3b8] light:text-slate-600 max-w-sm mx-auto">
                       {sendProvider === 'fallback-mailto'
-                        ? 'A mailto draft has been opened and message details copied to your clipboard.'
-                        : 'Your message was transmitted directly to sivodayan17@gmail.com via SMTP API.'}
+                        ? 'A mailto draft has been triggered and telemetry payload saved to your clipboard.'
+                        : 'Payload successfully received by the mail server for delivery to sivodayan17@gmail.com.'}
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="mt-1 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 light:bg-slate-200 text-white light:text-slate-900 text-xs font-mono font-semibold transition-all cursor-pointer"
+                    className="mt-1 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 light:bg-slate-200 text-white light:text-slate-900 text-xs font-mono font-semibold transition-all cursor-pointer active:translate-y-0.5"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                     <span>Send Another Message</span>
@@ -474,7 +504,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                           onChange={handleInputChange}
                           placeholder="Your Name *"
                           required
-                          className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all"
+                          className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-[#06070a] light:bg-[#f8fafc] border border-white/[0.08] light:border-slate-200 shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] light:shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.04)] text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-600 focus:ring-1 focus:ring-[#e5a93c]/30 transition-all"
                         />
                         <User className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-3 pointer-events-none" />
                       </div>
@@ -490,7 +520,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                           onChange={handleInputChange}
                           placeholder="Your Email *"
                           required
-                          className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all"
+                          className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-[#06070a] light:bg-[#f8fafc] border border-white/[0.08] light:border-slate-200 shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] light:shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.04)] text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-600 focus:ring-1 focus:ring-[#e5a93c]/30 transition-all"
                         />
                         <Mail className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-3 pointer-events-none" />
                       </div>
@@ -505,7 +535,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                       value={formData.subject}
                       onChange={handleInputChange}
                       placeholder="Subject (Optional)"
-                      className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all"
+                      className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-[#06070a] light:bg-[#f8fafc] border border-white/[0.08] light:border-slate-200 shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] light:shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.04)] text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-600 focus:ring-1 focus:ring-[#e5a93c]/30 transition-all"
                     />
                     <Sparkles className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-3 pointer-events-none" />
                   </div>
@@ -519,7 +549,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                       rows={3}
                       placeholder="Write your message here..."
                       required
-                      className="w-full p-3 rounded-xl bg-black/40 light:bg-slate-50 border border-white/10 light:border-slate-300 text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-500 transition-all resize-none min-h-[82px] sm:min-h-[92px]"
+                      className="w-full p-3 rounded-xl bg-[#06070a] light:bg-[#f8fafc] border border-white/[0.08] light:border-slate-200 shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] light:shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.04)] text-xs text-white light:text-slate-900 placeholder-white/30 light:placeholder-slate-400 font-mono focus:outline-none focus:border-[#e5a93c] light:focus:border-amber-600 focus:ring-1 focus:ring-[#e5a93c]/30 transition-all resize-none min-h-[82px] sm:min-h-[92px]"
                     />
                   </div>
 
@@ -527,7 +557,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     <motion.div
                       initial={{ opacity: 0, y: -2 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="p-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-mono flex items-center gap-2"
+                      className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-mono flex items-center gap-2"
                     >
                       <AlertCircle className="w-4 h-4 shrink-0" />
                       <span>{formError}</span>
@@ -542,7 +572,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     <button
                       type="submit"
                       disabled={formStatus === 'submitting'}
-                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#e5a93c] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#d97706] disabled:opacity-70 text-black font-mono text-xs sm:text-sm font-bold shadow-md shadow-[#e5a93c]/20 hover:shadow-[#e5a93c]/35 transition-all cursor-pointer focus:outline-none active:scale-[0.98]"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-b from-[#f59e0b] via-[#e5a93c] to-[#d97706] hover:brightness-105 active:translate-y-0.5 disabled:opacity-70 text-black font-mono text-xs sm:text-sm font-bold shadow-[0_3px_0_0_#92400e,0_6px_16px_rgba(229,169,60,0.25)] active:shadow-none transition-all cursor-pointer focus:outline-none"
                     >
                       {formStatus === 'submitting' ? (
                         <>
@@ -564,18 +594,18 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         </div>
       </motion.div>
 
-      {/* Copyright / Credits / Footer ("cc") */}
-      <footer className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto pt-4 pb-2 border-t border-white/10 light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left text-xs font-mono text-[#94a3b8] light:text-slate-500 mt-6 sm:mt-8">
+      {/* Precision Instrument Footer ("cc") */}
+      <footer className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto pt-4 pb-2 border-t border-white/[0.08] light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left text-xs font-mono text-[#94a3b8] light:text-slate-500 mt-6 sm:mt-8">
         <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
-          <span>© {new Date().getFullYear()} Sivodayan Sujeevakumar</span>
-          <span className="hidden sm:inline text-white/20 light:text-slate-300">•</span>
-          <span className="text-white/60 light:text-slate-600 font-medium">Computer Science &amp; Engineering</span>
+          <span>© {new Date().getFullYear()} SIVODAYAN SUJEEVAKUMAR</span>
+          <span className="hidden sm:inline text-white/20 light:text-slate-300">/</span>
+          <span className="text-white/70 light:text-slate-700 font-medium">COMPUTER SCIENCE &amp; ENGINEERING</span>
         </div>
 
-        <div className="flex items-center gap-1.5 text-[11px] text-[#94a3b8] light:text-slate-500">
-          <span>University of Moratuwa</span>
-          <span className="text-white/20 light:text-slate-300">•</span>
-          <span>Colombo, LK</span>
+        <div className="flex items-center gap-2 text-[11px] text-[#94a3b8] light:text-slate-500">
+          <span>UNIVERSITY OF MORATUWA</span>
+          <span className="text-white/20 light:text-slate-300">/</span>
+          <span className="text-[#e5a93c] light:text-[#b45309] font-semibold">COLOMBO, LK</span>
         </div>
       </footer>
     </section>
