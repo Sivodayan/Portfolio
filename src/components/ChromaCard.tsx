@@ -231,8 +231,17 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
 
     let lastTouchTime = 0;
 
+    const isTouchOrCoarse = () => {
+      if (typeof window === 'undefined') return false;
+      return (
+        window.matchMedia('(pointer: coarse)').matches ||
+        window.matchMedia('(hover: none)').matches ||
+        window.innerWidth < 1024
+      );
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (Date.now() - lastTouchTime < 1000) return;
+      if (isTouchOrCoarse() || Date.now() - lastTouchTime < 1000) return;
       if (!container || !mesh || !material) return;
       const rect = container.getBoundingClientRect();
 
@@ -346,14 +355,36 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       });
     };
 
+    const handleTouchStart = () => {
+      lastTouchTime = Date.now();
+      if (!material) return;
+      gsap.killTweensOf(material.uniforms.u_hover);
+      material.uniforms.u_hover.value = 0.0;
+    };
+
     const handleTouchEnd = () => {
       lastTouchTime = Date.now();
-      // Suppress glitchWave ripple circle on mobile tap/click
+      if (!material) return;
+      gsap.killTweensOf(material.uniforms.u_hover);
+      material.uniforms.u_hover.value = 0.0;
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      if (isTouchOrCoarse()) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (material) {
+          gsap.killTweensOf(material.uniforms.u_hover);
+          material.uniforms.u_hover.value = 0.0;
+        }
+      }
     };
 
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('touchstart', handleTouchStart, { passive: true });
     container.addEventListener('touchend', handleTouchEnd, { passive: true });
+    container.addEventListener('click', handleClick);
     window.addEventListener('resize', updateSize);
 
     let isIntersecting = true;
@@ -387,7 +418,9 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       cancelAnimationFrame(animationFrameId);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('touchstart', handleTouchStart);
       container.removeEventListener('touchend', handleTouchEnd);
+      container.removeEventListener('click', handleClick);
       window.removeEventListener('resize', updateSize);
       resizeObserver.disconnect();
 
@@ -447,7 +480,8 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('relative overflow-visible cursor-pointer select-none', className)}
+      data-cursor-ignore
+      className={cn('relative overflow-visible cursor-default lg:cursor-pointer select-none', className)}
       style={{
         width: resolvedWidth === 'auto' ? undefined : resolvedWidth,
         height: resolvedHeight === 'auto' ? undefined : resolvedHeight,

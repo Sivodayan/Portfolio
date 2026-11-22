@@ -1538,6 +1538,21 @@ html[data-theme-transition] *::after {
   box-shadow: 0 4px 16px rgba(180, 83, 9, 0.18) !important;
 }
 
+/* Prevent tap highlight and ripple on ChromaCard */
+#about [data-cursor-ignore],
+#about canvas {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  outline: none !important;
+  user-select: none !important;
+}
+
+@media (max-width: 1024px) {
+  #about canvas {
+    pointer-events: none !important;
+  }
+}
+
 /* Skills Showcase Tile Enhancements */
 [data-theme="light"] #skills .group {
   background-color: #f1f5f9 !important;
