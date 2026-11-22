@@ -403,24 +403,16 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     <h4 className="text-sm sm:text-base font-bold text-white light:text-slate-900 mb-1">
                       {activationNeeded
                         ? '1-Click Verification Sent to Your Inbox'
-                        : 'Message Delivered Directly to Inbox'}
+                        : 'Message Delivered Successfully!'}
                     </h4>
                     <p className="text-xs text-slate-400 light:text-slate-600 max-w-sm mx-auto leading-relaxed">
                       {activationNeeded ? (
                         <>
-                          A confirmation link has been sent to{' '}
-                          <span className="text-[#e5a93c] light:text-[#b45309] font-semibold">
-                            sivodayan18@gmail.com
-                          </span>
-                          . Please click <span className="underline">Activate Form</span> in that email once to authorize instant submissions!
+                          Activation Needed!
                         </>
                       ) : (
                         <>
-                          Message successfully transmitted directly to{' '}
-                          <span className="text-emerald-400 light:text-emerald-700 font-semibold">
-                            sivodayan18@gmail.com
-                          </span>
-                          .
+                          You will recieve reply as soon as possible
                         </>
                       )}
                     </p>
