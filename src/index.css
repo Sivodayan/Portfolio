@@ -383,8 +383,7 @@ p, .hero-bio, .project-desc, .timeline-details, .skills-content, .contact-text {
 
 /* View Transitions API: circular clip-path expansion & contraction */
 ::view-transition-group(root) {
-  animation-duration: 0.48s;
-  animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  animation: none;
 }
 
 ::view-transition-old(root),
@@ -410,6 +409,7 @@ html[data-theme-transition="to-dark"]::view-transition-new(root) {
 }
 
 /* Suppress intermediate CSS transitions during document view transitions */
+html[data-theme-transition],
 html[data-theme-transition] *,
 html[data-theme-transition] *::before,
 html[data-theme-transition] *::after {

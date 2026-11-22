@@ -154,11 +154,13 @@ export const App: React.FC = () => {
             {
               duration: 480,
               easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+              fill: 'forwards',
               pseudoElement: '::view-transition-new(root)',
             }
           );
         } else {
           // Shrink light theme snapshot smoothly back into the toggle button
+          // fill: 'forwards' pins clip-path at 0px until pseudo-element unmounts to eliminate post-animation flicker
           document.documentElement.animate(
             {
               clipPath: [
@@ -169,6 +171,7 @@ export const App: React.FC = () => {
             {
               duration: 480,
               easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+              fill: 'forwards',
               pseudoElement: '::view-transition-old(root)',
             }
           );
@@ -202,6 +205,7 @@ export const App: React.FC = () => {
         {
           duration: 480,
           easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+          fill: 'forwards',
         }
       );
 
@@ -229,6 +233,7 @@ export const App: React.FC = () => {
         {
           duration: 480,
           easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+          fill: 'forwards',
         }
       );
 
