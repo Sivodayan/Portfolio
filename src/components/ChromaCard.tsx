@@ -229,37 +229,25 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     });
     resizeObserver.observe(container);
 
-    let lastTouchTime = 0;
-
-    const isTouchOrCoarse = () => {
-      if (typeof window === 'undefined') return false;
-      return (
-        window.matchMedia('(pointer: coarse)').matches ||
-        window.matchMedia('(hover: none)').matches ||
-        window.innerWidth < 1024
-      );
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (isTouchOrCoarse() || Date.now() - lastTouchTime < 1000) return;
+    const updateTiltAndZoom = (clientX: number, clientY: number) => {
       if (!container || !mesh || !material) return;
       const rect = container.getBoundingClientRect();
 
       const isWithinBounds =
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
+        clientX >= rect.left &&
+        clientX <= rect.right &&
+        clientY >= rect.top &&
+        clientY <= rect.bottom;
 
-      mouse.x = Math.max(-1.1, Math.min(1.1, ((e.clientX - rect.left) / rect.width) * 2 - 1));
-      mouse.y = Math.max(-1.1, Math.min(1.1, -(((e.clientY - rect.top) / rect.height) * 2 - 1)));
+      mouse.x = Math.max(-1.1, Math.min(1.1, ((clientX - rect.left) / rect.width) * 2 - 1));
+      mouse.y = Math.max(-1.1, Math.min(1.1, -(((clientY - rect.top) / rect.height) * 2 - 1)));
 
       const canvas = canvasRef.current;
       if (canvas) {
         const canvasRect = canvas.getBoundingClientRect();
         const canvasMouse = new THREE.Vector2(
-          ((e.clientX - canvasRect.left) / canvasRect.width) * 2 - 1,
-          -(((e.clientY - canvasRect.top) / canvasRect.height) * 2 - 1)
+          ((clientX - canvasRect.left) / canvasRect.width) * 2 - 1,
+          -(((clientY - canvasRect.top) / canvasRect.height) * 2 - 1)
         );
         raycaster.setFromCamera(canvasMouse, camera);
       } else {
@@ -296,36 +284,11 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
           ease: 'power2.out',
         });
       } else {
-        gsap.to(material.uniforms.u_hover, {
-          value: 0.0,
-          duration: zoomOutDuration,
-          ease: 'power2.out',
-        });
-
-        gsap.to(mesh.scale, {
-          x: 1.0,
-          y: 1.0,
-          duration: zoomOutDuration,
-          ease: 'power2.out',
-        });
-
-        gsap.to(mesh.position, {
-          x: 0.0,
-          y: 0.0,
-          duration: zoomOutDuration,
-          ease: 'power2.out',
-        });
-
-        gsap.to(mesh.rotation, {
-          x: 0.0,
-          y: 0.0,
-          duration: zoomOutDuration,
-          ease: 'power2.out',
-        });
+        resetTiltAndZoom();
       }
     };
 
-    const handleMouseLeave = () => {
+    const resetTiltAndZoom = () => {
       if (!material || !mesh) return;
       gsap.to(material.uniforms.u_hover, {
         value: 0.0,
@@ -355,35 +318,52 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       });
     };
 
-    const handleTouchStart = () => {
-      lastTouchTime = Date.now();
-      if (!material) return;
-      gsap.killTweensOf(material.uniforms.u_hover);
-      material.uniforms.u_hover.value = 0.0;
+    const handleMouseMove = (e: MouseEvent) => {
+      updateTiltAndZoom(e.clientX, e.clientY);
+    };
+
+    const handleMouseLeave = () => {
+      resetTiltAndZoom();
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 0) return;
+      const t = e.touches[0];
+      updateTiltAndZoom(t.clientX, t.clientY);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 0) return;
+      const t = e.touches[0];
+      updateTiltAndZoom(t.clientX, t.clientY);
     };
 
     const handleTouchEnd = () => {
-      lastTouchTime = Date.now();
-      if (!material) return;
-      gsap.killTweensOf(material.uniforms.u_hover);
-      material.uniforms.u_hover.value = 0.0;
+      resetTiltAndZoom();
     };
 
-    const handleClick = (e: MouseEvent) => {
-      if (isTouchOrCoarse()) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (material) {
-          gsap.killTweensOf(material.uniforms.u_hover);
-          material.uniforms.u_hover.value = 0.0;
+    const handleClick = () => {
+      if (!material) return;
+      gsap.killTweensOf(material.uniforms.u_hover);
+      gsap.fromTo(
+        material.uniforms.u_hover,
+        { value: 0.0 },
+        {
+          value: 1.0,
+          duration: 0.6,
+          ease: 'power2.out',
+          yoyo: true,
+          repeat: 1,
         }
-      }
+      );
     };
 
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
     container.addEventListener('touchstart', handleTouchStart, { passive: true });
+    container.addEventListener('touchmove', handleTouchMove, { passive: true });
     container.addEventListener('touchend', handleTouchEnd, { passive: true });
+    container.addEventListener('touchcancel', handleTouchEnd, { passive: true });
     container.addEventListener('click', handleClick);
     window.addEventListener('resize', updateSize);
 
@@ -419,7 +399,9 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
       container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchmove', handleTouchMove);
       container.removeEventListener('touchend', handleTouchEnd);
+      container.removeEventListener('touchcancel', handleTouchEnd);
       container.removeEventListener('click', handleClick);
       window.removeEventListener('resize', updateSize);
       resizeObserver.disconnect();
@@ -481,7 +463,7 @@ export const ChromaCard: React.FC<ChromaCardProps> = ({
     <div
       ref={containerRef}
       data-cursor-ignore
-      className={cn('relative overflow-visible cursor-default lg:cursor-pointer select-none', className)}
+      className={cn('relative overflow-visible cursor-pointer select-none', className)}
       style={{
         width: resolvedWidth === 'auto' ? undefined : resolvedWidth,
         height: resolvedHeight === 'auto' ? undefined : resolvedHeight,
