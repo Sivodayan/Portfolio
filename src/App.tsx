@@ -10,7 +10,7 @@ import Projects from './components/Projects';
 import SkillsShowcase from './components/SkillsShowcase';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
-import {Analytics} from "@vercel/analytics/next"
+import { Analytics } from '@vercel/analytics/react';
 import LoadingScreen from './components/LoadingScreen';
 import BackToTop from './components/BackToTop';
 
@@ -322,6 +322,8 @@ export const App: React.FC = () => {
       <div className={`minimal-toast ${toastMsg ? 'visible' : ''}`}>
         {toastMsg}
       </div>
+
+      <Analytics />
     </>
   );
 };
