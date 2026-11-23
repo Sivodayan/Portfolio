@@ -508,18 +508,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     </div>
                   </div>
 
-                  <div className="relative">
-                    <input
-                      id="form-subject"
-                      type="text"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      placeholder="Subject (Optional)"
-                      className="w-full px-3.5 py-2.5 pl-9 rounded-xl bg-black/30 light:bg-white border border-white/20 light:border-[#79747e]/40 text-xs sm:text-sm text-white light:text-slate-900 placeholder:text-white/30 light:placeholder:text-slate-400 focus:outline-none focus:border-[#e5a93c] light:focus:border-[#b45309] focus:ring-2 focus:ring-[#e5a93c]/20 transition-all"
-                    />
-                    <Sparkles className="w-4 h-4 text-white/40 light:text-slate-400 absolute left-3 top-3 pointer-events-none" />
-                  </div>
+                
 
                   <div>
                     <textarea

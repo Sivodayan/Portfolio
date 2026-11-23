@@ -135,7 +135,7 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      signal: AbortSignal.timeout(6000),
+      signal: AbortSignal.timeout(45000),
       body: JSON.stringify({
         name,
         email,
@@ -175,8 +175,8 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
       throw new Error(data.message);
     }
   } catch (err: any) {
-    if (err?.name === 'AbortError') {
-      throw new Error('Direct transmission timed out. Please check your network connection and retry.');
+    if (err?.name === 'AbortError' || err?.name === 'TimeoutError' || (typeof err?.message === 'string' && err.message.toLowerCase().includes('timeout'))) {
+      throw new Error('Connection timed out. Please check your network and try again.');
     }
     if (err?.message && !err.message.includes('fetch')) {
       throw err;
