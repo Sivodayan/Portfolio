@@ -213,7 +213,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
                 letterStagger={27}
                 style={{ whiteSpace: 'nowrap' }}
                 wrapWordClassName="whitespace-nowrap"
-                className="section-heading !mb-0 !border-none !pb-0 text-lg min-[360px]:text-xl sm:text-2xl font-bold tracking-tight text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none whitespace-nowrap"
+                className="section-heading !mb-0 !border-none !pb-0 text-xl min-[360px]:text-2xl sm:text-3xl font-normal tracking-wide text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none whitespace-nowrap font-carter"
               >
                 Education &amp; Experience
               </TextEngine>

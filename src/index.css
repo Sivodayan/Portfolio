@@ -33,6 +33,7 @@
   --font-serif: 'Newsreader', Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-anton: 'Anton', sans-serif;
+  --font-carter: 'Carter One', cursive, sans-serif;
 
   --max-w: 1260px;
   --transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -699,15 +700,22 @@ html[data-theme-transition] *::after {
 
 .section-heading {
   font-size: 1.05rem;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  font-family: var(--font-carter);
+  font-weight: 400;
+  letter-spacing: 0.04em;
   color: #e5a93c;
   text-shadow: 0 0 12px rgba(229, 169, 60, 0.4);
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border-color);
+}
+
+h2 {
+  font-family: var(--font-carter);
+}
+
+p {
+  font-family: var(--font-sans);
 }
 
 /* Projects section */

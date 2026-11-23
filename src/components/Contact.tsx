@@ -217,7 +217,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                 letterIn={{ opacity: 1, scale: 1 }}
                 letterConfig={{ tension: 426, friction: 17 }}
                 letterStagger={27}
-                className="section-heading !mb-0 !border-none !pb-0 text-2xl sm:text-3xl font-bold tracking-tight text-white light:text-slate-900 drop-shadow-sm font-sans"
+                className="section-heading !mb-0 !border-none !pb-0 text-2xl sm:text-3xl font-normal tracking-wide text-white light:text-slate-900 drop-shadow-sm font-carter"
               >
                 Get in Touch
               </TextEngine>

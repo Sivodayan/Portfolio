@@ -240,7 +240,7 @@ export const Projects: React.FC<ProjectsProps> = () => {
                 letterIn={{ opacity: 1, scale: 1 }}
                 letterConfig={{ tension: 426, friction: 17 }}
                 letterStagger={27}
-                className="section-heading !mb-0 !border-none !pb-0 text-xl sm:text-2xl font-extrabold tracking-tight text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none"
+                className="section-heading !mb-0 !border-none !pb-0 text-2xl sm:text-3xl font-normal tracking-wide text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none font-carter"
               >
                 Selected Projects
               </TextEngine>

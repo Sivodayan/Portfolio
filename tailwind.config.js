@@ -25,6 +25,8 @@ export default {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
         anton: ['Anton', 'sans-serif'],
+        carter: ['"Carter One"', 'cursive', 'sans-serif'],
+        'carter-one': ['"Carter One"', 'cursive', 'sans-serif'],
       },
     },
   },
