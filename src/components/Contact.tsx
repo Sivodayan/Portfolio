@@ -204,7 +204,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-4xl lg:max-w-5xl mx-auto flex flex-col justify-start my-auto"
+        className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col justify-start my-auto"
       >
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5 mb-4 sm:mb-5 lg:mb-5">
@@ -231,7 +231,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         </div>
 
         {/* Material Design 3 Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch">
           {/* Left Column: M3 Elevated Surface Container (Channels & CV) */}
           <div className="lg:col-span-5 p-5 sm:p-6 rounded-[28px] bg-[#1d1b20]/90 light:bg-[#f7f2fa]/95 border border-white/[0.08] light:border-[#79747e]/20 shadow-[0_4px_24px_rgba(0,0,0,0.5)] light:shadow-[0_4px_20px_rgba(0,0,0,0.06)] flex flex-col justify-between gap-3">
             {/* M3 Channel Tile 1: Email */}
