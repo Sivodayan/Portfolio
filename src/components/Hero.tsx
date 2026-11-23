@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import TextEngine from 'spring-text-engine';
 import { Download, FileText } from 'lucide-react';
 import ChromaCard from './ChromaCard';
+import { dynaura } from 'dynaura';
 
 export interface HeroProps {
   isIntroDone?: boolean;
@@ -137,6 +138,12 @@ export const Hero: React.FC<HeroProps> = ({ isIntroDone = true, theme = 'dark' }
               <a
                 href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
                 download="Sivodayan_Sujeevakumar_CV.pdf"
+                onClick={() => {
+                  dynaura.success({
+                    title: 'CV Downloaded',
+                    description: 'Sivodayan_Sujeevakumar_CV.pdf saved to your device.',
+                  });
+                }}
                 className="px-3 sm:px-3.5 py-2 rounded-xl bg-[#e5a93c] hover:bg-[#d97706] text-[#07080b] hover:text-white light:bg-amber-600 light:hover:bg-amber-700 light:text-white font-mono text-xs sm:text-[13px] font-bold flex items-center gap-1.5 shadow-[0_0_16px_rgba(229,169,60,0.35)] hover:shadow-[0_0_22px_rgba(229,169,60,0.5)] transition-all cursor-pointer border border-[#e5a93c] hover:border-[#d97706] light:border-amber-600"
                 title="Download Resume (PDF)"
               >

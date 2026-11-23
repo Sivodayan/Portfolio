@@ -23,6 +23,7 @@ import {
 import GlitchHeading from './GlitchHeading';
 import RisingLines from './RisingLines';
 import { sendContactMessage } from '../services/smtpService';
+import { dynaura } from 'dynaura';
 
 export interface ContactProps {
   onShowToast?: (msg: string) => void;
@@ -56,10 +57,23 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
   const handleCopy = (text: string, label: string, key: string) => {
     navigator.clipboard.writeText(text).then(() => {
       setCopiedKey(key);
-      onShowToast?.(`${label} copied to clipboard`);
+      dynaura.success({
+        title: `${label} Copied`,
+        description: text,
+      });
       setTimeout(() => setCopiedKey(null), 2000);
     }).catch(() => {
-      onShowToast?.(text);
+      dynaura.info({
+        title: label,
+        description: text,
+      });
+    });
+  };
+
+  const handleCvDownload = () => {
+    dynaura.success({
+      title: 'CV Downloaded',
+      description: 'Sivodayan_Sujeevakumar_CV.pdf saved to your device.',
     });
   };
 
@@ -111,13 +125,24 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
       setFormStatus('success');
 
       if (result.activationNeeded) {
-        onShowToast?.('Activation email sent! Please check your inbox.');
+        dynaura.warning({
+          title: 'Activation Required',
+          description: 'A 1-click verification link was sent to your inbox.',
+        });
       } else {
-        onShowToast?.('Message dispatched directly!');
+        dynaura.success({
+          title: 'Message Sent!',
+          description: 'Your message has been delivered directly to my inbox.',
+        });
       }
     } catch (err: any) {
       setFormStatus('idle');
-      setFormError(err?.message || 'Failed to dispatch message via SMTP API.');
+      const errorMsg = err?.message || 'Failed to dispatch message via SMTP API.';
+      setFormError(errorMsg);
+      dynaura.error({
+        title: 'Send Failed',
+        description: errorMsg,
+      });
     }
   };
 
@@ -360,6 +385,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               <a
                 href="/assets/documents/Sivodayan_Sujeevakumar_CV.pdf"
                 download="Sivodayan_Sujeevakumar_CV.pdf"
+                onClick={handleCvDownload}
                 className="p-2.5 rounded-2xl bg-[#e5a93c] hover:bg-[#f59e0b] active:scale-[0.98] text-black shadow-sm flex items-center justify-center gap-2 font-bold transition-all"
                 title="Download Resume (PDF)"
               >

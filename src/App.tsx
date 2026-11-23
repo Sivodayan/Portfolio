@@ -13,6 +13,8 @@ import Contact from './components/Contact';
 import { Analytics } from '@vercel/analytics/react';
 import LoadingScreen from './components/LoadingScreen';
 import BackToTop from './components/BackToTop';
+import { Toaster } from 'dynaura';
+import 'dynaura/styles.css';
 
 
 export const App: React.FC = () => {
@@ -319,9 +321,7 @@ export const App: React.FC = () => {
 
       <BackToTop />
 
-      <div className={`minimal-toast ${toastMsg ? 'visible' : ''}`}>
-        {toastMsg}
-      </div>
+      <Toaster position="top-center" theme={theme === 'light' ? 'light' : 'dark'} />
 
       <Analytics />
     </>
