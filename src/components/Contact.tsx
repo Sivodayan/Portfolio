@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import GlitchHeading from './GlitchHeading';
 import RisingLines from './RisingLines';
-import { sendContactMessage } from '../services/smtpService';
+import { sendContactMessage, getMailtoFallbackUrl } from '../services/smtpService';
 import { dynaura } from 'dynaura';
 
 export interface ContactProps {
@@ -48,6 +48,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
     message: '',
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [isSlowSending, setIsSlowSending] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [sendProvider, setSendProvider] = useState<string | null>(null);
   const [activationNeeded, setActivationNeeded] = useState<boolean>(false);
@@ -111,6 +112,8 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
     setFormStatus('submitting');
     setFormError(null);
+    setIsSlowSending(false);
+    const slowTimer = setTimeout(() => setIsSlowSending(true), 3000);
 
     try {
       const result = await sendContactMessage({
@@ -127,7 +130,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
       if (result.activationNeeded) {
         dynaura.warning({
           title: 'Activation Required',
-          description: 'A 1-click verification link was sent to your inbox.',
+          description: 'A 1-click verification link was sent to your inbox or Spam.',
         });
       } else {
         dynaura.success({
@@ -143,6 +146,9 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
         title: 'Send Failed',
         description: errorMsg,
       });
+    } finally {
+      clearTimeout(slowTimer);
+      setIsSlowSending(false);
     }
   };
 
@@ -528,10 +534,19 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     <motion.div
                       initial={{ opacity: 0, y: -2 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center gap-2"
+                      className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2"
                     >
-                      <AlertCircle className="w-4 h-4 shrink-0" />
-                      <span>{formError}</span>
+                      <div className="flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+                        <span>{formError}</span>
+                      </div>
+                      <a
+                        href={getMailtoFallbackUrl(formData)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-white text-[11px] font-semibold transition-all shrink-0 underline"
+                      >
+                        <Mail className="w-3.5 h-3.5" />
+                        <span>Open in Mail App</span>
+                      </a>
                     </motion.div>
                   )}
 
@@ -547,7 +562,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                       {formStatus === 'submitting' ? (
                         <>
                           <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                          <span>Sending...</span>
+                          <span>{isSlowSending ? 'Routing to inbox...' : 'Sending...'}</span>
                         </>
                       ) : (
                         <>

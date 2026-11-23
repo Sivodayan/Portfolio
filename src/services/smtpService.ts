@@ -19,6 +19,14 @@ export interface SmtpSendResult {
 
 const RECIPIENT_EMAIL = 'sivodayan18@gmail.com';
 
+export function getMailtoFallbackUrl(payload: ContactMessagePayload): string {
+  const { name, email, subject, message } = payload;
+  const subjectLine = subject?.trim() || `Portfolio Contact from ${name.trim()}`;
+  return `mailto:${RECIPIENT_EMAIL}?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(
+    `Hi Sivodayan,\n\n${message}\n\n---\nFrom: ${name}\nEmail: ${email}`
+  )}`;
+}
+
 /**
  * Dispatches contact message through the best available SMTP / email API.
  */
