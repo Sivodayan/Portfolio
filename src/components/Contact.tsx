@@ -257,7 +257,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
                     Direct Email
                   </div>
                   <span className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 truncate block mt-0.5">
-                    sivodayan17@gmail.com
+                    sivodayan18@gmail.com
                   </span>
                 </div>
               </div>
