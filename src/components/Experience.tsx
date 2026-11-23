@@ -33,8 +33,8 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
       data-cursor-ignore
       className={`group relative w-[285px] min-[360px]:w-[325px] sm:w-[380px] md:w-[410px] shrink-0 p-4 min-[360px]:p-5 sm:p-6 rounded-2xl ${
         theme === 'light'
-          ? 'bg-[#e4e187] border border-slate-300 hover:border-slate-400 hover:bg-[#d6cf28] shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_28px_-6px_rgba(15,23,42,0.12)]'
-          : 'bg-[#191911] border border-white/10 hover:border-white/20 hover:bg-[#000000] shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.6)]'
+          ? 'bg-white/95 border border-slate-200 hover:border-amber-500/50 hover:bg-amber-50/40 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] hover:shadow-[0_14px_30px_-6px_rgba(217,119,6,0.12)]'
+          : 'bg-[#0e1015] border border-white/10 hover:border-white/20 hover:bg-[#12151c] shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.6)]'
       } hover:-translate-y-1 transition-all duration-300 ease-out flex flex-col justify-between min-h-[300px] sm:min-h-[350px]`}
     >
       <div>
