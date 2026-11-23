@@ -230,10 +230,10 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
         </div>
 
-        {/* Material Design 3 Cards Grid */}
+        {/* Material Design 3 Cards Grid (Equal Width Columns: 6 / 6) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch">
           {/* Left Column: M3 Elevated Surface Container (Channels & CV) */}
-          <div className="lg:col-span-5 p-5 sm:p-6 rounded-[28px] bg-[#1d1b20]/90 light:bg-[#f7f2fa]/95 border border-white/[0.08] light:border-[#79747e]/20 shadow-[0_4px_24px_rgba(0,0,0,0.5)] light:shadow-[0_4px_20px_rgba(0,0,0,0.06)] flex flex-col justify-between gap-3">
+          <div className="lg:col-span-6 p-5 sm:p-6 rounded-[28px] bg-[#1d1b20]/90 light:bg-[#f7f2fa]/95 border border-white/[0.08] light:border-[#79747e]/20 shadow-[0_4px_24px_rgba(0,0,0,0.5)] light:shadow-[0_4px_20px_rgba(0,0,0,0.06)] flex flex-col justify-between gap-3">
             {/* M3 Channel Tile 1: Email */}
             <div
               role="button"
@@ -398,7 +398,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
           </div>
 
           {/* Right Column: M3 Elevated Form Container */}
-          <div className="lg:col-span-7 p-5 sm:p-6 rounded-[28px] bg-[#1d1b20]/90 light:bg-[#f7f2fa]/95 border border-white/[0.08] light:border-[#79747e]/20 shadow-[0_4px_24px_rgba(0,0,0,0.5)] light:shadow-[0_4px_20px_rgba(0,0,0,0.06)] flex flex-col justify-between">
+          <div className="lg:col-span-6 p-5 sm:p-6 rounded-[28px] bg-[#1d1b20]/90 light:bg-[#f7f2fa]/95 border border-white/[0.08] light:border-[#79747e]/20 shadow-[0_4px_24px_rgba(0,0,0,0.5)] light:shadow-[0_4px_20px_rgba(0,0,0,0.06)] flex flex-col justify-between">
             {/* Header / Subhead */}
             <div className="flex items-center justify-between gap-2 mb-3.5 pb-2.5 border-b border-white/[0.06] light:border-slate-200/80">
               <div>
