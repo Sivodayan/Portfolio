@@ -550,17 +550,16 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
       </motion.div>
 
       {/* Material 3 Bottom Footer ("cc") */}
-      <footer className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto pt-3 pb-2 border-t border-white/[0.08] light:border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left text-xs text-slate-400 light:text-slate-500 mt-auto">
+      <footer className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto pt-3 pb-2 border-t border-white/[0.08] light:border-slate-300/80 light:bg-[#f8fafc]/85 light:backdrop-blur-md rounded-xl px-3 sm:px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left text-xs text-slate-400 light:text-slate-700 mt-auto shadow-none light:shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
         <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
-          <span>© {new Date().getFullYear()} Sivodayan Sujeevakumar</span>
-          <span className="hidden sm:inline text-white/20 light:text-slate-300">-</span>
-          <span className="text-white/70 light:text-slate-700 font-medium">Computer Science &amp; Engineering</span>
+          <span className="text-slate-400 light:text-slate-800 font-medium">© {new Date().getFullYear()} Sivodayan Sujeevakumar</span>
+          <span className="hidden sm:inline text-white/20 light:text-slate-400">-</span>
+          <span className="text-white/80 light:text-slate-900 font-semibold">Computer Science &amp; Engineering</span>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-slate-400 light:text-slate-500">
+        <div className="flex items-center gap-2 text-xs text-slate-400 light:text-slate-800 font-medium">
           <span>University of Moratuwa</span>
-          
-          <span className="text-[#e5a93c] light:text-[#b45309] font-medium">Colombo, LK</span>
+          <span className="text-[#e5a93c] light:text-[#b45309] font-bold">Colombo, LK</span>
         </div>
       </footer>
     </section>
