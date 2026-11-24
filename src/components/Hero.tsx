@@ -91,7 +91,7 @@ export const Hero: React.FC<HeroProps> = ({ isIntroDone = true, theme = 'dark' }
           >
             <div className="flex items-center gap-2 sm:gap-2.5">
               <a
-                href="https://github.com/Sivodayan"
+                href="https://github.com/devsivo"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor-target

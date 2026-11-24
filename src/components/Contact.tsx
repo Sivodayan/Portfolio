@@ -358,7 +358,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
               </a>
 
               <a
-                href="https://github.com/Sivodayan"
+                href="https://github.com/devsivo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] light:bg-white light:hover:bg-slate-50 border border-white/[0.06] light:border-[#79747e]/20 shadow-sm flex items-center justify-between group transition-colors"

@@ -63,7 +63,7 @@ Live Demo: [https://sivodayan.devs.surf](https://sivodayan.devs.surf)
 
 ```bash
 # Clone the repository
-git clone https://github.com/Sivodayan/Portfolio.git
+git clone https://github.com/devsivo/Portfolio.git
 
 # Navigate into project directory
 cd Portfolio
@@ -146,7 +146,7 @@ Portfolio/
 - **Department**: Computer Science & Engineering, University of Moratuwa
 - **Email**: [sivodayan18@gmail.com](mailto:sivodayan18@gmail.com)
 - **LinkedIn**: [sivodayan-sujeevakumar](https://www.linkedin.com/in/sivodayan-sujeevakumar-8096943a4/)
-- **GitHub**: [@Sivodayan](https://github.com/Sivodayan)
+- **GitHub**: [@devsivo](https://github.com/devsivo)
 
 ---
 
