@@ -45,39 +45,33 @@ The portfolio implements a deliberate four-tier font pairing:
    - WebGL shader card featuring signed distance field (SDF) rounded corner discard, 3D mouse parallax tilt, and chromatic aberration / RGB shift on hover.
    - Layered over a vibrant tilted accent backing card.
 
-4. **Hyperspace Warp Field (`<Lightspeed />`)**:
-   - Three.js hyperspace star streak background seamlessly masked with radial gradient edges under the projects showcase.
+4. **Interactive Projects Grid (`<Projects />`)**:
+   - Responsive multi-column grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-4`) showcasing featured engineering projects.
+   - Interactive project cards with high-definition preview media, technical badges, direct GitHub source code links, and live deployed demo links.
 
-5. **3D Circle Gallery (`<CircleGallery />`)**:
-   - Radial 3D cylinder carousel displaying portfolio projects.
-   - Touch/mouse drag rotation with momentum throw physics and gentle auto-rotation (`autoSpin: 4 deg/s`).
-   - Interactive 3D zoom-to-focus on click with soft background card blurring.
-   - Synchronized project details panel with technical tags, architecture specs, and live demo / GitHub links.
-   - View toggle between 3D Circle Gallery and Grid View.
+5. **Spectral Skills Matrix (`<SkillsShowcase />` & `<SpectralTiles />`)**:
+   - 3D interactive mesh tiles featuring core engineering competencies across hardware, firmware, distributed systems, and web technologies.
 
-6. **Spectral Grid (`<SpectralTiles />`)**:
-   - 3D glowing interactive spectral tiles field showcasing core competencies across hardware, firmware, distributed systems, and web technologies.
-
-7. **Rising Lines (`<RisingLines />`)**:
+6. **Rising Lines Atmospheric Horizon (`<RisingLines />`)**:
    - Filaments of light rising upward from a glowing horizon at the base of the page behind the contact channels.
 
-8. **Education & Experience Showcase (`<Experience />`)**:
+7. **Education & Experience Showcase (`<Experience />`)**:
    - Smooth horizontal swipe/scroll container for academic metrics and leadership roles.
    - Academic: **B.Sc. (Hons) in Engineering, CSE Department @ University of Moratuwa (CGPA 3.54)**.
    - Leadership: **Department Representative of CSE**, AIESEC CXP Member, Mora Lenz Media, and Wibhawi Prathibha lead coordinator.
    - Adaptive light/dark elevation with custom amber hover illumination.
 
-9. **Material 3 Contact Suite & Smart SMTP (`<Contact />`)**:
+8. **Material 3 Contact Suite & Smart SMTP (`<Contact />`)**:
    - Dual-card M3 elevated layout: Contact details card on the left with one-click copy chips and CV download; elevated message form on the right.
    - Seamless scroll-to-bottom behavior that keeps both the message card and bottom CC footer fully in view.
    - Dynamic Island notifications powered by `dynaura` for link copies, CV downloads, and delivery confirmation.
 
-10. **Multi-Tier Email & Serverless Dispatch (`/api/contact.js`)**:
-    - **Tier 1 (Serverless Bridge)**: Built-in Vercel Serverless Function `/api/contact` relaying submissions via Web3Forms with direct reply-to, bypassing client-side origin/TLD blocks in < 1 second.
-    - **Tier 2 (Direct Web3Forms)**: Client-side gateway with access key authentication.
-    - **Tier 3 (ShipMyForm)**: Sub-2s zero-config fallback.
-    - **Tier 4 (FormSubmit)**: Secondary public gateway with timeout protection.
-    - **Tier 5 (Fail-Safe Mailto)**: Instant `mailto:` client fallback with automatic clipboard copy so messages are never lost.
+9. **Multi-Tier Email & Serverless Dispatch (`/api/contact.js`)**:
+   - **Tier 1 (Serverless Bridge)**: Built-in Vercel Serverless Function `/api/contact` relaying submissions via Web3Forms with direct reply-to, bypassing client-side origin/TLD blocks in < 1 second.
+   - **Tier 2 (Direct Web3Forms)**: Client-side gateway with access key authentication.
+   - **Tier 3 (ShipMyForm)**: Sub-2s zero-config fallback.
+   - **Tier 4 (FormSubmit)**: Secondary public gateway with timeout protection.
+   - **Tier 5 (Fail-Safe Mailto)**: Instant `mailto:` client fallback with automatic clipboard copy so messages are never lost.
 
 ---
 
@@ -106,7 +100,7 @@ npm install
 Create a `.env.local` file in the root directory:
 
 ```env
-# Optional: Web3Forms Access Key (https://web3forms.com)
+# Web3Forms Access Key (https://web3forms.com)
 VITE_WEB3FORMS_ACCESS_KEY=your-access-key-here
 
 # Optional: EmailJS credentials (https://www.emailjs.com/)
@@ -159,8 +153,8 @@ Portfolio/
 ├── src/
 │   ├── components/
 │   │   ├── AsciiStream.tsx    # WebGL Fullscreen ASCII terminal stream
+│   │   ├── BackToTop.tsx      # Smooth scroll-to-top floating button
 │   │   ├── ChromaCard.tsx     # Holographic WebGL profile card with SDF corners
-│   │   ├── CircleGallery.tsx  # 3D circular project tiles cylinder carousel
 │   │   ├── CircuitFlash.tsx   # Cyberpunk circuit accent flash
 │   │   ├── Contact.tsx        # M3 contact section & communication suite
 │   │   ├── CustomCursor.tsx   # Fluid spring-physics morphing cursor
@@ -168,13 +162,11 @@ Portfolio/
 │   │   ├── GlitchHeading.tsx  # Viewport-triggered chromatic glitch effect
 │   │   ├── Header.tsx         # Responsive navbar with Colombo time & scroll handlers
 │   │   ├── Hero.tsx           # Display typography, telemetry & quick social links
-│   │   ├── Lightspeed.tsx     # Hyperspace warp starfield background
 │   │   ├── LoadingScreen.tsx  # Initial app loading sequence
 │   │   ├── Projects.tsx       # Selected engineering projects showcase
 │   │   ├── RisingLines.tsx    # Rising light filament shader animation
 │   │   ├── SkillsShowcase.tsx # Categorized technical skills & mastery badges
-│   │   ├── SpectralTiles.tsx  # 3D interactive mesh grid
-│   │   └── StaggeredText.tsx  # Word-by-word blur-in entrance animation
+│   │   └── SpectralTiles.tsx  # 3D interactive mesh grid
 │   ├── services/
 │   │   └── smtpService.ts     # Multi-tier SMTP & email API delivery engine
 │   ├── App.tsx                # Application root with theme state & smooth scrolling
