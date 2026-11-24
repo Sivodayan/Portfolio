@@ -694,8 +694,10 @@ html[data-theme-transition] *::after {
   scroll-margin-top: 3.75rem;
 }
 
-#experience {
+#experience,
+#contact {
   scroll-margin-top: 0;
+  scroll-margin-bottom: 0;
 }
 
 .section-heading {
@@ -1299,8 +1301,10 @@ p {
     scroll-margin-top: 3.5rem;
   }
 
-  #experience {
+  #experience,
+  #contact {
     scroll-margin-top: 0;
+    scroll-margin-bottom: 0;
   }
 
   .ascii-stream-frame {

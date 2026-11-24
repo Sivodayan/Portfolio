@@ -171,7 +171,7 @@ export const Contact: React.FC<ContactProps> = ({ onShowToast, theme = 'dark' })
 
   return (
     <section
-      className="section relative w-full min-h-screen lg:min-h-[calc(100vh-3.75rem)] lg:h-[calc(100vh-3.75rem)] flex flex-col justify-between pt-4 sm:pt-6 lg:pt-6 pb-2 sm:pb-3 overflow-hidden px-4 sm:px-6 lg:px-8"
+      className="section relative w-full min-h-screen lg:min-h-[calc(100vh-3.75rem)] flex flex-col justify-between pt-4 sm:pt-6 pb-2 sm:pb-3 px-4 sm:px-6 lg:px-8"
       id="contact"
       style={{
         minHeight: 'calc(100vh - 3.75rem)',

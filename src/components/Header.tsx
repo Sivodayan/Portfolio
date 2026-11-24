@@ -139,6 +139,35 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Ensure contact section scroll displays the full section including CC footer
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#contact') {
+        setTimeout(() => {
+          const contactEl = document.getElementById('contact');
+          if (contactEl) {
+            contactEl.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          }
+        }, 150);
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, itemId: string) => {
+    if (itemId === 'contact') {
+      e.preventDefault();
+      const contactEl = document.getElementById('contact');
+      if (contactEl) {
+        contactEl.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        window.history.pushState(null, '', '#contact');
+        setActiveSection('contact');
+      }
+    }
+  };
+
   // Close mobile menu on ESC key or click outside
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -208,6 +237,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                 <motion.a
                   key={item.id}
                   href={item.href}
+                  onClick={(e) => handleNavClick(e, item.id)}
                   onMouseEnter={() => setHoveredSection(item.id)}
                   whileTap={{ scale: 0.94 }}
                   className={`group relative px-3 sm:px-3.5 py-2 text-xs sm:text-[13px] tracking-wide transition-colors duration-200 z-10 select-none ${
@@ -372,7 +402,10 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
                     variants={mobileNavItemVariants}
                     whileTap={{ scale: 0.98 }}
                     href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      handleNavClick(e, item.id);
+                    }}
                     className={`relative px-3 py-2.5 rounded-lg text-xs font-medium flex items-center justify-between transition-all duration-200 ${
                       isActive
                         ? isLight
