@@ -232,7 +232,7 @@ export const Projects: React.FC<ProjectsProps> = () => {
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 sm:mb-4">
           <div>
-            <GlitchHeading>
+            <GlitchHeading className="whitespace-nowrap">
               <TextEngine
                 tag="h2"
                 mode="once"
@@ -240,7 +240,9 @@ export const Projects: React.FC<ProjectsProps> = () => {
                 letterIn={{ opacity: 1, scale: 1 }}
                 letterConfig={{ tension: 426, friction: 17 }}
                 letterStagger={27}
-                className="section-heading !mb-0 !border-none !pb-0 text-2xl sm:text-3xl font-normal tracking-wide text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none font-carter"
+                style={{ whiteSpace: 'nowrap' }}
+                wrapWordClassName="whitespace-nowrap"
+                className="section-heading !mb-0 !border-none !pb-0 text-xl min-[360px]:text-2xl sm:text-3xl font-normal tracking-wide text-white light:text-slate-900 drop-shadow-sm light:drop-shadow-none whitespace-nowrap font-carter"
               >
                 Selected Projects
               </TextEngine>
