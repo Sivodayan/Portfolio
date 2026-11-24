@@ -270,7 +270,7 @@ export const Experience: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 'da
               items={[
                 <><strong className="text-white light:text-slate-900 font-semibold">Department Representative</strong> for CSE Department.</>,
                 <>Maintaining <strong className="text-white light:text-slate-900 font-semibold">CGPA 3.54</strong> across core algorithms and engineering.</>,
-                <>Member of <strong className="text-white light:text-slate-900 font-semibold">CXP Team in AIESEC</strong> &amp; <strong className="text-white light:text-slate-900 font-semibold">Mora Lenz Club</strong>.</>,
+                <>Member of <strong className="text-white light:text-slate-900 font-semibold">CXP Team in AIESEC</strong> &amp; <strong className="text-white light:text-slate-900 font-semibold">Mora Lenz</strong>.</>,
                 <>Coordinated university flagship tech events and freshers&apos; induction programs like <strong className="text-white light:text-slate-900 font-semibold">Wibhawi Prathiba.</strong></>,
               ]}
             />
