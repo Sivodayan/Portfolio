@@ -12,7 +12,7 @@ export interface ContactMessagePayload {
 
 export interface SmtpSendResult {
   success: boolean;
-  provider: 'emailjs' | 'web3forms' | 'custom-smtp' | 'formsubmit';
+  provider: 'emailjs' | 'web3forms' | 'custom-smtp' | 'shipmyform' | 'formsubmit';
   message: string;
   activationNeeded?: boolean;
 }
@@ -135,7 +135,36 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
     }
   }
 
-  // 4. Direct AJAX SMTP Gateway (FormSubmit direct submission to recipient)
+  // 4. Try ShipMyForm Instant SMTP Gateway (Fast sub-2s direct delivery)
+  try {
+    const response = await fetch(`https://shipmyform.com/to/${RECIPIENT_EMAIL}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      signal: AbortSignal.timeout(6000),
+      body: JSON.stringify({
+        name,
+        email,
+        subject: subjectLine,
+        message,
+      }),
+    });
+
+    const data = await response.json().catch(() => null);
+    if (response.ok && data && (data.ok === true || data.success === true)) {
+      return {
+        success: true,
+        provider: 'shipmyform',
+        message: 'Message delivered directly to your inbox!',
+      };
+    }
+  } catch (err) {
+    console.warn('ShipMyForm instant gateway failed, attempting FormSubmit fallback:', err);
+  }
+
+  // 5. Direct AJAX SMTP Gateway (FormSubmit direct submission to recipient)
   try {
     const response = await fetch(`https://formsubmit.co/ajax/${RECIPIENT_EMAIL}`, {
       method: 'POST',
@@ -143,7 +172,7 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      signal: AbortSignal.timeout(45000),
+      signal: AbortSignal.timeout(8000),
       body: JSON.stringify({
         name,
         email,
