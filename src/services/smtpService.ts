@@ -37,10 +37,41 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
   const emailJsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
   const emailJsTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
   const emailJsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-  const web3FormsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  const web3FormsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '603b1bde-ad42-4b56-91c0-3f8d5f1d2b00';
   const customSmtpEndpoint = import.meta.env.VITE_SMTP_API_ENDPOINT;
 
-  // 1. Try EmailJS (SMTP Server / Gmail Integration) if configured
+  // 1. Try Vercel Serverless Function (/api/contact) - delivers via Web3Forms without domain TLD blocks
+  try {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      signal: AbortSignal.timeout(6000),
+      body: JSON.stringify({
+        name,
+        email,
+        subject: subjectLine,
+        message,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json().catch(() => null);
+      if (data && data.success) {
+        return {
+          success: true,
+          provider: 'web3forms',
+          message: 'Message delivered directly to your inbox!',
+        };
+      }
+    }
+  } catch (err) {
+    console.warn('/api/contact endpoint unavailable, attempting direct providers:', err);
+  }
+
+  // 2. Try EmailJS (SMTP Server / Gmail Integration) if configured
   if (emailJsServiceId && emailJsTemplateId && emailJsPublicKey) {
     try {
       const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
